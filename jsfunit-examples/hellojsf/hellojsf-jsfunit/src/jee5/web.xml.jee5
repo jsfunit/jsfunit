@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC
+   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>    
+
+   <servlet>
+      <servlet-name>Faces Servlet</servlet-name>
+      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>   
+
+   <servlet>
+      <servlet-name>JSFUnitRedirector</servlet-name>
+      <servlet-class>org.jboss.jsfunit.framework.JSFUnitCactusRedirector</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>  
+
+   <servlet>
+      <servlet-name>JSFUnitServlet</servlet-name>
+      <servlet-class>org.jboss.jsfunit.framework.JSFUnitServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet> 
+
+   <servlet-mapping>
+      <servlet-name>Faces Servlet</servlet-name>
+      <url-pattern>*.faces</url-pattern>
+   </servlet-mapping>  
+
+   <servlet-mapping>
+      <servlet-name>JSFUnitRedirector</servlet-name>
+      <url-pattern>/JSFUnitRedirector</url-pattern>
+   </servlet-mapping>  
+
+   <servlet-mapping>
+      <servlet-name>JSFUnitServlet</servlet-name>
+      <url-pattern>/jsfunit</url-pattern>
+   </servlet-mapping> 
+
+   <welcome-file-list>
+      <welcome-file>index.html</welcome-file>
+   </welcome-file-list>
+</web-app>
