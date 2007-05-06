@@ -15,7 +15,9 @@
       <name>Stan Silvert</name>
       <id>ssilvert</id>
       <email>stan@jboss.com</email>
+      <url>http://jsf.jboss.org</url>
       <organization>JBoss Middleware, LLC</organization>
+      <organizationUrl>http://www.jboss.org</organizationUrl>
       <roles>
         <role>Project Lead</role>
       </roles>
@@ -23,6 +25,25 @@
     </developer>
   </developers>
 
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License</name>
+      <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <scm>
+    <connection>scm:svn:http://anonsvn.jboss.org/repos/jsfunit/trunk</connection>
+    <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/trunk</developerConnection>
+    <url>http://fisheye.jboss.org/browse/JSFUnit</url>
+  </scm>
+  
+  <organization>
+    <name>JBoss.org</name>
+    <url>http://www.jboss.org</url>
+  </organization>
+  
   <dependencyManagement>
     <dependencies>
       <dependency>

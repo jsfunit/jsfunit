@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="JSFUnit">
+  
+  <bannerLeft>
+    <name>JSFUnit</name>
+    <href>http://www.jsf.org</href>
+  </bannerLeft>
+  
+  <bannerRight>
+    <name>JSFUnit</name>
+    <src>http://labs.jboss.com/file-access/default/theme/images/common/jbossorg_logo.gif</src>    
+  </bannerRight>
+  
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-default-skin</artifactId>
+  </skin>
+
+  <publishDate format="dd MMM yyyy" />
+  
+  <body>
+    <links>
+      <item name="Home" href="http://labs.jboss.com"/>
+      <item name="Resources" href="http://labs.jboss.com/resources"/>
+      <item name="Projects" href="http://labs.jboss.com/projects"/>
+      <item name="Community" href="http://labs.jboss.com/community"/>
+    </links>
+
+    <head>
+      <meta name="faq" content="jsfunit"/>
+    </head>
+
+    <menu name="About JSFUnit" inherit="top">
+      <item name="What is JSFUnit" href="/what-is-jsfunit.html"/>
+      <item name="Quick Start" href="/quickstart.html"/>
+      <item name="Testing JSF Applications" href="/testingjsf.html"/>
+    </menu>
+
+    <menu ref="modules" />
+
+    <menu ref="reports" />
+  
+  </body>
+</project>
