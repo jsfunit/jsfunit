@@ -35,6 +35,7 @@ import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 /**
+ * The ClientFacade provides a simplified API that wraps HttpUnit.
  *
  * @author Stan Silvert
  */
@@ -44,7 +45,11 @@ public class ClientFacade
    private String namingContainer = "";
    
    /**
-    * Creates a new client interface for testing the JSF application.
+    * Creates a new client interface for testing the JSF application.  The
+    * NamingContainer will be set to the Id of the first form found on the 
+    * returned page.
+    *
+    * This will also start a new HttpSession.
     *
     * @param initialViewId The view Id used to start a client session with JSF.  Example: "/index.jsf"
     *
@@ -52,19 +57,58 @@ public class ClientFacade
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(String initialViewId, String namingContainer) throws MalformedURLException, IOException, SAXException
+   public ClientFacade(String initialViewId) throws MalformedURLException, IOException, SAXException
    {
       WebConversation webConversation = WebConversationFactory.makeWebConversation();
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialViewId);
       this.webResponse = webConversation.getResponse(req);
+      setNamingContainer();
+   }
+   
+   /**
+    * Creates a new client interface for testing the JSF application.  
+    * 
+    * This will also start a brand new HttpSession.
+    *
+    * @param initialViewId The view Id used to start a client session with JSF.  Example: "/index.jsf"
+    * @param namingContainer The NamingContainer that will be used when the page is returned.
+    *
+    * @throws MalformedURLException If the view Id cannot be used to create a URL for the JSF app
+    * @throws IOException If there is an error calling the JSF app
+    * @throws SAXException If the response from the JSF app cannot be parsed as HTML
+    */
+   public ClientFacade(String initialViewId, String namingContainer) throws MalformedURLException, IOException, SAXException
+   {
+      this(initialViewId);
       setNamingContainer(namingContainer);
    }
    
+   /**
+    * Get the HttpUnit WebResponse object from the last request.
+    *
+    * @return The HttpUnit WebResponse.
+    */
    public WebResponse getWebResponse()
    {
       return this.webResponse;
    }
    
+   /**
+    * Get the NamingContainer that this ClientFacade is currently 
+    * workfing on.
+    *
+    * @return The current NamingContainer.
+    */
+   public String getNamingContainer()
+   {
+      return this.namingContainer;
+   }
+   
+   /**
+    * Set the NamingContainer that subsequent API calls will work with.
+    *
+    * @param namingContainer The name of the NamingContainer.
+    */
    public void setNamingContainer(String namingContainer)
    {
       if (namingContainer == null) throw new NullPointerException("namingContainer can not be null");
@@ -78,6 +122,28 @@ public class ClientFacade
       this.namingContainer = namingContainer;
    }
    
+   // Tries to set the NamingContainer based on the first form id
+   private void setNamingContainer() throws SAXException
+   {
+      WebForm[] forms = this.webResponse.getForms();
+      if (forms.length == 0) 
+      {
+         setNamingContainer("");
+         return;
+      }
+      
+      WebForm form = forms[0];
+      String id = form.getID();
+      
+      if (id == null) 
+      {
+         setNamingContainer("");
+         return;
+      }
+      
+      setNamingContainer(id);
+   }
+   
    private String makeComponentPath(String componentId)
    {
       if (this.namingContainer.equals("")) return componentId;
@@ -85,11 +151,26 @@ public class ClientFacade
       return this.namingContainer + NamingContainer.SEPARATOR_CHAR + componentId;
    }
    
+   /**
+    * Return the HttpUnit WebForm with the Id of the current NamingContainer.
+    *
+    * @return The current WebForm.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    */
    public WebForm getForm() throws SAXException
    {
       return getWebResponse().getFormWithID(this.namingContainer);
    }
    
+   /**
+    * Set a parameter value on the current NamingContainer (must be a form).
+    *
+    * @param paramName The name of the parameter.
+    * @param value The value.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    */
    public void setParameter(String paramName, String value) throws SAXException
    {
       getForm().setParameter(makeComponentPath(paramName), value);
@@ -97,16 +178,32 @@ public class ClientFacade
    
    /**
     * Finds the first submit button on the NamingContainer (form) and
-    * submits the form.
+    * submits the form.  If found, this method will set the NamingContainer to the
+    * id of the first form on the new page.
+    *
+    * @throws IOException if there is a problem submitting the form.
+    * @throws SAXException if the response page can not be parsed
     */
    public void submit() throws SAXException, IOException
    {
-      getForm().submit();
+      this.webResponse = getForm().submit();
+      setNamingContainer();
    }
    
+   /**
+    * Finds the named submit button on the NamingContainer (form) and
+    * submits the form.  If found, this method will set the NamingContainer to the
+    * id of the first form on the new page.
+    *
+    * @param componentId The id of the submit button to be "pressed".
+    *
+    * @throws IOException if there is a problem submitting the form.
+    * @throws SAXException if the response page can not be parsed
+    */
    public void submit(String componentId) throws SAXException, IOException
    {
       SubmitButton button = getForm().getSubmitButtonWithID(makeComponentPath(componentId));
-      getForm().submit(button);
+      this.webResponse = getForm().submit(button);
+      setNamingContainer();
    }
 }

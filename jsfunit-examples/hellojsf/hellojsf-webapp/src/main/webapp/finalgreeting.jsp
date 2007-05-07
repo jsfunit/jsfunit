@@ -30,7 +30,9 @@
 <f:view>  
    
       <h:outputText value="Bye #{foo.text}. I enjoyed our chat." id="finalgreeting"/><br/>
-
+      <h:form id="form2">
+         <h:commandButton value="Go Back to Start" action="/index.jsp" id="go_back_button"/>
+      </h:form>
 </f:view>
 
 </HTML>

@@ -32,46 +32,13 @@ import org.jboss.jsfunit.facade.ServerFacade;
 import org.xml.sax.SAXException;
 
 /**
- * JSFUnit is designed to allow complete integration testing and debugging of
- * JSF applications at the JSF level.  In short, it gives you
- * access to the state of the FacesContext and managed beans after every
- * request.  With the FacesContext in hand, you are able to do integration testing
- * of JSF applications at the proper level of abstraction.
- *
- * The typical usage pattern of JSFUnit is to submit a request with httpunit and then
- * examine both the raw HTML output (httpunit tests) and JSF internals (JSFUnit tests).
- * The httpunit-style tests are not shown here.
- *
- * The JSFUnit tests below demonstrate testing:
- * - Navigation:      "Did this input take me to the correct view?"
- * - View Components: "Does the JSF component tree contain the correct components?"
- *                    "Do these components have the expected state?"
- * - Managed Beans:   "What is the state of my managed beans?"  This can include managed beans in
- *                    Seam-defined scopes such as conversation scope.  The tests below only
- *                    demonstrate request scope, but you can find anything reachable with the EL.
- * - Validation:      "Does invalid input generate the proper FacesMessage and error to the user."
- *
- * Tests not shown below:
- * - EL Expressions:     You use the Expression Language (EL) to examine the state of your
- *                       managed beans.  JSFUnit allows you to invoke any EL expression.
- *                       So, it is also possible to use the EL to invoke actions
- *                       from JSFUnit without submitting a request.  This is not deomonstrated
- *                       below, but it is relatively easy to do.
- * - Application Config: Because you have access to FacesContext, you can also call
- *                       FacesContext.getApplication().  From there you can test to make sure
- *                       your application configuration is correct.  This would include tests
- *                       for proper installation of converters, validators, component types,
- *                       locales, and resource bundles.
- *
- * This class tests the HelloJSF application.  This is a simple Hello World
- * application written in JSF with a single managed bean bound to the name "foo" in request scope.
+ * This class tests all of the API's in the ClientFacade and ServerFacade.
  *
  * @author Stan Silvert
  */
 public class FacadeAPITest extends ServletTestCase
 {
    private ClientFacade client;
-   private ServerFacade server;
    
    /**
     * Start a JSFUnit session by getting the /index.faces page.
@@ -80,7 +47,7 @@ public class FacadeAPITest extends ServletTestCase
     */
    public void setUp() throws IOException, SAXException
    {
-      client = new ClientFacade("/index.faces", "form1");
+      this.client = new ClientFacade("/index.faces");
    }
    
    /**
@@ -91,23 +58,21 @@ public class FacadeAPITest extends ServletTestCase
       return new TestSuite( FacadeAPITest.class );
    }
    
+   public void testSetNamingContainerInClientFacadeConstructor() throws IOException, SAXException
+   {
+      this.client = new ClientFacade("/index.faces", "form1");
+      assertEquals("form1", this.client.getNamingContainer());
+   }
+   
    /**
     */
    public void testGetCurrentViewId() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade("form1");
+      ServerFacade server = new ServerFacade();
       
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
       assertEquals(server.getCurrentViewId(), server.getFacesContext().getViewRoot().getViewId());
-
-      // Assert that the prompt component is in the component tree and rendered
-      UIComponent prompt = server.findComponent("prompt");
-      assertTrue(prompt.isRendered());
-      
-      // Assert that the greeting component is in the component tree but not rendered
-      UIComponent greeting = server.findComponent("greeting");
-      assertFalse(greeting.isRendered());
    }
    
    public void testServerFacadeSetNamingContainer() throws IOException, SAXException
@@ -137,6 +102,18 @@ public class FacadeAPITest extends ServletTestCase
       ServerFacade server = new ServerFacade("form1");
       UIComponent greeting = server.findComponent("greeting");
       assertTrue(greeting.isRendered());
+   }
+   
+   /**
+    * Tests ClientFacade.submit().  This can only be called if there is
+    * only one submit button on the form.
+    */
+   public void testNoArgSubmit() throws IOException, SAXException
+   {
+      client.submit("goodbye_button");  // go to finalgreeting page
+      client.submit(); // only one submit button on finalgreeting page
+      ServerFacade server = new ServerFacade();
+      assertEquals("/index.jsp", server.getCurrentViewId());  // test that we are back on the first page
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException
