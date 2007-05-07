@@ -52,11 +52,12 @@ public class ClientFacade
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(String initialViewId) throws MalformedURLException, IOException, SAXException
+   public ClientFacade(String initialViewId, String namingContainer) throws MalformedURLException, IOException, SAXException
    {
       WebConversation webConversation = WebConversationFactory.makeWebConversation();
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialViewId);
       this.webResponse = webConversation.getResponse(req);
+      setNamingContainer(namingContainer);
    }
    
    public WebResponse getWebResponse()
@@ -66,13 +67,22 @@ public class ClientFacade
    
    public void setNamingContainer(String namingContainer)
    {
+      if (namingContainer == null) throw new NullPointerException("namingContainer can not be null");
+      
       if (namingContainer.equals("")) 
       {
          this.namingContainer = "";
          return;
       }
       
-      this.namingContainer = namingContainer + NamingContainer.SEPARATOR_CHAR;
+      this.namingContainer = namingContainer;
+   }
+   
+   private String makeComponentPath(String componentId)
+   {
+      if (this.namingContainer.equals("")) return componentId;
+      
+      return this.namingContainer + NamingContainer.SEPARATOR_CHAR + componentId;
    }
    
    public WebForm getForm() throws SAXException
@@ -82,7 +92,7 @@ public class ClientFacade
    
    public void setParameter(String paramName, String value) throws SAXException
    {
-      getForm().setParameter(this.namingContainer + paramName, value);
+      getForm().setParameter(makeComponentPath(paramName), value);
    }
    
    /**
@@ -96,7 +106,7 @@ public class ClientFacade
    
    public void submit(String componentId) throws SAXException, IOException
    {
-      SubmitButton button = getForm().getSubmitButtonWithID(this.namingContainer + componentId);
+      SubmitButton button = getForm().getSubmitButtonWithID(makeComponentPath(componentId));
       getForm().submit(button);
    }
 }

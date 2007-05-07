@@ -22,26 +22,11 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
-import com.meterware.httpunit.GetMethodWebRequest;
-import com.meterware.httpunit.SubmitButton;
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebForm;
-import com.meterware.httpunit.WebRequest;
-import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Iterator;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.component.ValueHolder;
-import javax.faces.context.FacesContext;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.framework.FacesContextBridge;
-import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.jboss.jsfunit.facade.ClientFacade;
 import org.jboss.jsfunit.facade.ServerFacade;
 import org.xml.sax.SAXException;
@@ -90,10 +75,12 @@ public class FacadeAPITest extends ServletTestCase
    
    /**
     * Start a JSFUnit session by getting the /index.faces page.
+    * Also, set the current naming container to form1 so that any API
+    * call on the client side will refer to the parameters of "form1".
     */
    public void setUp() throws IOException, SAXException
    {
-      client = new ClientFacade("/index.faces");
+      client = new ClientFacade("/index.faces", "form1");
    }
    
    /**
@@ -105,23 +92,21 @@ public class FacadeAPITest extends ServletTestCase
    }
    
    /**
-    * The initial page was called up in the setUp() method.  This shows
-    * some simple JSFUnit tests you can do on that page.
     */
-   public void testInitialPage() throws IOException, SAXException
+   public void testGetCurrentViewId() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade("form1");
       
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
       assertEquals(server.getCurrentViewId(), server.getFacesContext().getViewRoot().getViewId());
 
       // Assert that the prompt component is in the component tree and rendered
-      UIComponent prompt = server.findComponent("form1:prompt");
+      UIComponent prompt = server.findComponent("prompt");
       assertTrue(prompt.isRendered());
       
       // Assert that the greeting component is in the component tree but not rendered
-      UIComponent greeting = server.findComponent("form1:greeting");
+      UIComponent greeting = server.findComponent("greeting");
       assertFalse(greeting.isRendered());
    }
    
@@ -144,112 +129,34 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(prompt.isRendered());
    }
    
-   public void testClientFacadeSetNamingContainer() throws IOException, SAXException
-   {
-      // --------- User interaction ------------------------
-      // Submit invalid data
-      client.setNamingContainer("form1");
-      WebForm form = client.getForm();
-      form.setParameter("form1:input_foo_text", "A"); // input too short - validation error
-      SubmitButton submitButton = form.getSubmitButtonWithID("form1:submit_button");
-      form.submit(submitButton);
-      // ---------------------------------------------------
-
-      FacesContext facesContext = FacesContextBridge.getCurrentInstance();
-      UIViewRoot root = facesContext.getViewRoot();
-
-      // Test that I was returned to the initial view because of input error
-      assertEquals("/index.jsp", root.getViewId());
-      
-      // Should be only one FacesMessge generated for this test.
-      // It is for the component input_foo_text.
-      FacesMessage message = (FacesMessage)facesContext.getMessages().next();
-      assertTrue(message.getDetail().contains("input_foo_text"));
-   }
-   
-   public void testGetWebResponse() throws IOException, SAXException
-   {
-      // --------- User interaction ------------------------
-      // Submit invalid data
-      WebForm form = client.getWebResponse().getFormWithID("form1");
-      form.setParameter("form1:input_foo_text", "A"); // input too short - validation error
-      SubmitButton submitButton = form.getSubmitButtonWithID("form1:submit_button");
-      form.submit(submitButton);
-      // ---------------------------------------------------
-
-      FacesContext facesContext = FacesContextBridge.getCurrentInstance();
-      UIViewRoot root = facesContext.getViewRoot();
-
-      // Test that I was returned to the initial view because of input error
-      assertEquals("/index.jsp", root.getViewId());
-      
-      // Should be only one FacesMessge generated for this test.
-      // It is for the component input_foo_text.
-      FacesMessage message = (FacesMessage)facesContext.getMessages().next();
-      assertTrue(message.getDetail().contains("input_foo_text"));
-   }
-   
    public void testSetParamAndSubmit() throws IOException, SAXException
    {
-      // --------- User interaction ------------------------
-      // Submit invalid data
-      client.setNamingContainer("form1");
       client.setParameter("input_foo_text", "Stan"); 
-      client.submit();
+      client.submit("submit_button");
       
       ServerFacade server = new ServerFacade("form1");
       UIComponent greeting = server.findComponent("greeting");
       assertTrue(greeting.isRendered());
    }
    
+   public void testServerSideComponentValue() throws IOException, SAXException
+   {
+      testSetParamAndSubmit(); // put "Stan" into the input field
+
+      // test the greeting component
+      ServerFacade server = new ServerFacade("form1");
+      assertEquals("Hello Stan", server.getComponentValue("greeting"));
+   }
+   
    /**
     * This demonstrates how to test managed beans.
     */
-   public void testValidInput() throws IOException, SAXException
+   public void testManagedBeanValue() throws IOException, SAXException
    {
-      // --------- User interaction ------------------------
-      // Submit good data
-      WebForm form = client.getWebResponse().getFormWithID("form1");
-      form.setParameter("form1:input_foo_text", "Stan");
-      SubmitButton submitButton = form.getSubmitButtonWithID("form1:submit_button");
-      form.submit(submitButton);
-      // ---------------------------------------------------
+      testSetParamAndSubmit(); // put "Stan" into the input field
 
-      FacesContext facesContext = FacesContextBridge.getCurrentInstance();
-      UIViewRoot root = facesContext.getViewRoot();
-
-      // test the greeting component
-      UIComponent greeting = root.findComponent("form1:greeting");
-      assertTrue(greeting.isRendered());
-      assertEquals("Hello Stan", ((ValueHolder)greeting).getValue());
-
-      // Test the backing bean.  Since I am in-container, I can test any
-      // managed bean in any scope - even Seam scopes such as Conversation.
-      assertEquals("Stan", (String)facesContext.getApplication()
-                                               .createValueBinding("#{foo.text}")
-                                               .getValue(facesContext));
-   }
-   
-   public void testGoodbyeButton() throws IOException, SAXException
-   {
-      testValidInput(); // put "Stan" into the input field
-      
-      // --------- User interaction ------------------------
-      // User presses "Goodbye" button.
-      WebForm form = client.getWebResponse().getFormWithID("form1");
-      SubmitButton goodbyeButton = form.getSubmitButtonWithID("form1:goodbye_button");
-      form.submit(goodbyeButton);
-      // ---------------------------------------------------
-
-      FacesContext facesContext = FacesContextBridge.getCurrentInstance();
-      UIViewRoot root = facesContext.getViewRoot();
-
-      // Test navigation to a new view
-      assertEquals("/finalgreeting.jsp", root.getViewId());
-
-      // Test the greeting
-      UIComponent finalGreeting = root.findComponent("finalgreeting");
-      assertEquals("Bye Stan. I enjoyed our chat.", ((ValueHolder)finalGreeting).getValue());
+      ServerFacade server = new ServerFacade();
+      assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
    }
    
 }

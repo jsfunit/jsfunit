@@ -24,6 +24,7 @@ package org.jboss.jsfunit.facade;
 
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
+import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 
@@ -49,13 +50,22 @@ public class ServerFacade
    
    public void setNamingContainer(String namingContainer)
    {
+      if (namingContainer == null) throw new NullPointerException("namingContainer can not be null");
+      
       if (namingContainer.equals("")) 
       {
          this.namingContainer = "";
          return;
       }
       
-      this.namingContainer = namingContainer + NamingContainer.SEPARATOR_CHAR;
+      this.namingContainer = namingContainer;
+   }
+   
+   private String makeComponentPath(String componentId)
+   {
+      if (this.namingContainer.equals("")) return componentId;
+      
+      return this.namingContainer + NamingContainer.SEPARATOR_CHAR + componentId;
    }
    
    public String getCurrentViewId()
@@ -68,8 +78,22 @@ public class ServerFacade
       return FacesContextBridge.getCurrentInstance();
    }
    
-   public UIComponent findComponent(String componentPath)
+   public UIComponent findComponent(String componentId)
    {
-      return getFacesContext().getViewRoot().findComponent(this.namingContainer + componentPath);
+      return getFacesContext().getViewRoot().findComponent(makeComponentPath(componentId));
+   }
+   
+   public Object getComponentValue(String componentId)
+   {
+      UIComponent component = findComponent(componentId);
+      return ((ValueHolder)component).getValue();
+   }
+   
+   public Object getManagedBeanValue(String elExpression)
+   {
+      FacesContext facesContext = getFacesContext();
+      return facesContext.getApplication()
+                         .createValueBinding(elExpression)
+                         .getValue(facesContext);
    }
 }
