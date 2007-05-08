@@ -48,19 +48,19 @@ public class ClientFacade
     * Creates a new client interface for testing the JSF application.  The
     * NamingContainer will be set to the Id of the first form found on the 
     * returned page.
-    *
+    * 
     * This will also start a new HttpSession.
-    *
-    * @param initialViewId The view Id used to start a client session with JSF.  Example: "/index.jsf"
-    *
+    * 
+    * 
+    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
     * @throws MalformedURLException If the view Id cannot be used to create a URL for the JSF app
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(String initialViewId) throws MalformedURLException, IOException, SAXException
+   public ClientFacade(String initialPage) throws MalformedURLException, IOException, SAXException
    {
       WebConversation webConversation = WebConversationFactory.makeWebConversation();
-      WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialViewId);
+      WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
       this.webResponse = webConversation.getResponse(req);
       setNamingContainer();
    }
@@ -69,17 +69,17 @@ public class ClientFacade
     * Creates a new client interface for testing the JSF application.  
     * 
     * This will also start a brand new HttpSession.
-    *
-    * @param initialViewId The view Id used to start a client session with JSF.  Example: "/index.jsf"
+    * 
+    * 
+    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
     * @param namingContainer The NamingContainer that will be used when the page is returned.
-    *
     * @throws MalformedURLException If the view Id cannot be used to create a URL for the JSF app
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(String initialViewId, String namingContainer) throws MalformedURLException, IOException, SAXException
+   public ClientFacade(String initialPage, String namingContainer) throws MalformedURLException, IOException, SAXException
    {
-      this(initialViewId);
+      this(initialPage);
       setNamingContainer(namingContainer);
    }
    

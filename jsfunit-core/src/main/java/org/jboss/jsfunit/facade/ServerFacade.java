@@ -129,7 +129,7 @@ public class ServerFacade
     * will start searching for the component inside the current NamingContainer.
     * Note that the found component must implement ValueHolder.
     *
-    * @param The component Id to find in the JSF component tree.
+    * @param componentId The component Id to find in the JSF component tree.
     *
     * @return The value contained in the component.
     */

@@ -3,7 +3,7 @@
   
   <bannerLeft>
     <name>JSFUnit</name>
-    <href>http://www.jsf.org</href>
+    <href>http://www.jsfunit.org</href>
   </bannerLeft>
   
   <bannerRight>
@@ -26,10 +26,6 @@
       <item name="Community" href="http://labs.jboss.com/community"/>
     </links>
 
-    <head>
-      <meta name="faq" content="jsfunit"/>
-    </head>
-
     <menu name="About JSFUnit" inherit="top">
       <item name="What is JSFUnit" href="/what-is-jsfunit.html"/>
       <item name="Quick Start" href="/quickstart.html"/>
@@ -37,7 +33,7 @@
     </menu>
 
     <menu ref="modules" />
-
+  
     <menu ref="reports" />
   
   </body>
