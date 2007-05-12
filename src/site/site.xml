@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="JSFUnit">
-  
+<!-- <project name="JSFUnit"> -->
+<project>
+  <!--
   <bannerLeft>
     <name>JSFUnit</name>
     <href>http://www.jsfunit.org</href>
@@ -19,6 +20,7 @@
   <publishDate format="dd MMM yyyy" />
   
   <body>
+
     <links>
       <item name="Home" href="http://labs.jboss.com"/>
       <item name="Resources" href="http://labs.jboss.com/resources"/>
@@ -37,4 +39,5 @@
     <menu ref="reports" />
   
   </body>
+  -->
 </project>

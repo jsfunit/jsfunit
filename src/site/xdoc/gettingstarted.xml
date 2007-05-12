@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation Maven//EN" "http://maven.apache.org/dtd/maven-xdoc.dtd">
+      
+<document>
+
+<body>
+
+<section name="First, always follow the JSFUnit Golden Rule: Use Component ID's">
+    
+    <p>
+        For every JSF component on a page, you have the option of providing a
+component ID. If you don't provide one, JSF will create one for you.
+However, if you let JSF create the ID, you will have a hard time
+referencing the component in your tests. So at least use an ID for any
+component that you might want to test.
+    </p>
+    <p>
+    For Example:
+    </p>
+    <p>
+      <source xml:space="preserve">&lt;h:inputText value="#{foo.text}" id="input_foo_text"/&gt;</source>
+    </p>
+</section>
+
+<section name="Create a JSP or Facelets page">
+  <source xml:space="preserve">
+ &lt;f:view&gt;  
+   &lt;h:form id="form1"&gt;    
+      
+      &lt;h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/&gt;
+      &lt;h:outputText value="Hello #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/&gt;
+      
+      &lt;h:inputText value="#{foo.text}" id="input_foo_text"/&gt;
+      &lt;h:message for="input_foo_text" styleClass="errorMessage"/&gt;
+      &lt;br/&gt;
+      &lt;h:commandButton value="Submit" action="/index.jsp" id="submit_button"/&gt;
+      &lt;h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/&gt;
+
+   &lt;/h:form&gt;
+&lt;/f:view&gt;
+  </source>
+</section>
+<section name="Create a JUnit test using the JSFUnit Facade API">
+    
+    <source xml:space="preserve">
+public class JSFUnitTest extends junit.framework.TestCase
+{
+   public static Test suite()
+   {
+      return new TestSuite( JSFUnitTest.class );
+   }
+   
+   public void testInitialPage() throws IOException, SAXException
+   {
+      // Send an HTTP request for the initial page
+      ClientFacade client = new ClientFacade("/index.faces");
+      
+      // A ServerFacade helps you use the JSF API
+      ServerFacade server = new ServerFacade("form1");
+
+      // Test navigation to initial viewID
+      assertEquals("/index.jsp", server.getCurrentViewId());
+
+      // Assert that the prompt component is in the component tree and rendered
+      UIComponent prompt = server.findComponent("prompt");
+      assertTrue(prompt.isRendered());
+
+      // Test a managed bean
+      assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
+   }
+}
+    </source>
+</section>
+
+
+<section name="Add this to your web.xml">
+	<source xml:space="preserve">
+&lt;servlet&gt;
+      &lt;servlet-name&gt;JSFUnitServlet&lt;/servlet-name&gt;
+      &lt;servlet-class&gt;org.jboss.jsfunit.framework.JSFUnitServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;           
+&lt;servlet-mapping&gt;
+      &lt;servlet-name&gt;JSFUnitServlet&lt;/servlet-name&gt;
+      &lt;url-pattern&gt;/jsfunit&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;  
+	</source>
+</section>
+
+<section name="Package these jars in your WEB-INF/lib">
+<p>
+First, you will need the JSFUnit jar.  Since JSFunit uses JUnit, Cactus, and 
+HttpUnit for much of its infrastructue, you will need at least the minimum jars
+for these frameworks as well.  Don't worry, you won't need to pollute your
+project with these dependencies.  JSFUnit documentation shows how to use Ant 
+or Maven to only include these jars when you are testsing.
+</p>
+<p>
+  Here are the minimum jars you will need in your WEB-INF/lib.
+	<ul>
+		<li>jsfunit.jar</li>
+                <li>aspectjrt-1.2.1.jar</li>
+                <li>cactus-13-1.7.2.jar</li>
+                <li>httpunit-1.6.1.jar</li>
+                <li>junit-3.8.1.jar</li>
+                <li>nekohtml-0.9.1.jar</li>
+	</ul>
+</p>
+</section>
+
+<section name="Include cactus-report.xsl in your WAR">
+    <p>
+        You can get cactus-report.xsl <a href="http://jakarta.apache.org/cactus/misc/cactus-report.xsl">here</a>.
+    </p>
+</section>
+
+<section name="Deploy your application and run the tests.">
+
+<p>
+  Deploy your JSF application to your favorite server.  Then, type something like the following URL into your browser to run the tests:
+  <source xml:space="preserve">
+    http://localhost:8080/myjsfapp/jsfunit?suite=com.foo.JSFUnitTest
+  </source>
+</p>
+
+<p>
+  The JSFUnitServlet will run your tests with JUnit and display the results in your browser.
+</p>
+</section>
+
+</body>
+</document>

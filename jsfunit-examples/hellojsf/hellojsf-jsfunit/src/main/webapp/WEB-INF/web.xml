@@ -1,18 +1,18 @@
-<?xml version="1.0"?>
-<!DOCTYPE web-app PUBLIC
-   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-   "http://java.sun.com/dtd/web-app_2_3.dtd">
-
-<web-app>    
-
-   <listener>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <listener>
      <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
    </listener>
 
    <servlet>
       <servlet-name>Faces Servlet</servlet-name>
       <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-      <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>testMode</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
    </servlet>   
 
    <servlet>

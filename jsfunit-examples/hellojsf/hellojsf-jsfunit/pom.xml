@@ -116,6 +116,15 @@
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <dependentWarExcludes>WEB-INF/web.xml</dependentWarExcludes>   
+          <dependentWarExcludes>index.jsp</dependentWarExcludes>   
+          <webResources>
+            <resource>
+              <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/hellojsf</directory>
+              <includes>
+                <include>**/*.java</include>
+              </includes>
+            </resource>
+          </webResources>
         </configuration>
       </plugin>
       <plugin>
