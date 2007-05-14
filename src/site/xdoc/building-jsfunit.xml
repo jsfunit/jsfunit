@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation Maven//EN" "http://maven.apache.org/dtd/maven-xdoc.dtd">
+      
+<document>
+
+<body>
+
+<section name="Building JSFUnit with Maven 2">
+    
+    <p>
+        The JSFUnit project uses <a href="http://maven.apache.org/">Maven 2</a> for its build.  This document explains
+        how to build JSFUnit Core, build the examples for your servlet container, and run the JSFUnit tests against
+        the examples.
+    </p>
+    <p>
+      First, you will need to checkout the source from SVN.  Instructions for that are <a href="source-repository.html">here.</a>
+   </p>
+</section>
+
+<section name="Building JSFUnit Core">
+  <p>
+    To build JSFUnit Core, just run Maven from the root of the project:
+  
+  <source xml:space="preserve">
+  $ mvn
+  </source>
+  </p>
+  <p>
+    JSFUnit Core runs on any servlet platform that supports JSF, but the example application needs to be packaged specifically for each platform target.
+  </p>
+</section>
+<section name="For JBoss 4.0.3, 4.0.4, and 4.0.5 use the jboss4.0 profile">
+  <ol>
+    <li>$ mvn -Pjboss4.0</li>
+    <li>Manually deploy jsfunit-examples/hellojsf/hellojsf-jsfunit/target/hellojsf-jsfunit.war</li>
+    <li>Hit this URL:</li>
+  </ol>
+  <source xml:space="preserve">
+http://localhost:8080/hellojsf-jsfunit/
+  </source>
+</section>
+<section name="To automatically run the JSFUnit example tests against JBoss 4.0.x">
+  <p>
+    The example tests can be run as part of the Maven build process.  The container will be
+    automatically started and stopped using the Maven Cargo plugin.
+  </p>
+  <ol>
+    <li>Set JBOSS_HOME (i.e. JBOSS_HOME=/jboss-4.0.5.GA )</li>
+    <li>$ mvn -Pjboss4.0,test</li>
+  </ol>
+</section>
+<section name="For Tomcat 5.x use the tomcat5x profile">
+  <ol>
+    <li>$ mvn -Ptomcat5x</li>
+    <li>Manually deploy jsfunit-examples/hellojsf/hellojsf-jsfunit/target/hellojsf-jsfunit.war</li>
+    <li>Hit this URL:</li>
+  </ol>
+  <source xml:space="preserve">
+http://localhost:8080/hellojsf-jsfunit/
+  </source>
+</section>
+<section name="To automatically run the JSFUnit example tests against Tomcat 5.x">
+  <p>
+    The example tests can be run as part of the Maven build process.  The container will be
+    automatically started and stopped using the Maven Cargo plugin.
+  </p>
+  <ol>
+    <li>Set CATALINA_HOME (i.e. CATALINA_HOME=/apache-tomcat-5.5.23 )</li>
+    <li>$ mvn -Ptomcat5x,test</li>
+  </ol>
+</section>
+<section name="For JEE5 servers such as JBoss 4.2 and Glassfish, use the jee5 profile">
+  <p>
+    The Cargo plugin doesn't yet support any JEE5 containers.  So manual testing is your only choice.
+  </p>
+  <p>
+  <ol>
+    <li>$ mvn -Pjee5</li>
+    <li>Manually deploy jsfunit-examples/hellojsf/hellojsf-jsfunit/target/hellojsf-jsfunit.war</li>
+    <li>Hit this URL:</li>
+  </ol>
+  <source xml:space="preserve">
+http://localhost:8080/hellojsf-jsfunit/
+  </source>
+  </p>
+</section>
+<section name="To automatically run the JSFUnit example tests against Jetty">
+  <p>
+    The example tests can be run as part of the Maven build process.  The container will be
+    automatically started and stopped using the Maven Cargo plugin.
+  </p>
+  <p>
+    For Jetty, you don't need a container-specific profile.  Jetty is the default container for Cargo.  
+    So if you just run the test profile, Cargo will automatically download Jetty and automatically run the tests.
+    <source xml:space="preserve">
+      $ mvn -Ptest
+    </source>
+  </p>
+</section>
+<section name="Other servlet containers and application servers">
+  <p>
+    For all other servers, use no profile, then manually deploy.
+  </p>
+  <p>
+    <ol>
+      <li>$ mvn</li>
+      <li>Manually deploy jsfunit-examples/hellojsf/hellojsf-jsfunit/target/hellojsf-jsfunit.war</li>
+      <li>Hit this URL:</li>
+    </ol>
+    <source xml:space="preserve">
+http://localhost:8080/hellojsf-jsfunit/
+    </source>
+  </p>
+</section>
+</body>
+</document>
