@@ -28,14 +28,14 @@ component that you might want to test.
  &lt;f:view&gt;  
    &lt;h:form id="form1"&gt;    
       
-      &lt;h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/&gt;
-      &lt;h:outputText value="Hello #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/&gt;
+     &lt;h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/&gt;
+     &lt;h:outputText value="Hello #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/&gt;
       
-      &lt;h:inputText value="#{foo.text}" id="input_foo_text"/&gt;
-      &lt;h:message for="input_foo_text" styleClass="errorMessage"/&gt;
-      &lt;br/&gt;
-      &lt;h:commandButton value="Submit" action="/index.jsp" id="submit_button"/&gt;
-      &lt;h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/&gt;
+     &lt;h:inputText value="#{foo.text}" id="input_foo_text"/&gt;
+     &lt;h:message for="input_foo_text" styleClass="errorMessage"/&gt;
+     &lt;br/&gt;
+     &lt;h:commandButton value="Submit" action="/index.jsp" id="submit_button"/&gt;
+     &lt;h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/&gt;
 
    &lt;/h:form&gt;
 &lt;/f:view&gt;
@@ -57,6 +57,8 @@ public class JSFUnitTest extends junit.framework.TestCase
       ClientFacade client = new ClientFacade("/index.faces");
       
       // A ServerFacade helps you use the JSF API
+      // You pass in "form1" to tell the facade that you will be referencing  
+      // components from the form &lt;h:form id="form1"&gt;
       ServerFacade server = new ServerFacade("form1");
 
       // Test navigation to initial viewID
@@ -98,17 +100,17 @@ or Maven to only include these jars when you are testsing.
 <p>
   Here are the minimum jars you will need in your WEB-INF/lib.
 	<ul>
-		<li>jsfunit.jar</li>
-                <li>aspectjrt-1.2.1.jar</li>
-                <li>cactus-13-1.7.2.jar</li>
-                <li>httpunit-1.6.1.jar</li>
-                <li>junit-3.8.1.jar</li>
-                <li>nekohtml-0.9.1.jar</li>
+		<li><a href="prealpha/0.1/jsfunit-core-1.0-SNAPSHOT.jar">jsfunit-core-1.0-SNAPSHOT.jar (pre-alpha)</a></li>
+                <li><a href="http://repo1.maven.org/maven2/aspectj/aspectjrt/1.2.1/aspectjrt-1.2.1.jar">aspectjrt-1.2.1.jar</a></li>
+                <li><a href="http://repo1.maven.org/maven2/cactus/cactus/13-1.7.1/cactus-13-1.7.1.jar">cactus-13-1.7.1.jar</a></li>
+                <li><a href="http://repo1.maven.org/maven2/httpunit/httpunit/1.6.1/httpunit-1.6.1.jar">httpunit-1.6.1.jar</a></li>
+                <li><a href="http://repo1.maven.org/maven2/junit/junit/3.8.1/junit-3.8.1.jar">junit-3.8.1.jar</a></li>
+                <li><a href="http://repo1.maven.org/maven2/nekohtml/nekohtml/0.9.1/nekohtml-0.9.1.jar">nekohtml-0.9.1.jar</a></li>
 	</ul>
 </p>
 </section>
 
-<section name="Include cactus-report.xsl in your WAR">
+<section name="Include cactus-report.xsl in the root of your WAR">
     <p>
         You can get cactus-report.xsl <a href="http://jakarta.apache.org/cactus/misc/cactus-report.xsl">here</a>.
     </p>
@@ -119,13 +121,35 @@ or Maven to only include these jars when you are testsing.
 <p>
   Deploy your JSF application to your favorite server.  Then, type something like the following URL into your browser to run the tests:
   <source xml:space="preserve">
-    http://localhost:8080/myjsfapp/jsfunit?suite=com.foo.JSFUnitTest
+  http://localhost:8080/myjsfapp/jsfunit?suite=com.foo.JSFUnitTest&amp;xsl=cactus-report.xsl
   </source>
 </p>
 
 <p>
-  The JSFUnitServlet will run your tests with JUnit and display the results in your browser.
+  The JSFUnitServlet will run your tests with JUnit and display the results in your browser.  When you are done,
+  the output will look something like this:
 </p>
+<p>
+  <img src="http://jakarta.apache.org/cactus/images/servlettestrunner_html.jpg"/>
+</p>
+</section>
+
+<section name="Running JSFUnit tests as part of your build.">
+  <p>
+    After you see how to run JSFunit tests from a browser, you will probably want to integrate JSFUnit as part of your
+    build and part of a true Test-Driven Development process.  We will be documenting this soon, but you can probably
+    figure it out on your own if you look at the Cactus documentation 
+    <a href="http://jakarta.apache.org/cactus/integration/manual/index.html">here.</a>
+  </p>
+  <p>
+    Since the JSFUnit infrastructure is based on <a href="http://jakarta.apache.org/cactus/">Apache Cactus</a>, you set 
+    up your tests exactly the same way as Cactus.  The only difference is that you should use the 
+    org.jboss.jsfunit.framework.JSFUnitCactusRedirector instead of org.apache.cactus.server.ServletTestRedirector.
+  </p>
+  <p>
+    If the above is too complicated, there are various <a href="http://jakarta.apache.org/cactus/integration/index.html">cactify tools</a>
+    that help you set up cactus.  These tools have not yet been tested with JSFUnit.
+  </p>
 </section>
 
 </body>

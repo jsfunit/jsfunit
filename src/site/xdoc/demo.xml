@@ -6,19 +6,19 @@
 
 <body>
 
-<section name="JSFUnit Demo WARs">
+<section name="JSFUnit Demo WAR">
     
     <p>
         The JSFUnit Demo shows a simple "Hello JSF" application and demonstrates testing it with JSFUnit.
-        Because JSF is initialized in a slightly different way in different containers.  We have three versions
+        Because JSF is initialized in a slightly different way in different containers, we have three versions
         of the demo.
     </p>
     <p>
-      Download the version of the Hello JSF application for your servlet container:
+      Download the version of the demo war for your servlet container:
 	<ul>
-		<li><a href="/demo/jee5/hellojsf-jsfunit.war">hellojsf-jsfunit.war for JEE5 containers such as JBoss 4.2, JBoss 5.0, and Glassfish</a></li>
-                <li><a href="/demo/jboss4.0/hellojsf-jsfunit.war">hellojsf-jsfunit.war for JBoss 4.0.3, 4.0.4, and 4.0.5</a></li>
-                <li><a href="/demo/tomcat5x/hellojsf-jsfunit.war">hellojsf-jsfunit.war for all others such as Tomcat 5.x</a></li>
+		<li><a href="demo/jee5/hellojsf-jsfunit.war">JEE5 servers like JBoss 4.2, JBoss 5.0, and Glassfish</a></li>
+                <li><a href="demo/jboss4.0/hellojsf-jsfunit.war">JBoss 4.0.3, 4.0.4, and 4.0.5</a></li>
+                <li><a href="demo/tomcat5x/hellojsf-jsfunit.war">All others such as Tomcat 5.x</a></li>
 	</ul>
    </p>
 </section>
