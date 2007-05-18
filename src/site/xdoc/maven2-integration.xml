@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation Maven//EN" "http://maven.apache.org/dtd/maven-xdoc.dtd">
+      
+<document>
+
+  <properties>  
+    <title>JSFUnit - Maven 2 Integration</title>  
+  </properties>  
+  
+  <meta name="keyword" content="JSFUnit, JSF, JavaServer, Faces, JUnit"/>
+  
+<body>
+
+<section name="Using JSFUnit with Maven 2">
+    
+    <p>
+      This guide shows how to set up automated testing with Maven 2.  The goal
+      is to run your JSFUnit tests during the build and record the results.  
+    </p>
+    <p>
+        JSFUnit itself is built using Maven 2.  Also, JSFUnit is tested with JSFUnit.
+        Unfortunately, Cactus does not yet have a "cactify" plugin for Maven 2.
+        So, to automate JSFUnit testing with Maven 2, we had come up with a
+        way to build the test WAR, deploy it on a container, and run the unit 
+        tests during a build.
+    </p>
+    <p>
+      In the following sections, we show how this was done for the JSFUnit 
+      project.  You can use the JSFUnit project as a template to set up your
+      own automated testing for Test Driven Development.
+   </p>
+   <p>
+     You can <a href="source-repository.html">check out the JSFUnit build</a>
+     if you would like to see the full solution.
+   </p>
+</section>
+<section name="Let your test classes extend ServletTestCase">
+  <p>
+    In the <a href="gettingstarted.html">Getting Started Guide</a>, it shows
+    that your test classes extend <b>junit.framework.TestCase</b>.  That works fine
+    if you will only run your test manually from the browser.  However, if you
+    want to run your tests as part of the build then you will need to use the 
+    JSFUnit Cactus Redirector.  So, your JUnit tests classes should extend 
+    <b>org.apache.cactus.ServletTestCase</b> instead.
+  </p>
+</section>
+<section name="Create a Seperate Test Module">
+  <p>
+    If you look at the Maven directory structure for the Hello JSF application
+    you will see that we have two modules, <b>hellojsf-jsfunit</b> and <b>hellojsf-webapp</b>:
+  
+  <source xml:space="preserve">
+<![CDATA[
+jsfunit
+`-- jsfunit-examples
+    |-- pom.xml
+    `-- hellojsf
+        |-- pom.xml
+        |-- hellojsf-jsfunit
+        `-- hellojsf-webapp]]>
+  </source>
+  </p>
+  <p>
+    <b>hellojsf-webapp</b> contains the production version of the application.  That is,
+    it contains no JSFUnit tests or supporting jars.
+  </p>
+  <p>
+    <b>hellojsf-jsfunit</b> contains the additional artifacts needed to run JSFUnit tests
+    against the WAR.  Most of this is described on the Cactus web site 
+    <a href="http://jakarta.apache.org/cactus/integration/manual/index.html">here</a>.
+    <b>The only configuration difference between JSFUnit and Cactus is that with JSFUnit 
+    you will use different servlet classes in web.xml.</b>
+  </p>
+  
+</section>
+
+<section name="Add test artifacts to the JSFUnit WAR">
+  <p>
+    In this section, we show how to use the Maven WAR plugin to merge the WARs so
+    that the <b>hellojsf-webapp</b> target will contain the production WAR and the
+    <b>hellojsf-jsfunit</b> target will contain the test WAR.
+  </p>
+  <p>
+    <b>hellojsf-webapp</b> is set up like any other production web app.
+  </p>
+  <p>
+    <b>hellojsf-jsfunit</b> is where we will build our test WAR.  To do this,
+    we need to add test artifacts and then let Maven merge them with the WAR
+    from <b>hellojsf-webapp</b>.
+  </p>
+  <p>
+    The test classes go in src/test as usual:
+<source xml:space="preserve">
+<![CDATA[
+hellojsf-jsfunit
+|-- pom.xml
+`-- src
+    |-- main
+    `-- test
+        `-- java
+            `-- org
+                `-- jboss
+                     `-- example
+                         `-- hellojsf
+                             `-- HelloJSFIntegrationTest.java]]>
+  </source>
+  </p>
+  <p>
+    For JSFUnit tests, we need the test classes to be bundled with the WAR so
+    that they can run in the container.  So, we add this to pom.xml:
+<source xml:space="preserve">
+<![CDATA[
+<build>
+    <sourceDirectory>src/test/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+...
+</build>
+]]>
+</source>
+  </p>
+  <p>
+    The next artifact we need to add is cactus.properties.  cactus.properties is
+    docmented <a href="http://jakarta.apache.org/cactus/integration/manual/howto_config.html">here</a>.
+    Like our test classes, cactus.properties will need to be bundled with the WAR.  So, we put cactus.properties
+    in src/test/resources and add this to pom.xml:
+<source xml:space="preserve">
+<![CDATA[
+<build>
+    <resources>
+      <resource>
+        <directory>src/test/resources</directory>
+      </resource>
+    </resources>
+...
+</build>
+]]>
+</source>
+  Our cactus.properties file looks like this:
+  <source xml:space="preserve">
+cactus.contextURL=http://localhost:8080/hellojsf-jsfunit
+cactus.servletRedirectorName=JSFUnitRedirector
+  </source>
+  </p>
+  <p>
+    The last test artifacts you will need are the dependencies:
+<source xml:space="preserve">
+<![CDATA[
+<dependencies>
+    <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jsfunit-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>hellojsf-webapp</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>      
+]]>
+</source>
+  Note that the last dependency is our production WAR, <b>hellojsf-webapp</b>.
+  </p>
+</section>
+
+<section name="Create a web.xml for the test WAR">
+  <p>
+    For the test WAR, we need to add one or two servlet instances and their
+    associated mappings.  So, we need the final web.xml to contain all the 
+    mappings for the production app, plus the two extra mappings.  There are two
+    approaches to solving this problem.  One is to create an 
+    <a href="http://cargo.codehaus.org/Merging+WAR+files">uberwar</a> using the
+    Cargo plugin.
+  </p>
+  <p>
+    The approach we took in JSFUnit is to simply have a second version of the web.xml
+    that we tell Maven to use when the two WARs are merged.  While this violates the
+    <a href="http://en.wikipedia.org/wiki/DRY_code">DRY code principal</a>, it seems
+    a fair trade-off in this case.
+  </p>
+  <p>
+    Our web.xml under hellojsf-jsfunit/src/main/webapp/WEB-INF contains these mappings
+    that you can use verbatim in your own test WAR:
+<source xml:space="preserve">
+<![CDATA[
+<servlet>
+  <servlet-name>JSFUnitRedirector</servlet-name>
+  <servlet-class>org.jboss.jsfunit.framework.JSFUnitCactusRedirector</servlet-class>
+</servlet>   
+
+<servlet>
+  <servlet-name>JSFUnitServlet</servlet-name>
+  <servlet-class>org.jboss.jsfunit.framework.JSFUnitServlet</servlet-class>
+</servlet> 
+
+<servlet-mapping>
+  <servlet-name>JSFUnitRedirector</servlet-name>
+  <url-pattern>/JSFUnitRedirector</url-pattern>
+</servlet-mapping>  
+
+<servlet-mapping>
+  <servlet-name>JSFUnitServlet</servlet-name>
+  <url-pattern>/jsfunit</url-pattern>
+</servlet-mapping>]]>
+  </source>
+  </p>
+  <p>
+    To make sure that the web.xml for your test WAR is not overwritten by the
+    production WAR, you will need to add this to your plugins:
+<source xml:space="preserve">
+<![CDATA[
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-war-plugin</artifactId>
+  <configuration>
+    <dependentWarExcludes>WEB-INF/web.xml</dependentWarExcludes>   
+  </configuration>
+</plugin>]]>
+</source>
+Note that in the pom.xml for <b>hellojsf-jsfunit</b> we have some extra declarations
+under &lt;configuration&gt; that are not shown above.  These are for demo purposes
+only.  You should only need the plugin configuration shown for your test application.
+  </p>
+</section>
+
+</body>
+</document>
