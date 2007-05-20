@@ -93,6 +93,12 @@ public class WebConversationFactory
    {
       WebConversation wc = new WebConversation();
       HttpSession session = getSessionFromThreadLocal();
+      
+      if (session == null)
+      {
+         throw new IllegalStateException("Can not find HttpSession.  Perhaps JSFUnitFilter has not run?");
+      }
+      
       clearSession(session);
       wc.putCookie("JSESSIONID", session.getId());
       wc.putCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);

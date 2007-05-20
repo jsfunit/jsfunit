@@ -5,36 +5,49 @@
 
 <web-app>    
 
+   <filter>
+     <filter-name>JSFUnitFilter</filter-name>
+     <filter-class>org.jboss.jsfunit.framework.JSFUnitFilter</filter-class>
+   </filter>
+
+   <filter-mapping>
+     <filter-name>JSFUnitFilter</filter-name>
+     <servlet-name>ServletTestRunner</servlet-name>
+   </filter-mapping>	
+   
+   <filter-mapping>
+     <filter-name>JSFUnitFilter</filter-name>
+     <servlet-name>ServletRedirector</servlet-name>
+   </filter-mapping>   
+   
    <servlet>
-      <servlet-name>Faces Servlet</servlet-name>
-      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-      <load-on-startup>1</load-on-startup>
+     <servlet-name>Faces Servlet</servlet-name>
+     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
    </servlet>   
+   
+   <servlet-mapping>
+     <servlet-name>Faces Servlet</servlet-name>
+     <url-pattern>*.faces</url-pattern>
+   </servlet-mapping>  
 
    <servlet>
-      <servlet-name>JSFUnitRedirector</servlet-name>
-      <servlet-class>org.jboss.jsfunit.framework.JSFUnitCactusRedirector</servlet-class>
-      <load-on-startup>1</load-on-startup>
-   </servlet>  
-
+     <servlet-name>ServletRedirector</servlet-name>
+     <servlet-class>org.apache.cactus.server.ServletTestRedirector</servlet-class>
+   </servlet>
+   
    <servlet>
-      <servlet-name>JSFUnitServlet</servlet-name>
+      <servlet-name>ServletTestRunner</servlet-name>
       <servlet-class>org.jboss.jsfunit.framework.JSFUnitServlet</servlet-class>
       <load-on-startup>1</load-on-startup>
    </servlet> 
 
    <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
-      <url-pattern>*.faces</url-pattern>
-   </servlet-mapping>  
-
+     <servlet-name>ServletRedirector</servlet-name>
+     <url-pattern>/ServletRedirector</url-pattern>
+   </servlet-mapping> 
+   
    <servlet-mapping>
-      <servlet-name>JSFUnitRedirector</servlet-name>
-      <url-pattern>/JSFUnitRedirector</url-pattern>
-   </servlet-mapping>  
-
-   <servlet-mapping>
-      <servlet-name>JSFUnitServlet</servlet-name>
+      <servlet-name>ServletTestRunner</servlet-name>
       <url-pattern>/jsfunit</url-pattern>
    </servlet-mapping> 
 
