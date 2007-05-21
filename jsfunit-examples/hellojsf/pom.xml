@@ -15,6 +15,7 @@
   <modules>    
     <module>hellojsf-webapp</module>
     <module>hellojsf-jsfunit</module>
+    <module>hellojsf-jsfunit-pathmapped</module>
   </modules>
     
 </project>

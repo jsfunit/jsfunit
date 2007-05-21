@@ -139,7 +139,6 @@ hellojsf-jsfunit
   Our cactus.properties file looks like this:
   <source xml:space="preserve">
 cactus.contextURL=http://localhost:8080/hellojsf-jsfunit
-cactus.servletRedirectorName=JSFUnitRedirector
   </source>
   </p>
   <p>
@@ -178,10 +177,11 @@ cactus.servletRedirectorName=JSFUnitRedirector
 
 <section name="Create a web.xml for the test WAR">
   <p>
-    For the test WAR, we need to add one or two servlet instances and their
-    associated mappings.  So, we need the final web.xml to contain all the 
-    mappings for the production app, plus the two extra mappings.  There are two
-    approaches to solving this problem.  One is to create an 
+    For the test WAR, we need to add one or two cactus servlets and their
+    associated mappings.  We also need to add the JSFUnitFilter.  So, we need 
+    the final web.xml to contain all the mappings for the production app, plus 
+    the extra mappings.  There are two approaches to solving this problem.  One 
+    is to create an 
     <a href="http://cargo.codehaus.org/Merging+WAR+files">uberwar</a> using the
     Cargo plugin.
   </p>
@@ -196,25 +196,41 @@ cactus.servletRedirectorName=JSFUnitRedirector
     that you can use verbatim in your own test WAR:
 <source xml:space="preserve">
 <![CDATA[
-<servlet>
-  <servlet-name>JSFUnitRedirector</servlet-name>
-  <servlet-class>org.jboss.jsfunit.framework.JSFUnitCactusRedirector</servlet-class>
-</servlet>   
+<filter>
+ <filter-name>JSFUnitFilter</filter-name>
+ <filter-class>org.jboss.jsfunit.framework.JSFUnitFilter</filter-class>
+</filter>
+
+<filter-mapping>
+ <filter-name>JSFUnitFilter</filter-name>
+ <servlet-name>ServletTestRunner</servlet-name>
+</filter-mapping>	
+
+<filter-mapping>
+ <filter-name>JSFUnitFilter</filter-name>
+ <servlet-name>ServletRedirector</servlet-name>
+</filter-mapping>
 
 <servlet>
-  <servlet-name>JSFUnitServlet</servlet-name>
-  <servlet-class>org.jboss.jsfunit.framework.JSFUnitServlet</servlet-class>
+ <servlet-name>ServletRedirector</servlet-name>
+ <servlet-class>org.apache.cactus.server.ServletTestRedirector</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>ServletTestRunner</servlet-name>
+  <servlet-class>org.apache.cactus.server.runner.ServletTestRunner</servlet-class>
 </servlet> 
 
 <servlet-mapping>
-  <servlet-name>JSFUnitRedirector</servlet-name>
-  <url-pattern>/JSFUnitRedirector</url-pattern>
-</servlet-mapping>  
+ <servlet-name>ServletRedirector</servlet-name>
+ <url-pattern>/ServletRedirector</url-pattern>
+</servlet-mapping> 
 
 <servlet-mapping>
-  <servlet-name>JSFUnitServlet</servlet-name>
-  <url-pattern>/jsfunit</url-pattern>
-</servlet-mapping>]]>
+  <servlet-name>ServletTestRunner</servlet-name>
+  <url-pattern>/ServletTestRunner</url-pattern>
+</servlet-mapping> 
+]]>
   </source>
   </p>
   <p>

@@ -132,9 +132,9 @@ or Maven to only include these jars when you are testsing.
 
 <p>
   Deploy your JSF application to your favorite server.  Then, type something like the following URL into your browser to run the tests:
-  <source xml:space="preserve">
-  http://localhost:8080/myjsfapp/ServletTestRunner?suite=com.foo.JSFUnitTest&amp;xsl=cactus-report.xsl
-  </source>
+<source xml:space="preserve">
+http://localhost:8080/myjsfapp/ServletTestRunner?suite=com.foo.JSFUnitTest&amp;xsl=cactus-report.xsl
+</source>
 </p>
 
 <p>
