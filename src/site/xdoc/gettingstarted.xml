@@ -78,14 +78,26 @@ public class JSFUnitTest extends junit.framework.TestCase
 
 <section name="Add this to your web.xml">
 	<source xml:space="preserve">
-&lt;servlet&gt;
-      &lt;servlet-name&gt;JSFUnitServlet&lt;/servlet-name&gt;
-      &lt;servlet-class&gt;org.jboss.jsfunit.framework.JSFUnitServlet&lt;/servlet-class&gt;
-&lt;/servlet&gt;           
-&lt;servlet-mapping&gt;
-      &lt;servlet-name&gt;JSFUnitServlet&lt;/servlet-name&gt;
-      &lt;url-pattern&gt;/jsfunit&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;  
+<![CDATA[          
+   <filter-mapping>
+     <filter-name>JSFUnitFilter</filter-name>
+     <servlet-name>ServletTestRunner</servlet-name>
+   </filter-mapping>	
+   
+   <filter-mapping>
+     <filter-name>JSFUnitFilter</filter-name>
+     <servlet-name>ServletRedirector</servlet-name>
+   </filter-mapping>
+
+   <servlet>
+      <servlet-name>ServletTestRunner</servlet-name>
+      <servlet-class>org.apache.cactus.server.runner.ServletTestRunner</servlet-class>
+   </servlet> 
+
+   <servlet-mapping>
+      <servlet-name>ServletTestRunner</servlet-name>
+      <url-pattern>/ServletTestRunner</url-pattern>
+   </servlet-mapping>]]>
 	</source>
 </section>
 
@@ -121,12 +133,12 @@ or Maven to only include these jars when you are testsing.
 <p>
   Deploy your JSF application to your favorite server.  Then, type something like the following URL into your browser to run the tests:
   <source xml:space="preserve">
-  http://localhost:8080/myjsfapp/jsfunit?suite=com.foo.JSFUnitTest&amp;xsl=cactus-report.xsl
+  http://localhost:8080/myjsfapp/ServletTestRunner?suite=com.foo.JSFUnitTest&amp;xsl=cactus-report.xsl
   </source>
 </p>
 
 <p>
-  The JSFUnitServlet will run your tests with JUnit and display the results in your browser.  When you are done,
+  The ServletTestRunner will set run your tests with JUnit and display the results in your browser.  When you are done,
   the output will look something like this:
 </p>
 <p>
@@ -143,8 +155,8 @@ or Maven to only include these jars when you are testsing.
   </p>
   <p>
     Since the JSFUnit infrastructure is based on <a href="http://jakarta.apache.org/cactus/">Apache Cactus</a>, you set 
-    up your tests exactly the same way as Cactus.  The only difference is that you should use the 
-    org.jboss.jsfunit.framework.JSFUnitCactusRedirector instead of org.apache.cactus.server.ServletTestRedirector.
+    up your tests exactly the same way as Cactus.  The only difference is that you use the filter declaration as shown
+    above.
   </p>
   <p>
     If the above is too complicated, there are various <a href="http://jakarta.apache.org/cactus/integration/index.html">cactify tools</a>

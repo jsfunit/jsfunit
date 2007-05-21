@@ -33,32 +33,35 @@ import javax.servlet.http.HttpServletRequest;
 import org.jboss.jsfunit.context.JSFUnitFacesContext;
 
 /**
+ * <p>
  * The JSFUnitFilter is used to set up JSFUnit tests during a client
  * invocation of JUnit.  It must run before the Cactus ServletTestRedirector or
  * Cactus ServletTestRunner.
- * <br/>
- * For details, see http://jakarta.apache.org/cactus/   
- * 
- * Suggested setup in web.xml is:
- * <code>
- * 
- *  <filter>
- *    <filter-name>JSFUnitFilter</filter-name>
- *    <filter-class>org.jboss.jsfunit.framework.JSFUnitFilter</filter-class>
- *  </filter>
+ * </p>
+ * <p>
+ * For details, see <a href="http://jakarta.apache.org/cactus/">Apache Cactus</a>.
+ * </p>
+ * <p>
+ * Suggested setup in web.xml is to map the filter to the Cactus servlet(s) as
+ * follows:
+ * <code><pre>
+ *  &lt;filter&gt;
+ *    &lt;filter-name&gt;JSFUnitFilter&lt;/filter-name&gt;
+ *    &lt;filter-class&gt;org.jboss.jsfunit.framework.JSFUnitFilter&lt;/filter-class&gt;
+ *  &lt;/filter&gt;
  *
- * <filter-mapping>
- *   <filter-name>JSFUnitFilter</filter-name>
- *   <servlet-name>ServletRedirector</servlet-name>
- * </filter-mapping>
+ * &lt;filter-mapping&gt;
+ *   &lt;filter-name&gt;JSFUnitFilter&lt;/filter-name&gt;
+ *   &lt;servlet-name&gt;ServletRedirector&lt;/servlet-name&gt;
+ * &lt;/filter-mapping&gt;
  *
- * <filter-mapping>
- *   <filter-name>JSFUnitFilter</filter-name>
- *   <servlet-name>ServletTestRunner</servlet-name>
- * </filter-mapping>	
+ * &lt;filter-mapping&gt;
+ *   &lt;filter-name&gt;JSFUnitFilter&lt;/filter-name&gt;
+ *   &lt;servlet-name&gt;ServletTestRunner&lt;/servlet-name&gt;
+ * &lt;/filter-mapping&gt;	
+ * </pre></code>
+ * </p> 
  *
- * </code>
- * 
  * @author Stan Silvert
  */
 public class JSFUnitFilter implements Filter

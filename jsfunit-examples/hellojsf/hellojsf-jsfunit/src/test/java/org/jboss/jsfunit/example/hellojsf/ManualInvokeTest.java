@@ -78,7 +78,7 @@ public class ManualInvokeTest extends TestCase
    /**
     * This test simulates invoking the JSFUnit tests manually through a browser.
     */
-   public void testJSFUnitServlet() throws Exception
+   public void testInvokeWithServletTestRunner() throws Exception
    {
       WebConversation webConversation = new WebConversation();
       WebRequest req = new GetMethodWebRequest(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest");
