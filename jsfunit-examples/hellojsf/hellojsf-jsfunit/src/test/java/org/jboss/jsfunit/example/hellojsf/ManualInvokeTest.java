@@ -37,7 +37,7 @@ import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /**
- * This class tests invoking the test using the JSFUnitServlet as
+ * This class tests invoking the test using the Cactus ServletTestRunner as
  * if it were a manual invocation from a browser.
  *
  * @author Stan Silvert
@@ -81,7 +81,7 @@ public class ManualInvokeTest extends TestCase
    public void testJSFUnitServlet() throws Exception
    {
       WebConversation webConversation = new WebConversation();
-      WebRequest req = new GetMethodWebRequest(contextURL + "/jsfunit?suite=org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest");
+      WebRequest req = new GetMethodWebRequest(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest");
       WebResponse webResponse = webConversation.getResponse(req);
       assertTrue(webResponse.getText().contains(
                 "<testsuite name=\"org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest\" tests=\"4\" failures=\"0\" errors=\"0\""));

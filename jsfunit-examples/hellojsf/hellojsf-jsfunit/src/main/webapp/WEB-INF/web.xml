@@ -25,11 +25,6 @@
      <servlet-name>Faces Servlet</servlet-name>
      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
    </servlet>   
-   
-   <servlet-mapping>
-     <servlet-name>Faces Servlet</servlet-name>
-     <url-pattern>*.faces</url-pattern>
-   </servlet-mapping>  
 
    <servlet>
      <servlet-name>ServletRedirector</servlet-name>
@@ -38,9 +33,13 @@
    
    <servlet>
       <servlet-name>ServletTestRunner</servlet-name>
-      <servlet-class>org.jboss.jsfunit.framework.JSFUnitServlet</servlet-class>
-      <load-on-startup>1</load-on-startup>
+      <servlet-class>org.apache.cactus.server.runner.ServletTestRunner</servlet-class>
    </servlet> 
+
+   <servlet-mapping>
+     <servlet-name>Faces Servlet</servlet-name>
+     <url-pattern>*.faces</url-pattern>
+   </servlet-mapping>  
 
    <servlet-mapping>
      <servlet-name>ServletRedirector</servlet-name>
@@ -49,7 +48,7 @@
    
    <servlet-mapping>
       <servlet-name>ServletTestRunner</servlet-name>
-      <url-pattern>/jsfunit</url-pattern>
+      <url-pattern>/ServletTestRunner</url-pattern>
    </servlet-mapping> 
 
    <welcome-file-list>
