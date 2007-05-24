@@ -3,19 +3,19 @@
 
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
-    <artifactId>jsfunit-examples</artifactId>
+    <artifactId>jboss-jsfunit-examples</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>hellojsf</artifactId>
+  <artifactId>jboss-jsfunit-examples-hellojsf</artifactId>
   <packaging>pom</packaging>  
   <name>HelloJSF Example App</name>
 
   <modules>    
-    <module>hellojsf-webapp</module>
-    <module>hellojsf-jsfunit</module>
-    <module>hellojsf-jsfunit-pathmapped</module>
+    <module>jboss-jsfunit-examples-hellojsf-webapp</module>
+    <module>jboss-jsfunit-examples-hellojsf-jsfunit</module>
+    <module>jboss-jsfunit-examples-hellojsf-pathmapped</module>
   </modules>
     
 </project>

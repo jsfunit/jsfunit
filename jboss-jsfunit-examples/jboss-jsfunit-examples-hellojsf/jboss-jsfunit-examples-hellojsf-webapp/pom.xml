@@ -3,12 +3,12 @@
 
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
-    <artifactId>hellojsf</artifactId>
+    <artifactId>jboss-jsfunit-examples-hellojsf</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>hellojsf-webapp</artifactId>
+  <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
   <packaging>war</packaging>  
   <name>HelloJSF Example Web App</name>      
 

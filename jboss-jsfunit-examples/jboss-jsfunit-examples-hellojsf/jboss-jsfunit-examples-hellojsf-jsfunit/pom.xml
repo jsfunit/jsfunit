@@ -3,12 +3,12 @@
 
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
-    <artifactId>hellojsf</artifactId>
+    <artifactId>jboss-jsfunit-examples-hellojsf</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>hellojsf-jsfunit</artifactId>
+  <artifactId>jboss-jsfunit-examples-hellojsf-jsfunit</artifactId>
   <packaging>war</packaging>
   <name>HelloJSF JSFUnit Integration Test</name>
 
@@ -88,13 +88,14 @@
   
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
-      <artifactId>jsfunit-core</artifactId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
-      <artifactId>hellojsf-webapp</artifactId>
+      <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
       <version>${project.version}</version>
       <type>war</type>
       <scope>runtime</scope>
@@ -115,8 +116,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <dependentWarExcludes>WEB-INF/web.xml</dependentWarExcludes>   
-          <dependentWarExcludes>index.jsp</dependentWarExcludes>   
+          <dependentWarExcludes>WEB-INF/web.xml,index.jsp</dependentWarExcludes>   
           <webResources>
             <resource>
               <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/hellojsf</directory>
