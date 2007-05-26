@@ -30,25 +30,12 @@
     </developer>
   </developers>
 
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License</name>
-      <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  
   <scm>
     <connection>scm:svn:http://anonsvn.jboss.org/repos/jsfunit/trunk</connection>
     <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/trunk</developerConnection>
     <url>http://fisheye.jboss.org/browse/JSFUnit</url>
   </scm>
-  
-  <organization>
-    <name>JBoss.org</name>
-    <url>http://www.jboss.org</url>
-  </organization>
-  
+    
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -82,15 +69,7 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-
-    <repository>
-      <id>java.net</id>
-      <url>https://maven-repository.dev.java.net/nonav/repository</url>
-      <layout>legacy</layout>
-    </repository>
   </repositories>
-  
-  
 
   <modules>
     <module>jboss-jsfunit-core</module>

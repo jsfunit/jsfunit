@@ -87,14 +87,14 @@
     </dependency>
   
     <dependency>
-      <groupId>org.jboss.jsfunit</groupId>
+      <groupId>jboss</groupId>
       <artifactId>jboss-jsfunit-core</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.jsfunit</groupId>
+      <groupId>jboss</groupId>
       <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
       <version>${project.version}</version>
       <type>war</type>
