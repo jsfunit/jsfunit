@@ -27,13 +27,9 @@ import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.net.ConnectException;
 import java.util.Properties;
-import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /**

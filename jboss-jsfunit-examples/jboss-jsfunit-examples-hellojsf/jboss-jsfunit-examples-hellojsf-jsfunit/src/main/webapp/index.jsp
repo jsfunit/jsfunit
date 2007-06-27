@@ -28,11 +28,12 @@
 
 <f:view>  
    <h1><h:outputText value="JSFUnit HelloJSF Demo Application" id="title"/></h1>
+   
    <h:form id="form1">    
-      
+
       <h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/>
       <h:outputText value="Hello #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/><br/>
-      
+
       <h:inputText value="#{foo.text}" id="input_foo_text">          
         <f:validateLength minimum="2"/>
       </h:inputText>
@@ -42,10 +43,11 @@
       <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>
 
    </h:form>
+   
    <br/><br/>
    <h2><h:outputText value="Sample JSFUnit Tests You Can Run Against This Application"/></h2>
    
-   <h:panelGrid columns="3" border="1" cellpadding="2">
+   <h:panelGrid columns="3" border="1" cellpadding="2" id="panelGrid">
       <h:outputText value="SimplifiedHelloJSFIntegrationTest"/>
       <h:outputLink id="RunSimplifiedHelloJSFIntegrationTest" 
                   value="ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.SimplifiedHelloJSFIntegrationTest&xsl=cactus-report.xsl">
@@ -75,8 +77,9 @@
                   value="FacadeAPITest.java">
           <h:outputText value="View Source"/>
       </h:outputLink>
-   
+
    </h:panelGrid>
+      
 </f:view>
 
 </HTML>

@@ -16,6 +16,14 @@
   </navigation-rule>
   
   <navigation-rule>
+    <from-view-id>/NestedNamingContainers.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>/finalgreeting.jsp</from-outcome>
+      <to-view-id>/finalgreeting.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
     <from-view-id>/finalgreeting.jsp</from-view-id>
     <navigation-case>
       <from-outcome>/index.jsp</from-outcome>

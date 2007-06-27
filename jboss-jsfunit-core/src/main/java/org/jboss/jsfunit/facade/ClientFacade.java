@@ -30,7 +30,6 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import javax.faces.component.NamingContainer;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
@@ -42,18 +41,20 @@ import org.xml.sax.SAXException;
 public class ClientFacade
 {
    private WebResponse webResponse;
-   private String namingContainer = "";
+   private ClientIDs clientIDs;
    
    /**
-    * Creates a new client interface for testing the JSF application.  The
-    * NamingContainer will be set to the Id of the first form found on the 
-    * returned page.
-    * 
+    * Creates a new client interface for testing the JSF application.   
     * This will also start a new HttpSession.
     * 
+    * Note that the initialPage param should be something that maps into the FacesServlet.
+    * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
+    * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
+    * initialPage param will be something like "/faces/index.jsp".
     * 
     * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
-    * @throws MalformedURLException If the view Id cannot be used to create a URL for the JSF app
+    *
+    * @throws MalformedURLException If the initialPage cannot be used to create a URL for the JSF app
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
@@ -62,25 +63,7 @@ public class ClientFacade
       WebConversation webConversation = WebConversationFactory.makeWebConversation();
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
       this.webResponse = webConversation.getResponse(req);
-      setNamingContainer();
-   }
-   
-   /**
-    * Creates a new client interface for testing the JSF application.  
-    * 
-    * This will also start a brand new HttpSession.
-    * 
-    * 
-    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
-    * @param namingContainer The NamingContainer that will be used when the page is returned.
-    * @throws MalformedURLException If the view Id cannot be used to create a URL for the JSF app
-    * @throws IOException If there is an error calling the JSF app
-    * @throws SAXException If the response from the JSF app cannot be parsed as HTML
-    */
-   public ClientFacade(String initialPage, String namingContainer) throws MalformedURLException, IOException, SAXException
-   {
-      this(initialPage);
-      setNamingContainer(namingContainer);
+      this.clientIDs = new ClientIDs();
    }
    
    /**
@@ -94,116 +77,78 @@ public class ClientFacade
    }
    
    /**
-    * Get the NamingContainer that this ClientFacade is currently 
-    * workfing on.
-    *
-    * @return The current NamingContainer.
-    */
-   public String getNamingContainer()
-   {
-      return this.namingContainer;
-   }
-   
-   /**
-    * Set the NamingContainer that subsequent API calls will work with.
-    *
-    * @param namingContainer The name of the NamingContainer.
-    */
-   public void setNamingContainer(String namingContainer)
-   {
-      if (namingContainer == null) throw new NullPointerException("namingContainer can not be null");
-      
-      if (namingContainer.equals("")) 
-      {
-         this.namingContainer = "";
-         return;
-      }
-      
-      this.namingContainer = namingContainer;
-   }
-   
-   // Tries to set the NamingContainer based on the first form id
-   private void setNamingContainer() throws SAXException
-   {
-      WebForm[] forms = this.webResponse.getForms();
-      if (forms.length == 0) 
-      {
-         setNamingContainer("");
-         return;
-      }
-      
-      WebForm form = forms[0];
-      String id = form.getID();
-      
-      if (id == null) 
-      {
-         setNamingContainer("");
-         return;
-      }
-      
-      setNamingContainer(id);
-   }
-   
-   private String makeComponentPath(String componentId)
-   {
-      if (this.namingContainer.equals("")) return componentId;
-      
-      return this.namingContainer + NamingContainer.SEPARATOR_CHAR + componentId;
-   }
-   
-   /**
     * Return the HttpUnit WebForm with the Id of the current NamingContainer.
+    *
+    * @param componentID The id of the <h:form> component.
     *
     * @return The current WebForm.
     *
     * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the form can not be found on the page
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     */
-   public WebForm getForm() throws SAXException
+   public WebForm getForm(String componentID) throws SAXException
    {
-      return getWebResponse().getFormWithID(this.namingContainer);
+      String clientID = this.clientIDs.find(componentID);
+      WebForm[] forms = getWebResponse().getForms();
+      if (forms.length == 0) throw new ComponentIDNotFoundException(componentID);
+      
+      for (int i=0; i < forms.length; i++)
+      {
+         if (forms[i].hasParameterNamed(clientID)) return forms[i];
+      }
+      
+      throw new ComponentIDNotFoundException(componentID);
    }
    
    /**
     * Set a parameter value on the current NamingContainer (must be a form).
     *
-    * @param paramName The name of the parameter.
-    * @param value The value.
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
     *
     * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     */
-   public void setParameter(String paramName, String value) throws SAXException
+   public void setParameter(String componentID, String value) throws SAXException
    {
-      getForm().setParameter(makeComponentPath(paramName), value);
+      String clientID = this.clientIDs.find(componentID);
+      getForm(clientID).setParameter(clientID, value);
    }
    
    /**
-    * Finds the first submit button on the NamingContainer (form) and
-    * submits the form.  If found, this method will set the NamingContainer to the
-    * id of the first form on the new page.
+    * Finds the first submit button on the form and submits the form.  
     *
+    * @throws IllegalStateException if page does not contain a single form.
     * @throws IOException if there is a problem submitting the form.
     * @throws SAXException if the response page can not be parsed
     */
    public void submit() throws SAXException, IOException
    {
-      this.webResponse = getForm().submit();
-      setNamingContainer();
+      WebForm[] forms = getWebResponse().getForms();
+      if (forms.length != 1) throw new IllegalStateException("For this method, page must contain only one form.  Use another version of the submit() method.");
+      
+      this.webResponse = forms[0].submit();
+      this.clientIDs = new ClientIDs();
    }
    
    /**
-    * Finds the named submit button on the NamingContainer (form) and
-    * submits the form.  If found, this method will set the NamingContainer to the
-    * id of the first form on the new page.
+    * Finds the named submit button on a form and submits the form.  
     *
-    * @param componentId The id of the submit button to be "pressed".
+    * @param componentID The JSF component id (or a suffix of the client ID) of the submit button to be "pressed".
     *
     * @throws IOException if there is a problem submitting the form.
     * @throws SAXException if the response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     */
-   public void submit(String componentId) throws SAXException, IOException
+   public void submit(String componentID) throws SAXException, IOException
    {
-      SubmitButton button = getForm().getSubmitButtonWithID(makeComponentPath(componentId));
-      this.webResponse = getForm().submit(button);
-      setNamingContainer();
+      String clientID = this.clientIDs.find(componentID);
+      WebForm form = getForm(clientID);
+      SubmitButton button = form.getSubmitButtonWithID(clientID);
+      this.webResponse = form.submit(button);
+      this.clientIDs = new ClientIDs();
    }
 }

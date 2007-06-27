@@ -22,7 +22,6 @@
 
 package org.jboss.jsfunit.facade;
 
-import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
@@ -36,59 +35,11 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
  */
 public class ServerFacade
 {
-   private String namingContainer = "";
-   
    /**
-    * Create a new ServerFacade with the NamingContainer set to the 
-    * empty string.
+    * Create a new ServerFacade.
     */
    public ServerFacade()
    {
-   }
-   
-   /**
-    * Create a new ServerFacade.
-    *
-    * @param namingContainer The initial NamingContainer.
-    */
-   public ServerFacade(String namingContainer)
-   {
-      setNamingContainer(namingContainer);
-   }
-   
-   /**
-    * Set the NamingContainer used by other API calls on this object.
-    *
-    * @param namingContainer The NamingContainer.
-    */
-   public void setNamingContainer(String namingContainer)
-   {
-      if (namingContainer == null) throw new NullPointerException("namingContainer can not be null");
-      
-      if (namingContainer.equals("")) 
-      {
-         this.namingContainer = "";
-         return;
-      }
-      
-      this.namingContainer = namingContainer;
-   }
-   
-   /**
-    * Get the current NamingContainer setting.
-    *
-    * @return The current NamingContainer setting.
-    */
-   public String getNamingContainer()
-   {
-      return this.namingContainer;
-   }
-   
-   private String makeComponentPath(String componentId)
-   {
-      if (this.namingContainer.equals("")) return componentId;
-      
-      return this.namingContainer + NamingContainer.SEPARATOR_CHAR + componentId;
    }
    
    /**
@@ -115,27 +66,33 @@ public class ServerFacade
     * Find a component in the JSF component tree.  This will start searching
     * for the component inside the current NamingContainer.
     *
-    * @param componentId The component Id to find in the JSF component tree.
+    * @param componentID The JSF component ID or client ID suffix.
     *
     * @return The component.
+    *
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     */
-   public UIComponent findComponent(String componentId)
+   public UIComponent findComponent(String componentID)
    {
-      return getFacesContext().getViewRoot().findComponent(makeComponentPath(componentId));
+      return getFacesContext().getViewRoot().findComponent(new ClientIDs().find(componentID));
    }
    
    /**
-    * Find a component in the JSF component tree and return its value.  This 
-    * will start searching for the component inside the current NamingContainer.
+    * Find a component in the JSF component tree and return its value.
     * Note that the found component must implement ValueHolder.
     *
-    * @param componentId The component Id to find in the JSF component tree.
+    * @param componentID The JSF component ID or client ID suffix.
     *
     * @return The value contained in the component.
+    *
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws ClassCastException if the found component does not implement ValueHolder
     */
-   public Object getComponentValue(String componentId)
+   public Object getComponentValue(String componentID)
    {
-      UIComponent component = findComponent(componentId);
+      UIComponent component = findComponent(componentID);
       return ((ValueHolder)component).getValue();
    }
    

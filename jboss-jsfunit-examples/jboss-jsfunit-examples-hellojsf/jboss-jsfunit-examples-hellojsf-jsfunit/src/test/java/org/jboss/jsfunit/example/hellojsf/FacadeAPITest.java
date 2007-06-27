@@ -58,12 +58,6 @@ public class FacadeAPITest extends ServletTestCase
       return new TestSuite( FacadeAPITest.class );
    }
    
-   public void testSetNamingContainerInClientFacadeConstructor() throws IOException, SAXException
-   {
-      this.client = new ClientFacade("/index.faces", "form1");
-      assertEquals("form1", this.client.getNamingContainer());
-   }
-   
    /**
     */
    public void testGetCurrentViewId() throws IOException, SAXException
@@ -75,31 +69,12 @@ public class FacadeAPITest extends ServletTestCase
       assertEquals(server.getCurrentViewId(), server.getFacesContext().getViewRoot().getViewId());
    }
    
-   public void testServerFacadeSetNamingContainer() throws IOException, SAXException
-   {
-      ServerFacade server = new ServerFacade();
-      server.setNamingContainer("form1");
-      UIComponent prompt = server.findComponent("prompt");
-      assertTrue(prompt.isRendered());
-      
-      server.setNamingContainer("");
-      prompt = server.findComponent("form1:prompt");
-      assertTrue(prompt.isRendered());
-   }
-   
-   public void testSetNamingContainerInServerFacadeConstructor() throws IOException, SAXException
-   {
-      ServerFacade server = new ServerFacade("form1");
-      UIComponent prompt = server.findComponent("prompt");
-      assertTrue(prompt.isRendered());
-   }
-   
    public void testSetParamAndSubmit() throws IOException, SAXException
    {
       client.setParameter("input_foo_text", "Stan"); 
       client.submit("submit_button");
       
-      ServerFacade server = new ServerFacade("form1");
+      ServerFacade server = new ServerFacade();
       UIComponent greeting = server.findComponent("greeting");
       assertTrue(greeting.isRendered());
    }
@@ -121,7 +96,7 @@ public class FacadeAPITest extends ServletTestCase
       testSetParamAndSubmit(); // put "Stan" into the input field
 
       // test the greeting component
-      ServerFacade server = new ServerFacade("form1");
+      ServerFacade server = new ServerFacade();
       assertEquals("Hello Stan", server.getComponentValue("greeting"));
    }
    

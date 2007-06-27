@@ -29,51 +29,17 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.ClientFacade;
+import org.jboss.jsfunit.facade.ComponentIDNotFoundException;
+import org.jboss.jsfunit.facade.DuplicateClientIDException;
 import org.jboss.jsfunit.facade.ServerFacade;
 import org.xml.sax.SAXException;
 
 /**
- * This is a simplified version of the HelloJSFIntegrationTest.  Instead of using
- * HttpUnit and JSF API's, it uses JSFUnit's ClientFacade and ServerFacade classes
- * to do most of the work.
- *
- * JSFUnit is designed to allow complete integration testing and debugging of
- * JSF applications at the JSF level.  In short, it gives you
- * access to the state of the FacesContext and managed beans after every
- * request.  With the FacesContext in hand, you are able to do integration testing
- * of JSF applications at the proper level of abstraction.
- *
- * The typical usage pattern of JSFUnit is to submit a request with httpunit and then
- * examine both the raw HTML output (httpunit tests) and JSF internals (JSFUnit tests).
- * The httpunit-style tests are not shown here.
- *
- * The JSFUnit tests below demonstrate testing:
- * - Navigation:      "Did this input take me to the correct view?"
- * - View Components: "Does the JSF component tree contain the correct components?"
- *                    "Do these components have the expected state?"
- * - Managed Beans:   "What is the state of my managed beans?"  This can include managed beans in
- *                    Seam-defined scopes such as conversation scope.  The tests below only
- *                    demonstrate request scope, but you can find anything reachable with the EL.
- * - Validation:      "Does invalid input generate the proper FacesMessage and error to the user."
- *
- * Tests not shown below:
- * - EL Expressions:     You use the Expression Language (EL) to examine the state of your
- *                       managed beans.  JSFUnit allows you to invoke any EL expression.
- *                       So, it is also possible to use the EL to invoke actions
- *                       from JSFUnit without submitting a request.  This is not deomonstrated
- *                       below, but it is relatively easy to do.
- * - Application Config: Because you have access to FacesContext, you can also call
- *                       FacesContext.getApplication().  From there you can test to make sure
- *                       your application configuration is correct.  This would include tests
- *                       for proper installation of converters, validators, component types,
- *                       locales, and resource bundles.
- *
- * This class tests the HelloJSF application.  This is a simple Hello World
- * application written in JSF with a single managed bean bound to the name "foo" in request scope.
+ * Test the facade API on a page that contains nested subviews/NamingContainers.
  *
  * @author Stan Silvert
  */
-public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
+public class NestedNamingContainersTest extends ServletTestCase
 {
    private ClientFacade client;
    
@@ -83,7 +49,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
    public void setUp() throws IOException, SAXException
    {
       // Initial JSF request
-      this.client = new ClientFacade("/index.faces");
+      this.client = new ClientFacade("/NestedNamingContainers.faces");
    }
    
    /**
@@ -91,8 +57,14 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
     */
    public static Test suite()
    {
-      return new TestSuite( SimplifiedHelloJSFIntegrationTest.class );
+      return new TestSuite( NestedNamingContainersTest.class );
    }
+   
+   // These first four tests are identical to the ones in 
+   // SimplifiedHelloJSFIntegrationTest except that they operate 
+   // on NestedNamingContainers.jsp which contains a form with 
+   // with subviews.  It also contains two forms.  So you have
+   // to specify which form you are operating on.
    
    /**
     * The initial page was called up in the setUp() method.  This shows
@@ -103,27 +75,27 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       ServerFacade server = new ServerFacade();
 
       // Test navigation to initial viewID
-      assertEquals("/index.jsp", server.getCurrentViewId());
+      assertEquals("/NestedNamingContainers.jsp", server.getCurrentViewId());
 
       // Assert that the prompt component is in the component tree and rendered
-      UIComponent prompt = server.findComponent("prompt");
+      UIComponent prompt = server.findComponent("form1:prompt");
       assertTrue(prompt.isRendered());
 
       // Assert that the greeting component is in the component tree but not rendered
-      UIComponent greeting = server.findComponent("greeting");
+      UIComponent greeting = server.findComponent("form1:greeting");
       assertFalse(greeting.isRendered());
    }
    
    
    public void testInputValidation() throws IOException, SAXException
    {
-      client.setParameter("input_foo_text", "A"); // input too short - validation error
-      client.submit("submit_button");
+      client.setParameter("form1:input_foo_text", "A"); // input too short - validation error
+      client.submit("form1:submit_button");
 
       ServerFacade server = new ServerFacade();
       
       // Test that I was returned to the initial view because of input error
-      assertEquals("/index.jsp", server.getCurrentViewId());
+      assertEquals("/NestedNamingContainers.jsp", server.getCurrentViewId());
       
       // Should be only one FacesMessge generated for this test.
       // It is for the component input_foo_text.
@@ -136,15 +108,15 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
     */
    public void testValidInput() throws IOException, SAXException
    {
-      client.setParameter("input_foo_text", "Stan");
-      client.submit("submit_button");
+      client.setParameter("form1:input_foo_text", "Stan");
+      client.submit("form1:submit_button");
 
       ServerFacade server = new ServerFacade();
       
       // test the greeting component
-      UIComponent greeting = server.findComponent("greeting");
+      UIComponent greeting = server.findComponent("form1:greeting");
       assertTrue(greeting.isRendered());
-      assertEquals("Hello Stan", server.getComponentValue("greeting"));
+      assertEquals("Hello Stan", server.getComponentValue("form1:greeting"));
 
       // Test the backing bean.  Since I am in-container, I can test any
       // managed bean in any scope - even Seam scopes such as Conversation.
@@ -154,7 +126,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
    public void testGoodbyeButton() throws IOException, SAXException
    {
       testValidInput(); // put "Stan" into the input field
-      client.submit("goodbye_button");
+      client.submit("form1:goodbye_button");
 
       ServerFacade server = new ServerFacade();
       
@@ -165,4 +137,31 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       assertEquals("Bye Stan. I enjoyed our chat.", server.getComponentValue("finalgreeting"));
    }
    
+   public void testDualFormAmbiguity() throws IOException, SAXException
+   {
+      ServerFacade server = new ServerFacade();
+      
+      try
+      {
+         server.findComponent("greeting");
+         fail("Expected DuplicateClientIDException");
+      }
+      catch (DuplicateClientIDException e)
+      {
+         // ok
+      }
+   }
+   
+   public void testComponentIDNotFound() throws IOException, SAXException
+   {
+      try
+      {
+         client.submit("bogus_submit_button");
+         fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // ok
+      }
+   }
 }

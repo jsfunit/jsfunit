@@ -22,25 +22,14 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
-import com.meterware.httpunit.GetMethodWebRequest;
-import com.meterware.httpunit.SubmitButton;
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebForm;
-import com.meterware.httpunit.WebRequest;
-import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.component.ValueHolder;
-import javax.faces.context.FacesContext;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.ClientFacade;
 import org.jboss.jsfunit.facade.ServerFacade;
-import org.jboss.jsfunit.framework.FacesContextBridge;
-import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -111,7 +100,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
     */
    public void testInitialPage() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade("form1");
+      ServerFacade server = new ServerFacade();
 
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -150,7 +139,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       client.setParameter("input_foo_text", "Stan");
       client.submit("submit_button");
 
-      ServerFacade server = new ServerFacade("form1");
+      ServerFacade server = new ServerFacade();
       
       // test the greeting component
       UIComponent greeting = server.findComponent("greeting");
@@ -167,9 +156,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       testValidInput(); // put "Stan" into the input field
       client.submit("goodbye_button");
 
-      // I'll be looking at a component outside the form. 
-      // So set the NamingContainer to root ("")
-      ServerFacade server = new ServerFacade("");
+      ServerFacade server = new ServerFacade();
       
       // Test navigation to a new view
       assertEquals("/finalgreeting.jsp", server.getCurrentViewId());
