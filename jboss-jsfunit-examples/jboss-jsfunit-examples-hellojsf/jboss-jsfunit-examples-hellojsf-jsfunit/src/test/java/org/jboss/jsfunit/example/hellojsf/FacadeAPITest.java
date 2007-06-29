@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
+import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import javax.faces.component.UIComponent;
 import junit.framework.Test;
@@ -41,9 +42,9 @@ public class FacadeAPITest extends ServletTestCase
    private ClientFacade client;
    
    /**
-    * Start a JSFUnit session by getting the /index.faces page.
-    * Also, set the current naming container to form1 so that any API
-    * call on the client side will refer to the parameters of "form1".
+    * Start a JSFUnit session by getting the /index.faces page.  Note that
+    * because setUp() is called before each test, a new HttpSession will be
+    * created each time a test is run.
     */
    public void setUp() throws IOException, SAXException
    {
@@ -111,4 +112,10 @@ public class FacadeAPITest extends ServletTestCase
       assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
    }
    
+   public void testClickALink() throws IOException, SAXException
+   {
+      client.click("SourceSimplifiedHelloJSFIntegrationTest");
+      WebResponse response = client.getWebResponse();
+      assertTrue(response.getText().contains("public class SimplifiedHelloJSFIntegrationTest"));
+   }
 }

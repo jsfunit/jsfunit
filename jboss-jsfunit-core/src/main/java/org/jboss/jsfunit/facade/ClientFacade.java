@@ -26,6 +26,7 @@ import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.SubmitButton;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
+import com.meterware.httpunit.WebLink;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
@@ -149,6 +150,25 @@ public class ClientFacade
       WebForm form = getForm(clientID);
       SubmitButton button = form.getSubmitButtonWithID(clientID);
       this.webResponse = form.submit(button);
+      this.clientIDs = new ClientIDs();
+   }
+   
+   /**
+    * Finds the named link and clicks it.
+    *
+    * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
+    *
+    * @throws IOException if there is a problem clicking the link.
+    * @throws SAXException if the response page can not be parsed.
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    */
+   public void click(String componentID) throws SAXException, IOException
+   {
+      String clientID = this.clientIDs.find(componentID);
+      WebLink link = this.webResponse.getLinkWithID(clientID);
+      if (link == null) throw new ComponentIDNotFoundException(componentID);
+      this.webResponse = link.click();
       this.clientIDs = new ClientIDs();
    }
 }
