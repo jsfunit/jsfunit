@@ -100,7 +100,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
     */
    public void testInitialPage() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
 
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -120,7 +120,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       client.setParameter("input_foo_text", "A"); // input too short - validation error
       client.submit("submit_button");
 
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       
       // Test that I was returned to the initial view because of input error
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -139,7 +139,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       client.setParameter("input_foo_text", "Stan");
       client.submit("submit_button");
 
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       
       // test the greeting component
       UIComponent greeting = server.findComponent("greeting");
@@ -156,7 +156,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       testValidInput(); // put "Stan" into the input field
       client.submit("goodbye_button");
 
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       
       // Test navigation to a new view
       assertEquals("/finalgreeting.jsp", server.getCurrentViewId());

@@ -35,11 +35,17 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
  */
 public class ServerFacade
 {
+   private ClientFacade client;
+   
    /**
     * Create a new ServerFacade.
+    *
+    * @param client The ClientFacade for the current web conversation.
     */
-   public ServerFacade()
+   public ServerFacade(ClientFacade client)
    {
+      if (client == null) throw new NullPointerException("client can not be null");
+      this.client = client;
    }
    
    /**
@@ -63,8 +69,7 @@ public class ServerFacade
    }
    
    /**
-    * Find a component in the JSF component tree.  This will start searching
-    * for the component inside the current NamingContainer.
+    * Find a component in the JSF component tree.  
     *
     * @param componentID The JSF component ID or client ID suffix.
     *
@@ -75,7 +80,22 @@ public class ServerFacade
     */
    public UIComponent findComponent(String componentID)
    {
-      return getFacesContext().getViewRoot().findComponent(new ClientIDs().find(componentID));
+      return client.getClientIDs().findComponent(componentID);
+   }
+   
+   /**
+    * Find a clientID given the componentID.  
+    *
+    * @param componentID The JSF component ID or client ID suffix.
+    *
+    * @return The clientID.
+    *
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    */
+   public String findClientID(String componentID)
+   {
+      return client.getClientIDs().findClientID(componentID);
    }
    
    /**

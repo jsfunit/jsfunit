@@ -41,6 +41,7 @@ import org.xml.sax.SAXException;
  */
 public class ClientFacade
 {
+   private WebConversation webConversation;
    private WebResponse webResponse;
    private ClientIDs clientIDs;
    
@@ -61,14 +62,20 @@ public class ClientFacade
     */
    public ClientFacade(String initialPage) throws MalformedURLException, IOException, SAXException
    {
-      WebConversation webConversation = WebConversationFactory.makeWebConversation();
+      this.webConversation = WebConversationFactory.makeWebConversation();
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
       this.webResponse = webConversation.getResponse(req);
       this.clientIDs = new ClientIDs();
    }
    
+   // protected method used by ServerFacade
+   protected ClientIDs getClientIDs()
+   {
+      return this.clientIDs;
+   }
+   
    /**
-    * Get the HttpUnit WebResponse object from the last request.
+    * Get the HttpUnit WebResponse object from the latest request.
     *
     * @return The HttpUnit WebResponse.
     */
@@ -78,32 +85,33 @@ public class ClientFacade
    }
    
    /**
-    * Return the HttpUnit WebForm with the Id of the current NamingContainer.
+    * Return the HttpUnit WebForm that contains the given component.
     *
-    * @param componentID The id of the <h:form> component.
+    * @param componentID The id of the component contained by the form.
     *
-    * @return The current WebForm.
+    * @return The WebForm.
     *
     * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the form can not be found on the page
     * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws FormNotFoundException if no form parameter can be found matching the componentID
     */
    public WebForm getForm(String componentID) throws SAXException
    {
-      String clientID = this.clientIDs.find(componentID);
+      String clientID = this.clientIDs.findClientID(componentID);
       WebForm[] forms = getWebResponse().getForms();
-      if (forms.length == 0) throw new ComponentIDNotFoundException(componentID);
+      if (forms.length == 0) throw new FormNotFoundException(componentID);
       
       for (int i=0; i < forms.length; i++)
       {
-         if (forms[i].hasParameterNamed(clientID)) return forms[i];
+         if (clientID.startsWith(forms[i].getID())) return forms[i];
       }
       
-      throw new ComponentIDNotFoundException(componentID);
-   }
+      throw new FormNotFoundException(componentID);
+   } 
    
    /**
-    * Set a parameter value on the current NamingContainer (must be a form).
+    * Set a parameter value on a form.
     *
     * @param componentID The JSF component ID or a suffix of the client ID.
     * @param value The value to set before the form is submitted.
@@ -114,7 +122,7 @@ public class ClientFacade
     */
    public void setParameter(String componentID, String value) throws SAXException
    {
-      String clientID = this.clientIDs.find(componentID);
+      String clientID = this.clientIDs.findClientID(componentID);
       getForm(clientID).setParameter(clientID, value);
    }
    
@@ -146,7 +154,7 @@ public class ClientFacade
     */
    public void submit(String componentID) throws SAXException, IOException
    {
-      String clientID = this.clientIDs.find(componentID);
+      String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(clientID);
       SubmitButton button = form.getSubmitButtonWithID(clientID);
       this.webResponse = form.submit(button);
@@ -165,10 +173,34 @@ public class ClientFacade
     */
    public void click(String componentID) throws SAXException, IOException
    {
-      String clientID = this.clientIDs.find(componentID);
+      String clientID = this.clientIDs.findClientID(componentID);
       WebLink link = this.webResponse.getLinkWithID(clientID);
       if (link == null) throw new ComponentIDNotFoundException(componentID);
       this.webResponse = link.click();
+      this.clientIDs = new ClientIDs();
+   }
+   
+   /**
+    * Sends WebRequest to the server and then does a "refresh".  
+    * 
+    * Each AJAX-enabled component library has its own "protocol" for sending AJAX requests to the 
+    * server via javascript.  Because JSFUnit/HttpUnit can't reliably handle javascript, each 
+    * AJAX-enabled JSF component library must prepare the WebRequest and submit it through this method.
+    *
+    * When an AJAX request is sent through this method, a second "refresh" request is submitted to the
+    * server.  This allows the client to sync up with the component tree on the server side.  Therefore,
+    * AJAX changes that are "client side only" will not be preserved.
+    *
+    * @param request A request prepared using the AJAX JSF component library's required params.
+    *
+    * @throws IOException if there is a problem submitting the request.
+    * @throws SAXException if the response page can not be parsed.
+    */
+   public void ajaxRequest(WebRequest request) throws SAXException, IOException
+   {
+      this.webResponse = this.webConversation.getResponse(request);
+      String url = this.webResponse.getURL().toString();
+      this.webResponse = this.webConversation.getResponse(new GetMethodWebRequest(url));
       this.clientIDs = new ClientIDs();
    }
 }

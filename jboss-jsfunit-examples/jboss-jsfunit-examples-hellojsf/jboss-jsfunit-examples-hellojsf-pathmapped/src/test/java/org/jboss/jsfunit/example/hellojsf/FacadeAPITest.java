@@ -62,7 +62,7 @@ public class FacadeAPITest extends ServletTestCase
     */
    public void testGetCurrentViewId() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -74,7 +74,7 @@ public class FacadeAPITest extends ServletTestCase
       client.setParameter("input_foo_text", "Stan"); 
       client.submit("submit_button");
       
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       UIComponent greeting = server.findComponent("greeting");
       assertTrue(greeting.isRendered());
    }
@@ -87,7 +87,7 @@ public class FacadeAPITest extends ServletTestCase
    {
       client.submit("goodbye_button");  // go to finalgreeting page
       client.submit(); // only one submit button on finalgreeting page
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       assertEquals("/index.jsp", server.getCurrentViewId());  // test that we are back on the first page
    }
    
@@ -96,7 +96,7 @@ public class FacadeAPITest extends ServletTestCase
       testSetParamAndSubmit(); // put "Stan" into the input field
 
       // test the greeting component
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       assertEquals("Hello Stan", server.getComponentValue("greeting"));
    }
    
@@ -107,7 +107,7 @@ public class FacadeAPITest extends ServletTestCase
    {
       testSetParamAndSubmit(); // put "Stan" into the input field
 
-      ServerFacade server = new ServerFacade();
+      ServerFacade server = new ServerFacade(client);
       assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
    }
    

@@ -23,9 +23,12 @@
 package org.jboss.jsfunit.facade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIData;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;
@@ -42,6 +45,7 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
 public class ClientIDs
 {
    private List<String> allClientIDs = new ArrayList<String>();
+   private Map<String, UIComponent> allComponents = new HashMap<String, UIComponent>();
    
    /**
     * Create a new instance of ClientIDs.
@@ -56,12 +60,35 @@ public class ClientIDs
    // recursively walk the component tree and add all the client IDs to the list
    private void addAllIDs(UIComponent component, FacesContext facesContext)
    {
+      if (component == null) return;
+      
       addClientID(component, facesContext);
+
+      if (component instanceof UIData)
+      {
+         addUIData((UIData)component, facesContext);
+         return;
+      }
       
       for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
       {
          addAllIDs((UIComponent)facetsAndChildren.next(), facesContext);
       }
+   }
+   
+   private void addUIData(UIData component, FacesContext facesContext)
+   {
+      // TODO: find out if headers and footers are found
+      for (int i=0; i < component.getRowCount(); i++)
+      {
+         component.setRowIndex(i);
+         for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
+         {
+            addAllIDs((UIComponent)facetsAndChildren.next(), facesContext);
+         } 
+      }
+      
+      component.setRowIndex(-1);
    }
    
    private void addClientID(UIComponent component, FacesContext facesContext)
@@ -71,21 +98,34 @@ public class ClientIDs
       String clientId = component.getClientId(facesContext);
       if (clientId == null) return;
 
-      //System.out.println("adding clientID=" + clientId);
+      /* temporary junk for debugging
+      if (component instanceof javax.faces.component.html.HtmlInputText) 
+      {
+         javax.faces.component.html.HtmlInputText textComp = (javax.faces.component.html.HtmlInputText)component;
+         System.out.println("adding clientID=" + clientId + "/ className=" + component.getClass().getName() +
+                         "/ onkeyup=" + textComp.getOnkeyup());
+        // org.ajax4jsf.framework.util.javascript.AjaxSubmitFunction aFunc = new org.ajax4jsf.framework.util.javascript.AjaxSubmitFunction(component);
+        // System.out.println("options=" + aFunc.getOptions());
+        // System.out.println("params=" + aFunc.getRequestParameters());
+      } else {
+         //System.out.println("adding clientID=" + clientId + "/ className=" + component.getClass().getName() + " / identity=" + component.hashCode());
+      } */
+      
       allClientIDs.add(clientId);
+      allComponents.put(clientId, component);
    }
    
    /**
-    * Given a client ID suffix, find the fully-qualified client ID.
+    * Given a client ID or client ID suffix, find the fully-qualified client ID.
     * 
-    * @param suffix The client ID suffix.
+    * @param suffix The full client ID or a suffix of the client ID.
     *
     * @return The fully-qualified client ID.
     *
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     */
-   public String find(String suffix)
+   public String findClientID(String suffix)
    {
       if (suffix == null) throw new NullPointerException();
       
@@ -101,5 +141,20 @@ public class ClientIDs
       if (matches.isEmpty()) throw new ComponentIDNotFoundException(suffix);
       
       throw new DuplicateClientIDException(suffix, matches);
+   }
+   
+   /**
+    * Given a client ID suffix, find the matching UIComponent.
+    * 
+    * @param suffix The full client ID or a suffix of the client ID.
+    *
+    * @return The UIComponent.
+    *
+    * @throws ComponentIDNotFoundException if no client ID matches the suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    */
+   public UIComponent findComponent(String suffix)
+   {
+      return allComponents.get(findClientID(suffix));
    }
 }
