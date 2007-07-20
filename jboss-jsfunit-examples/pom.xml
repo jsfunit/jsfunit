@@ -14,6 +14,7 @@
 
   <modules>
     <module>jboss-jsfunit-examples-hellojsf</module>
+    <module>jboss-jsfunit-examples-ajax4jsf</module>
   </modules>
     
   <profiles>
@@ -39,11 +40,17 @@
 
     <profile>
       <id>jboss4.0</id>    
-      <dependencies>
+      <dependencies>        
         <dependency>
-          <groupId>myfaces</groupId>
+          <groupId>org.apache.myfaces.core</groupId>
           <artifactId>myfaces-impl</artifactId>
-          <version>1.1.1</version>
+          <version>1.1.5</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.myfaces.core</groupId>
+          <artifactId>myfaces-api</artifactId>
+          <version>1.1.5</version>
           <scope>provided</scope>
         </dependency>
       </dependencies>
@@ -68,13 +75,19 @@
 
     <profile>
       <id>jee5</id>
-      <dependencies>
-          <dependency>
-            <groupId>myfaces</groupId>
-            <artifactId>myfaces-impl</artifactId>
-            <version>1.1.1</version>
-            <scope>provided</scope>
-          </dependency>
+      <dependencies>          
+        <dependency>
+          <groupId>org.apache.myfaces.core</groupId>
+          <artifactId>myfaces-impl</artifactId>
+          <version>1.1.5</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.myfaces.core</groupId>
+          <artifactId>myfaces-api</artifactId>
+          <version>1.1.5</version>
+          <scope>provided</scope>
+        </dependency>
       </dependencies>
       <build>    
         <plugins>
@@ -92,14 +105,22 @@
 
   </profiles>
   
-  <dependencies>
+  <dependencies>    
     <dependency>
-      <groupId>myfaces</groupId>
+      <groupId>org.apache.myfaces.core</groupId>
       <artifactId>myfaces-impl</artifactId>
-      <version>1.1.1</version>
+      <version>1.1.5</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-api</artifactId>
+      <version>1.1.5</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>

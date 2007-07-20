@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>jboss</groupId>
+    <artifactId>jboss-jsfunit-examples</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-examples-ajax4jsf</artifactId>
+  <packaging>war</packaging>  
+  <name>Example tests for Ajax4JSF sample app</name>      
+   
+<!--
+  <repositories>    
+    <repository>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+         <snapshots>
+            <updatePolicy>always</updatePolicy>
+         </snapshots>
+         <id>maven.exadel.com</id>
+         <name>Exadel Repository for Maven Snapshots</name>
+         <url>http://maven.exadel.com/</url>
+         <layout>default</layout>
+    </repository>
+  </repositories>
+  -->
+
+  <profiles>
+    <profile>
+      <id>test</id>        
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            
+            <executions>
+              <execution>
+                <id>surefire-it</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <skip>false</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <wait>false</wait>  
+              <configuration>                  
+                <deployables>
+                  <deployable>
+                    <location>${project.build.directory}/${artifactId}.war</location>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>jee5</id>
+      <dependencies>  
+        <dependency>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+          <version>1.0</version>
+          <scope>provided</scope>
+        </dependency>    
+        <dependency>
+          <groupId>com.sun.el</groupId>
+          <artifactId>el-ri</artifactId>
+          <version>1.0</version>
+          <scope>provided</scope>
+        </dependency>                      
+      </dependencies>
+    </profile>
+  </profiles>
+
+  <dependencies>    
+  
+    <dependency>
+      <groupId>jboss</groupId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>jboss</groupId>
+      <artifactId>jboss-jsfunit-ajax4jsf</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.ajax4jsf</groupId>
+      <artifactId>ajax4jsf</artifactId>
+      <version>1.1.1</version>
+      <scope>compile</scope>
+      <exclusions>        
+        <exclusion>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-impl</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.facelets</groupId>
+      <artifactId>jsf-facelets</artifactId>
+	<version>1.1.11</version>	
+    </dependency>
+
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>el-api</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>  
+
+    <dependency>
+      <groupId>com.sun.el</groupId>
+      <artifactId>el-ri</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>                
+
+  </dependencies>
+
+  <!-- repo for el-ri -->
+  <repositories>
+    <repository>
+      <id>java.net</id>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <sourceDirectory>src/test/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/test/resources</directory>
+      </resource>
+    </resources>
+    
+    <plugins>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>  
+  </build>
+
+</project>

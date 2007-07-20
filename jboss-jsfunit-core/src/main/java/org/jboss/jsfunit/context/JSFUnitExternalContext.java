@@ -240,6 +240,38 @@ public class JSFUnitExternalContext extends ExternalContext
       return string;
    }
    
+   /**
+    * We know that we are using cookies for the jsessionid.
+    * So this method will return the url unchanged.
+    *
+    * @param url The url to encode.
+    *
+    * @return The url unchanged.
+    *
+    * @throws NullPointerException if the url is null
+    */
+   public String encodeResourceURL(String url)
+   {
+      if (url == null) throw new NullPointerException("url can not be null.");
+      return url;
+   }
+
+   /**
+    * We know that we are using cookies for the jsessionid.
+    * So this method will return the url unchanged.
+    *
+    * @param url The url to encode.
+    *
+    * @return The url unchanged.
+    *
+    * @throws NullPointerException if the url is null
+    */
+   public String encodeActionURL(String url)
+   {
+      if (url == null) throw new NullPointerException("url can not be null.");
+      return url;
+   }
+   
 // ----- Methods that rely on HttpRequest or HttpResponse: These objects may
 // ----- have been recycled/reclaimed by the servlet container.
    /**
@@ -248,22 +280,6 @@ public class JSFUnitExternalContext extends ExternalContext
    public boolean isUserInRole(String string)
    {
       return delegate.isUserInRole(string);
-   }
-
-   /**
-    * Warning: This method could yield unexpected results.
-    */
-   public String encodeResourceURL(String string)
-   {
-      return delegate.encodeResourceURL(string);
-   }
-
-   /**
-    * Warning: This method could yield unexpected results.
-    */
-   public String encodeActionURL(String string)
-   {
-      return delegate.encodeActionURL(string);
    }
 
    /**
