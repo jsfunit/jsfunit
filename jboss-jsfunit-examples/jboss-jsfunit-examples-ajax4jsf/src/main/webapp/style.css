@@ -1,0 +1,32 @@
+	.toptable {
+		border: 1px solid gray;
+	}
+
+	.toptable td{
+		padding: 10px 10px 10px 10px;
+	}
+	
+	
+	.panel {
+		background-color: lightblue;
+		height:180px;
+		width:100%;
+
+	}
+	
+	.panel td {
+		padding: 3px 3px 3px 3px;
+		font-size: 14px;
+		font-family:helvetica, sans-serif, arial;
+	}
+	
+	.celltop {
+		vertical-align:top;
+	}
+	.cellmiddle {
+		vertical-align:middle;
+	}
+	.cellbottom {
+		vertical-align:bottom;
+	}
+	

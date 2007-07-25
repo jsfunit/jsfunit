@@ -5,6 +5,9 @@ package demo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  * @author ias
@@ -36,24 +39,40 @@ public class Bean {
 	}
 
 	public synchronized String up() {
-		for (int index=0; index<getCollection().size(); index++) {
-			Integer current = getCollection().get(index);
-			current++;
-			getCollection().set(index,current);
-		}
+                int index = findTargetIndex("command_link_up");
+		Integer current = getCollection().get(index);
+		current++;
+		getCollection().set(index,current);
 		requestCounter++;
 		return null;
 	}
 
 	public synchronized String down() {
 		requestCounter++;
-		for (int index=0; index<getCollection().size(); index++) {
-			Integer current = getCollection().get(index);
-			current--;
-			getCollection().set(index,current);
-		}
+                int index = findTargetIndex("command_link_down");
+		Integer current = getCollection().get(index);
+		current--;
+		getCollection().set(index,current);
 		return null;
 	}
+
+        private int findTargetIndex(String target)
+        {
+           ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();   
+           for (Iterator i = extCtx.getRequestParameterNames(); i.hasNext();)
+           {
+              String param = (String)i.next();
+              if (param.endsWith(target))
+              {
+                 int lastColon = param.lastIndexOf(":");
+                 int nextToLastColon = param.lastIndexOf(":", lastColon - 1);
+                 String index = param.substring(nextToLastColon + 1, lastColon);
+                 return Integer.parseInt(index);
+              }
+            } 
+
+            throw new IllegalStateException("Could not find target index.");
+        }
 
 	public synchronized int getRequestCounter() {
 		return requestCounter;

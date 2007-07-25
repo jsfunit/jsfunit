@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="https://ajax4jsf.dev.java.net/ajax">
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+
+<body>
+<h:form id="form1">
+	<table width="600"  class="toptable" border="0">
+		<tr>
+			<td width="120" valign="top" rowspan="3"  class="toptabletd">
+				<h:selectOneListbox id="list" value="#{backingBean.selectedId}">
+				        <a4j:support id="a4jsupport" event="onclick" action="#{backingBean.changeCurrent}" reRender="info"/>
+					<f:selectItems value="#{backingBean.selectList}"/>
+				</h:selectOneListbox>
+			</td>
+			<td valign="middle"   class="toptabletd">
+				<h:panelGrid id="info"  styleClass="panel" rowClasses="celltop, cellmiddle, cellbottom" columns="1">
+
+						<h:panelGroup>
+							<h:outputText value="#{userList.currentUser.prefix}" />
+							<h:outputText value=" " />
+							<h:outputText value="#{userList.currentUser.firstName}" />
+							<h:outputText value=" " />
+							<h:outputText value="#{userList.currentUser.lastName}" /><br />
+							<h:outputText value="#{userList.currentUser.address}" />
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<h:outputText value="#{userList.currentUser.jobTitle}" />
+						</h:panelGroup>
+
+						<h:panelGroup>
+							Phone:<h:outputText value="#{userList.currentUser.phone}" /><br />
+							Cell:<h:outputText value="#{userList.currentUser.mobile}" />
+						</h:panelGroup>
+
+				</h:panelGrid>
+			</td>
+		</tr>
+	</table>
+</h:form>
+</body>
+</html>

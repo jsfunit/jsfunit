@@ -6,6 +6,7 @@
   "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
 
 <faces-config>
+
  <managed-bean>
   <managed-bean-name>bean</managed-bean-name>
   <managed-bean-class>demo.Bean</managed-bean-class>
@@ -15,6 +16,16 @@
  <managed-bean>
   <managed-bean-name>textbean</managed-bean-name>
   <managed-bean-class>org.jboss.jsfunit.example.ajax4jsf.TextBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+  <managed-property>
+    <property-name>text</property-name>
+    <value/>
+  </managed-property>
+ </managed-bean>
+ 
+ <managed-bean>
+  <managed-bean-name>request_scope_textbean</managed-bean-name>
+  <managed-bean-class>org.jboss.jsfunit.example.ajax4jsf.TextBean</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
   <managed-property>
     <property-name>text</property-name>
@@ -22,6 +33,21 @@
   </managed-property>
  </managed-bean>
  
- <lifecycle>
- </lifecycle>
+ <managed-bean>
+  <managed-bean-name>userList</managed-bean-name>
+  <managed-bean-class>demo.UserList</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+
+ <managed-bean>
+  <managed-bean-name>backingBean</managed-bean-name>
+  <managed-bean-class>demo.BackingBean</managed-bean-class>
+  <managed-bean-scope>request</managed-bean-scope>
+  <managed-property>
+   <property-name>userlist</property-name>
+   <property-class>demo.UserList</property-class>
+   <value>#{userList}</value>
+  </managed-property>
+ </managed-bean>
+
 </faces-config>

@@ -166,12 +166,6 @@ public class Ajax4jsfClient
          req.setParameter(param, (String)params.get(param));
       }
 
-      /* dump params    
-      String[] reqParamNames = req.getRequestParameterNames();
-      for (int i=0; i < reqParamNames.length; i++) {
-         System.out.println(reqParamNames[i] + " = " + req.getParameterValues(reqParamNames[i])[0]);
-      } */
-      
       restoreRowIndices(indiciesToRestore);
       client.ajaxRequest(req);
    }

@@ -22,7 +22,9 @@
 
 package org.jboss.jsfunit.framework;
 
+import com.meterware.httpunit.HttpUnitOptions;
 import com.meterware.httpunit.WebConversation;
+import com.meterware.httpunit.parsing.HTMLParserFactory;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -91,6 +93,8 @@ public class WebConversationFactory
     */
    public static WebConversation makeWebConversation()
    {
+      HTMLParserFactory.useJTidyParser();
+      HttpUnitOptions.setScriptingEnabled(false);
       WebConversation wc = new WebConversation();
       HttpSession session = getSessionFromThreadLocal();
       

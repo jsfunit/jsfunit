@@ -120,7 +120,7 @@ public class ClientFacade
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     */
-   public void setParameter(String componentID, String value) throws SAXException
+   public void setParameter(String componentID, String... value) throws SAXException
    {
       String clientID = this.clientIDs.findClientID(componentID);
       getForm(clientID).setParameter(clientID, value);
