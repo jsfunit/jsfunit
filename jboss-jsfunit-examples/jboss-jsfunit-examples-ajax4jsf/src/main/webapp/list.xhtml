@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -9,40 +10,57 @@
 </head>
 
 <body>
+<f:view>
+<h:outputLink id="GoBack" 
+                     value="index.jsf">
+  <h:outputText value="&lt;-- Go Back"/>
+</h:outputLink>
+<br/><br/>
+<h:outputText value="Click a name to see AJAX update"/>
 <h:form id="form1">
-	<table width="600"  class="toptable" border="0">
-		<tr>
-			<td width="120" valign="top" rowspan="3"  class="toptabletd">
-				<h:selectOneListbox id="list" value="#{backingBean.selectedId}">
-				        <a4j:support id="a4jsupport" event="onclick" action="#{backingBean.changeCurrent}" reRender="info"/>
-					<f:selectItems value="#{backingBean.selectList}"/>
-				</h:selectOneListbox>
-			</td>
-			<td valign="middle"   class="toptabletd">
-				<h:panelGrid id="info"  styleClass="panel" rowClasses="celltop, cellmiddle, cellbottom" columns="1">
+  <table width="600"  class="toptable" border="0">
+    <tr>
+    <td width="120" valign="top" rowspan="3"  class="toptabletd">
+      <h:selectOneListbox id="list" value="#{backingBean.selectedId}">
+              <a4j:support id="a4jsupport" event="onclick" 
+                         action="#{backingBean.changeCurrent}" reRender="info"/>
+              <f:selectItems value="#{backingBean.selectList}"/>
+      </h:selectOneListbox>
+    </td>
+    <td valign="middle"   class="toptabletd">
+      <h:panelGrid id="info"  styleClass="panel" 
+                   rowClasses="celltop, cellmiddle, cellbottom" columns="1">
 
-						<h:panelGroup>
-							<h:outputText value="#{userList.currentUser.prefix}" />
-							<h:outputText value=" " />
-							<h:outputText value="#{userList.currentUser.firstName}" />
-							<h:outputText value=" " />
-							<h:outputText value="#{userList.currentUser.lastName}" /><br />
-							<h:outputText value="#{userList.currentUser.address}" />
-						</h:panelGroup>
+        <h:panelGroup>
+                <h:outputText value="#{userList.currentUser.prefix}" />
+                <h:outputText value=" " />
+                <h:outputText value="#{userList.currentUser.firstName}" />
+                <h:outputText value=" " />
+                <h:outputText value="#{userList.currentUser.lastName}" /><br />
+                <h:outputText value="#{userList.currentUser.address}" />
+        </h:panelGroup>
 
-						<h:panelGroup>
-							<h:outputText value="#{userList.currentUser.jobTitle}" />
-						</h:panelGroup>
+        <h:panelGroup>
+                <h:outputText value="#{userList.currentUser.jobTitle}" />
+        </h:panelGroup>
 
-						<h:panelGroup>
-							Phone:<h:outputText value="#{userList.currentUser.phone}" /><br />
-							Cell:<h:outputText value="#{userList.currentUser.mobile}" />
-						</h:panelGroup>
+        <h:panelGroup>
+                Phone:<h:outputText value="#{userList.currentUser.phone}" />
+                <br/>
+                Cell:<h:outputText value="#{userList.currentUser.mobile}" />
+        </h:panelGroup>
 
-				</h:panelGrid>
-			</td>
-		</tr>
-	</table>
+      </h:panelGrid>
+    </td>
+    </tr>
+  </table>
 </h:form>
+  <br/>
+  <h:panelGrid columns="1" border="0" cellpadding="10" id="panelGrid">
+    <h:outputText value="Here is the source for this page"/>
+    <h:inputTextarea rows="30" cols="80" readonly="true" 
+                     value="#{textbean.listSource}"/>
+  </h:panelGrid>
+</f:view>
 </body>
 </html>

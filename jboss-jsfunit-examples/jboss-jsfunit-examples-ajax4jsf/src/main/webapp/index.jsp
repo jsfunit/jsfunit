@@ -2,6 +2,6 @@
 <html>
 <head></head>
 	<body>
-		<jsp:forward page="/pages/a4j-repeat-rerender.jsf"/>
+		<jsp:forward page="/index.jsf"/>
 	</body>
 </html>

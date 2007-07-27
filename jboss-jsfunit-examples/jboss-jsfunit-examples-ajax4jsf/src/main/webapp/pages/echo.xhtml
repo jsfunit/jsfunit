@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -7,17 +8,34 @@
 
   <body>
     <f:view>
+      <h:outputLink id="GoBack" 
+                     value="../index.jsf">
+             <h:outputText value="&lt;-- Go Back"/>
+      </h:outputLink>
+      <br/>
+      <h2>
+      <h:outputText value="Type text into the fields to see the AJAX update"/>
+      </h2>
+      
       <h:form id="form1">
         <h:inputText id="input_text" size="50" value="#{textbean.text}" >
           <a4j:support id="a4jsupport" event="onkeyup" reRender="rep"/>
         </h:inputText>
         <h:outputText value="#{textbean.text}" id="rep"/>
         <p/>
-        <h:inputText id="input_text_request_scope" size="50" value="#{request_scope_textbean.text}" >
-          <a4j:support id="a4jsupport_request_scope" event="onkeyup" reRender="rep2"/>
+        <h:inputText id="input_text_request_scope" size="50" 
+                     value="#{request_scope_textbean.text}" >
+          <a4j:support id="a4jsupport_request_scope" event="onkeyup" 
+                       reRender="rep2"/>
         </h:inputText>
         <h:outputText value="#{request_scope_textbean.text}" id="rep2"/>
       </h:form>
+      <br/>
+      <h:panelGrid columns="1" border="0" cellpadding="10" id="panelGrid">
+        <h:outputText value="Here is the source for this page"/>
+        <h:inputTextarea rows="30" cols="80" readonly="true" 
+                         value="#{textbean.echoSource}"/>
+      </h:panelGrid>
     </f:view>
   </body>
   

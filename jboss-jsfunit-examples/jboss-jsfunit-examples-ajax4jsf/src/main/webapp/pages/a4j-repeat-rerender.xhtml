@@ -74,6 +74,11 @@ color: rgb(0,0,196); background-color: rgb(228,230,160);
 </head>
 <body>
 <f:view>
+        <h:outputLink id="GoBack" 
+                     value="../index.jsf">
+             <h:outputText value="&lt;-- Go Back"/>
+        </h:outputLink>
+        <br/><br/>
 	<a4j:log hotkey="M" />
 	<h:panelGrid columns="2" columnClasses="col1,col2">
 	<h:panelGrid columns="1">
@@ -92,9 +97,9 @@ color: rgb(0,0,196); background-color: rgb(228,230,160);
 					</a4j:commandLink>
 				</h:column>
 				<h:column>
-					<a4j:commandButton id="command_link_down" value="Down"  reRender="item, counter" action="#{bean.down}" styleClass="output">
+					<a4j:commandLink id="command_link_down" value="Down"  reRender="item, counter" action="#{bean.down}" styleClass="output">
 						<a4j:ajaxListener type="org.ajax4jsf.ajax.ForceRender" /> 
-					</a4j:commandButton>
+					</a4j:commandLink>
 				</h:column>
 			</h:dataTable>
 		</h:form>

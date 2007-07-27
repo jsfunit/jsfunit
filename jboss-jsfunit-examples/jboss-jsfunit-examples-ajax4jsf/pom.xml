@@ -188,7 +188,20 @@
     </resources>
     
     <plugins>
-      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/ajax4jsf</directory>
+              <includes>
+                <include>A4JTest.java</include>
+              </includes>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
