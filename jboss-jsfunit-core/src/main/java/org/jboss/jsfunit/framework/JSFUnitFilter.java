@@ -61,6 +61,16 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  * &lt;/filter-mapping&gt;	
  * </pre></code>
  * </p> 
+ * <p>
+ * If you are using a secure Cacuts redirector, you will also
+ * need to declare the filter for that servele:
+ * <code><pre>
+ * &lt;filter-mapping&gt;
+ *   &lt;filter-name&gt;JSFUnitFilter&lt;/filter-name&gt;
+ *   &lt;servlet-name&gt;ServletRedirectorSecure&lt;/servlet-name&gt;
+ * &lt;/filter-mapping&gt;	
+ * </pre></code>
+ * </p> 
  *
  * @author Stan Silvert
  */

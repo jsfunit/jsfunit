@@ -114,7 +114,6 @@ public class JSFUnitExternalContext extends ExternalContext
       return this.requestContextPath;
    }
 
-
    public String getRemoteUser()
    {
       return this.remoteUser;
@@ -241,8 +240,8 @@ public class JSFUnitExternalContext extends ExternalContext
    }
    
    /**
-    * We know that we are using cookies for the jsessionid.
-    * So this method will return the url unchanged.
+    * Return the url unchanged.  This is OK in JSFUnit because we know that we 
+    * are using cookies for the jsessionid.
     *
     * @param url The url to encode.
     *
@@ -257,8 +256,8 @@ public class JSFUnitExternalContext extends ExternalContext
    }
 
    /**
-    * We know that we are using cookies for the jsessionid.
-    * So this method will return the url unchanged.
+    * Return the url unchanged.  This is OK in JSFUnit because we know that we 
+    * are using cookies for the jsessionid.
     *
     * @param url The url to encode.
     *
@@ -301,8 +300,12 @@ public class JSFUnitExternalContext extends ExternalContext
    
 // ------------ Unsupported Operations ----------------------------------------------------------
    /**
-    * Since the JSFUnitExternalContext is not active until the request is
-    * over, it doesn't make sense to do a dispatch by calling this method.
+    * Unsupported method.  Since the JSFUnitExternalContext is not active until 
+    * the request is over, it doesn't make sense to do a dispatch by calling 
+    * this method in a JSFUnit test.
+    *
+    * @throws UnsupportedOperationException if this method is called during
+    *                                       a JSFUnit test.
     */
    public void dispatch(String string) throws IOException
    {
@@ -310,8 +313,12 @@ public class JSFUnitExternalContext extends ExternalContext
    }
    
    /**
-    * Since the JSFUnitExternalContext is not active until the request is
-    * over, it doesn't make sense to call this method.
+    * Unsupported method.  Since the JSFUnitExternalContext is not active until 
+    * the request is over, it doesn't make sense to do a dispatch by calling 
+    * this method in a JSFUnit test.
+    *
+    * @throws UnsupportedOperationException if this method is called during
+    *                                       a JSFUnit test.
     */
    public void redirect(String string) throws IOException
    {

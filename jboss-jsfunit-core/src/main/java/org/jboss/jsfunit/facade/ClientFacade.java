@@ -68,7 +68,9 @@ public class ClientFacade
       this.clientIDs = new ClientIDs();
    }
    
-   // protected method used by ServerFacade
+   /**
+    * Protected method used by ServerFacade
+    */
    protected ClientIDs getClientIDs()
    {
       return this.clientIDs;
@@ -92,7 +94,7 @@ public class ClientFacade
     * @return The WebForm.
     *
     * @throws SAXException if the current response page can not be parsed
-    * @throws ComponentIDNotFoundException if the form can not be found on the page
+    * @throws ComponentIDNotFoundException if the component can not be found
     * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     * @throws FormNotFoundException if no form parameter can be found matching the componentID
     */
@@ -127,9 +129,27 @@ public class ClientFacade
    }
    
    /**
-    * Finds the first submit button on the form and submits the form.  
+    * Set a checkbox value on a form.  This method is needed because
+    * setParameter can not "uncheck" a checkbox.
     *
-    * @throws IllegalStateException if page does not contain a single form.
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws IllegalArgumentException if the componentID does not resolve to a checkbox control
+    */
+   public void setCheckbox(String componentID, boolean state) throws SAXException
+   {
+      String clientID = this.clientIDs.findClientID(componentID);
+      getForm(clientID).setCheckbox(clientID, state);
+   }
+   
+   /**
+    * Finds the lone form on the page and submits the form.
+    *
+    * @throws IllegalStateException if page does not contain exactly one form.
     * @throws IOException if there is a problem submitting the form.
     * @throws SAXException if the response page can not be parsed
     */
@@ -171,7 +191,7 @@ public class ClientFacade
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
     */
-   public void click(String componentID) throws SAXException, IOException
+   public void clickLink(String componentID) throws SAXException, IOException
    {
       String clientID = this.clientIDs.findClientID(componentID);
       WebLink link = this.webResponse.getLinkWithID(clientID);

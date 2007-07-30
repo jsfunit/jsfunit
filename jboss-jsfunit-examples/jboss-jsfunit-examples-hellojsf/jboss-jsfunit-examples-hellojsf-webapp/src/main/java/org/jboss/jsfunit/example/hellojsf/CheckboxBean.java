@@ -1,4 +1,3 @@
-<%--
 /*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
@@ -20,31 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
-<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+package org.jboss.jsfunit.example.hellojsf;
 
-<HTML>
-
-<f:view>  
-   <h:form id="form1">    
-      
-      <h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/>
-      <h:outputText value="Hello #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/><br/>
-      
-      <h:inputText value="#{foo.text}" id="input_foo_text">          
-        <f:validateLength minimum="2"/>
-      </h:inputText>
-      <h:message for="input_foo_text" styleClass="errorMessage"/>
-      <br/>
-      <h:outputText id="funchecktext" value="Uncheck this box just for fun  "/>
-      <h:selectBooleanCheckbox id="funcheck" value="#{checkbox.funCheck}"/>
-      <br/><br/>
-      <h:commandButton value="Submit" action="/index.jsp" id="submit_button"/>
-      <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>
-
-   </h:form>
-</f:view>
-
-</HTML>
+/**
+ * Simple backing bean for a checkbox.
+ *
+ * @author Stan Silvert
+ */
+public class CheckboxBean
+{
+   
+   private boolean funCheck = true;
+   
+   public boolean getFunCheck()
+   {
+      return this.funCheck;
+   }
+   
+   public void setFunCheck(boolean funCheck)
+   {
+      this.funCheck = funCheck;
+   }
+   
+}

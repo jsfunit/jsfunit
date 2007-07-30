@@ -83,6 +83,18 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(greeting.isRendered());
    }
    
+   public void testSetCheckbox() throws IOException, SAXException
+   {
+      ServerFacade server = new ServerFacade(client);
+      client.setCheckbox("funcheck", false);
+      client.submit("submit_button");
+      assertFalse((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
+      
+      client.setCheckbox("funcheck", true);
+      client.submit("submit_button");
+      assertTrue((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
+   }
+   
    /**
     * Tests ClientFacade.submit().  This can only be called if there is
     * only one submit button on the form.
@@ -117,7 +129,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testClickALink() throws IOException, SAXException
    {
-      client.click("SourceSimplifiedHelloJSFIntegrationTest");
+      client.clickLink("SourceSimplifiedHelloJSFIntegrationTest");
       WebResponse response = client.getWebResponse();
       assertTrue(response.getText().contains("public class SimplifiedHelloJSFIntegrationTest"));
    }

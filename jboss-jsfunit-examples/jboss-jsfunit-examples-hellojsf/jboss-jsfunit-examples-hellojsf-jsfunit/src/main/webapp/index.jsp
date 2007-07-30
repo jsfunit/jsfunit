@@ -39,6 +39,9 @@
       </h:inputText>
       <h:message for="input_foo_text" styleClass="errorMessage"/>
       <br/>
+      <h:outputText id="funchecktext" value="Uncheck this box just for fun  "/>
+      <h:selectBooleanCheckbox id="funcheck" value="#{checkbox.funCheck}"/>
+      <br/><br/>
       <h:commandButton value="Hello" action="/index.jsp" id="submit_button"/>
       <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>
 

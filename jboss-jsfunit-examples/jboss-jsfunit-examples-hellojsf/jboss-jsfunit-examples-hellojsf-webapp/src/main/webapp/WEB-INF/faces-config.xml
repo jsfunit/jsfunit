@@ -37,5 +37,12 @@
     <managed-bean-class>javax.swing.JButton</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+  
+  <managed-bean>
+    <description>Backing bean for checkbox</description>
+    <managed-bean-name>checkbox</managed-bean-name>
+    <managed-bean-class>org.jboss.jsfunit.example.hellojsf.CheckboxBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
 
 </faces-config>
