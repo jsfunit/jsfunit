@@ -84,6 +84,7 @@ public class JSFUnitFilter implements Filter
       try 
       {
         WebConversationFactory.setThreadLocals((HttpServletRequest)req);
+        System.setProperty("cactus.contextURL", WebConversationFactory.getWARURL());
         filterChain.doFilter(req, res);
       } 
       finally 

@@ -26,6 +26,7 @@ import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import junit.framework.Test;
@@ -43,15 +44,28 @@ public class ManualInvokeTest extends TestCase
    
    private String contextURL;
    
-   public void setUp() throws Exception
+   public void setUp() throws IOException
    {
+      String url = System.getProperty("cactus.contextURL");
+      if (url != null)
+      {
+         this.contextURL = url;
+         return;
+      }
+      
+      this.contextURL = getContextURLFromCactusDotProperties();
+   }
+   
+   private String getContextURLFromCactusDotProperties() throws IOException
+   {
+   
       InputStream in = null;
       try
       {
          in = ManualInvokeTest.class.getResourceAsStream("/cactus.properties");
          Properties props = new Properties();
          props.load(in);
-         this.contextURL = props.getProperty("cactus.contextURL");
+         return props.getProperty("cactus.contextURL");
       }
       finally
       {

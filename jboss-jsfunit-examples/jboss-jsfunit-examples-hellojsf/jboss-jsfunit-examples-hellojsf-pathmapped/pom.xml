@@ -30,6 +30,12 @@
                 </goals>
                 <configuration>
                   <skip>false</skip>
+                  <systemProperties>
+                    <property>
+                      <name>cactus.contextURL</name>
+                      <value>http://localhost:8080/${artifactId}</value>
+                    </property>
+                  </systemProperties>
                 </configuration>
               </execution>
             </executions>
@@ -105,11 +111,6 @@
   <build>
     <sourceDirectory>src/test/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
-    <resources>
-      <resource>
-        <directory>src/test/resources</directory>
-      </resource>
-    </resources>
     
     <plugins>
       <plugin>
