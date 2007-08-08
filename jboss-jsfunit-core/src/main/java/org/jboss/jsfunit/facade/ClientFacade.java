@@ -69,6 +69,32 @@ public class ClientFacade
    }
    
    /**
+    * Creates a new client interface for testing a JSF application that requires basic authentication.   
+    * This will also start a new HttpSession.
+    * 
+    * Note that the initialPage param should be something that maps into the FacesServlet.
+    * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
+    * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
+    * initialPage param will be something like "/faces/index.jsp".
+    * 
+    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
+    * @param username The username used for basic authentication.
+    * @param password The password used for basic authentication.
+    *
+    * @throws MalformedURLException If the initialPage cannot be used to create a URL for the JSF app
+    * @throws IOException If there is an error calling the JSF app
+    * @throws SAXException If the response from the JSF app cannot be parsed as HTML
+    */
+   public ClientFacade(String initialPage, String username, String password) throws MalformedURLException, IOException, SAXException
+   {
+      this.webConversation = WebConversationFactory.makeWebConversation();
+      WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
+      webConversation.setAuthorization(username, password);
+      this.webResponse = webConversation.getResponse(req);
+      this.clientIDs = new ClientIDs();
+   }
+   
+   /**
     * Protected method used by ServerFacade
     */
    protected ClientIDs getClientIDs()
