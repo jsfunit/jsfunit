@@ -104,7 +104,29 @@ public class FacadeAPITest extends ServletTestCase
       client.submit("goodbye_button");  // go to finalgreeting page
       client.submit(); // only one submit button on finalgreeting page
       ServerFacade server = new ServerFacade(client);
-      assertEquals("/index.jsp", server.getCurrentViewId());  // test that we are back on the first page
+      
+      // test that we are back on the first page
+      assertEquals("/index.jsp", server.getCurrentViewId());  
+   }
+   
+   public void testClickCommandLink() throws IOException, SAXException
+   {
+      client.submit("goodbye_button");
+      client.clickCommandLink("go_back_link");
+      ServerFacade server = new ServerFacade(client);
+      
+      // test that we are back on the first page
+      assertEquals("/index.jsp", server.getCurrentViewId());
+   }
+   
+   public void testCommandLinkWithoutViewChange() throws IOException, SAXException
+   {
+      client.submit("goodbye_button");
+      client.clickCommandLink("stay_here_link");
+      ServerFacade server = new ServerFacade(client);
+      
+      // test that we are still on the same page
+      assertEquals("/finalgreeting.jsp", server.getCurrentViewId());
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException

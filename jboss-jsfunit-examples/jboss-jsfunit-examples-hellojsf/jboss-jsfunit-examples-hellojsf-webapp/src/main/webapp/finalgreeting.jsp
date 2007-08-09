@@ -31,7 +31,9 @@
    
       <h:outputText value="Bye #{foo.text}. I enjoyed our chat." id="finalgreeting"/><br/>
       <h:form id="form2">
-         <h:commandButton value="Go Back to Start" action="/index.jsp" id="go_back_button"/>
+         <h:commandButton value="Go Back to Start" action="/index.jsp" id="go_back_button"/><br/>
+         <h:commandLink value="Go Back to Start Using h:commandLink" action="/index.jsp" id="go_back_link"/></br>
+         <h:commandLink value="Stay here Using h:commandLink" action="/finalgreeting.jsp" id="stay_here_link"/>
       </h:form>
 </f:view>
 

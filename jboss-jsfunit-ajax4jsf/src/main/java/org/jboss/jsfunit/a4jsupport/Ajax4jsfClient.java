@@ -38,6 +38,7 @@ import org.ajax4jsf.framework.renderer.AjaxContainerRenderer;
 import org.ajax4jsf.framework.renderer.AjaxRendererUtils;
 import org.jboss.jsfunit.facade.ClientFacade;
 import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.WebRequestFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -48,11 +49,13 @@ import org.xml.sax.SAXException;
 public class Ajax4jsfClient
 {
    private ClientFacade client;
+   private WebRequestFactory requestFactory;
    
    public Ajax4jsfClient(ClientFacade client)
    {
       if (client == null) throw new NullPointerException("client can not be null");
       this.client = client;
+      this.requestFactory = new WebRequestFactory(client);
    }
    
    private String makeClientID(String[] terms, int treeDepth)
@@ -118,15 +121,6 @@ public class Ajax4jsfClient
       }
    } 
    
-   private WebRequest makePostRequest(String actionURL)
-   {
-      WebResponse latestResponse = client.getWebResponse();
-      String protocol = latestResponse.getURL().getProtocol();
-      String host = latestResponse.getURL().getHost();
-      String port = Integer.toString(latestResponse.getURL().getPort());
-      return new PostMethodWebRequest(protocol + "://" + host + ":" + port + actionURL);
-   }
-   
    /**
     * Fire the AJAX event associated with this component.
     *
@@ -143,16 +137,9 @@ public class Ajax4jsfClient
       UIComponent uiComp = server.findComponent(componentID);
       Map options = AjaxRendererUtils.buildEventOptions(server.getFacesContext(), uiComp);
       
-      WebRequest req = makePostRequest((String)options.get("actionUrl"));
+      WebRequest req = requestFactory.makePostRequest((String)options.get("actionUrl"),
+                                                      client.getForm(componentID));
 
-      // set params from the form
-      WebForm form = client.getForm(componentID);
-      String[] paramNames = form.getParameterNames();
-      for (int i=0; i < paramNames.length; i++)
-      {
-         req.setParameter(paramNames[i], form.getParameterValues(paramNames[i]));
-      }
-      
       // Tell A4J that it's an AJAX request
       FacesContext ctx = server.getFacesContext();
       UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);

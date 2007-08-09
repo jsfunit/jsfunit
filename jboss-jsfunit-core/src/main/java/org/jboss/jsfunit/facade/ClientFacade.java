@@ -44,6 +44,7 @@ public class ClientFacade
    private WebConversation webConversation;
    private WebResponse webResponse;
    private ClientIDs clientIDs;
+   private WebRequestFactory requestFactory;
    
    /**
     * Creates a new client interface for testing the JSF application.   
@@ -64,8 +65,8 @@ public class ClientFacade
    {
       this.webConversation = WebConversationFactory.makeWebConversation();
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
-      this.webResponse = webConversation.getResponse(req);
-      this.clientIDs = new ClientIDs();
+      doWebRequest(req);
+      this.requestFactory = new WebRequestFactory(this);
    }
    
    /**
@@ -90,8 +91,8 @@ public class ClientFacade
       this.webConversation = WebConversationFactory.makeWebConversation();
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
       webConversation.setAuthorization(username, password);
-      this.webResponse = webConversation.getResponse(req);
-      this.clientIDs = new ClientIDs();
+      doWebRequest(req);
+      this.requestFactory = new WebRequestFactory(this);
    }
    
    /**
@@ -208,7 +209,9 @@ public class ClientFacade
    }
    
    /**
-    * Finds the named link and clicks it.
+    * Finds the named link and clicks it.  This method is used to click static
+    * links such as those produced by h:outputLink.  If you need to submit
+    * a form using an h:commandLink, use clickCommandLink() instead.
     *
     * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
     *
@@ -223,6 +226,52 @@ public class ClientFacade
       WebLink link = this.webResponse.getLinkWithID(clientID);
       if (link == null) throw new ComponentIDNotFoundException(componentID);
       this.webResponse = link.click();
+      this.clientIDs = new ClientIDs();
+   }
+   
+   /**
+    * Finds the named command link and uses the link to submit its form.
+    *
+    * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
+    *
+    * @throws IOException if there is a problem clicking the link.
+    * @throws SAXException if the response page can not be parsed.
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    */
+   public void clickCommandLink(String componentID) throws SAXException, IOException
+   {
+      
+      WebRequest req = this.requestFactory.makePostRequest(getForm(componentID));
+      setCmdLinkParam(req, componentID);
+      doWebRequest(req);
+   }
+   
+   private void setCmdLinkParam(WebRequest req, String componentID) throws SAXException, IOException
+   {
+      String clientID = this.clientIDs.findClientID(componentID);
+      WebForm form = getForm(componentID);
+      
+      String myFaces115CmdLink = form.getID() + ":" + "_idcl";
+      if (form.hasParameterNamed(myFaces115CmdLink))
+      {
+         req.setParameter(myFaces115CmdLink, clientID);
+         return;
+      }
+      
+      String myFaces114CmdLink = form.getID() + ":" + "_link_hidden_";
+      if (form.hasParameterNamed(myFaces114CmdLink))
+      {
+         req.setParameter(myFaces114CmdLink, clientID);
+         return;
+      }
+      
+      req.setParameter(clientID, clientID); // for the RI
+   }
+   
+   private void doWebRequest(WebRequest request) throws SAXException, IOException
+   {
+      this.webResponse = this.webConversation.getResponse(request);
       this.clientIDs = new ClientIDs();
    }
    
@@ -244,9 +293,15 @@ public class ClientFacade
     */
    public void ajaxRequest(WebRequest request) throws SAXException, IOException
    {
-      this.webResponse = this.webConversation.getResponse(request);
-      String url = this.webResponse.getURL().toString();
-      this.webResponse = this.webConversation.getResponse(new GetMethodWebRequest(url));
-      this.clientIDs = new ClientIDs();
+      ServerFacade server = new ServerFacade(this);
+      String viewId = server.getCurrentViewId();
+      doWebRequest(request);
+      
+      // if viewId did not change, refresh the page
+      if (viewId.equals(server.getCurrentViewId()))
+      {
+         String url = this.webResponse.getURL().toString();
+         doWebRequest(new GetMethodWebRequest(url));
+      }
    }
 }
