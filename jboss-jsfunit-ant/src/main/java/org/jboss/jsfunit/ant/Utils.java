@@ -21,6 +21,7 @@
  */
 package org.jboss.jsfunit.ant;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -181,26 +182,38 @@ public class Utils {
 		for (int i=0; i< children.length; i++)
 		{
 			if (children[i].isDirectory()){
-				zip (prefix, children[i], zos);
+                            zip (prefix, children[i], zos);
 			}
 			else
 			{
-				ZipEntry zipFileEntry = new ZipEntry(prefix + children[i].getName());
-				FileInputStream in = new FileInputStream(children[i].getAbsolutePath());
-				int c;
-				zos.putNextEntry(zipFileEntry);
-
-				while ((c = in.read()) != -1)
-				{
-					zos.write(c);
-				}
-
-				in.close();
-				zos.flush();
+                            zipOneFile(prefix, children[i], zos);
 			}
 		}
 	}
 
+        /**
+	 * Zips a single file.
+	 * @param prefix used to specify the parent directory of the file
+	 * @param archiveDirectory the directory to be zipped
+	 * @param zos the ZipOutputStream used for the zip process
+	 * @throws IOException If an exception occurs during the zip process
+	 */
+        private static void zipOneFile(String prefix, File file, ZipOutputStream zos) throws IOException
+        {
+            ZipEntry zipFileEntry = new ZipEntry(prefix + file.getName());
+            InputStream in = new BufferedInputStream(new FileInputStream(file.getAbsolutePath()));
+            int c;
+            zos.putNextEntry(zipFileEntry);
+
+            while ((c = in.read()) != -1)
+            {
+                    zos.write(c);
+            }
+
+            in.close();
+            zos.flush();
+        }
+        
 	/**
 	 * Zips an exploded archive, this means that the directory itself is not added to the zip
 	 * @param prefix used to specify the parent directories of the files
@@ -211,10 +224,15 @@ public class Utils {
 	private static void archive (String prefix, File archiveDirectory, ZipOutputStream zos) throws IOException
 	{
 		File[] children = archiveDirectory.listFiles();
-
 		for (int i=0; i< children.length; i++)
 		{
-			zip (prefix, children[i], zos);
+                    if (children[i].isFile()) 
+                    {
+                        zipOneFile("", children[i], zos);
+                        continue;
+                    }
+                    
+                    zip (prefix, children[i], zos);
 		} 
 	}
 

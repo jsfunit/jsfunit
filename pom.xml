@@ -75,6 +75,7 @@
     <module>jboss-jsfunit-core</module>
     <module>jboss-jsfunit-ajax4jsf</module>
     <module>jboss-jsfunit-examples</module>
+    <module>jboss-jsfunit-ant</module>
   </modules>
 
   <build>
