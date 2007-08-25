@@ -35,7 +35,9 @@ import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 /**
- * The ClientFacade provides a simplified API that wraps HttpUnit.
+ * The ClientFacade provides a simplified API that wraps HttpUnit.  With a
+ * single ClientFacade object, you can simulate an entire user session as you
+ * set parameters and submit data using submit() and clickCommandLink() methods.
  *
  * @author Stan Silvert
  */
@@ -48,7 +50,7 @@ public class ClientFacade
    
    /**
     * Creates a new client interface for testing the JSF application.   
-    * This will also start a new HttpSession.
+    * This will also clear the HttpSession.
     * 
     * Note that the initialPage param should be something that maps into the FacesServlet.
     * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
@@ -64,43 +66,104 @@ public class ClientFacade
    public ClientFacade(String initialPage) throws MalformedURLException, IOException, SAXException
    {
       this.webConversation = WebConversationFactory.makeWebConversation();
-      WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
-      doWebRequest(req);
-      this.requestFactory = new WebRequestFactory(this);
+      doInitialRequest(initialPage);
    }
    
    /**
-    * Creates a new client interface for testing a JSF application that requires basic authentication.   
-    * This will also start a new HttpSession.
+    * Creates a new client interface for testing a JSF application using a
+    * customized WebConversation.  To use this constructor, first get a
+    * WebConversation from org.jboss.jsfunit.framework.WebConversationFactory.
+    *
+    * Example:
+    * <code>
+    * WebConversation webConv = WebConversationFactory.makeWebConversation();
+    * webConv.setAuthorization("myuser", "mypassword");
+    * webConv.setHeaderField("Accept-Language", "es-mx,es"); 
+    * ClientFacade client = new ClientFacade(webConv, "/index.jsf");
+    * </code>
     * 
     * Note that the initialPage param should be something that maps into the FacesServlet.
     * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
     * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
     * initialPage param will be something like "/faces/index.jsp".
     * 
+    * @param webConversation A WebConversation object with "custom" attributes.
     * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
-    * @param username The username used for basic authentication.
-    * @param password The password used for basic authentication.
     *
+    * @throws IllegalArgumentException if the WebConversation did not come from the
+    *                                  WebConversationFactory.
     * @throws MalformedURLException If the initialPage cannot be used to create a URL for the JSF app
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(String initialPage, String username, String password) throws MalformedURLException, IOException, SAXException
+   public ClientFacade(WebConversation webConversation, String initialPage) 
+        throws MalformedURLException, IOException, SAXException
    {
-      this.webConversation = WebConversationFactory.makeWebConversation();
+      if (!WebConversationFactory.isJSFUnitWebConversation(webConversation))
+      {
+          throw new IllegalArgumentException("WebConversation was not created with WebConversationFactory.");
+      }
+      
+      this.webConversation = webConversation;
+      doInitialRequest(initialPage);
+   }
+   
+   // common code for constructors
+   private void doInitialRequest(String initialPage)
+           throws MalformedURLException, IOException, SAXException
+   {
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
-      webConversation.setAuthorization(username, password);
       doWebRequest(req);
       this.requestFactory = new WebRequestFactory(this);
    }
    
    /**
-    * Protected method used by ServerFacade
+    * Package-private method used by ServerFacade
     */
-   protected ClientIDs getClientIDs()
+   ClientIDs getClientIDs()
    {
       return this.clientIDs;
+   }
+   
+   /**
+    * Package-private method do get the WebForm that contains the given component.
+    *
+    * @param componentID The id of the component contained by the form.
+    *
+    * @return The WebForm.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws FormNotFoundException if no form parameter can be found matching the componentID
+    */
+   WebForm getForm(String componentID) throws SAXException
+   {
+      String clientID = this.clientIDs.findClientID(componentID);
+      WebForm[] forms = getWebResponse().getForms();
+      if (forms.length == 0) throw new FormNotFoundException(componentID);
+      
+      for (int i=0; i < forms.length; i++)
+      {
+         if (clientID.startsWith(forms[i].getID())) return forms[i];
+      }
+      
+      throw new FormNotFoundException(componentID);
+   } 
+   
+   /**
+    * The method submits the WebRequest to the server using the WebConversation
+    * of this ClientFacade instance.  
+    *
+    * @param request The WebRequest
+    *
+    * @throws IOException If there is an error calling the JSF app
+    * @throws SAXException If the response from the JSF app cannot be parsed as HTML
+    */
+   public void doWebRequest(WebRequest request) throws SAXException, IOException
+   {
+      this.webResponse = this.webConversation.getResponse(request);
+      this.clientIDs = new ClientIDs();
    }
    
    /**
@@ -114,30 +177,14 @@ public class ClientFacade
    }
    
    /**
-    * Return the HttpUnit WebForm that contains the given component.
+    * Get the WebConversation used by this instance.
     *
-    * @param componentID The id of the component contained by the form.
-    *
-    * @return The WebForm.
-    *
-    * @throws SAXException if the current response page can not be parsed
-    * @throws ComponentIDNotFoundException if the component can not be found
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
-    * @throws FormNotFoundException if no form parameter can be found matching the componentID
+    * @return The WebConversation
     */
-   public WebForm getForm(String componentID) throws SAXException
-   {
-      String clientID = this.clientIDs.findClientID(componentID);
-      WebForm[] forms = getWebResponse().getForms();
-      if (forms.length == 0) throw new FormNotFoundException(componentID);
-      
-      for (int i=0; i < forms.length; i++)
-      {
-         if (clientID.startsWith(forms[i].getID())) return forms[i];
-      }
-      
-      throw new FormNotFoundException(componentID);
-   } 
+   public WebConversation getWebConversation()
+   { 
+      return this.webConversation;
+   }
    
    /**
     * Set a parameter value on a form.
@@ -176,6 +223,9 @@ public class ClientFacade
    /**
     * Finds the lone form on the page and submits the form.
     *
+    * At the end of this method call, the new view will be loaded so you can
+    * perform tests on the next page.
+    *
     * @throws IllegalStateException if page does not contain exactly one form.
     * @throws IOException if there is a problem submitting the form.
     * @throws SAXException if the response page can not be parsed
@@ -191,6 +241,9 @@ public class ClientFacade
    
    /**
     * Finds the named submit button on a form and submits the form.  
+    *
+    * At the end of this method call, the new view will be loaded so you can
+    * perform tests on the next page.
     *
     * @param componentID The JSF component id (or a suffix of the client ID) of the submit button to be "pressed".
     *
@@ -213,6 +266,12 @@ public class ClientFacade
     * links such as those produced by h:outputLink.  If you need to submit
     * a form using an h:commandLink, use clickCommandLink() instead.
     *
+    * At the end of this method call, a new page will be loaded.  So you can
+    * use this ClientFacade instance to do tests on the page.  However, static 
+    * links typically do not call into the JSF servlet.  Therefore, you have
+    * exited the realm of JSF.  In that case you will probably need a new 
+    * ClientFacade instance to do more JSF testing.
+    *
     * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
     *
     * @throws IOException if there is a problem clicking the link.
@@ -232,6 +291,9 @@ public class ClientFacade
    /**
     * Finds the named command link and uses the link to submit its form.
     *
+    * At the end of this method call, the new view will be loaded so you can
+    * perform tests on the next page.
+    *
     * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
     *
     * @throws IOException if there is a problem clicking the link.
@@ -242,7 +304,7 @@ public class ClientFacade
    public void clickCommandLink(String componentID) throws SAXException, IOException
    {
       
-      WebRequest req = this.requestFactory.makePostRequest(getForm(componentID));
+      WebRequest req = this.requestFactory.buildRequest(componentID);
       setCmdLinkParam(req, componentID);
       doWebRequest(req);
    }
@@ -269,39 +331,4 @@ public class ClientFacade
       req.setParameter(clientID, clientID); // for the RI
    }
    
-   private void doWebRequest(WebRequest request) throws SAXException, IOException
-   {
-      this.webResponse = this.webConversation.getResponse(request);
-      this.clientIDs = new ClientIDs();
-   }
-   
-   /**
-    * Sends WebRequest to the server and then does a "refresh".  
-    * 
-    * Each AJAX-enabled component library has its own "protocol" for sending AJAX requests to the 
-    * server via javascript.  Because JSFUnit/HttpUnit can't reliably handle javascript, each 
-    * AJAX-enabled JSF component library must prepare the WebRequest and submit it through this method.
-    *
-    * When an AJAX request is sent through this method, a second "refresh" request is submitted to the
-    * server.  This allows the client to sync up with the component tree on the server side.  Therefore,
-    * AJAX changes that are "client side only" will not be preserved.
-    *
-    * @param request A request prepared using the AJAX JSF component library's required params.
-    *
-    * @throws IOException if there is a problem submitting the request.
-    * @throws SAXException if the response page can not be parsed.
-    */
-   public void ajaxRequest(WebRequest request) throws SAXException, IOException
-   {
-      ServerFacade server = new ServerFacade(this);
-      String viewId = server.getCurrentViewId();
-      doWebRequest(request);
-      
-      // if viewId did not change, refresh the page
-      if (viewId.equals(server.getCurrentViewId()))
-      {
-         String url = this.webResponse.getURL().toString();
-         doWebRequest(new GetMethodWebRequest(url));
-      }
-   }
 }

@@ -26,6 +26,7 @@ import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
+import org.xml.sax.SAXException;
 
 /**
  * This class contains methods to create WebRequest objects that contain all
@@ -49,7 +50,7 @@ public class WebRequestFactory
       this.client = client;
    }
    
-   private WebRequest makePostRequest(String actionURL)
+   private PostMethodWebRequest makePostRequest(String actionURL)
    {
       WebResponse latestResponse = client.getWebResponse();
       String protocol = latestResponse.getURL().getProtocol();
@@ -57,27 +58,10 @@ public class WebRequestFactory
       String port = Integer.toString(latestResponse.getURL().getPort());
       return new PostMethodWebRequest(protocol + "://" + host + ":" + port + actionURL);
    }
-
-   /**
-    * Return a request based on the parameters of the WebForm.  The request 
-    * will use the action URL from the form.
-    *
-    * @param form The WebForm that the reqeust will be built from.
-    */
-   public WebRequest makePostRequest(WebForm form)
-   {
-      return makePostRequest(form.getAction(), form);
-   }
    
-   /**
-    * Return a request based on the parameters of the WebForm.  The request 
-    * will use the specified action URL instead of the one from the WebForm.
-    *
-    * @param form The WebForm that the reqeust will be built from.
-    */
-   public WebRequest makePostRequest(String actionURL, WebForm form)
+   private PostMethodWebRequest buildRequest(String actionURL, WebForm form)
    {
-      WebRequest req = makePostRequest(actionURL);
+      PostMethodWebRequest req = makePostRequest(actionURL);
       // set params from the form
       String[] paramNames = form.getParameterNames();
       for (int i=0; i < paramNames.length; i++)
@@ -86,6 +70,42 @@ public class WebRequestFactory
       }
       
       return req;
+   }
+   
+   /**
+    * Return a PostMethodWebRequest built from the component's parent form.  
+    * The request will contain all the form's current param values and will
+    * use the action URL from the form.
+    *
+    * With the returned PostMethodWebRequest, you can add your own params to
+    * the form before submitting.
+    *
+    * @param componentID The ID for the JSF component that lives in the form.
+    *
+    * @return A PostMethodWebRequest based on the component's parent form.
+    */
+   public PostMethodWebRequest buildRequest(String componentID)
+         throws SAXException
+   {
+      WebForm form = this.client.getForm(componentID);
+      return buildRequest(form.getAction(), form);
+   }
+   
+   /**
+    * Return a PostMethodWebRequest built from the component's parent form.  
+    * The request will contain all the form's current param values and will
+    * use the action URL specified.
+    *
+    * With the returned PostMethodWebRequest, you can add your own params to
+    * the form before submitting.
+    *
+    * @param form The WebForm that the reqeust will be built from.
+    */
+   public PostMethodWebRequest buildRequest(String actionURL, String componentID)
+         throws SAXException
+   {
+      WebForm form = this.client.getForm(componentID);
+      return buildRequest(actionURL, form);
    }
    
 }

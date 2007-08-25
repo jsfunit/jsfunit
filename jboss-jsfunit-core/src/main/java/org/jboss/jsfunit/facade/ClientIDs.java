@@ -34,15 +34,15 @@ import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 
 /**
- * This class gathers all the client IDs from the current component tree.  It
- * then allows finding a full client ID given a suffix of that ID.  This suffix
- * is usually just the component ID, but for specificity it can also include 
- * one or more of a component's naming containers such as in 
+ * This immutable helper class gathers all the client IDs from the current 
+ * component tree.  It then allows finding a full client ID given a suffix of 
+ * that ID.  This suffix is usually just the component ID, but for specificity 
+ * it can also include one or more of a component's naming containers such as in 
  * "mysubview:myform:mycomponentID".
  *
  * @author Stan Silvert
  */
-public class ClientIDs
+class ClientIDs
 {
    private List<String> allClientIDs = new ArrayList<String>();
    private Map<String, UIComponent> allComponents = new HashMap<String, UIComponent>();
@@ -50,7 +50,7 @@ public class ClientIDs
    /**
     * Create a new instance of ClientIDs.
     */
-   public ClientIDs()
+   ClientIDs()
    {
       FacesContext facesContext = FacesContextBridge.getCurrentInstance();
       UIComponent component = facesContext.getViewRoot();
@@ -98,18 +98,7 @@ public class ClientIDs
       String clientId = component.getClientId(facesContext);
       if (clientId == null) return;
 
-      /* temporary junk for debugging
-      if (component instanceof javax.faces.component.html.HtmlInputText) 
-      {
-         javax.faces.component.html.HtmlInputText textComp = (javax.faces.component.html.HtmlInputText)component;
-         System.out.println("adding clientID=" + clientId + "/ className=" + component.getClass().getName() +
-                         "/ onkeyup=" + textComp.getOnkeyup());
-        // org.ajax4jsf.framework.util.javascript.AjaxSubmitFunction aFunc = new org.ajax4jsf.framework.util.javascript.AjaxSubmitFunction(component);
-        // System.out.println("options=" + aFunc.getOptions());
-        // System.out.println("params=" + aFunc.getRequestParameters());
-      } else {
-         //System.out.println("adding clientID=" + clientId + "/ className=" + component.getClass().getName() + " / identity=" + component.hashCode());
-      } */
+      //System.out.println("adding clientID=" + clientId + "/ className=" + component.getClass().getName() + " / identity=" + component.hashCode());
       
       allClientIDs.add(clientId);
       allComponents.put(clientId, component);
@@ -125,7 +114,7 @@ public class ClientIDs
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     */
-   public String findClientID(String suffix)
+   String findClientID(String suffix)
    {
       if (suffix == null) throw new NullPointerException();
       
@@ -153,7 +142,7 @@ public class ClientIDs
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     */
-   public UIComponent findComponent(String suffix)
+   UIComponent findComponent(String suffix)
    {
       return allComponents.get(findClientID(suffix));
    }

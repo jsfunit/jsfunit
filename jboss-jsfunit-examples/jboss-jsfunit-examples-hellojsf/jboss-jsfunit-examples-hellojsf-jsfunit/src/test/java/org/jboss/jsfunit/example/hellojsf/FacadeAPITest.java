@@ -156,41 +156,4 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(response.getText().contains("public class SimplifiedHelloJSFIntegrationTest"));
    }
    
-   public void testGetForm() throws IOException, SAXException
-   {
-      // test passing a form param
-      WebForm form = client.getForm("input_foo_text");
-      assertEquals("form1", form.getID());
-      
-      // test passing a component in the form that is not a param
-      form = client.getForm("prompt");
-      assertEquals("form1", form.getID());
-      
-      // test passing the form ID itself
-      form = client.getForm("form1");
-      assertEquals("form1", form.getID());
-      
-      // test ComponentIDNotFoundException
-      try
-      {
-         form = client.getForm("bogus");
-         fail("Expected ComponentIDNotFoundException");
-      }
-      catch (ComponentIDNotFoundException e)
-      {
-         // OK
-      }
-      
-      // test FormNotFoundException
-      // "title" is on the page (a valid component) but it's not inside the form
-      try
-      {
-         form = client.getForm("title");
-         fail("Expected FormNotFoundException");
-      }
-      catch (FormNotFoundException e)
-      {
-         // OK
-      }
-   }
 }

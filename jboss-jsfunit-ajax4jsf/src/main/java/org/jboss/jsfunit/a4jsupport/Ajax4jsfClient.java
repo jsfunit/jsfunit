@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.a4jsupport;
 
+import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebRequest;
@@ -137,8 +138,8 @@ public class Ajax4jsfClient
       UIComponent uiComp = server.findComponent(componentID);
       Map options = AjaxRendererUtils.buildEventOptions(server.getFacesContext(), uiComp);
       
-      WebRequest req = requestFactory.makePostRequest((String)options.get("actionUrl"),
-                                                      client.getForm(componentID));
+      PostMethodWebRequest req = requestFactory.buildRequest((String)options.get("actionUrl"),
+                                                             componentID);
 
       // Tell A4J that it's an AJAX request
       FacesContext ctx = server.getFacesContext();
@@ -154,7 +155,37 @@ public class Ajax4jsfClient
       }
 
       restoreRowIndices(indiciesToRestore);
-      client.ajaxRequest(req);
+      ajaxRequest(req);
+   }
+   
+   /**
+    * Sends WebRequest to the server and then does a "refresh".  
+    * 
+    * Each AJAX-enabled component library has its own "protocol" for sending AJAX requests to the 
+    * server via javascript.  Because JSFUnit/HttpUnit can't reliably handle javascript, each 
+    * AJAX-enabled JSF component library must prepare the WebRequest and submit it through this method.
+    *
+    * When an AJAX request is sent through this method, a second "refresh" request is submitted to the
+    * server.  This allows the client to sync up with the component tree on the server side.  Therefore,
+    * AJAX changes that are "client side only" will not be preserved.
+    *
+    * @param request A request prepared using the AJAX JSF component library's required params.
+    *
+    * @throws IOException if there is a problem submitting the request.
+    * @throws SAXException if the response page can not be parsed.
+    */
+   private void ajaxRequest(WebRequest request) throws SAXException, IOException
+   {
+      ServerFacade server = new ServerFacade(this.client);
+      String viewId = server.getCurrentViewId();
+      client.doWebRequest(request);
+      
+      // if viewId did not change, refresh the page
+      if (viewId.equals(server.getCurrentViewId()))
+      {
+         String url = client.getWebResponse().getURL().toString();
+         client.doWebRequest(new GetMethodWebRequest(url));
+      }
    }
    
 }

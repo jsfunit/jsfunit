@@ -109,6 +109,25 @@ public class WebConversationFactory
       return wc;
    }
    
+   /**
+    * Determine if the WebConversation was created with this factory.
+    *
+    * @return <code>true</code> if the WebConversation was created with this
+    *         factory.  <code>false</code> otherwise.
+    */
+   public static boolean isJSFUnitWebConversation(WebConversation webConversation)
+   {
+      if (webConversation == null) return false;
+      String jsessionid = webConversation.getCookieValue("JSESSIONID");
+      String testingFlag = webConversation.getCookieValue(JSF_UNIT_CONVERSATION_FLAG);
+      if ( (jsessionid == null) || (testingFlag == null) )
+      {
+          return false;
+      }
+      
+      return true;
+   }
+   
    // We need to start with a clean (but not new) session at the beginning of each
    // WebConversation.
    protected static void clearSession(HttpSession session)
