@@ -21,6 +21,7 @@
  */
 package org.jboss.jsfunit.example.authentication.basic;
 
+import com.meterware.httpunit.WebConversation;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -36,6 +37,7 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.ClientFacade;
 import org.jboss.jsfunit.facade.ServerFacade;
 import org.jboss.jsfunit.framework.FacesContextBridge;
+import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 import com.meterware.httpunit.WebForm;
@@ -46,7 +48,9 @@ public class BasicAuthenticationTest extends ServletTestCase
         
         public void setUp() throws MalformedURLException, IOException, SAXException
         {
-        	this.client = new ClientFacade ("/secured-page.faces", "admin", "adminpw");
+           WebConversation webConv = WebConversationFactory.makeWebConversation();
+           webConv.setAuthorization("admin", "adminpw");
+           this.client = new ClientFacade (webConv, "/secured-page.faces");
         }
 	    
         /**
