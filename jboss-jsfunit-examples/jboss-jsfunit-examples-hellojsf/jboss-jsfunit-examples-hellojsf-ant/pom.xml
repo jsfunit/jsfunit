@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>jboss</groupId>
+    <artifactId>jboss-jsfunit-examples-hellojsf</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-examples-hellojsf-ant</artifactId>
+  <packaging>war</packaging>
+  <name>HelloJSF Ant Task Test</name>
+
+  <profiles>
+    <profile>
+      <id>test</id>        
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            
+            <executions>
+              <execution>
+                <id>surefire-it</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <skip>false</skip>
+                  <systemProperties>
+                    <property>
+                      <name>cactus.contextURL</name>
+                      <value>http://localhost:8080/mywar</value>
+                    </property>
+                  </systemProperties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <wait>false</wait>  
+              <configuration>                  
+                <deployables>
+                  <deployable>
+                    <location>${project.build.directory}/mywar.war</location>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <id>tomcat5x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>tomcat5x</containerId>
+                <home>${CATALINA_HOME}</home>
+                <log>${basedir}/target/tomcat5x/cargo.log</log>
+                <output>${basedir}/target/tomcat5x/container.log</output>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-impl</artifactId>
+      <version>1.1.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-api</artifactId>
+      <version>1.1.5</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>jboss</groupId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>      
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <property name="target" location="./target"/>
+                
+                <property name="src.war.dir" location="./sourcewar"/>
+                <property name="src.war" location="${src.war.dir}/jboss-jsfunit-examples-hellojsf-webapp.war"/>
+                <property name="dest.war.dir" location="${target}"/>
+                <property name="dest.war" location="${dest.war.dir}/mywar.war"/>
+
+                <property name="classes.test" location="${target}/test-classes"/>
+                
+                <property name="ant.lib.dir" location="./ant-lib"/>
+                <property name="jsfunit.lib.dir" location="${target}/jsfunitwar-lib"/>
+
+                <path id="maven-ant-tasks.classpath" 
+                      path="${ant.lib.dir}/maven-ant-tasks-2.0.7.jar" />
+                      
+                <typedef resource="org/apache/maven/artifact/ant/antlib.xml" 
+                         classpathref="maven-ant-tasks.classpath" />
+                         
+                <dependencies filesetId="dependency.fileset" 
+                              pathId="jsfunit.classpath">
+                   <dependency groupId="cactus" 
+                               artifactId="cactus"
+                               version="13-1.7.1"/>
+                   <dependency groupId="jboss" 
+                               artifactId="jboss-jsfunit-core"
+                               version="${project.version}"/>
+                   <dependency groupId="jboss" 
+                               artifactId="jboss-jsfunit-ant"
+                               version="${project.version}"/>
+                </dependencies>
+                
+                <copy todir="${jsfunit.lib.dir}">
+                  <fileset refid="dependency.fileset" />
+                  <mapper type="flatten" />
+                </copy>
+                         
+                <taskdef name="jsfunitwar"
+                         classname="org.jboss.jsfunit.ant.JSFUnitWarTask" >      
+                  <classpath refid="jsfunit.classpath"/>
+                </taskdef>
+
+                <!-- This library is required for Tomcat, but not Jetty -->
+                <!-- We will always bundle it anyway -->
+                <property name="xercesImpl.jar" 
+                          location="${jsfunit.lib.dir}/xercesImpl-2.6.2.jar"/>
+                
+                <delete file="${dest.war}"/>
+                <jsfunitwar srcfile="${src.war}" 
+                            destfile="${dest.war}">
+                  <TestRunner/>
+                  <classes dir="${classes.test}" includes="**/*.class"/>
+                  <lib file="${xercesImpl.jar}"/>
+                </jsfunitwar>	
+                
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>  
+       
+  </build>
+</project>
