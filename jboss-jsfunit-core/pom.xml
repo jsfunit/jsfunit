@@ -18,7 +18,8 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <links>
-            <link>http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/</link>
+            <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+            <link>http://java.sun.com/javaee/javaserverfaces/1.2/docs/api/</link>
             <link>http://jakarta.apache.org/cactus/api/framework-13</link>
             <link>http://httpunit.sourceforge.net/doc/api</link>
           </links>

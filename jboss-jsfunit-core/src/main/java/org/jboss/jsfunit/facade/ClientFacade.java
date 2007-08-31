@@ -126,16 +126,20 @@ public class ClientFacade
    }
    
    /**
-    * Package-private method do get the WebForm that contains the given component.
+    * Package-private method to get the WebForm that contains the given 
+    * component.
     *
-    * @param componentID The id of the component contained by the form.
+    * @param componentID The ID of the component contained by the form, or the
+    *                    ID of the form itself.
     *
     * @return The WebForm.
     *
     * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
-    * @throws FormNotFoundException if no form parameter can be found matching the componentID
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    * @throws FormNotFoundException if no form parameter can be found matching 
+    *                               the componentID
     */
    WebForm getForm(String componentID) throws SAXException
    {
@@ -155,10 +159,15 @@ public class ClientFacade
     * The method submits the WebRequest to the server using the WebConversation
     * of this ClientFacade instance.  
     *
+    * At the end of this method, a new view from the server will be loaded so 
+    * that you can continue to use this ClientFacade instance to make further 
+    * requests.
+    *
     * @param request The WebRequest
     *
     * @throws IOException If there is an error calling the JSF app
-    * @throws SAXException If the response from the JSF app cannot be parsed as HTML
+    * @throws SAXException If the response from the JSF app cannot be parsed as 
+    *                      HTML
     */
    public void doWebRequest(WebRequest request) throws SAXException, IOException
    {
@@ -177,7 +186,7 @@ public class ClientFacade
    }
    
    /**
-    * Get the WebConversation used by this instance.
+    * Get the HttpUnit WebConversation used by this instance.
     *
     * @return The WebConversation
     */
@@ -194,7 +203,8 @@ public class ClientFacade
     *
     * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found 
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
     */
    public void setParameter(String componentID, String... value) throws SAXException
    {
@@ -211,8 +221,10 @@ public class ClientFacade
     *
     * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found 
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
-    * @throws IllegalArgumentException if the componentID does not resolve to a checkbox control
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    * @throws IllegalArgumentException if the componentID does not resolve to a 
+    *                                  checkbox control
     */
    public void setCheckbox(String componentID, boolean state) throws SAXException
    {
@@ -233,7 +245,10 @@ public class ClientFacade
    public void submit() throws SAXException, IOException
    {
       WebForm[] forms = getWebResponse().getForms();
-      if (forms.length != 1) throw new IllegalStateException("For this method, page must contain only one form.  Use another version of the submit() method.");
+      if (forms.length != 1) 
+         throw new IllegalStateException("For this method, page must contain" +
+                                         " only one form.  Use another " +
+                                         "version of the submit() method.");
       
       this.webResponse = forms[0].submit();
       this.clientIDs = new ClientIDs();
@@ -245,12 +260,14 @@ public class ClientFacade
     * At the end of this method call, the new view will be loaded so you can
     * perform tests on the next page.
     *
-    * @param componentID The JSF component id (or a suffix of the client ID) of the submit button to be "pressed".
+    * @param componentID The JSF component id (or a suffix of the client ID) of 
+    *                    the submit button to be "pressed".
     *
     * @throws IOException if there is a problem submitting the form.
     * @throws SAXException if the response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found 
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
     */
    public void submit(String componentID) throws SAXException, IOException
    {
@@ -258,6 +275,32 @@ public class ClientFacade
       WebForm form = getForm(clientID);
       SubmitButton button = form.getSubmitButtonWithID(clientID);
       this.webResponse = form.submit(button);
+      this.clientIDs = new ClientIDs();
+   }
+   
+   /**
+    * Submits a form without pressing a button.  This is useful for testing
+    * forms that are submitted via javascript.
+    *
+    * At the end of this method call, the new view will be loaded so you can
+    * perform tests on the next page.
+    *
+    * @param componentID The JSF component id (or a suffix of the client ID) of 
+    *                    a component on the form to be submitted.  This can also
+    *                    be the ID of the form itself.
+    *
+    * @throws IOException if there is a problem submitting the form.
+    * @throws SAXException if the response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void submitNoButton(String componentID) 
+         throws SAXException, IOException
+   {
+      String clientID = this.clientIDs.findClientID(componentID);
+      WebForm form = getForm(clientID);
+      this.webResponse = form.submitNoButton();
       this.clientIDs = new ClientIDs();
    }
    
@@ -272,12 +315,14 @@ public class ClientFacade
     * exited the realm of JSF.  In that case you will probably need a new 
     * ClientFacade instance to do more JSF testing.
     *
-    * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
+    * @param componentID The JSF component id (or a suffix of the client ID) of 
+    *                    the link to be "clicked".
     *
     * @throws IOException if there is a problem clicking the link.
     * @throws SAXException if the response page can not be parsed.
     * @throws ComponentIDNotFoundException if the component can not be found 
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
     */
    public void clickLink(String componentID) throws SAXException, IOException
    {
@@ -294,14 +339,17 @@ public class ClientFacade
     * At the end of this method call, the new view will be loaded so you can
     * perform tests on the next page.
     *
-    * @param componentID The JSF component id (or a suffix of the client ID) of the link to be "clicked".
+    * @param componentID The JSF component id (or a suffix of the client ID) of 
+    *                    the link to be "clicked".
     *
     * @throws IOException if there is a problem clicking the link.
     * @throws SAXException if the response page can not be parsed.
     * @throws ComponentIDNotFoundException if the component can not be found 
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
     */
-   public void clickCommandLink(String componentID) throws SAXException, IOException
+   public void clickCommandLink(String componentID) 
+         throws SAXException, IOException
    {
       
       WebRequest req = this.requestFactory.buildRequest(componentID);
@@ -309,7 +357,8 @@ public class ClientFacade
       doWebRequest(req);
    }
    
-   private void setCmdLinkParam(WebRequest req, String componentID) throws SAXException, IOException
+   private void setCmdLinkParam(WebRequest req, String componentID) 
+         throws SAXException, IOException
    {
       String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(componentID);

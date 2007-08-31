@@ -80,9 +80,12 @@ public class WebRequestFactory
     * With the returned PostMethodWebRequest, you can add your own params to
     * the form before submitting.
     *
-    * @param componentID The ID for the JSF component that lives in the form.
+    * @param componentID The ID for any JSF component that lives in the form.
+    *                    It can also be the ID of the form itself.
     *
     * @return A PostMethodWebRequest based on the component's parent form.
+    *
+    * @throws SAXException if the current response page can not be parsed
     */
    public PostMethodWebRequest buildRequest(String componentID)
          throws SAXException
@@ -99,7 +102,11 @@ public class WebRequestFactory
     * With the returned PostMethodWebRequest, you can add your own params to
     * the form before submitting.
     *
-    * @param form The WebForm that the reqeust will be built from.
+    * @param actionURL The alternate actionURL used to submit the form's data.
+    * @param componentID The ID for any JSF component that lives in the form.
+    *                    It can also be the ID of the form itself.
+    *
+    * @throws SAXException if the current response page can not be parsed
     */
    public PostMethodWebRequest buildRequest(String actionURL, String componentID)
          throws SAXException

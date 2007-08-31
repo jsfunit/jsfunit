@@ -83,6 +83,20 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(greeting.isRendered());
    }
    
+   public void testSubmitNoButton() throws IOException, SAXException
+   {
+      ClientFacade client = new ClientFacade("/indexNoButtons.faces");
+      ServerFacade server = new ServerFacade(client);
+      UIComponent greeting = server.findComponent("greeting");
+      assertFalse(greeting.isRendered());
+      
+      client.setParameter("input_foo_text", "Stan"); 
+      client.submitNoButton("form1");
+      
+      greeting = server.findComponent("greeting");
+      assertTrue(greeting.isRendered());
+   }
+   
    public void testSetCheckbox() throws IOException, SAXException
    {
       ServerFacade server = new ServerFacade(client);
