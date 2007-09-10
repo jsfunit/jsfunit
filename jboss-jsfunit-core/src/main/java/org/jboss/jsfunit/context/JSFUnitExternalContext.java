@@ -139,6 +139,19 @@ public class JSFUnitExternalContext extends ExternalContext
       return this.authType;
    }
 
+   /**
+    * Warning: The write-through capabilities of this Map are disabled for
+    * JSFUnit tests.  You can still modify the Application attributes 
+    * through the ServletContext.  It is not recommended to do this in
+    * a JSFUnit test.  Ideally, JSFUnit tests should only examine the state of 
+    * the system, not change it.<br/>
+    * But if you must, here is how to do it:<br/>
+    * <code>
+    * HttpSession session = (HttpSession)externalContext.getSession();<br/>
+    * ServletContext appContext = session.getServletContext();<br/>
+    * appContext.setAttribute("foo", "bar");
+    * </code>
+    */
    public Map getApplicationMap()
    {
       return this.applicationMap;
@@ -199,6 +212,19 @@ public class JSFUnitExternalContext extends ExternalContext
       return this.session;
    }
 
+   /**
+    * Warning: The write-through capabilities of this Map are disabled for
+    * JSFUnit tests.  In other words, modifications to the Map do not actually 
+    * affect the HttpSession. You can still modify the Session attributes 
+    * using the 'live' HttpSession obtained from the getSession() method.  
+    * It is not recommended to do this in a JSFUnit test.  Ideally, JSFUnit
+    * tests should only examine the state of the system, not change it.<br/>
+    * But if you must, here is how to do it:<br/>
+    * <code>
+    * HttpSession session = (HttpSession)externalContext.getSession();<br/>
+    * session.setAttribute("foo", "bar");
+    * </code>
+    */
    public Map getSessionMap()
    {
       return this.sessionMap;
