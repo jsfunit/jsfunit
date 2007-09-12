@@ -3,165 +3,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <parent>
-
-    <groupId>jboss</groupId>
-
+    <groupId>org.jboss</groupId>
     <artifactId>jboss-jsfunit</artifactId>
-
     <version>1.0-SNAPSHOT</version>
-
   </parent>
 
-
-
   <modelVersion>4.0.0</modelVersion>
-
   <artifactId>jboss-jsfunit-ant</artifactId>
-
   <name>JSFUnit Core Ant Tasks</name>
-
   <packaging>jar</packaging>      
 
 
-
   <reporting>
-
     <plugins>      
-
       <plugin>
-
         <groupId>org.apache.maven.plugins</groupId>
-
         <artifactId>maven-javadoc-plugin</artifactId>
-
         <configuration>
-
           <links>
-
             <link>http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/</link>
-
             <link>http://jakarta.apache.org/cactus/api/framework-13</link>
-
             <link>http://httpunit.sourceforge.net/doc/api</link>
-
           </links>
-
         </configuration>
-
       </plugin>
-
     </plugins>
-
   </reporting>
-
   
 
   <dependencies>
-
     <dependency>
-
       <groupId>javax.servlet</groupId>
-
       <artifactId>servlet-api</artifactId>
-
       <scope>provided</scope>
-
     </dependency>
 
 
-
     <dependency>
-
       <groupId>httpunit</groupId>
-
       <artifactId>httpunit</artifactId>
-
       <version>1.6.1</version>
-
       <scope>compile</scope>
-
     </dependency>
 
 
-
     <dependency>
-
       <groupId>cactus</groupId>
-
       <artifactId>cactus</artifactId>
-
       <version>13-1.7.1</version>
-
       <scope>compile</scope>
-
     </dependency>
 
-
     <dependency>
-
       <groupId>cactus</groupId>
-
       <artifactId>cactus-ant</artifactId>
-
       <version>13-1.7.1</version>
-
       <scope>compile</scope>
-
     </dependency>
 
     <dependency>
-
       <groupId>ant</groupId>
-
       <artifactId>ant</artifactId>
-
       <version>1.6.5</version>
-
       <scope>compile</scope>
-
     </dependency>
 
     <dependency>
-
       <groupId>javax.faces</groupId>
-
       <artifactId>jsf-api</artifactId>
-
       <scope>provided</scope>
-
     </dependency>
 
 
-
     <dependency>
-
       <groupId>javax.el</groupId>
-
       <artifactId>el-api</artifactId>
-
-
       <version>1.0</version>
-
       <scope>provided</scope>
-
     </dependency>       
 
     <dependency>
-
       <groupId>cargo</groupId>
-
       <artifactId>cargo</artifactId>
-
       <version>0.5</version>
-
       <scope>compile</scope>
-
     </dependency>
 
   </dependencies>
 
 
-
 </project>
-
-
