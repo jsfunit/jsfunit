@@ -12,19 +12,4 @@
   <packaging>war</packaging>  
   <name>HelloJSF Example Web App</name>      
 
-<!-- If I rename the WAR cargo doesn't work.  Looks like a bug in cargo.
-  <build>    
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.0.2</version>
-        <configuration>
-          <warName>jsfunit-hellojsf</warName>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>  
--->  
-   
 </project>
