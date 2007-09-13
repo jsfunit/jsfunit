@@ -75,6 +75,11 @@
 
         </plugins>
       </build>
+      <activation>
+        <property>
+           <name>jsfunit-test-profile</name>
+        </property>
+      </activation>
     </profile>
   </profiles>
   

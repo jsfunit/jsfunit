@@ -12,23 +12,6 @@
   <packaging>war</packaging>  
   <name>Example tests for Ajax4JSF sample app</name>      
    
-<!--
-  <repositories>    
-    <repository>
-         <releases>
-            <enabled>false</enabled>
-         </releases>
-         <snapshots>
-            <updatePolicy>always</updatePolicy>
-         </snapshots>
-         <id>maven.exadel.com</id>
-         <name>Exadel Repository for Maven Snapshots</name>
-         <url>http://maven.exadel.com/</url>
-         <layout>default</layout>
-    </repository>
-  </repositories>
-  -->
-
   <profiles>
     <profile>
       <id>test</id>        
@@ -92,6 +75,11 @@
 
         </plugins>
       </build>
+      <activation>
+        <property>
+           <name>jsfunit-test-profile</name>
+        </property>
+      </activation>
     </profile>
 
     <profile>
