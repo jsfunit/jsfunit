@@ -25,6 +25,15 @@
           </links>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.1.2</version>
+        <configuration>
+          <excludes>
+            <exclude>**/*StateUtilsAES_CBCTest*</exclude>
+          </excludes>
+        </configuration>
+      </plugin>      
     </plugins>
   </reporting>
   
