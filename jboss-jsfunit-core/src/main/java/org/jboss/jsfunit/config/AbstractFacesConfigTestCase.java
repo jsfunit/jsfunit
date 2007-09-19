@@ -95,9 +95,8 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 					}});
 	}};
 	
-	// create this once, as it holds state across > 1 conf source
-	private final FacesConfigHandler handler = new FacesConfigHandler(CLASS_CONSTRAINTS.keySet(), VALUE_CONSTRAINTS.keySet());
-
+	private Map<String, List<String>> classNamesByElement ;
+	
 	public AbstractFacesConfigTestCase(Set<String> facesConfigPaths) {
 		this(facesConfigPaths, new ResourceUtils());
 	}
@@ -107,11 +106,8 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		if(streamProvider == null)
 			throw new IllegalArgumentException("stream provider is null");
 		
-		if(facesConfigPaths == null)
-			throw new IllegalArgumentException("facesConfigPaths is null");
-		
-		if(facesConfigPaths.isEmpty())
-			throw new IllegalArgumentException("facesConfigPaths is empty");
+		if(facesConfigPaths == null || facesConfigPaths.isEmpty())
+			throw new IllegalArgumentException("facesConfigPaths is null or empty");
 		
 		parseResources(facesConfigPaths, streamProvider);
 
@@ -121,48 +117,24 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	private void parseResources(Set<String> facesConfigPaths, StreamProvider streamProvider) {
 		
+		// create this once, as it holds state across > 1 conf source
+		FacesConfigHandler handler = new FacesConfigHandler(CLASS_CONSTRAINTS.keySet(), VALUE_CONSTRAINTS.keySet());
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		factory.setValidating(false); // TODO set to true
 		factory.setNamespaceAware(false); // TODO set to true
 		
-		for(String resourcePath : facesConfigPaths) 
-			parseResource(streamProvider, factory, resourcePath);
-		
-	}
-
-	private void parseResource(StreamProvider streamProvider, SAXParserFactory factory, String resourcePath) {
-
-		String xml = getXml(streamProvider, resourcePath);
-		
-		try {
-			factory.newSAXParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not parse XML:" + xml);
+		for(String resourcePath : facesConfigPaths) {
+			String xml = getXml(streamProvider, resourcePath);
+			try {
+				factory.newSAXParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
+			} catch (Exception e) {
+				throw new RuntimeException("Could not parse XML:" + xml);
+			}
 		}
 		
+		classNamesByElement = handler.getClassNamesByElement();
 	}
-	
-	private String getConstraintsList(Class[] constraints) {
-		
-		String msg = "";
-		
-		for(int c = 0; c < constraints.length ; c++) {
-			String append = c == constraints.length - 1 ? "" : " or ";
-			msg += constraints[c].getName() + append;
-		}
-		
-		return msg;
-	}
-	
-	private boolean isAssignableFrom(Class[] constraints, Class clazz) {
-		
-		for(Class constraint : constraints) 
-			if(constraint.isAssignableFrom(clazz)) 
-				return true;
-		
-		return false;
-	}
-	
+
 	private String getXml(StreamProvider streamProvider, String resourcePath) {
 		InputStream stream = streamProvider.getInputStream(resourcePath);
 		
@@ -180,9 +152,9 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	public void testClassDefinitions() {
 		
-		for(String elementName : handler.getClassNamesByElement().keySet()) {
+		for(String elementName : classNamesByElement.keySet()) {
 			
-			List<String> classNames = handler.getClassNamesByElement().get(elementName);
+			List<String> classNames = classNamesByElement.get(elementName);
 			
 			for(String className : classNames) {
 				
@@ -195,5 +167,26 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 			}
 		}
 		
+	}
+	
+	private boolean isAssignableFrom(Class[] constraints, Class clazz) {
+		
+		for(Class constraint : constraints) 
+			if(constraint.isAssignableFrom(clazz)) 
+				return true;
+		
+		return false;
+	}
+	
+	private String getConstraintsList(Class[] constraints) {
+		
+		String msg = "";
+		
+		for(int c = 0; c < constraints.length ; c++) {
+			String append = c == constraints.length - 1 ? "" : " or ";
+			msg += constraints[c].getName() + append;
+		}
+		
+		return msg;
 	}
 }
