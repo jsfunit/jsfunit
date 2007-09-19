@@ -189,7 +189,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 				Class clazz = new ClassUtils().loadClass(className, elementName);
 				Class[] constraints = CLASS_CONSTRAINTS.get(elementName);
 				
-				if( ! isAssignableFrom(constraints, clazz) )
+				if( constraints.length > 0 && ! isAssignableFrom(constraints, clazz) )
 					throw new RuntimeException(clazz.getName() + ", in element " + elementName 
 							+ " should be a " + getConstraintsList(constraints));
 			}
