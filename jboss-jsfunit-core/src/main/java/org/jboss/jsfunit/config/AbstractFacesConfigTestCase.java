@@ -20,7 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-
 package org.jboss.jsfunit.config;
 
 import java.io.ByteArrayInputStream;
@@ -52,13 +51,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 import junit.framework.TestCase;
 
-import org.xml.sax.HandlerBase;
-
 public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	protected Set<String> facesConfigPaths = new HashSet<String>();
 	
-	private final Map<String, Class[]> CLASS_CONSTRAINTS = new HashMap<String, Class[]>(){{
+	private final static Map<String, Class[]> CLASS_CONSTRAINTS = new HashMap<String, Class[]>(){{
 		
 		put("action-listener", new Class[]{ActionListener.class});
 		put("navigation-handler", new Class[]{NavigationHandler.class});
@@ -88,7 +85,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 	}};
 	
-	private final Map<String, List<String>> VALUE_CONSTRAINTS = new HashMap<String, List<String>>(){{
+	private final static Map<String, List<String>> VALUE_CONSTRAINTS = new HashMap<String, List<String>>(){{
 		put("managed-bean-scope", 
 				new ArrayList<String>(){{
 					add("none");
@@ -97,6 +94,9 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 					add("application");
 					}});
 	}};
+	
+	// create this once, as it holds state across > 1 conf source
+	private final FacesConfigHandler handler = new FacesConfigHandler(CLASS_CONSTRAINTS.keySet(), VALUE_CONSTRAINTS.keySet());
 
 	public AbstractFacesConfigTestCase(Set<String> facesConfigPaths) {
 		this(facesConfigPaths, new ResourceUtils());
@@ -134,22 +134,12 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 		String xml = getXml(streamProvider, resourcePath);
 		
-		FacesConfigHandler handler = handle(factory, xml);
-		
-		for(String elementName : handler.getClasses().keySet()) {
-			
-			List<String> classNames = handler.getClasses().get(elementName);
-			
-			for(String className : classNames) {
-				 
-				Class clazz = new ClassUtils().loadClass(className, elementName);
-				Class[] constraints = CLASS_CONSTRAINTS.get(elementName);
-				
-				if( ! isAssignableFrom(constraints, clazz) )
-					throw new RuntimeException(clazz.getName() + ", in element " + elementName 
-							+ " should be a " + getConstraintsList(constraints));
-			}
+		try {
+			factory.newSAXParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
+		} catch (Exception e) {
+			throw new RuntimeException("Could not parse XML:" + xml);
 		}
+		
 	}
 	
 	private String getConstraintsList(Class[] constraints) {
@@ -173,17 +163,6 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		return false;
 	}
 	
-	private FacesConfigHandler handle(SAXParserFactory factory, String xml) {
-		FacesConfigHandler handler = new FacesConfigHandler(CLASS_CONSTRAINTS.keySet(), VALUE_CONSTRAINTS.keySet());
-		
-		try {
-			factory.newSAXParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not parse XML:" + xml);
-		}
-		return handler;
-	}
-
 	private String getXml(StreamProvider streamProvider, String resourcePath) {
 		InputStream stream = streamProvider.getInputStream(resourcePath);
 		
@@ -199,9 +178,22 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		return xml;
 	}
 
-	public void testConfiguration() {
+	public void testClassDefinitions() {
 		
-		// move constructor code to here
+		for(String elementName : handler.getClassNamesByElement().keySet()) {
+			
+			List<String> classNames = handler.getClassNamesByElement().get(elementName);
+			
+			for(String className : classNames) {
+				
+				Class clazz = new ClassUtils().loadClass(className, elementName);
+				Class[] constraints = CLASS_CONSTRAINTS.get(elementName);
+				
+				if( ! isAssignableFrom(constraints, clazz) )
+					throw new RuntimeException(clazz.getName() + ", in element " + elementName 
+							+ " should be a " + getConstraintsList(constraints));
+			}
+		}
 		
 	}
 }

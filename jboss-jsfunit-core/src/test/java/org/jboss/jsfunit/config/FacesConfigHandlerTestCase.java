@@ -52,9 +52,9 @@ public class FacesConfigHandlerTestCase extends TestCase {
         InputStream is = new ByteArrayInputStream(("<root><foo>" + CLASS_NAME + "</foo><bar></bar></root>").getBytes());
         getParser().parse(is, handler);
         
-        assertEquals(1, handler.getClasses().keySet().size());
-        assertEquals(CLASS_NAME, handler.getClasses().get("foo").get(0));
-        assertEquals(0, handler.getValues().keySet().size());
+        assertEquals(1, handler.getClassNamesByElement().keySet().size());
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(0));
+        assertEquals(0, handler.getValuesByElement().keySet().size());
 	}
 
 	public void testValues() throws Exception{
@@ -66,9 +66,9 @@ public class FacesConfigHandlerTestCase extends TestCase {
 		InputStream is = new ByteArrayInputStream(("<root><foo></foo><bar>" + CLASS_NAME + "</bar></root>").getBytes());
 		getParser().parse(is, handler);
 
-        assertEquals(0, handler.getClasses().keySet().size());
-        assertEquals(1, handler.getValues().keySet().size());
-        assertEquals(CLASS_NAME, handler.getValues().get("bar").get(0));
+        assertEquals(0, handler.getClassNamesByElement().keySet().size());
+        assertEquals(1, handler.getValuesByElement().keySet().size());
+        assertEquals(CLASS_NAME, handler.getValuesByElement().get("bar").get(0));
 	}
 	
 	public void testClassesAndValues() throws Exception{
@@ -83,10 +83,10 @@ public class FacesConfigHandlerTestCase extends TestCase {
 		InputStream is = new ByteArrayInputStream(("<root><foo>" + CLASS_NAME + "</foo><bar>" + CLASS_NAME + "</bar></root>").getBytes());
 		getParser().parse(is, handler);		
 
-        assertEquals(1, handler.getClasses().keySet().size());
-        assertEquals(CLASS_NAME, handler.getClasses().get("foo").get(0));
-        assertEquals(1, handler.getValues().keySet().size());
-        assertEquals(CLASS_NAME, handler.getValues().get("bar").get(0));
+        assertEquals(1, handler.getClassNamesByElement().keySet().size());
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(0));
+        assertEquals(1, handler.getValuesByElement().keySet().size());
+        assertEquals(CLASS_NAME, handler.getValuesByElement().get("bar").get(0));
 	}
 	
 	public void testNeither() throws Exception{
@@ -95,8 +95,8 @@ public class FacesConfigHandlerTestCase extends TestCase {
 		InputStream is = new ByteArrayInputStream(("<root><foo>" + CLASS_NAME + "</foo><bar>" + CLASS_NAME + "</bar></root>").getBytes());
 		getParser().parse(is, handler);
 		
-		assertEquals(0, handler.getClasses().keySet().size());
-		assertEquals(0, handler.getValues().keySet().size());
+		assertEquals(0, handler.getClassNamesByElement().keySet().size());
+		assertEquals(0, handler.getValuesByElement().keySet().size());
 	}
 	
 	private SAXParser getParser() throws ParserConfigurationException, SAXException {
@@ -119,10 +119,10 @@ public class FacesConfigHandlerTestCase extends TestCase {
         getParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
         getParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
         
-        assertEquals(1, handler.getClasses().keySet().size());
-        assertEquals(CLASS_NAME, handler.getClasses().get("foo").get(0));
-        assertEquals(CLASS_NAME, handler.getClasses().get("foo").get(1));
-        assertEquals(0, handler.getValues().keySet().size());
+        assertEquals(1, handler.getClassNamesByElement().keySet().size());
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(0));
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(1));
+        assertEquals(0, handler.getValuesByElement().keySet().size());
 		
 	}
 

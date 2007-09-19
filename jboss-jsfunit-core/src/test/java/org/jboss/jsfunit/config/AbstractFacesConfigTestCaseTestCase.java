@@ -22,6 +22,8 @@
 
 package org.jboss.jsfunit.config;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +34,13 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 	private static final Set<String> STUBBED_RESOURCEPATH = new HashSet<String>() {{
 		add("stubbed resource path");
 	}};
+	
+	private static final String CORRECT = "<validator>" 
+		+ "<validator-id>javax.faces.DoubleRange</validator-id>"
+		+ "<validator-class>" + AtomicIntegerValidator.class.getName() + "</validator-class>" 
+		+ "</validator>";
+	private static final String NON_EXISTING_ACTION_LISTENER 
+		= "<application><action-listener>com.nonexist.Foo</action-listener></application>";
 	
 	public void testEmptyFacesConfig() {
 
@@ -86,13 +95,7 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 	}
 
 	public void testFacesConfigHappyPath() {
-		
-		String body = "<validator>" 
-					+ "<validator-id>javax.faces.DoubleRange</validator-id>"
-					+ "<validator-class>" + AtomicIntegerValidator.class.getName() + "</validator-class>" 
-					+ "</validator>";
-		new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, 
-				new StringStreamProvider(getXml(body))) {};		
+		new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, new StringStreamProvider(getXml(CORRECT))) {};		
 	}
 	
 	public void testFacesConfigElementsMissingInterface() {
@@ -102,7 +105,7 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 		try {
 			
 			new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, 
-					new StringStreamProvider(getXml(body))) {};
+					new StringStreamProvider(getXml(body))) {}.testClassDefinitions();
 			
 			fail("should have failed ");
 			
@@ -112,14 +115,44 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 	
 	public void testFacesConfigElementsNonExistingClass() {
 		
-		String body = "<application><action-listener>com.nonexist.Foo</action-listener></application>";
 		
 		try {
 			
 			new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, 
-					new StringStreamProvider(getXml(body))) {};		
+					new StringStreamProvider(getXml(NON_EXISTING_ACTION_LISTENER))) {}.testClassDefinitions();
 			
 			fail("should have failed ");
+			
+		}catch(Exception e) { }
+		
+	}
+	
+	public void testCanHandleMoreThanOneConfigFile() {
+		
+		Set<String> paths = new HashSet<String>() {{
+			add("stubbed resource path");
+			add("second stubbed resource path");
+		}};
+		
+		StreamProvider streamProvider = new StreamProvider() {
+			
+			private InputStream stream;
+			
+			public InputStream getInputStream(String path) {
+				
+				stream = stream == null ? new ByteArrayInputStream(getXml(CORRECT).getBytes())
+						: new ByteArrayInputStream(getXml(NON_EXISTING_ACTION_LISTENER).getBytes());
+				
+				return stream;
+			}
+			
+		};
+		
+		try {
+			
+			new AbstractFacesConfigTestCase(paths, streamProvider) {}.testClassDefinitions();
+			
+			fail("should have failed");
 			
 		}catch(Exception e) { }
 		

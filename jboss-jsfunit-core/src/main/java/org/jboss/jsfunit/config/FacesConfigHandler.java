@@ -33,26 +33,28 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 class FacesConfigHandler extends DefaultHandler {
-
+	
 	private Set<String> classElementNames;
 	private Set<String> valueElementNames;
-	private Map<String, List<String>> classNames = new HashMap<String, List<String>>();
-	private Map<String, List<String>> valueNames = new HashMap<String, List<String>>();
+	
 	private boolean clazz;
 	private boolean value;
 	private StringBuffer buffer;
+
+	private Map<String, List<String>> classNamesByElement = new HashMap<String, List<String>>();
+	private Map<String, List<String>> valuesByElement = new HashMap<String, List<String>>();
 
 	public FacesConfigHandler(Set<String> classElementNames, Set<String> valueElementNames) {
 		this.classElementNames = classElementNames;
 		this.valueElementNames = valueElementNames;
 	}
 	
-	public Map<String, List<String>> getClasses() {
-		return classNames;
+	public Map<String, List<String>> getClassNamesByElement() {
+		return classNamesByElement;
 	}
 
-	public Map<String, List<String>> getValues() {
-		return valueNames;
+	public Map<String, List<String>> getValuesByElement() {
+		return valuesByElement;
 	}
 
 	public void characters(char[] ch, int start, int length)
@@ -75,17 +77,17 @@ class FacesConfigHandler extends DefaultHandler {
 			throw new IllegalStateException("cannot be looking for a element class and an element value");
 		
 		if (clazz) {
-			List<String> classNames = this.classNames.get(qName);
+			List<String> classNames = this.classNamesByElement.get(qName);
 			if( classNames == null )
 				classNames = new LinkedList<String>();
 			classNames.add(buffer.toString());
-			this.classNames.put(qName, classNames);
+			this.classNamesByElement.put(qName, classNames);
 		}else if(value) {
-			List<String> valueNames = this.valueNames.get(qName);
+			List<String> valueNames = this.valuesByElement.get(qName);
 			if(valueNames == null)
 				valueNames = new LinkedList<String>();
 			valueNames.add(buffer.toString());
-			this.valueNames.put(qName, valueNames);
+			this.valuesByElement.put(qName, valueNames);
 		}
 		
 		clazz = value = false;
