@@ -30,13 +30,14 @@ import org.apache.cactus.ServletTestCase;
 import org.xml.sax.SAXException;
 
 /**
- * This class tests the package-private methods of the ClientFacade.
- *
+ * This class tests the package-private methods of the JSFClientSession.
+ * 
+ * 
  * @author Stan Silvert
  */
-public class ClientFacadePackagePrivateTest extends ServletTestCase
+public class JSFClientSessionPackagePrivateTest extends ServletTestCase
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    
    /**
     * Start a JSFUnit session by getting the /index.faces page.  Note that
@@ -45,7 +46,7 @@ public class ClientFacadePackagePrivateTest extends ServletTestCase
     */
    public void setUp() throws IOException, SAXException
    {
-      this.client = new ClientFacade("/index.faces");
+      this.client = new JSFClientSession("/index.faces");
    }
    
    /**
@@ -53,7 +54,7 @@ public class ClientFacadePackagePrivateTest extends ServletTestCase
     */
    public static Test suite()
    {
-      return new TestSuite( ClientFacadePackagePrivateTest.class );
+      return new TestSuite( JSFClientSessionPackagePrivateTest.class );
    }
    
    public void testGetClientIDs() throws IOException, SAXException

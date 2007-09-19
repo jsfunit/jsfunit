@@ -29,8 +29,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.a4jsupport.Ajax4jsfClient;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.xml.sax.SAXException;
 
 /**
@@ -54,9 +54,9 @@ public class A4JTest extends ServletTestCase
     */
    public void testEcho() throws IOException, SAXException
    {
-      ClientFacade client = new ClientFacade("/pages/echo.jsf");
+      JSFClientSession client = new JSFClientSession("/pages/echo.jsf");
       Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // Note: input_text is session scoped
       client.setParameter("input_text", "foo");
@@ -93,9 +93,9 @@ public class A4JTest extends ServletTestCase
     */
    public void testSelectionList() throws IOException, SAXException
    {
-      ClientFacade client = new ClientFacade("/list.jsf");
+      JSFClientSession client = new JSFClientSession("/list.jsf");
       Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("list", "Lott, Charlie");
       ajaxClient.fireAjaxEvent("a4jsupport");
@@ -140,9 +140,9 @@ public class A4JTest extends ServletTestCase
     */
    public void testRepeatRerender() throws IOException, SAXException
    {
-      ClientFacade client = new ClientFacade("/pages/a4j-repeat-rerender.jsf");
+      JSFClientSession client = new JSFClientSession("/pages/a4j-repeat-rerender.jsf");
       Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       ajaxClient.fireAjaxEvent("0:command_link_up");
       assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));

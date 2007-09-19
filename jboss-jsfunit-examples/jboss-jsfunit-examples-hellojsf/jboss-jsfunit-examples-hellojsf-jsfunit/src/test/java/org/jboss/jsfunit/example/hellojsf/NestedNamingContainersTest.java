@@ -28,10 +28,10 @@ import javax.faces.component.UIComponent;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.ClientFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.ComponentIDNotFoundException;
 import org.jboss.jsfunit.facade.DuplicateClientIDException;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.xml.sax.SAXException;
 
 /**
@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
  */
 public class NestedNamingContainersTest extends ServletTestCase
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    
    /**
     * Start a JSFUnit session by getting the /index.faces page.
@@ -49,7 +49,7 @@ public class NestedNamingContainersTest extends ServletTestCase
    public void setUp() throws IOException, SAXException
    {
       // Initial JSF request
-      this.client = new ClientFacade("/NestedNamingContainers.faces");
+      this.client = new JSFClientSession("/NestedNamingContainers.faces");
    }
    
    /**
@@ -72,7 +72,7 @@ public class NestedNamingContainersTest extends ServletTestCase
     */
    public void testInitialPage() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
 
       // Test navigation to initial viewID
       assertEquals("/NestedNamingContainers.jsp", server.getCurrentViewId());
@@ -92,7 +92,7 @@ public class NestedNamingContainersTest extends ServletTestCase
       client.setParameter("form1:input_foo_text", "A"); // input too short - validation error
       client.submit("form1:submit_button");
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // Test that I was returned to the initial view because of input error
       assertEquals("/NestedNamingContainers.jsp", server.getCurrentViewId());
@@ -111,7 +111,7 @@ public class NestedNamingContainersTest extends ServletTestCase
       client.setParameter("form1:input_foo_text", "Stan");
       client.submit("form1:submit_button");
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // test the greeting component
       UIComponent greeting = server.findComponent("form1:greeting");
@@ -128,7 +128,7 @@ public class NestedNamingContainersTest extends ServletTestCase
       testValidInput(); // put "Stan" into the input field
       client.submit("form1:goodbye_button");
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // Test navigation to a new view
       assertEquals("/finalgreeting.jsp", server.getCurrentViewId());
@@ -139,7 +139,7 @@ public class NestedNamingContainersTest extends ServletTestCase
    
    public void testDualFormAmbiguity() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       try
       {

@@ -34,8 +34,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
@@ -44,13 +44,13 @@ import com.meterware.httpunit.WebForm;
 
 public class BasicAuthenticationTest extends ServletTestCase
 {
-        private ClientFacade client;
+        private JSFClientSession client;
         
         public void setUp() throws MalformedURLException, IOException, SAXException
         {
            WebConversation webConv = WebConversationFactory.makeWebConversation();
            webConv.setAuthorization("admin", "adminpw");
-           this.client = new ClientFacade (webConv, "/secured-page.faces");
+           this.client = new JSFClientSession (webConv, "/secured-page.faces");
         }
 	    
         /**
@@ -61,7 +61,7 @@ public class BasicAuthenticationTest extends ServletTestCase
          */
         public void testLogin () throws SAXException, IOException
         {
-            ServerFacade server = new ServerFacade (client);
+            JSFServerSession server = new JSFServerSession (client);
         
             FacesContext facesContext = FacesContextBridge.getCurrentInstance();
             UIViewRoot root = facesContext.getViewRoot();

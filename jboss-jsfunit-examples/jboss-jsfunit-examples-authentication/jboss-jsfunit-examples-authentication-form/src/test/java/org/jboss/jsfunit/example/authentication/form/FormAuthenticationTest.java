@@ -33,8 +33,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 import org.xml.sax.SAXException;
 
@@ -42,11 +42,11 @@ import com.meterware.httpunit.WebForm;
 
 public class FormAuthenticationTest extends ServletTestCase
 {
-        private ClientFacade client;
+        private JSFClientSession client;
         
         public void setUp() throws MalformedURLException, IOException, SAXException
         {
-        	this.client = new ClientFacade ("/secured-page.faces");
+        	this.client = new JSFClientSession ("/secured-page.faces");
         }
 	    
         /**
@@ -57,7 +57,7 @@ public class FormAuthenticationTest extends ServletTestCase
          */
         public void testLogin () throws SAXException, IOException
         {
-        	ServerFacade server = new ServerFacade (client);
+        	JSFServerSession server = new JSFServerSession (client);
         	// check that the page can be accessed
         	assertEquals ("/login.jsp", server.getCurrentViewId());
         	// check that we can see something on the secured page

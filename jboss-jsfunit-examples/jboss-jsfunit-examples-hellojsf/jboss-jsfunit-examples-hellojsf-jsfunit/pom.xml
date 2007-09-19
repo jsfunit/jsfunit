@@ -105,7 +105,7 @@
     </dependency>
 
     <dependency>
-      <groupId>jboss</groupId>
+      <groupId>org.jboss</groupId>
       <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
       <version>${project.version}</version>
       <type>war</type>

@@ -35,13 +35,14 @@ import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 /**
- * The ClientFacade provides a simplified API that wraps HttpUnit.  With a
- * single ClientFacade object, you can simulate an entire user session as you
+ * The JSFClientSession provides a simplified API that wraps HttpUnit.  With a
+ * single JSFClientSession object, you can simulate an entire user session as you
  * set parameters and submit data using submit() and clickCommandLink() methods.
- *
+ * 
+ * 
  * @author Stan Silvert
  */
-public class ClientFacade
+public class JSFClientSession
 {
    private WebConversation webConversation;
    private WebResponse webResponse;
@@ -63,7 +64,7 @@ public class ClientFacade
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(String initialPage) throws MalformedURLException, IOException, SAXException
+   public JSFClientSession(String initialPage) throws MalformedURLException, IOException, SAXException
    {
       this.webConversation = WebConversationFactory.makeWebConversation();
       doInitialRequest(initialPage);
@@ -73,13 +74,13 @@ public class ClientFacade
     * Creates a new client interface for testing a JSF application using a
     * customized WebConversation.  To use this constructor, first get a
     * WebConversation from org.jboss.jsfunit.framework.WebConversationFactory.
-    *
+    * 
     * Example:
     * <code>
     * WebConversation webConv = WebConversationFactory.makeWebConversation();
     * webConv.setAuthorization("myuser", "mypassword");
     * webConv.setHeaderField("Accept-Language", "es-mx,es"); 
-    * ClientFacade client = new ClientFacade(webConv, "/index.jsf");
+    * JSFClientSession client = new JSFClientSession(webConv, "/index.jsf");
     * </code>
     * 
     * Note that the initialPage param should be something that maps into the FacesServlet.
@@ -87,16 +88,16 @@ public class ClientFacade
     * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
     * initialPage param will be something like "/faces/index.jsp".
     * 
+    * 
     * @param webConversation A WebConversation object with "custom" attributes.
     * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
-    *
     * @throws IllegalArgumentException if the WebConversation did not come from the
     *                                  WebConversationFactory.
     * @throws MalformedURLException If the initialPage cannot be used to create a URL for the JSF app
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as HTML
     */
-   public ClientFacade(WebConversation webConversation, String initialPage) 
+   public JSFClientSession(WebConversation webConversation, String initialPage) 
         throws MalformedURLException, IOException, SAXException
    {
       if (!WebConversationFactory.isJSFUnitWebConversation(webConversation))
@@ -157,14 +158,14 @@ public class ClientFacade
    
    /**
     * The method submits the WebRequest to the server using the WebConversation
-    * of this ClientFacade instance.  
-    *
+    * of this JSFClientSession instance.  
+    * 
     * At the end of this method, a new view from the server will be loaded so 
-    * that you can continue to use this ClientFacade instance to make further 
+    * that you can continue to use this JSFClientSession instance to make further 
     * requests.
-    *
+    * 
+    * 
     * @param request The WebRequest
-    *
     * @throws IOException If there is an error calling the JSF app
     * @throws SAXException If the response from the JSF app cannot be parsed as 
     *                      HTML
@@ -308,19 +309,19 @@ public class ClientFacade
     * Finds the named link and clicks it.  This method is used to click static
     * links such as those produced by h:outputLink.  If you need to submit
     * a form using an h:commandLink, use clickCommandLink() instead.
-    *
+    * 
     * At the end of this method call, a new page will be loaded.  So you can
-    * use this ClientFacade instance to do tests on the page.  However, static 
+    * use this JSFClientSession instance to do tests on the page.  However, static 
     * links typically do not call into the JSF servlet.  Therefore, you have
     * exited the realm of JSF.  In that case you will probably need a new 
-    * ClientFacade instance to do more JSF testing.
-    *
+    * JSFClientSession instance to do more JSF testing.
+    * 
+    * 
     * @param componentID The JSF component id (or a suffix of the client ID) of 
     *                    the link to be "clicked".
-    *
     * @throws IOException if there is a problem clicking the link.
     * @throws SAXException if the response page can not be parsed.
-    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws ComponentIDNotFoundException if the component can not be found
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */

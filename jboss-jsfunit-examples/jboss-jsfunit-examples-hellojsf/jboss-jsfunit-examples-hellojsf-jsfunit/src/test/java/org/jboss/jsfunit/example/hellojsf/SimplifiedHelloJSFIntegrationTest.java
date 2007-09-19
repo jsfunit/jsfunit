@@ -28,25 +28,25 @@ import javax.faces.component.UIComponent;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.xml.sax.SAXException;
 
 /**
  * This is a simplified version of the HelloJSFIntegrationTest.  Instead of using
- * HttpUnit and JSF API's, it uses JSFUnit's ClientFacade and ServerFacade classes
+ * HttpUnit and JSF API's, it uses JSFUnit's JSFClientSession and JSFServerSession classes
  * to do most of the work.
- *
+ * 
  * JSFUnit is designed to allow complete integration testing and debugging of
  * JSF applications at the JSF level.  In short, it gives you
  * access to the state of the FacesContext and managed beans after every
  * request.  With the FacesContext in hand, you are able to do integration testing
  * of JSF applications at the proper level of abstraction.
- *
+ * 
  * The typical usage pattern of JSFUnit is to submit a request with httpunit and then
  * examine both the raw HTML output (httpunit tests) and JSF internals (JSFUnit tests).
  * The httpunit-style tests are not shown here.
- *
+ * 
  * The JSFUnit tests below demonstrate testing:
  * - Navigation:      "Did this input take me to the correct view?"
  * - View Components: "Does the JSF component tree contain the correct components?"
@@ -55,7 +55,7 @@ import org.xml.sax.SAXException;
  *                    Seam-defined scopes such as conversation scope.  The tests below only
  *                    demonstrate request scope, but you can find anything reachable with the EL.
  * - Validation:      "Does invalid input generate the proper FacesMessage and error to the user."
- *
+ * 
  * Tests not shown below:
  * - EL Expressions:     You use the Expression Language (EL) to examine the state of your
  *                       managed beans.  JSFUnit allows you to invoke any EL expression.
@@ -67,15 +67,17 @@ import org.xml.sax.SAXException;
  *                       your application configuration is correct.  This would include tests
  *                       for proper installation of converters, validators, component types,
  *                       locales, and resource bundles.
- *
+ * 
  * This class tests the HelloJSF application.  This is a simple Hello World
  * application written in JSF with a single managed bean bound to the name "foo" in request scope.
- *
+ * 
+ * 
+ * 
  * @author Stan Silvert
  */
 public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    
    /**
     * Start a JSFUnit session by getting the /index.faces page.
@@ -83,7 +85,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
    public void setUp() throws IOException, SAXException
    {
       // Initial JSF request
-      this.client = new ClientFacade("/index.faces");
+      this.client = new JSFClientSession("/index.faces");
    }
    
    /**
@@ -100,7 +102,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
     */
    public void testInitialPage() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
 
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -120,7 +122,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       client.setParameter("input_foo_text", "A"); // input too short - validation error
       client.submit("submit_button");
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // Test that I was returned to the initial view because of input error
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -139,7 +141,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       client.setParameter("input_foo_text", "Stan");
       client.submit("submit_button");
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // test the greeting component
       UIComponent greeting = server.findComponent("greeting");
@@ -156,7 +158,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       testValidInput(); // put "Stan" into the input field
       client.submit("goodbye_button");
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // Test navigation to a new view
       assertEquals("/finalgreeting.jsp", server.getCurrentViewId());

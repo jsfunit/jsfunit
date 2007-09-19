@@ -38,14 +38,15 @@ import org.xml.sax.SAXException;
  */
 public class WebRequestFactory
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    
    /**
     * Create a new WebRequestFactory.
-    *
-    * @param client A ClientFacade that requests will be based on.
+    * 
+    * 
+    * @param client A JSFClientSession that requests will be based on.
     */
-   public WebRequestFactory(ClientFacade client)
+   public WebRequestFactory(JSFClientSession client)
    {
       this.client = client;
    }

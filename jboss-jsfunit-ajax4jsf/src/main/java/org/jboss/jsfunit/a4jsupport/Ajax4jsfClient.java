@@ -37,8 +37,8 @@ import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import org.ajax4jsf.framework.renderer.AjaxContainerRenderer;
 import org.ajax4jsf.framework.renderer.AjaxRendererUtils;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.facade.WebRequestFactory;
 import org.xml.sax.SAXException;
 
@@ -49,10 +49,10 @@ import org.xml.sax.SAXException;
  */
 public class Ajax4jsfClient
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    private WebRequestFactory requestFactory;
    
-   public Ajax4jsfClient(ClientFacade client)
+   public Ajax4jsfClient(JSFClientSession client)
    {
       if (client == null) throw new NullPointerException("client can not be null");
       this.client = client;
@@ -81,7 +81,7 @@ public class Ajax4jsfClient
     * @return A map of UIData components for which the row index has been changed, along with the
     *         original row index.
     */
-   private Map<UIData, Integer> setRowIndicies(ServerFacade server, String componentID) throws SAXException, IOException
+   private Map<UIData, Integer> setRowIndicies(JSFServerSession server, String componentID) throws SAXException, IOException
    {
       String clientID = server.findClientID(componentID);
       
@@ -132,7 +132,7 @@ public class Ajax4jsfClient
     */
    public void fireAjaxEvent(String componentID) throws SAXException, IOException
    {
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       Map<UIData, Integer> indiciesToRestore = setRowIndicies(server, componentID);
       
       UIComponent uiComp = server.findComponent(componentID);
@@ -176,7 +176,7 @@ public class Ajax4jsfClient
     */
    private void ajaxRequest(WebRequest request) throws SAXException, IOException
    {
-      ServerFacade server = new ServerFacade(this.client);
+      JSFServerSession server = new JSFServerSession(this.client);
       String viewId = server.getCurrentViewId();
       client.doWebRequest(request);
       

@@ -27,18 +27,20 @@ import javax.faces.component.UIComponent;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.xml.sax.SAXException;
 
 /**
- * This class tests all of the API's in the ClientFacade and ServerFacade.
- *
+ * This class tests all of the API's in the JSFClientSession and JSFServerSession.
+ * 
+ * 
+ * 
  * @author Stan Silvert
  */
 public class FacadeAPITest extends ServletTestCase
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    
    /**
     * Start a JSFUnit session by getting the /index.faces page.
@@ -47,7 +49,7 @@ public class FacadeAPITest extends ServletTestCase
     */
    public void setUp() throws IOException, SAXException
    {
-      this.client = new ClientFacade("/jsf/index.jsp");
+      this.client = new JSFClientSession("/jsf/index.jsp");
    }
    
    /**
@@ -62,7 +64,7 @@ public class FacadeAPITest extends ServletTestCase
     */
    public void testGetCurrentViewId() throws IOException, SAXException
    {
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewId());
@@ -74,20 +76,20 @@ public class FacadeAPITest extends ServletTestCase
       client.setParameter("input_foo_text", "Stan"); 
       client.submit("submit_button");
       
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       UIComponent greeting = server.findComponent("greeting");
       assertTrue(greeting.isRendered());
    }
    
    /**
-    * Tests ClientFacade.submit().  This can only be called if there is
+    * Tests JSFClientSession.submit().  This can only be called if there is
     * only one submit button on the form.
     */
    public void testNoArgSubmit() throws IOException, SAXException
    {
       client.submit("goodbye_button");  // go to finalgreeting page
       client.submit(); // only one submit button on finalgreeting page
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       assertEquals("/index.jsp", server.getCurrentViewId());  // test that we are back on the first page
    }
    
@@ -96,7 +98,7 @@ public class FacadeAPITest extends ServletTestCase
       testSetParamAndSubmit(); // put "Stan" into the input field
 
       // test the greeting component
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       assertEquals("Hello Stan", server.getComponentValue("greeting"));
    }
    
@@ -107,7 +109,7 @@ public class FacadeAPITest extends ServletTestCase
    {
       testSetParamAndSubmit(); // put "Stan" into the input field
 
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
    }
    

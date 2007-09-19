@@ -27,14 +27,15 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.ClientFacade;
-import org.jboss.jsfunit.facade.ServerFacade;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 /**
- * This class tests a ClientFacade that uses a custom WebConversation.
- *
+ * This class tests a JSFClientSession that uses a custom WebConversation.
+ * 
+ * 
  * @author Stan Silvert
  */
 public class CustomWebConversationTest extends ServletTestCase
@@ -51,8 +52,8 @@ public class CustomWebConversationTest extends ServletTestCase
    {
       WebConversation webConv = WebConversationFactory.makeWebConversation();
       webConv.setHeaderField("mycoolheader", "mycoolvalue");
-      ClientFacade client = new ClientFacade(webConv, "/index.faces");
-      ServerFacade server = new ServerFacade(client);
+      JSFClientSession client = new JSFClientSession(webConv, "/index.faces");
+      JSFServerSession server = new JSFServerSession(client);
       Object headerValue = server.getFacesContext()
                                  .getExternalContext()
                                  .getRequestHeaderValuesMap()
@@ -64,7 +65,7 @@ public class CustomWebConversationTest extends ServletTestCase
    {
       try
       {
-         ClientFacade client = new ClientFacade(null, "/index.faces");
+         JSFClientSession client = new JSFClientSession(null, "/index.faces");
          fail("Expected IllegalArgumentException");
       }
       catch (IllegalArgumentException e)
@@ -79,7 +80,7 @@ public class CustomWebConversationTest extends ServletTestCase
       try
       {
          WebConversation webConv = new WebConversation();
-         ClientFacade client = new ClientFacade(webConv, "/index.faces");
+         JSFClientSession client = new JSFClientSession(webConv, "/index.faces");
          fail("Expected IllegalArgumentException");
       }
       catch (IllegalArgumentException e)
@@ -94,7 +95,7 @@ public class CustomWebConversationTest extends ServletTestCase
    {
       WebConversation webConv = WebConversationFactory.makeWebConversation();
       
-      ClientFacade client = new ClientFacade(webConv, "/index.faces");
+      JSFClientSession client = new JSFClientSession(webConv, "/index.faces");
       
       WebConversation webConvFromClient = client.getWebConversation();
       assertEquals(webConv, webConvFromClient);
@@ -102,7 +103,7 @@ public class CustomWebConversationTest extends ServletTestCase
       webConvFromClient.setHeaderField("mycoolheader", "mycoolvalue");
       client.submit("submit_button");
       
-      ServerFacade server = new ServerFacade(client);
+      JSFServerSession server = new JSFServerSession(client);
       Object headerValue = server.getFacesContext()
                                  .getExternalContext()
                                  .getRequestHeaderValuesMap()

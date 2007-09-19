@@ -28,21 +28,24 @@ import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 
 /**
- * The ServerFacade provides a simplified API that wraps parts of the JSF API 
+ * The JSFServerSession provides a simplified API that wraps parts of the JSF API 
  * for things that you would commonly do in testing.
- *
+ * 
+ * 
  * @author Stan Silvert
  */
-public class ServerFacade
+public class JSFServerSession
 {
-   private ClientFacade client;
+   private JSFClientSession client;
    
    /**
-    * Create a new ServerFacade.
-    *
-    * @param client The ClientFacade for the current web conversation.
+    * Create a new JSFServerSession.
+    * 
+    * 
+    * 
+    * @param client The JSFClientSession for the current web conversation.
     */
-   public ServerFacade(ClientFacade client)
+   public JSFServerSession(JSFClientSession client)
    {
       if (client == null) throw new NullPointerException("client can not be null");
       this.client = client;
