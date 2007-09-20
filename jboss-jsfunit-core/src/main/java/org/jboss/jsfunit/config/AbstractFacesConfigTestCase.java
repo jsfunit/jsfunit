@@ -24,6 +24,7 @@ package org.jboss.jsfunit.config;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -60,6 +61,7 @@ import org.w3c.dom.NodeList;
 public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	protected final Map<String, Document> documentsByPath = new HashMap<String, Document>();
+	
 	private StreamProvider streamProvider;
 	
 	private final static Map<String, Class[]> CLASS_CONSTRAINTS = new HashMap<String, Class[]>(){{
@@ -92,7 +94,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 	}};
 	
-	private final static Map<String, List<String>> VALUE_CONSTRAINTS = new HashMap<String, List<String>>(){{
+	final static Map<String, List<String>> VALUE_CONSTRAINTS = new HashMap<String, List<String>>(){{
 		put("managed-bean-scope", 
 				new ArrayList<String>(){{
 					add("none");
@@ -130,7 +132,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		try {
 			 builder = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
-			throw new RuntimeException("Could not create " + DocumentBuilder.class.getName());
+			throw new RuntimeException("Could not create a " + DocumentBuilder.class.getName());
 		}
 		
 		for(String facesConfigPath : facesConfigPaths){
@@ -139,7 +141,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 			try {
 				document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
 			} catch (Exception e) {
-				throw new RuntimeException("Could not parse document " + facesConfigPath, e);
+				throw new RuntimeException("Could not parse document '" + facesConfigPath + "'\n" + xml, e);
 			}
 			documentsByPath.put(facesConfigPath, document);
 		}
@@ -166,11 +168,11 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 		for( ; facesConfigPaths.hasNext() ; ) {
 			String facesConfigPath = facesConfigPaths.next();
-			testClassDefinitions(documentsByPath.get(facesConfigPath), facesConfigPath);
+			classDefinitions(documentsByPath.get(facesConfigPath), facesConfigPath);
 		}
 	}
 	
-	private void testClassDefinitions(Node node, String faceConfigPath) {
+	private void classDefinitions(Node node, String faceConfigPath) {
 		
 		String nodeName = node.getNodeName();
 		
@@ -186,7 +188,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 			NodeList children = node.getChildNodes();
 			for(int i = 0; i < children.getLength(); i++)
-				testClassDefinitions(children.item(i), faceConfigPath);
+				classDefinitions(children.item(i), faceConfigPath);
 		}
 		
 	}
@@ -209,4 +211,61 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 		return msg;
 	}
+	
+	public void testManagedBeanSerialization() {
+
+		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
+		
+		for( ; facesConfigPaths.hasNext() ; ) {
+			String facesConfigPath = facesConfigPaths.next();
+			managedBeanScope(documentsByPath.get(facesConfigPath), facesConfigPath);
+		}
+		
+	}
+	
+	private void managedBeanScope(Node node, String facesConfigPath) {
+		
+		String nodeName = node.getNodeName();
+		NodeList children = node.getChildNodes();
+		
+		if("managed-bean".equals(nodeName)) { 
+			doManagedBean(node, facesConfigPath, children);
+		}else { 
+			for(int i = 0; i < children.getLength(); i++)
+				managedBeanScope(children.item(i), facesConfigPath);
+		}
+	}
+
+	private void doManagedBean(Node parent, String facesConfigPath, NodeList children) {
+		
+		String name = null;
+		String clazz = null;
+		String scope = null;
+		
+		for(int i = 0 ; i < children.getLength(); i++) {
+			if("managed-bean-name".equals(children.item(i).getNodeName())) 
+				name = children.item(i).getTextContent();
+			else if("managed-bean-scope".equals(children.item(i).getNodeName())) 
+				scope = children.item(i).getTextContent();
+			else if("managed-bean-class".equals(children.item(i).getNodeName())) 
+				clazz = children.item(i).getTextContent();
+		}
+		
+		if(scope == null)
+			throw new RuntimeException("could not determine scope of " + parent.getNodeName() + " '" 
+					+ name + "' in " + facesConfigPath);
+		if(clazz == null)
+			throw new RuntimeException("could not determine class of " + parent.getNodeName() + " '" 
+					+ name + "' in " + facesConfigPath);
+		
+		// TODO check for valid scope here
+		
+		if(( "session".equals(scope) || "application".equals(scope) ) ) {
+			Class managedBeanClass = new ClassUtils().loadClass(clazz, "managed-bean-class"); 
+			if( ! Serializable.class.isAssignableFrom(managedBeanClass))
+				throw new RuntimeException("Managed bean '" + parent.getNodeValue() + "' is in " 
+						+ scope + " scope, so it needs to implement " + Serializable.class);
+		}
+	}
+	
 }

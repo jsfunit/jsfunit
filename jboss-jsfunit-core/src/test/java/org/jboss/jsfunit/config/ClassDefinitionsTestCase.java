@@ -29,16 +29,13 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-public class AbstractFacesConfigTestCaseTestCase extends TestCase{
-	
-	private static final Set<String> STUBBED_RESOURCEPATH = new HashSet<String>() {{
-		add("stubbed resource path");
-	}};
+public class ClassDefinitionsTestCase extends TestCase{
 	
 	private static final String CORRECT = "<validator>" 
 		+ "<validator-id>javax.faces.DoubleRange</validator-id>"
 		+ "<validator-class>" + AtomicIntegerValidator.class.getName() + "</validator-class>" 
 		+ "</validator>";
+	
 	private static final String NON_EXISTING_ACTION_LISTENER 
 		= "<application><action-listener>com.nonexist.Foo</action-listener></application>";
 	
@@ -78,7 +75,7 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 	
 	public void testEmptyFacesConfiguration() {
 
-		new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, new StringStreamProvider(getXml(""))) {};
+		new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, new StringStreamProvider(TestUtils.getFacesConfig(""))) {};
 		
 	}
 
@@ -86,7 +83,7 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 
 		try {
 			
-			new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, new StringStreamProvider(getXml("<"))) {};
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, new StringStreamProvider(TestUtils.getFacesConfig("<"))) {};
 			
 			fail("malformed xml should fail");
 			
@@ -95,7 +92,7 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 	}
 
 	public void testFacesConfigHappyPath() {
-		new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, new StringStreamProvider(getXml(CORRECT))) {};		
+		new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, new StringStreamProvider(TestUtils.getFacesConfig(CORRECT))) {};		
 	}
 	
 	public void testFacesConfigElementsMissingInterface() {
@@ -104,8 +101,8 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 		
 		try {
 			
-			new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, 
-					new StringStreamProvider(getXml(body))) {}.testClassDefinitions();
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, 
+					new StringStreamProvider(TestUtils.getFacesConfig(body))) {}.testClassDefinitions();
 			
 			fail("should have failed ");
 			
@@ -115,11 +112,10 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 	
 	public void testFacesConfigElementsNonExistingClass() {
 		
-		
 		try {
 			
-			new AbstractFacesConfigTestCase(STUBBED_RESOURCEPATH, 
-					new StringStreamProvider(getXml(NON_EXISTING_ACTION_LISTENER))) {}.testClassDefinitions();
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, 
+					new StringStreamProvider(TestUtils.getFacesConfig(NON_EXISTING_ACTION_LISTENER))) {}.testClassDefinitions();
 			
 			fail("should have failed ");
 			
@@ -140,8 +136,8 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 			
 			public InputStream getInputStream(String path) {
 				
-				stream = stream == null ? new ByteArrayInputStream(getXml(CORRECT).getBytes())
-						: new ByteArrayInputStream(getXml(NON_EXISTING_ACTION_LISTENER).getBytes());
+				stream = stream == null ? new ByteArrayInputStream(TestUtils.getFacesConfig(CORRECT).getBytes())
+						: new ByteArrayInputStream(TestUtils.getFacesConfig(NON_EXISTING_ACTION_LISTENER).getBytes());
 				
 				return stream;
 			}
@@ -158,14 +154,4 @@ public class AbstractFacesConfigTestCaseTestCase extends TestCase{
 		
 	}
 	
-	private String getXml(String body) {
-		
-		return "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><!DOCTYPE faces-config PUBLIC "
-			+ "\"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN\""
-			+ "\"http://java.sun.com/dtd/web-facesconfig_1_1.dtd\">"
-			+ "<faces-config>"
-			+ body
-			+ "</faces-config>";
-		
-	}
 }

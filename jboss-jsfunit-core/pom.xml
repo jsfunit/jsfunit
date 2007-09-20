@@ -30,7 +30,7 @@
         <version>2.1.2</version>
         <configuration>
           <excludes>
-            <exclude>**/*StateUtilsAES_CBCTest*</exclude>
+            <exclude>**/TestUtils*</exclude>
           </excludes>
         </configuration>
       </plugin>      
