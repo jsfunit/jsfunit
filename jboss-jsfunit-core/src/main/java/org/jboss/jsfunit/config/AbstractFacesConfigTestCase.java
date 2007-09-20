@@ -239,15 +239,20 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		String name = null;
 		String clazz = null;
 		String scope = null;
+		List<String> propertyNames = new LinkedList<String>();
 		
 		for(int i = 0 ; i < children.getLength(); i++) {
 			Node child = children.item(i);
-			if("managed-bean-name".equals(child.getNodeName())) 
-				name = children.item(i).getTextContent();
-			else if("managed-bean-scope".equals(child.getNodeName())) 
-				scope = children.item(i).getTextContent();
-			else if("managed-bean-class".equals(child.getNodeName())) 
-				clazz = children.item(i).getTextContent();
+			String nodeName = child.getNodeName();
+			String text = child.getTextContent();
+			if("managed-bean-name".equals(nodeName)) 
+				name = text;
+			else if("managed-bean-scope".equals(nodeName)) 
+				scope = text;
+			else if("managed-bean-class".equals(nodeName)) 
+				clazz = text;
+			else if("managed-property".equals(nodeName))
+				doManagedBeanProperty(child, propertyNames, name, facesConfigPath);
 		}
 		
 		if(scope == null || "".equals(scope))
@@ -282,6 +287,23 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 			if( ! Serializable.class.isAssignableFrom(managedBeanClass))
 				throw new RuntimeException("Managed bean '" + parent.getNodeValue() + "' is in " 
 						+ scope + " scope, so it needs to implement " + Serializable.class);
+		}
+	}
+
+	private void doManagedBeanProperty(Node parent, final List<String> propertyNames, 
+			String managedBeanName, String facesConfig) {
+
+		NodeList children = parent.getChildNodes();
+		
+		for(int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			if("property-name".equals(child.getNodeName())) {
+				String name = child.getTextContent();
+				if(propertyNames.contains(name))
+					throw new RuntimeException("managed bean '" + managedBeanName 
+							+ "' in " + facesConfig + " has a duplicate property named " + name);
+				propertyNames.add(name);
+			}
 		}
 	}
 	

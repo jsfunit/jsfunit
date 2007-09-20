@@ -47,14 +47,27 @@ public class TestUtils {
 			+ "</faces-config>";
 	}
 	
-	public static String getManagedBean(String name, Class clazz, String scope) {
+	
+	public static String getManagedProperty(String name, String value) {
+		
+		return "<managed-property>"
+	    	+ "<property-name>" + name + "</property-name>"
+	    	+ "<value>" + value + "</value>"
+	    	+ "</managed-property>";
+	}
+	
+	public static String getManagedBean(String name, Class clazz, String scope, String managedProperties) {
 		
 		return "<managed-bean>"
-    			+ "<managed-bean-name>" + name + "</managed-bean-name>"
-    			+ "<managed-bean-class>" + clazz.getName() + "</managed-bean-class>"
-    			+ "<managed-bean-scope>" + scope + "</managed-bean-scope>"
-    			+ "</managed-bean>";
-		
+			+ "<managed-bean-name>" + name + "</managed-bean-name>"
+			+ "<managed-bean-class>" + clazz.getName() + "</managed-bean-class>"
+			+ "<managed-bean-scope>" + scope + "</managed-bean-scope>"
+			+ managedProperties
+			+ "</managed-bean>";
+	}
+	
+	public static String getManagedBean(String name, Class clazz, String scope) {
+		return getManagedBean(name, clazz, scope, "");
 	}
 	
 }
