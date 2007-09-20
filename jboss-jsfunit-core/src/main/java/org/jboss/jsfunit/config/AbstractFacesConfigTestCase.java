@@ -1,4 +1,4 @@
-/*
+/**
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -18,6 +18,8 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
+ * @author Dennis Byrne
  */
 
 package org.jboss.jsfunit.config;
@@ -92,16 +94,6 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		put("phase-listener", new Class[]{PhaseListener.class});
 		put("converter-for-class", new Class[]{});
 		
-	}};
-	
-	final static Map<String, List<String>> VALUE_CONSTRAINTS = new HashMap<String, List<String>>(){{
-		put("managed-bean-scope", 
-				new ArrayList<String>(){{
-					add("none");
-					add("request");
-					add("session");
-					add("application");
-					}});
 	}};
 	
 	public AbstractFacesConfigTestCase(Set<String> facesConfigPaths) {
@@ -212,7 +204,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		return msg;
 	}
 	
-	public void testManagedBeanSerialization() {
+	public void testManagedBeans() {
 
 		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
 		
@@ -257,8 +249,17 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		if(clazz == null)
 			throw new RuntimeException("could not determine class of " + parent.getNodeName() + " '" 
 					+ name + "' in " + facesConfigPath);
+	
+		List<String> scopes = new ArrayList<String>(){{
+			add("none");
+			add("request");
+			add("session");
+			add("application");
+			}};
 		
-		// TODO check for valid scope here
+		if ( ! scopes.contains(scope) )
+			throw new RuntimeException("managed bean '" + name + "' in " 
+					+ facesConfigPath + " has an invalid scope '" + scope + "'");
 		
 		if(( "session".equals(scope) || "application".equals(scope) ) ) {
 			Class managedBeanClass = new ClassUtils().loadClass(clazz, "managed-bean-class"); 

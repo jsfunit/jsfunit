@@ -22,34 +22,23 @@
 
 package org.jboss.jsfunit.config;
 
-import java.util.HashSet;
-import java.util.Set;
+import junit.framework.TestCase;
 
-public class TestUtils {
+public class ManagedBeanScope_JSFUNIT_36_TestCase extends TestCase {
 
-	public static final Set<String> STUBBED_RESOURCEPATH = new HashSet<String>() {{
-		add("stubbed resource path");
-	}};
-	
-	private TestUtils() {}
-	
-	public static final String getFacesConfig(String body) {
+	public void testInvalidScope() {
 		
-		return "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><!DOCTYPE faces-config PUBLIC "
-			+ "\"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN\""
-			+ "\"http://java.sun.com/dtd/web-facesconfig_1_1.dtd\">"
-			+ "<faces-config>"
-			+ body
-			+ "</faces-config>";
-	}
-	
-	public static String getManagedBean(String name, Class clazz, String scope) {
+		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "foo");
+		String facesConfig = TestUtils.getFacesConfig(manageBean);
+		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 		
-		return "<managed-bean>"
-    			+ "<managed-bean-name>" + name + "</managed-bean-name>"
-    			+ "<managed-bean-class>" + clazz.getName() + "</managed-bean-class>"
-    			+ "<managed-bean-scope>" + scope + "</managed-bean-scope>"
-    			+ "</managed-bean>";
+		try {
+			
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+			
+			fail("should have failed because foo is invalid scope");
+			
+		}catch(Exception e) { }
 		
 	}
 	

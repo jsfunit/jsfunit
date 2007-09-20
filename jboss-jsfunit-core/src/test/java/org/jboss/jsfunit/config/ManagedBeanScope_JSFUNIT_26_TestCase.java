@@ -38,20 +38,20 @@ public class ManagedBeanScope_JSFUNIT_26_TestCase extends TestCase {
 		}};
 		
 		for(String scope : scopes) {
-			String manageBean = getManagedBean("good", Pojo.class, scope);
+			String manageBean = TestUtils.getManagedBean("good", Pojo.class, scope);
 			String facesConfig = TestUtils.getFacesConfig(manageBean);
 			StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeanSerialization();
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 		}
 		
 		scopes.add("session");
 		scopes.add("application");
 		
 		for(String scope : scopes) {
-			String manageBean = getManagedBean("good2", SerializablePojo.class, scope);
+			String manageBean = TestUtils.getManagedBean("good2", SerializablePojo.class, scope);
 			String facesConfig = TestUtils.getFacesConfig(manageBean);
 			StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeanSerialization();
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 		}
 		
 	}
@@ -64,7 +64,7 @@ public class ManagedBeanScope_JSFUNIT_26_TestCase extends TestCase {
 		}};
 		
 		for(String scope : scopes) 
-			testNotSerializable(getManagedBean("bad", Pojo.class, scope));
+			testNotSerializable(TestUtils.getManagedBean("bad", Pojo.class, scope));
 	}
 	
 	private void testNotSerializable(String manageBean) {
@@ -74,20 +74,11 @@ public class ManagedBeanScope_JSFUNIT_26_TestCase extends TestCase {
 		
 		try {
 			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeanSerialization();
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 			
 			fail("should have failed because " + Pojo.class + " is not " + Serializable.class);
 			
 		}catch(Exception e) { }
 	}
 	
-	private String getManagedBean(String name, Class clazz, String scope) {
-		
-		return "<managed-bean>"
-    			+ "<managed-bean-name>" + name + "</managed-bean-name>"
-    			+ "<managed-bean-class>" + clazz.getName() + "</managed-bean-class>"
-    			+ "<managed-bean-scope>" + scope + "</managed-bean-scope>"
-    			+ "</managed-bean>";
-		
-	}
 }
