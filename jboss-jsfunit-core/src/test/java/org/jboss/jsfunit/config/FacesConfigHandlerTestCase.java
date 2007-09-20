@@ -45,15 +45,15 @@ public class FacesConfigHandlerTestCase extends TestCase {
 	public void testClasses() throws Exception{
 		
 		Map<String, Class[]> classes = new HashMap<String, Class[]>(){{
-			put("foo", new Class[] {});
+			put("documentsByPath", new Class[] {});
 		}};
 		
         FacesConfigHandler handler = new FacesConfigHandler(classes.keySet(), EMPTY_VALUES.keySet());
-        InputStream is = new ByteArrayInputStream(("<root><foo>" + CLASS_NAME + "</foo><bar></bar></root>").getBytes());
+        InputStream is = new ByteArrayInputStream(("<root><documentsByPath>" + CLASS_NAME + "</documentsByPath><bar></bar></root>").getBytes());
         getParser().parse(is, handler);
         
         assertEquals(1, handler.getClassNamesByElement().keySet().size());
-        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(0));
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("documentsByPath").get(0));
         assertEquals(0, handler.getValuesByElement().keySet().size());
 	}
 
@@ -63,7 +63,7 @@ public class FacesConfigHandlerTestCase extends TestCase {
 			put("bar", new String[] {});
 		}};	
 		FacesConfigHandler handler = new FacesConfigHandler(EMPTY_CLASSES.keySet(), values.keySet());
-		InputStream is = new ByteArrayInputStream(("<root><foo></foo><bar>" + CLASS_NAME + "</bar></root>").getBytes());
+		InputStream is = new ByteArrayInputStream(("<root><documentsByPath></documentsByPath><bar>" + CLASS_NAME + "</bar></root>").getBytes());
 		getParser().parse(is, handler);
 
         assertEquals(0, handler.getClassNamesByElement().keySet().size());
@@ -74,17 +74,17 @@ public class FacesConfigHandlerTestCase extends TestCase {
 	public void testClassesAndValues() throws Exception{
 
 		Map<String, Class[]> classes = new HashMap<String, Class[]>(){{
-			put("foo", new Class[] {});
+			put("documentsByPath", new Class[] {});
 		}};
 		Map<String, String[]> values = new HashMap<String, String[]>(){{
 			put("bar", new String[] {});
 		}};			
 		FacesConfigHandler handler = new FacesConfigHandler(classes.keySet(), values.keySet());
-		InputStream is = new ByteArrayInputStream(("<root><foo>" + CLASS_NAME + "</foo><bar>" + CLASS_NAME + "</bar></root>").getBytes());
+		InputStream is = new ByteArrayInputStream(("<root><documentsByPath>" + CLASS_NAME + "</documentsByPath><bar>" + CLASS_NAME + "</bar></root>").getBytes());
 		getParser().parse(is, handler);		
 
         assertEquals(1, handler.getClassNamesByElement().keySet().size());
-        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(0));
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("documentsByPath").get(0));
         assertEquals(1, handler.getValuesByElement().keySet().size());
         assertEquals(CLASS_NAME, handler.getValuesByElement().get("bar").get(0));
 	}
@@ -92,7 +92,7 @@ public class FacesConfigHandlerTestCase extends TestCase {
 	public void testNeither() throws Exception{
 		
 		FacesConfigHandler handler = new FacesConfigHandler(EMPTY_CLASSES.keySet(), EMPTY_VALUES.keySet());
-		InputStream is = new ByteArrayInputStream(("<root><foo>" + CLASS_NAME + "</foo><bar>" + CLASS_NAME + "</bar></root>").getBytes());
+		InputStream is = new ByteArrayInputStream(("<root><documentsByPath>" + CLASS_NAME + "</documentsByPath><bar>" + CLASS_NAME + "</bar></root>").getBytes());
 		getParser().parse(is, handler);
 		
 		assertEquals(0, handler.getClassNamesByElement().keySet().size());
@@ -111,17 +111,17 @@ public class FacesConfigHandlerTestCase extends TestCase {
 	public void testMultipleResources() throws Exception{
 		
 		Map<String, Class[]> classes = new HashMap<String, Class[]>(){{
-			put("foo", new Class[] {});
+			put("documentsByPath", new Class[] {});
 		}};
-		String xml = "<root><foo>" + CLASS_NAME + "</foo><bar></bar></root>";
+		String xml = "<root><documentsByPath>" + CLASS_NAME + "</documentsByPath><bar></bar></root>";
 		
         FacesConfigHandler handler = new FacesConfigHandler(classes.keySet(), EMPTY_VALUES.keySet());
         getParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
         getParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
         
         assertEquals(1, handler.getClassNamesByElement().keySet().size());
-        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(0));
-        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("foo").get(1));
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("documentsByPath").get(0));
+        assertEquals(CLASS_NAME, handler.getClassNamesByElement().get("documentsByPath").get(1));
         assertEquals(0, handler.getValuesByElement().keySet().size());
 		
 	}

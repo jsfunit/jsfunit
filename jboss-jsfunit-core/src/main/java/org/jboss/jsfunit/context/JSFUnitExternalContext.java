@@ -149,7 +149,7 @@ public class JSFUnitExternalContext extends ExternalContext
     * <code>
     * HttpSession session = (HttpSession)externalContext.getSession();<br/>
     * ServletContext appContext = session.getServletContext();<br/>
-    * appContext.setAttribute("foo", "bar");
+    * appContext.setAttribute("documentsByPath", "bar");
     * </code>
     */
    public Map getApplicationMap()
@@ -222,7 +222,7 @@ public class JSFUnitExternalContext extends ExternalContext
     * But if you must, here is how to do it:<br/>
     * <code>
     * HttpSession session = (HttpSession)externalContext.getSession();<br/>
-    * session.setAttribute("foo", "bar");
+    * session.setAttribute("documentsByPath", "bar");
     * </code>
     */
    public Map getSessionMap()

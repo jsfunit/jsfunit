@@ -26,7 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,13 +47,20 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
-import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.TestCase;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public abstract class AbstractFacesConfigTestCase extends TestCase {
 
-	protected Set<String> facesConfigPaths = new HashSet<String>();
+	protected final Map<String, Document> documentsByPath = new HashMap<String, Document>();
+	private StreamProvider streamProvider;
 	
 	private final static Map<String, Class[]> CLASS_CONSTRAINTS = new HashMap<String, Class[]>(){{
 		
@@ -95,8 +102,6 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 					}});
 	}};
 	
-	private Map<String, List<String>> classNamesByElement ;
-	
 	public AbstractFacesConfigTestCase(Set<String> facesConfigPaths) {
 		this(facesConfigPaths, new ResourceUtils());
 	}
@@ -109,33 +114,38 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		if(facesConfigPaths == null || facesConfigPaths.isEmpty())
 			throw new IllegalArgumentException("facesConfigPaths is null or empty");
 		
-		parseResources(facesConfigPaths, streamProvider);
-
-		this.facesConfigPaths = facesConfigPaths;
+		this.streamProvider = streamProvider;
+		parseResources(facesConfigPaths);
 		
 	}
 
-	private void parseResources(Set<String> facesConfigPaths, StreamProvider streamProvider) {
+	private void parseResources(Set<String> facesConfigPaths) {
 		
-		// create this once, as it holds state across > 1 conf source
-		FacesConfigHandler handler = new FacesConfigHandler(CLASS_CONSTRAINTS.keySet(), VALUE_CONSTRAINTS.keySet());
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		factory.setValidating(false); // TODO set to true
-		factory.setNamespaceAware(false); // TODO set to true
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setIgnoringComments(true);
+		factory.setIgnoringElementContentWhitespace(true);
 		
-		for(String resourcePath : facesConfigPaths) {
-			String xml = getXml(streamProvider, resourcePath);
-			try {
-				factory.newSAXParser().parse(new ByteArrayInputStream(xml.getBytes()), handler);
-			} catch (Exception e) {
-				throw new RuntimeException("Could not parse XML:" + xml);
-			}
+		DocumentBuilder builder = null;
+		
+		try {
+			 builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			throw new RuntimeException("Could not create " + DocumentBuilder.class.getName());
 		}
 		
-		classNamesByElement = handler.getClassNamesByElement();
+		for(String facesConfigPath : facesConfigPaths){
+			String xml = getXml(facesConfigPath);
+			Document document = null;
+			try {
+				document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
+			} catch (Exception e) {
+				throw new RuntimeException("Could not parse document " + facesConfigPath, e);
+			}
+			documentsByPath.put(facesConfigPath, document);
+		}
 	}
-
-	private String getXml(StreamProvider streamProvider, String resourcePath) {
+	
+	private String getXml(String resourcePath) {
 		InputStream stream = streamProvider.getInputStream(resourcePath);
 		
 		if(stream == null)
@@ -143,7 +153,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 		String xml = new ResourceUtils().getAsString(stream, resourcePath);
 		
-		// TODO find a better way to prevent SAX from going to the Internet
+		// TODO find a better way to prevent DOM from going to the Internet
 		int indexOf = xml.indexOf("<faces-config");
 		if(indexOf > 0)
 			xml = xml.substring(indexOf, xml.length());
@@ -152,19 +162,31 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	public void testClassDefinitions() {
 		
-		for(String elementName : classNamesByElement.keySet()) {
+		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
+		
+		for( ; facesConfigPaths.hasNext() ; ) {
+			String facesConfigPath = facesConfigPaths.next();
+			testClassDefinitions(documentsByPath.get(facesConfigPath), facesConfigPath);
+		}
+	}
+	
+	private void testClassDefinitions(Node node, String faceConfigPath) {
+		
+		String nodeName = node.getNodeName();
+		
+		if(CLASS_CONSTRAINTS.keySet().contains(nodeName)) {
 			
-			List<String> classNames = classNamesByElement.get(elementName);
+			Class clazz = new ClassUtils().loadClass(node.getNodeValue(), nodeName);
+			Class[] constraints = CLASS_CONSTRAINTS.get(nodeName);
 			
-			for(String className : classNames) {
-				
-				Class clazz = new ClassUtils().loadClass(className, elementName);
-				Class[] constraints = CLASS_CONSTRAINTS.get(elementName);
-				
-				if( constraints.length > 0 && ! isAssignableFrom(constraints, clazz) )
-					throw new RuntimeException(clazz.getName() + ", in element " + elementName 
-							+ " should be a " + getConstraintsList(constraints));
-			}
+			if( constraints.length > 0 && ! isAssignableFrom(constraints, clazz) )
+				throw new RuntimeException(faceConfigPath + ": " + clazz.getName() + ", in element " + nodeName 
+						+ " should be a " + getConstraintsList(constraints));
+		}else {
+		
+			NodeList children = node.getChildNodes();
+			for(int i = 0; i < children.getLength(); i++)
+				testClassDefinitions(children.item(i), faceConfigPath);
 		}
 		
 	}
@@ -182,10 +204,8 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 		
 		String msg = "";
 		
-		for(int c = 0; c < constraints.length ; c++) {
-			String append = c == constraints.length - 1 ? "" : " or ";
-			msg += constraints[c].getName() + append;
-		}
+		for(int c = 0; c < constraints.length ; c++) 
+			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
 		
 		return msg;
 	}
