@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  * @author Dennis Byrne
  */
 
-public class ManagedBeanScope_JSFUNIT_30_TestCase extends TestCase {
+public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
 
 	public void testDuplicateManagedBean() {
 		
