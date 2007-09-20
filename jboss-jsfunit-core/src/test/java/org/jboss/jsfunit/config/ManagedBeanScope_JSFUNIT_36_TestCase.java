@@ -24,6 +24,10 @@ package org.jboss.jsfunit.config;
 
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class ManagedBeanScope_JSFUNIT_36_TestCase extends TestCase {
 
 	public void testInvalidScope() {

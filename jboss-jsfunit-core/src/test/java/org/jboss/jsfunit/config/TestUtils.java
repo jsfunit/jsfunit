@@ -25,6 +25,10 @@ package org.jboss.jsfunit.config;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class TestUtils {
 
 	public static final Set<String> STUBBED_RESOURCEPATH = new HashSet<String>() {{

@@ -27,6 +27,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class AtomicIntegerValidator implements Validator{
 
 	public void validate(FacesContext ctx, UIComponent ui, Object object) 

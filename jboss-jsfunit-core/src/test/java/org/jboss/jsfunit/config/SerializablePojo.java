@@ -24,6 +24,10 @@ package org.jboss.jsfunit.config;
 
 import java.io.Serializable;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class SerializablePojo implements Serializable {
 
 }

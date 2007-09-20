@@ -24,6 +24,10 @@ package org.jboss.jsfunit.config;
 
 import java.io.InputStream;
 
+/**
+ * @author Dennis Byrne
+ */
+
 interface StreamProvider {
 
 	public InputStream getInputStream(String path);

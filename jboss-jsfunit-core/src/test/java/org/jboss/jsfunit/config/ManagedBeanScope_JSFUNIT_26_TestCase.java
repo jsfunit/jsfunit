@@ -28,6 +28,10 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class ManagedBeanScope_JSFUNIT_26_TestCase extends TestCase {
 
 	public void testHappyPaths() {

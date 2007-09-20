@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class ResourceUtils implements StreamProvider{
 
 	public InputStream getInputStream(String resourceName) {

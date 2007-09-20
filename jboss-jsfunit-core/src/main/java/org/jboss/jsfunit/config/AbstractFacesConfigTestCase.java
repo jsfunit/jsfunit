@@ -1,4 +1,4 @@
-/**
+/*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  * 
- * @author Dennis Byrne
  */
 
 package org.jboss.jsfunit.config;
@@ -60,6 +59,10 @@ import junit.framework.TestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+/**
+ * @author Dennis Byrne
+ */
 
 public abstract class AbstractFacesConfigTestCase extends TestCase {
 

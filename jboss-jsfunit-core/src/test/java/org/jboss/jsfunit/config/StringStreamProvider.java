@@ -25,6 +25,10 @@ package org.jboss.jsfunit.config;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class StringStreamProvider implements StreamProvider {
 
 	private String xml;

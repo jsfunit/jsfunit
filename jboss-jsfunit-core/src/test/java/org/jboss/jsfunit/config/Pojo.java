@@ -22,6 +22,10 @@
 
 package org.jboss.jsfunit.config;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class Pojo {
 
 }

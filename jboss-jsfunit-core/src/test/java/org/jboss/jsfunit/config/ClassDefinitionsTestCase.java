@@ -29,6 +29,10 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class ClassDefinitionsTestCase extends TestCase{
 	
 	private static final String CORRECT = "<validator>" 

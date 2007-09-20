@@ -22,6 +22,10 @@
 
 package org.jboss.jsfunit.config;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class ClassUtils {
 
 	public Class loadClass(String clazzName, String elementName) {
