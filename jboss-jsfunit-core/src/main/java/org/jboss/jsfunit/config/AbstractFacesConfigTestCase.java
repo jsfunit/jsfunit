@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -207,49 +208,61 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 	public void testManagedBeans() {
 
 		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
+		Map<String, String> managedBeanNames = new HashMap<String, String>();
 		
 		for( ; facesConfigPaths.hasNext() ; ) {
 			String facesConfigPath = facesConfigPaths.next();
-			managedBeanScope(documentsByPath.get(facesConfigPath), facesConfigPath);
+			managedBeans(documentsByPath.get(facesConfigPath), facesConfigPath, managedBeanNames);
 		}
 		
 	}
 	
-	private void managedBeanScope(Node node, String facesConfigPath) {
+	private void managedBeans(Node node, String facesConfigPath, final Map<String, String> managedBeanNames) {
 		
 		String nodeName = node.getNodeName();
 		NodeList children = node.getChildNodes();
 		
 		if("managed-bean".equals(nodeName)) { 
-			doManagedBean(node, facesConfigPath, children);
+			doManagedBean(node, facesConfigPath, children, managedBeanNames);
 		}else { 
 			for(int i = 0; i < children.getLength(); i++)
-				managedBeanScope(children.item(i), facesConfigPath);
+				managedBeans(children.item(i), facesConfigPath, managedBeanNames);
 		}
 	}
 
-	private void doManagedBean(Node parent, String facesConfigPath, NodeList children) {
+	private void doManagedBean(Node parent, String facesConfigPath, 
+			NodeList children, final Map<String, String> managedBeanNames) {
 		
 		String name = null;
 		String clazz = null;
 		String scope = null;
 		
 		for(int i = 0 ; i < children.getLength(); i++) {
-			if("managed-bean-name".equals(children.item(i).getNodeName())) 
+			Node child = children.item(i);
+			if("managed-bean-name".equals(child.getNodeName())) 
 				name = children.item(i).getTextContent();
-			else if("managed-bean-scope".equals(children.item(i).getNodeName())) 
+			else if("managed-bean-scope".equals(child.getNodeName())) 
 				scope = children.item(i).getTextContent();
-			else if("managed-bean-class".equals(children.item(i).getNodeName())) 
+			else if("managed-bean-class".equals(child.getNodeName())) 
 				clazz = children.item(i).getTextContent();
 		}
 		
-		if(scope == null)
+		if(scope == null || "".equals(scope))
 			throw new RuntimeException("could not determine scope of " + parent.getNodeName() + " '" 
 					+ name + "' in " + facesConfigPath);
-		if(clazz == null)
+		if(clazz == null || "".equals(clazz))
 			throw new RuntimeException("could not determine class of " + parent.getNodeName() + " '" 
 					+ name + "' in " + facesConfigPath);
-	
+		if(name == null || "".equals(name))
+			throw new RuntimeException("could not determine name of " + parent.getNodeName() + 
+					" in " + facesConfigPath);
+		
+		if(managedBeanNames.keySet().contains(name))
+			throw new RuntimeException("managed bean '" + name + "' in '" + facesConfigPath 
+					+ "' is duplicated. Look for a managed bean w/ the same name in '" + managedBeanNames.get(name) + "'");
+		
+		managedBeanNames.put(name, facesConfigPath);
+		
 		List<String> scopes = new ArrayList<String>(){{
 			add("none");
 			add("request");
