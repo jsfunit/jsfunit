@@ -24,6 +24,7 @@
 package org.jboss.jsfunit.config;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -98,7 +99,7 @@ public class ManagedBeansTest {
 			else if("managed-bean-class".equals(nodeName)) 
 				clazz = text;
 			else if("managed-property".equals(nodeName))
-				doManagedBeanProperty(child, propertyNames, name, facesConfigPath);
+				doManagedBeanProperty(child, propertyNames, name, facesConfigPath, clazz);
 		}
 		
 		if(scope == null || "".equals(scope))
@@ -130,7 +131,7 @@ public class ManagedBeansTest {
 	}
 
 	private void doManagedBeanProperty(Node parent, final List<String> propertyNames, 
-			String managedBeanName, String facesConfig) {
+			String managedBeanName, String facesConfig, String managedBeanClass) {
 
 		NodeList children = parent.getChildNodes();
 		
@@ -138,6 +139,15 @@ public class ManagedBeansTest {
 			Node child = children.item(i);
 			if("property-name".equals(child.getNodeName())) {
 				String name = child.getTextContent();
+				
+				Class clazz = new ClassUtils().loadClass(managedBeanClass, "managed-bean-class");
+				
+				String setter = "set" + name.substring(0, 1).toUpperCase() + name.substring(1, name.length());
+				if( ! hasMethod(setter, clazz))
+					throw new RuntimeException("managed bean '" + managedBeanName 
+							+ "' has a managed property called '" + name + "', but " 
+							+ clazz.getName() + " has no method " + setter + "()");
+				
 				if(propertyNames.contains(name))
 					throw new RuntimeException("managed bean '" + managedBeanName 
 							+ "' in " + facesConfig + " has a duplicate property named " + name);
@@ -146,4 +156,18 @@ public class ManagedBeansTest {
 		}
 	}
 	
+	private boolean hasMethod(String methodName, Class clazz) {
+		
+		if(clazz == null)
+			return false;
+		
+		Method[] methods = clazz.getMethods();
+		
+		for(int i = 0; i < methods.length; i++) 
+			if(methodName.equals(methods[i].getName())
+					& methods[i].getParameterTypes().length == 1)
+				return true;
+		
+		return hasMethod(methodName, clazz.getSuperclass());
+	}
 }
