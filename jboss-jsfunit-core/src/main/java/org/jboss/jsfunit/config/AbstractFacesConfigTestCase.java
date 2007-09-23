@@ -48,7 +48,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 	private StreamProvider streamProvider;
 	
 	public AbstractFacesConfigTestCase(Set<String> facesConfigPaths) {
-		this(facesConfigPaths, new ResourceUtils());
+		this(facesConfigPaths, new DefaultStreamProvider());
 	}
 	
 	AbstractFacesConfigTestCase(Set<String> facesConfigPaths, StreamProvider streamProvider) {
