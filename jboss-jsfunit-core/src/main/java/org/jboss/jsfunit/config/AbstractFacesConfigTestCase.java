@@ -66,20 +66,10 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	private void parseResources(Set<String> facesConfigPaths) {
 		
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setIgnoringComments(true);
-		factory.setIgnoringElementContentWhitespace(true);
-		
-		DocumentBuilder builder = null;
-		
-		try {
-			 builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException("Could not create a " + DocumentBuilder.class.getName());
-		}
+		DocumentBuilder builder = ParserUtils.getDocumentBuilder();
 		
 		for(String facesConfigPath : facesConfigPaths){
-			String xml = getXml(facesConfigPath);
+			String xml = ParserUtils.getXml(facesConfigPath, streamProvider);
 			Document document = null;
 			try {
 				document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
@@ -88,21 +78,6 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 			}
 			documentsByPath.put(facesConfigPath, document);
 		}
-	}
-	
-	private String getXml(String resourcePath) {
-		InputStream stream = streamProvider.getInputStream(resourcePath);
-		
-		if(stream == null)
-			throw new RuntimeException("Could not locate faces config file '" + resourcePath + "'" );
-		
-		String xml = new ResourceUtils().getAsString(stream, resourcePath);
-		
-		// TODO find a better way to prevent DOM from going to the Internet
-		int indexOf = xml.indexOf("<faces-config");
-		if(indexOf > 0)
-			xml = xml.substring(indexOf, xml.length());
-		return xml;
 	}
 
 	public void testClassDefinitions() {

@@ -22,7 +22,7 @@
 
 package org.jboss.jsfunit.config;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import junit.framework.TestCase;
 
@@ -41,13 +41,27 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
 		try {
 
-			new AbstractTldTestCase(new ArrayList<String>()) {};
+			new AbstractTldTestCase(new HashSet<String>()) {};
 
 			fail();
 
 		} catch (Exception t) {
 		}
 
+	}
+	
+	public void testNonExistingResource() {
+		
+		try {
+
+			new AbstractTldTestCase(new HashSet<String>() {{
+				add("not there");
+			}}) {};
+
+			fail();
+
+		} catch (Exception t) {
+		}		
 	}
 	
 }

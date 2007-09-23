@@ -22,12 +22,14 @@
 
 package org.jboss.jsfunit.config;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-import net.sf.maventaglib.checker.Tld;
+import javax.xml.parsers.DocumentBuilder;
 
 import junit.framework.TestCase;
+import net.sf.maventaglib.checker.Tld;
 
 /**
  * @author Dennis Byrne
@@ -35,13 +37,39 @@ import junit.framework.TestCase;
 
 public abstract class AbstractTldTestCase extends TestCase {
 
-	private Map<String, Tld> tldsByPath;
+	protected Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
+	private StreamProvider streamProvider;
 	
-	public AbstractTldTestCase(List<String> tldPaths) {
+	public AbstractTldTestCase(Set<String> tldPaths) {
+		this(tldPaths, new DefaultStreamProvider());
+	}
+	
+	AbstractTldTestCase(Set<String> tldPaths, StreamProvider streamProvider) {
+		
+		if(streamProvider == null)
+			throw new IllegalArgumentException("stream provider is null");
 		
 		if(tldPaths == null || tldPaths.size() == 0)
 			throw new IllegalArgumentException("tldPaths was null or empty. At least one TLD needed");
 		
+		this.streamProvider = streamProvider;
+		parseResources(tldPaths);
 	}
 	
+	private void parseResources(Set<String> facesConfigPaths) {
+		
+		DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+		
+		for(String facesConfigPath : facesConfigPaths){
+			String xml = ParserUtils.getXml(facesConfigPath, streamProvider);
+			/*Tld tld;
+			try {
+				Document document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
+				tld = TldParser.parse(document, facesConfigPath);
+			} catch (Exception e) {
+				throw new RuntimeException("Could not parse document '" + facesConfigPath + "'\n" + xml, e);
+			}
+			tldsByPath.put(facesConfigPath, tld);*/
+		}
+	}
 }
