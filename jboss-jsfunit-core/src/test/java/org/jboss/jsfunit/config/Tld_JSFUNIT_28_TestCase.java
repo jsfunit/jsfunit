@@ -28,6 +28,25 @@ import junit.framework.TestCase;
 
 public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
+	public void testEmptyLib() {
+		
+		String tld = "<!DOCTYPE taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN\" " 
+			+ "\"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd\">"
+			+ "<taglib xmlns=\"http://java.sun.com/JSP/TagLibraryDescriptor\">"
+			+ "<tlib-version>1.0</tlib-version>"
+			+ "<jsp-version>1.2</jsp-version>"
+			+ "<short-name>jsfunit</short-name>"
+			+ "<uri>http://labs.jboss.com/jsfunit/</uri>"
+			+ "<display-name>An empty tag library.</display-name>"
+			+ "<description />"
+			+ "</taglib>";
+		
+		StreamProvider streamProvider = new StringStreamProvider(tld);
+		
+		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		
+	}
+	
 	public void testMissingResource() {
 
 		try {

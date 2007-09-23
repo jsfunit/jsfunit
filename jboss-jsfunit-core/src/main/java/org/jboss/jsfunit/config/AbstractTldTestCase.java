@@ -22,14 +22,18 @@
 
 package org.jboss.jsfunit.config;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 
+import org.w3c.dom.Document;
+
 import junit.framework.TestCase;
 import net.sf.maventaglib.checker.Tld;
+import net.sf.maventaglib.checker.TldParser;
 
 /**
  * @author Dennis Byrne
@@ -62,14 +66,14 @@ public abstract class AbstractTldTestCase extends TestCase {
 		
 		for(String facesConfigPath : facesConfigPaths){
 			String xml = ParserUtils.getXml(facesConfigPath, streamProvider);
-			/*Tld tld;
+			Tld tld;
 			try {
 				Document document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
 				tld = TldParser.parse(document, facesConfigPath);
 			} catch (Exception e) {
 				throw new RuntimeException("Could not parse document '" + facesConfigPath + "'\n" + xml, e);
 			}
-			tldsByPath.put(facesConfigPath, tld);*/
+			tldsByPath.put(facesConfigPath, tld);
 		}
 	}
 }
