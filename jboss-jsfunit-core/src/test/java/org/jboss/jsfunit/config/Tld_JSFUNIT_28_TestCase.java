@@ -28,26 +28,45 @@ import junit.framework.TestCase;
 
 public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
-	public void testHappyPath() {
+	public void testHappyPathUIComponentClassicTagBase() {
 		
-		String tag = "<tag>"
-			+ "<name>goodTag</name>"
-			+ "<tag-class>" + UIComponentClassicTagBaseChild.class.getName() + "</tag-class>"
-			+ "<body-content>JSP</body-content>"
-			+ "<description />"
-			+ "<attribute>"
-				+ "<name>id</name>"
-				+ "<required>false</required>"
-				+ "<rtexprvalue>false</rtexprvalue>"
-				+ "<type>java.lang.String</type>"
-				+ "<description />"
-			+ "</attribute>"
-			+ "</tag>";
+		String tag = getTag("goodTag", UIComponentClassicTagBaseChild.class);
 		String tld = getTld(tag, "A good tag library.");
 		StreamProvider streamProvider = new StringStreamProvider(tld);
 		
-		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
 		
+	}
+	
+	public void testNonUIComponentClassicTagBase() {
+		
+		String tag = getTag("badTag", Pojo.class);
+		String tld = getTld(tag, "A bad tag library.");
+		StreamProvider streamProvider = new StringStreamProvider(tld);
+		
+		try {
+
+			new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
+
+			fail();
+			
+		}catch(Exception e) {}
+	}
+	
+	private String getTag(String name, Class clazz) {
+		return "<tag>"
+		+ "<name>" + name + "</name>"
+		+ "<tag-class>" + clazz.getName() + "</tag-class>"
+		+ "<body-content>JSP</body-content>"
+		+ "<description />"
+		+ "<attribute>"
+			+ "<name>id</name>"
+			+ "<required>false</required>"
+			+ "<rtexprvalue>false</rtexprvalue>"
+			+ "<type>java.lang.String</type>"
+			+ "<description />"
+		+ "</attribute>"
+		+ "</tag>";
 	}
 	
 	public void testEmptyLib() {

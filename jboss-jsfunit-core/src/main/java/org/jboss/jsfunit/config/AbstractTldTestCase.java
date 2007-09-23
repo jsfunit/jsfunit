@@ -27,11 +27,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.webapp.UIComponentClassicTagBase;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.w3c.dom.Document;
 
 import junit.framework.TestCase;
+import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldParser;
 
@@ -75,5 +77,26 @@ public abstract class AbstractTldTestCase extends TestCase {
 			}
 			tldsByPath.put(facesConfigPath, tld);
 		}
+	}
+	
+	public void testInheritance() {
+
+		Set<String> tlds = tldsByPath.keySet();
+		
+		for(String tldPath : tlds) {
+			
+			Tld tld = tldsByPath.get(tldPath);
+			
+			for(Tag tag : tld.getTags()) {
+				
+				String tagClass = tag.getTagClass();
+				Class clazz = new ClassUtils().loadClass(tagClass, "tag-class");
+				
+				if( ! UIComponentClassicTagBase.class.isAssignableFrom(clazz) )
+					throw new RuntimeException(tagClass + " configured in " 
+							+ tldPath + " needs to be a " + UIComponentClassicTagBase.class.getName());
+			}
+		}
+		
 	}
 }
