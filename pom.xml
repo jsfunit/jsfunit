@@ -28,6 +28,15 @@
       </roles>
       <timezone>-5</timezone>
     </developer>
+    <developer>
+      <name>Dennis Byrne</name>
+      <id>dennisbyrne</id>
+      <email>dennisbyrne@apache.org</email>
+      <url>http://jsf.jboss.org</url>
+      <organization>ThoughtWorks</organization>
+      <organizationUrl>http://www.thoughtworks.com/</organizationUrl>
+      <timezone>-6</timezone>
+    </developer>    
   </developers>
 
   <scm>
@@ -69,6 +78,12 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+	<id>java.net</id>
+	<name>java.net Maven 1 Repository</name>
+	<url>https://maven-repository.dev.java.net/nonav/repository</url>
+	<layout>legacy</layout>
+    </repository>    
   </repositories>
 
   <modules>
