@@ -28,19 +28,31 @@ import junit.framework.TestCase;
 
 public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
+	public void testHappyPath() {
+		
+		String tag = "<tag>"
+			+ "<name>goodTag</name>"
+			+ "<tag-class>" + UIComponentClassicTagBaseChild.class.getName() + "</tag-class>"
+			+ "<body-content>JSP</body-content>"
+			+ "<description />"
+			+ "<attribute>"
+				+ "<name>id</name>"
+				+ "<required>false</required>"
+				+ "<rtexprvalue>false</rtexprvalue>"
+				+ "<type>java.lang.String</type>"
+				+ "<description />"
+			+ "</attribute>"
+			+ "</tag>";
+		String tld = getTld(tag, "A good tag library.");
+		StreamProvider streamProvider = new StringStreamProvider(tld);
+		
+		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		
+	}
+	
 	public void testEmptyLib() {
 		
-		String tld = "<!DOCTYPE taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN\" " 
-			+ "\"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd\">"
-			+ "<taglib xmlns=\"http://java.sun.com/JSP/TagLibraryDescriptor\">"
-			+ "<tlib-version>1.0</tlib-version>"
-			+ "<jsp-version>1.2</jsp-version>"
-			+ "<short-name>jsfunit</short-name>"
-			+ "<uri>http://labs.jboss.com/jsfunit/</uri>"
-			+ "<display-name>An empty tag library.</display-name>"
-			+ "<description />"
-			+ "</taglib>";
-		
+		String tld = getTld("", "An empty tag library.");
 		StreamProvider streamProvider = new StringStreamProvider(tld);
 		
 		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
@@ -83,4 +95,19 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 		}		
 	}
 	
+	private String getTld(String body, String display) {
+		
+		return "<!DOCTYPE taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN\" " 
+		+ "\"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd\">"
+		+ "<taglib xmlns=\"http://java.sun.com/JSP/TagLibraryDescriptor\">"
+		+ "<tlib-version>1.0</tlib-version>"
+		+ "<jsp-version>1.2</jsp-version>"
+		+ "<short-name>jsfunit</short-name>"
+		+ "<uri>http://labs.jboss.com/jsfunit/</uri>"
+		+ "<display-name>" + display + "</display-name>"
+		+ "<description />"
+		+ body
+		+ "</taglib>";
+		
+	}
 }
