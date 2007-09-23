@@ -27,15 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.faces.webapp.UIComponentClassicTagBase;
+import javax.faces.webapp.UIComponentTag;
+import javax.faces.webapp.UIComponentTagBase;
 import javax.xml.parsers.DocumentBuilder;
-
-import org.w3c.dom.Document;
 
 import junit.framework.TestCase;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldParser;
+
+import org.w3c.dom.Document;
 
 /**
  * @author Dennis Byrne
@@ -91,10 +92,11 @@ public abstract class AbstractTldTestCase extends TestCase {
 				
 				String tagClass = tag.getTagClass();
 				Class clazz = new ClassUtils().loadClass(tagClass, "tag-class");
+				Class[] constraints = new Class[] {UIComponentTag.class, UIComponentTagBase.class};
 				
-				if( ! UIComponentClassicTagBase.class.isAssignableFrom(clazz) )
+				if( ! new ClassUtils().isAssignableFrom(constraints, clazz) )
 					throw new RuntimeException(tagClass + " configured in " 
-							+ tldPath + " needs to be a " + UIComponentClassicTagBase.class.getName());
+							+ tldPath + " needs to be a ");
 			}
 		}
 		

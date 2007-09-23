@@ -28,6 +28,15 @@ package org.jboss.jsfunit.config;
 
 class ClassUtils {
 
+	public boolean isAssignableFrom(Class[] constraints, Class clazz) {
+		
+		for(Class constraint : constraints) 
+			if(constraint.isAssignableFrom(clazz)) 
+				return true;
+		
+		return false;
+	}
+	
 	public Class loadClass(String clazzName, String elementName) {
 
 		try {
@@ -48,5 +57,15 @@ class ClassUtils {
 			
 		}
 
+	}
+	
+	public String getConstraintsList(Class[] constraints) {
+		
+		String msg = "";
+		
+		for(int c = 0; c < constraints.length ; c++) 
+			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
+		
+		return msg;
 	}
 }

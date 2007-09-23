@@ -110,9 +110,9 @@ public class ClassDefinitionsTest {
 			Class clazz = new ClassUtils().loadClass(node.getNodeValue(), nodeName);
 			Class[] constraints = CLASS_CONSTRAINTS.get(nodeName);
 			
-			if( constraints.length > 0 && ! isAssignableFrom(constraints, clazz) )
+			if( constraints.length > 0 && ! new ClassUtils().isAssignableFrom(constraints, clazz) )
 				throw new RuntimeException(faceConfigPath + ": " + clazz.getName() + ", in element " + nodeName 
-						+ " should be a " + getConstraintsList(constraints));
+						+ " should be a " + new ClassUtils().getConstraintsList(constraints));
 		}else {
 		
 			NodeList children = node.getChildNodes();
@@ -120,25 +120,6 @@ public class ClassDefinitionsTest {
 				classDefinitions(children.item(i), faceConfigPath);
 		}
 		
-	}
-	
-	private boolean isAssignableFrom(Class[] constraints, Class clazz) {
-		
-		for(Class constraint : constraints) 
-			if(constraint.isAssignableFrom(clazz)) 
-				return true;
-		
-		return false;
-	}
-	
-	private String getConstraintsList(Class[] constraints) {
-		
-		String msg = "";
-		
-		for(int c = 0; c < constraints.length ; c++) 
-			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
-		
-		return msg;
 	}
 	
 }

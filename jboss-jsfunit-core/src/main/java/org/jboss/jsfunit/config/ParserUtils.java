@@ -53,9 +53,15 @@ class ParserUtils {
 		String xml = new ResourceUtils().getAsString(stream, resourcePath);
 		
 		// TODO find a better way to prevent DOM from going to the Internet
-		int indexOf = xml.indexOf("<faces-config");
-		if(indexOf > 0)
-			xml = xml.substring(indexOf, xml.length());
+		int indexOfFaces = xml.indexOf("<faces-config");
+		int indexOfTaglib = xml.indexOf("<taglib");
+		
+		if(indexOfFaces > 0) {
+			xml = xml.substring(indexOfFaces, xml.length());
+		}else if(indexOfTaglib > 0) {
+			xml = xml.substring(indexOfTaglib, xml.length());
+		}
+		
 		return xml;
 	}
 	
