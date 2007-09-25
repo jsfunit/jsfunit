@@ -45,6 +45,7 @@ import org.w3c.dom.Document;
 public abstract class AbstractTldTestCase extends TestCase {
 
 	protected Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
+	protected Map<String, Document> documentsByPath = new HashMap<String, Document>();
 	private StreamProvider streamProvider;
 	
 	public AbstractTldTestCase(Set<String> tldPaths) {
@@ -70,13 +71,15 @@ public abstract class AbstractTldTestCase extends TestCase {
 		for(String facesConfigPath : facesConfigPaths){
 			String xml = ParserUtils.getXml(facesConfigPath, streamProvider);
 			Tld tld;
+			Document document;
 			try {
-				Document document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
+				document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
 				tld = TldParser.parse(document, facesConfigPath);
 			} catch (Exception e) {
 				throw new RuntimeException("Could not parse document '" + facesConfigPath + "'\n" + xml, e);
 			}
 			tldsByPath.put(facesConfigPath, tld);
+			documentsByPath.put(facesConfigPath, document);
 		}
 	}
 	
@@ -101,4 +104,29 @@ public abstract class AbstractTldTestCase extends TestCase {
 		}
 		
 	}
+	
+	public void testRtexprvalueOnePointOne() {
+		
+		// all 1.1 tags should have @rtexprvalue = false ... section 9.3.1.1
+		
+	}
+	
+	public void testTagAttributeTypeOnePointOne() {
+		
+		// all 1.1 tags should have a java.lang.String ... section 9.3.1.1
+		
+	}
+	
+	public void testRtexprvalueUnifiedEl() {
+		
+		// tags w/ U. EL should not have @rtexprvalue
+
+	}
+
+	public void testRtexprvalueValueExpressionOrMethodExpression() {
+
+		// tags w/ U. EL should have ValueExpression or MethodExpression
+	
+	}
+	
 }
