@@ -30,13 +30,31 @@ import junit.framework.TestCase;
 
 public class UniqueTagNamesTestCase extends TestCase {
 
+	public void testNameCollision() {
+		
+		try {
+			
+			scrutinize("same", "same");
+			
+			fail();
+			
+		}catch(Exception e) {}
+		
+	}
+	
 	public void testHappyPath() {
 	
+		scrutinize("firstTag", "secondTag");
+		
+	}
+
+	private void scrutinize(String firstTagName, String secondTagName) {
+		
 		Tag first = new Tag();
-		first.setName("firstTag");
+		first.setName(firstTagName);
 		
 		Tag second = new Tag();
-		second.setName("secondTag");
+		second.setName(secondTagName);
 		
 		final Tld firstTld = new Tld();
 		firstTld.setName("firstTld");

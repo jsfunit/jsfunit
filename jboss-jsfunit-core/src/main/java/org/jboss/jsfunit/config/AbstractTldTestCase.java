@@ -62,6 +62,7 @@ public abstract class AbstractTldTestCase extends TestCase {
 		
 		this.streamProvider = streamProvider;
 		parseResources(tldPaths);
+		trimNames();
 	}
 	
 	private void parseResources(Set<String> facesConfigPaths) {
@@ -80,6 +81,26 @@ public abstract class AbstractTldTestCase extends TestCase {
 			}
 			tldsByPath.put(facesConfigPath, tld);
 			documentsByPath.put(facesConfigPath, document);
+		}
+	}
+	
+	private void trimNames() {
+		
+		Set<String> tlds = tldsByPath.keySet();
+		
+		for(String tldPath : tlds) {
+			
+			Tld tld = tldsByPath.get(tldPath);
+			if( tld.getName() == null || "".equals(tld.getName().trim()) )
+				throw new RuntimeException("TLD in " + tldPath + " has no name");
+			tld.setName(tld.getName().trim());
+			
+			for(Tag tag : tld.getTags()) {
+				if(tag.getName() == null || "".equals(tag.getName().trim()))
+					throw new RuntimeException("tag in " + tldPath + " has no name");
+				tag.setName(tag.getName().trim());
+			}
+			
 		}
 	}
 	

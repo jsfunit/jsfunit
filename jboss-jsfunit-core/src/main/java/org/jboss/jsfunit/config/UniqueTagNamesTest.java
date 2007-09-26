@@ -23,8 +23,12 @@
 package org.jboss.jsfunit.config;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
 
 class UniqueTagNamesTest {
@@ -37,8 +41,25 @@ class UniqueTagNamesTest {
 	
 	public void scrutinize() {
 		
+		Set<String> tlds = tldsByPath.keySet();
+		Map<String, List<String>> tagNamesByTldName = new HashMap<String, List<String>>();
 		
-		
+		for(String tldPath : tlds) {
+			Tld tld = tldsByPath.get(tldPath);
+			for(Tag tag : tld.getTags()) {
+				List<String> tagNames = tagNamesByTldName.get(tld.getName());
+				
+				if(tagNames == null) {
+					tagNames = new LinkedList<String>();
+					tagNamesByTldName.put(tld.getName(), tagNames);
+				}
+				
+				if(tagNames.contains(tag.getName()))
+					throw new RuntimeException("tag '" + tag.getName() + "' occurs in tag library '"
+							+ tld.getName() + "' more than once");
+				tagNames.add(tag.getName());
+			}
+		}
 	}
 	
 }
