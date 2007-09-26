@@ -129,4 +129,9 @@ public abstract class AbstractTldTestCase extends TestCase {
 	
 	}
 	
+	public void testUniqueTagNames() {
+		
+		new UniqueTagNamesTest(tldsByPath).scrutinize();
+		
+	}
 }
