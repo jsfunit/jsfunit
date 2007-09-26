@@ -23,7 +23,11 @@
 package org.jboss.jsfunit.config;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
 
 class TagAttributesTest {
@@ -36,12 +40,31 @@ class TagAttributesTest {
 	
 	public void scrutinize(){
 		
-		for(Tld tld : tlds) {
-			
-			
-			
-		}
+		for(Tld tld : tlds) 
+			for(Tag tag : tld.getTags()) 
+				scrutinizeAttributes(tld, tag);
+	}
+
+	private void scrutinizeAttributes(Tld tld, Tag tag) {
+
+		final List<String> attributeNames = new LinkedList<String>();
 		
+		for (TagAttribute attribute : tag.getAttributes()) {
+
+			String name = attribute.getAttributeName();
+			
+			if (name == null || "".equals(name.trim())) {
+				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
+						+ " has an empty attribute name");
+			} else if (attributeNames.contains(name)) {
+				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
+						+ "@" + name + " is a duplicated attribute.");
+			} 
+			
+			//path + ":" + tag.getName() + "@" + name + " exists, but " + tag.getName() + " has no setter for " + name
+
+			attributeNames.add(name);
+		}
 	}
 	
 }

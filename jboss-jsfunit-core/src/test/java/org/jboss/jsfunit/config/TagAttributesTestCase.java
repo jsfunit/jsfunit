@@ -31,13 +31,31 @@ import junit.framework.TestCase;
 
 public class TagAttributesTestCase extends TestCase {
 
+	public void testNameCollision() {
+		
+		try {
+			
+			scrutinize("same", "same");
+			
+			fail();
+			
+		}catch(Exception e) {}
+		
+	}
+	
 	public void testHappyPath() {
 		
+		scrutinize("id", "value");
+		
+	}
+
+	private void scrutinize(String firstName, String secondName) {
+		
 		TagAttribute id = new TagAttribute();
-		id.setAttributeName("id");
+		id.setAttributeName(firstName);
 		
 		TagAttribute value = new TagAttribute();
-		value.setAttributeName("value");
+		value.setAttributeName(secondName);
 		
 		Tag tag = new Tag();
 		tag.setAttributes(new TagAttribute[] {id, value});
