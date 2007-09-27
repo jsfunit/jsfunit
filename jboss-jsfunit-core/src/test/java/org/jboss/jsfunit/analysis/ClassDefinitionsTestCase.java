@@ -101,7 +101,8 @@ public class ClassDefinitionsTestCase extends TestCase{
 	}
 
 	public void testFacesConfigHappyPath() {
-		new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, new StringStreamProvider(TestUtils.getFacesConfig(CORRECT))) {};		
+		StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(CORRECT));
+		new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testClassDefinitions();		
 	}
 	
 	public void testFacesConfigElementsMissingInterface() {

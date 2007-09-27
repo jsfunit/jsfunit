@@ -39,6 +39,9 @@ public class ClassUtils {
 	
 	public Class loadClass(String clazzName, String elementName) {
 
+		if(clazzName == null)
+			throw new RuntimeException("No class for element " + elementName);
+		
 		try {
 
 			return getClass().getClassLoader().loadClass(clazzName.trim()); 
