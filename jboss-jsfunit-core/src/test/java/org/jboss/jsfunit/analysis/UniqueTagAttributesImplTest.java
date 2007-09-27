@@ -29,6 +29,7 @@ import org.jboss.jsfunit.analysis.UniqueTagAttributesImpl;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 public class UniqueTagAttributesImplTest extends TestCase {
@@ -39,9 +40,9 @@ public class UniqueTagAttributesImplTest extends TestCase {
 			
 			scrutinize("same", "same");
 			
-			fail();
+			throw new RuntimeException();
 			
-		}catch(Exception e) {}
+		}catch(AssertionFailedError e) {}
 		
 	}
 	

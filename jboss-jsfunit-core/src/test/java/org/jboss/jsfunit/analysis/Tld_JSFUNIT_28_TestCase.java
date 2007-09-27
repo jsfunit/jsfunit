@@ -80,8 +80,11 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 		String tld = getTld("", "An empty tag library.");
 		StreamProvider streamProvider = new StringStreamProvider(tld);
 		
-		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
-		
+		AbstractTldTestCase test = new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		test.testInheritance();
+		test.testTagAttributeTypes();
+		test.testUniqueTagAttributes();
+		test.testUniqueTagNames();
 	}
 	
 	public void testMissingResource() {

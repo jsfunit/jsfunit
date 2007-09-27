@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import static junit.framework.Assert.fail;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
 
@@ -55,7 +55,7 @@ class UniqueTagNamesImpl {
 				}
 				
 				if(tagNames.contains(tag.getName()))
-					throw new RuntimeException("tag '" + tag.getName() + "' occurs in tag library '"
+					fail("Tag '" + tag.getName() + "' occurs in tag library '"
 							+ tld.getName() + "' more than once");
 				tagNames.add(tag.getName());
 			}

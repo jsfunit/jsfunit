@@ -85,7 +85,9 @@ public class ClassDefinitionsTestCase extends TestCase{
 	
 	public void testEmptyFacesConfiguration() {
 
-		new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, new StringStreamProvider(TestUtils.getFacesConfig(""))) {};
+		StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(""));
+		AbstractFacesConfigTestCase test = new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		test.testClassDefinitions();
 		
 	}
 
@@ -103,7 +105,8 @@ public class ClassDefinitionsTestCase extends TestCase{
 
 	public void testFacesConfigHappyPath() {
 		StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(CORRECT));
-		new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testClassDefinitions();		
+		AbstractFacesConfigTestCase test = new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		test.testClassDefinitions();	
 	}
 	
 	public void testFacesConfigElementsMissingInterface() {

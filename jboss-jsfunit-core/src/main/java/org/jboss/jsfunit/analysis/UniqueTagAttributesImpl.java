@@ -29,6 +29,7 @@ import java.util.List;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
+import static junit.framework.Assert.fail;
 
 class UniqueTagAttributesImpl {
 
@@ -54,11 +55,11 @@ class UniqueTagAttributesImpl {
 			String name = attribute.getAttributeName();
 			
 			if (name == null || "".equals(name.trim())) {
-				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
+				fail(tld.getName() + ":" + tag.getName() 
 						+ " has an empty attribute name");
 			} else if (attributeNames.contains(name)) {
-				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
-						+ "@" + name + " is a duplicated attribute.");
+				fail("Attribute " + name + " in " + tld.getName() + ":" + tag.getName() 
+						+ " is duplicated.");
 			} 
 			
 			//path + ":" + tag.getName() + "@" + name + " exists, but " + tag.getName() + " has no setter for " + name
