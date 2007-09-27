@@ -30,6 +30,7 @@ import javax.faces.webapp.UIComponentTag;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
+import static junit.framework.Assert.fail;
 
 class TagAttributeTypesImpl {
 
@@ -48,12 +49,12 @@ class TagAttributeTypesImpl {
 				if( UIComponentTag.class.isAssignableFrom(tagClassesByTag.get(tag))) {
 					for(TagAttribute attribute : tag.getAttributes()) {
 						if( ! String.class.getName().equals(attribute.getAttributeType()) ) {
-							throw new RuntimeException("Tag '" + tag.getName() + "' in TLD " 
+							fail("Tag '" + tag.getName() + "' in TLD " 
 									+ "'" + tld.getName() + "' is a " + UIComponentTag.class.getName()
 									+ ". Becuase it is a JSF 1.1 tag, each tag attribute must be of " 
-									+ "type " + String.class.getName() + "', however attribute '" 
+									+ "type " + String.class.getName() + ", however attribute '" 
 									+ attribute.getAttributeName() + "' is of type " + attribute.getAttributeType()
-									+ " See JSF Spec 1.2 section 9.3.1.1 for more information.");
+									+ ". See JSF Spec 1.2 section 9.3.1.1 for more information.");
 						}
 					}
 				}

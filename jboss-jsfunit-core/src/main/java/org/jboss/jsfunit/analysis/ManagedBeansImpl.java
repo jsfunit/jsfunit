@@ -36,7 +36,7 @@ import org.jboss.jsfunit.analysis.util.ClassUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
+import static junit.framework.Assert.fail;
 /**
  * @author Dennis Byrne
  */
@@ -114,19 +114,19 @@ class ManagedBeansImpl {
 					" in " + facesConfigPath);
 		
 		if(managedBeanNames.keySet().contains(name))
-			throw new RuntimeException("managed bean '" + name + "' in '" + facesConfigPath 
+			fail("The managed bean '" + name + "' in '" + facesConfigPath 
 					+ "' is duplicated. Look for a managed bean w/ the same name in '" + managedBeanNames.get(name) + "'");
 		
 		managedBeanNames.put(name, facesConfigPath);
 		
 		if ( ! SCOPES.contains(scope) )
-			throw new RuntimeException("managed bean '" + name + "' in " 
+			fail("Managed bean '" + name + "' in " 
 					+ facesConfigPath + " has an invalid scope '" + scope + "'");
 		
 		if(( "session".equals(scope) || "application".equals(scope) ) ) {
 			Class managedBeanClass = new ClassUtils().loadClass(clazz, "managed-bean-class"); 
 			if( ! Serializable.class.isAssignableFrom(managedBeanClass))
-				throw new RuntimeException("Managed bean '" + parent.getNodeValue() + "' is in " 
+				fail("Managed bean '" + parent.getNodeValue() + "' is in " 
 						+ scope + " scope, so it needs to implement " + Serializable.class);
 		}
 	}
@@ -145,9 +145,9 @@ class ManagedBeansImpl {
 				
 				String setter = "set" + name.substring(0, 1).toUpperCase() + name.substring(1, name.length());
 				if( ! hasMethod(setter, clazz))
-					throw new RuntimeException("managed bean '" + managedBeanName 
+					fail("The managed bean '" + managedBeanName 
 							+ "' has a managed property called '" + name + "', but " 
-							+ clazz.getName() + " has no method " + setter + "()");
+							+ clazz.getName() + " has no method " + setter + "(?)");
 				
 				if(propertyNames.contains(name))
 					throw new RuntimeException("managed bean '" + managedBeanName 

@@ -23,6 +23,7 @@
 
 package org.jboss.jsfunit.analysis;
 
+import static junit.framework.Assert.fail;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -112,7 +113,7 @@ class ClassDefinitionsImpl {
 			Class[] constraints = CLASS_CONSTRAINTS.get(nodeName);
 			
 			if( constraints.length > 0 && ! new ClassUtils().isAssignableFrom(constraints, clazz) )
-				throw new RuntimeException(faceConfigPath + ": " + clazz.getName() + ", in element " + nodeName 
+				fail("In '" + faceConfigPath + "', " + clazz.getName() + " for element " + nodeName 
 						+ " should be a " + new ClassUtils().getConstraintsList(constraints));
 		}else {
 		

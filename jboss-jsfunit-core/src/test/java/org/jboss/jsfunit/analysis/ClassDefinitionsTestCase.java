@@ -32,6 +32,7 @@ import org.jboss.jsfunit.analysis.StreamProvider;
 import org.jboss.jsfunit.analysis.model.AtomicIntegerValidator;
 import org.jboss.jsfunit.analysis.model.Pojo;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
@@ -114,9 +115,9 @@ public class ClassDefinitionsTestCase extends TestCase{
 			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, 
 					new StringStreamProvider(TestUtils.getFacesConfig(body))) {}.testClassDefinitions();
 			
-			fail("should have failed ");
+			throw new RuntimeException("should have failed ");
 			
-		}catch(Exception e) { }
+		}catch(AssertionFailedError e) { }
 		
 	}
 	
@@ -127,9 +128,9 @@ public class ClassDefinitionsTestCase extends TestCase{
 			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, 
 					new StringStreamProvider(TestUtils.getFacesConfig(NON_EXISTING_ACTION_LISTENER))) {}.testClassDefinitions();
 			
-			fail("should have failed ");
+			throw new RuntimeException("should have failed ");
 			
-		}catch(Exception e) { }
+		}catch(AssertionFailedError e) { }
 		
 	}
 	
@@ -158,9 +159,9 @@ public class ClassDefinitionsTestCase extends TestCase{
 			
 			new AbstractFacesConfigTestCase(paths, streamProvider) {}.testClassDefinitions();
 			
-			fail("should have failed");
+			throw new RuntimeException("should have failed");
 			
-		}catch(Exception e) { }
+		}catch(AssertionFailedError e) { }
 		
 	}
 	

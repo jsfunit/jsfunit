@@ -31,6 +31,7 @@ import org.jboss.jsfunit.analysis.StreamProvider;
 import org.jboss.jsfunit.analysis.model.Pojo;
 import org.jboss.jsfunit.analysis.model.SerializablePojo;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
@@ -85,9 +86,9 @@ public class ManagedBeanScope_JSFUNIT_26_TestCase extends TestCase {
 			
 			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 			
-			fail("should have failed because " + Pojo.class + " is not " + Serializable.class);
+			throw new RuntimeException("should have failed because " + Pojo.class + " is not " + Serializable.class);
 			
-		}catch(Exception e) { }
+		}catch(AssertionFailedError e) { }
 	}
 	
 }

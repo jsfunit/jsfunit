@@ -129,7 +129,7 @@ public abstract class AbstractTldTestCase extends TestCase {
 			
 			if( ! new ClassUtils().isAssignableFrom(constraints, clazz) ) {
 				Tld tld = tldsByTag.get(tag);
-				throw new RuntimeException(clazz + " configured in " 
+				fail(clazz + " configured in " 
 						+ tld.getName() + " needs to be a " 
 						+ UIComponentTag.class.getName() + " or a " + UIComponentTagBase.class.getName());			
 			}

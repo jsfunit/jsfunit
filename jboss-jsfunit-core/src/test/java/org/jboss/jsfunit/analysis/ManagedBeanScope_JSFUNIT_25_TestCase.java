@@ -29,6 +29,7 @@ import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
 import org.jboss.jsfunit.analysis.StreamProvider;
 import org.jboss.jsfunit.analysis.model.Pojo;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
@@ -47,9 +48,9 @@ public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
 			
 			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 			
-			fail("should have failed");
+			throw new RuntimeException("should have failed");
 			
-		}catch(Exception e) { }
+		}catch(AssertionFailedError e) { }
 		
 	}
 
@@ -68,9 +69,9 @@ public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
 
 			new AbstractFacesConfigTestCase(facesConfigPaths, streamProvider) {}.testManagedBeans();
 
-			fail("should have failed");
+			throw new RuntimeException("should have failed");
 
-		}catch(Exception e) { }		
+		}catch(AssertionFailedError e) { }		
 	}
 
 }

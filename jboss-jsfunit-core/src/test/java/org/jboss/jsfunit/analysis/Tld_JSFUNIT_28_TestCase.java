@@ -29,6 +29,7 @@ import org.jboss.jsfunit.analysis.StreamProvider;
 import org.jboss.jsfunit.analysis.model.Pojo;
 import org.jboss.jsfunit.analysis.model.UIComponentClassicTagBaseChild;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 public class Tld_JSFUNIT_28_TestCase extends TestCase {
@@ -53,9 +54,9 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
 			new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
 
-			fail();
+			throw new RuntimeException();
 			
-		}catch(Exception e) {}
+		}catch(AssertionFailedError e) {}
 	}
 	
 	private String getTag(String name, Class clazz) {

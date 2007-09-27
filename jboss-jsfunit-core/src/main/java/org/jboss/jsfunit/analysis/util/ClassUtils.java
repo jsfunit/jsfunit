@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.analysis.util;
 
+import static junit.framework.Assert.fail;
 /**
  * @author Dennis Byrne
  */
@@ -54,8 +55,8 @@ public class ClassUtils {
 
 			}catch(ClassNotFoundException e2) {
 
-				throw new RuntimeException("could not load class " + clazzName + " for element " + elementName);
-
+				fail("Could not load class " + clazzName + " for element " + elementName);
+				return null; // this line is unreachable but the compiler does not know this
 			}
 			
 		}

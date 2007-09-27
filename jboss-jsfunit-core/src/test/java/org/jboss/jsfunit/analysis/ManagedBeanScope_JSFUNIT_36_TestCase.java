@@ -26,6 +26,7 @@ import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
 import org.jboss.jsfunit.analysis.StreamProvider;
 import org.jboss.jsfunit.analysis.model.Pojo;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
@@ -44,9 +45,9 @@ public class ManagedBeanScope_JSFUNIT_36_TestCase extends TestCase {
 			
 			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 			
-			fail("should have failed because foo is invalid scope");
+			throw new RuntimeException("should have failed because foo is invalid scope");
 			
-		}catch(Exception e) { }
+		}catch(AssertionFailedError e) { }
 		
 	}
 	
