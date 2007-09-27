@@ -35,6 +35,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.TestCase;
 
+import org.jboss.jsfunit.config.util.ParserUtils;
 import org.w3c.dom.Document;
 
 /**
@@ -82,13 +83,13 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 
 	public void testClassDefinitions() {
 		
-		new ClassDefinitionsTest(documentsByPath).scrutinize(); // delegate method logic to another class
+		new ClassDefinitionsImpl(documentsByPath).test();
 		
 	}
 	
 	public void testManagedBeans() {
 
-		new ManagedBeansTest(documentsByPath).scrutinize(); // delegate method logic to another class
+		new ManagedBeansImpl(documentsByPath).test();
 		
 	}
 	

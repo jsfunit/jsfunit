@@ -23,43 +23,54 @@
 package org.jboss.jsfunit.config;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
+import junit.framework.TestCase;
 
-class UniqueTagNamesTest {
+public class UniqueTagNamesImplTest extends TestCase {
 
-	private Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
-	
-	public UniqueTagNamesTest(Map<String, Tld> tldsByPath) {
-		this.tldsByPath = tldsByPath;
+	public void testNameCollision() {
+		
+		try {
+			
+			scrutinize("same", "same");
+			
+			fail();
+			
+		}catch(Exception e) {}
+		
 	}
 	
-	public void scrutinize() {
+	public void testHappyPath() {
+	
+		scrutinize("firstTag", "secondTag");
 		
-		Set<String> tlds = tldsByPath.keySet();
-		Map<String, List<String>> tagNamesByTldName = new HashMap<String, List<String>>();
+	}
+
+	private void scrutinize(String firstTagName, String secondTagName) {
 		
-		for(String tldPath : tlds) {
-			Tld tld = tldsByPath.get(tldPath);
-			for(Tag tag : tld.getTags()) {
-				List<String> tagNames = tagNamesByTldName.get(tld.getName());
-				
-				if(tagNames == null) {
-					tagNames = new LinkedList<String>();
-					tagNamesByTldName.put(tld.getName(), tagNames);
-				}
-				
-				if(tagNames.contains(tag.getName()))
-					throw new RuntimeException("tag '" + tag.getName() + "' occurs in tag library '"
-							+ tld.getName() + "' more than once");
-				tagNames.add(tag.getName());
-			}
-		}
+		Tag first = new Tag();
+		first.setName(firstTagName);
+		
+		Tag second = new Tag();
+		second.setName(secondTagName);
+		
+		final Tld firstTld = new Tld();
+		firstTld.setName("firstTld");
+		firstTld.setTags(new Tag[] {first, second});
+
+		final Tld secondTld = new Tld();
+		secondTld.setName("secondTld");
+		secondTld.setTags(new Tag[] {first, second});
+
+		UniqueTagNamesImpl test = new UniqueTagNamesImpl(new HashMap<String, Tld>(){{
+				put("firstPath", firstTld);
+				put("secondPath", secondTld);
+			}}
+		);
+		
+		test.test();
 	}
 	
 }

@@ -21,7 +21,7 @@
  * 
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.config.util;
 
 import java.io.InputStream;
 
@@ -29,7 +29,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-class ParserUtils {
+import org.jboss.jsfunit.config.StreamProvider;
+
+public class ParserUtils {
 
 	public static DocumentBuilder getDocumentBuilder() {
 

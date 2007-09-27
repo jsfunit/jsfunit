@@ -36,6 +36,8 @@ import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldParser;
 
+import org.jboss.jsfunit.config.util.ClassUtils;
+import org.jboss.jsfunit.config.util.ParserUtils;
 import org.w3c.dom.Document;
 
 /**
@@ -47,6 +49,10 @@ public abstract class AbstractTldTestCase extends TestCase {
 	protected Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
 	protected Map<String, Document> documentsByPath = new HashMap<String, Document>();
 	private StreamProvider streamProvider;
+	// with mvn-tagib had a Tag.getTld()
+	private Map<Tag, Tld> tldsByTag = new HashMap<Tag, Tld>();
+	// wish mvn-taglib had a 'Class getTagClass()'
+	private Map<Tag, Class> tagClassesByTag = new HashMap<Tag, Class>();
 	
 	public AbstractTldTestCase(Set<String> tldPaths) {
 		this(tldPaths, new DefaultStreamProvider());
@@ -62,103 +68,93 @@ public abstract class AbstractTldTestCase extends TestCase {
 		
 		this.streamProvider = streamProvider;
 		parseResources(tldPaths);
-		trimNames();
 	}
 	
-	private void parseResources(Set<String> facesConfigPaths) {
+	private void parseResources(Set<String> tldPaths) {
 		
 		DocumentBuilder builder = ParserUtils.getDocumentBuilder();
 		
-		for(String facesConfigPath : facesConfigPaths){
-			String xml = ParserUtils.getXml(facesConfigPath, streamProvider);
+		for(String tldPath : tldPaths){
+			String xml = ParserUtils.getXml(tldPath, streamProvider);
 			Tld tld;
 			Document document;
 			try {
 				document = builder.parse( new ByteArrayInputStream(xml.getBytes()));
-				tld = TldParser.parse(document, facesConfigPath);
+				tld = TldParser.parse(document, tldPath);
 			} catch (Exception e) {
-				throw new RuntimeException("Could not parse document '" + facesConfigPath + "'\n" + xml, e);
+				throw new RuntimeException("Could not parse document '" + tldPath + "'\n" + xml, e);
 			}
-			tldsByPath.put(facesConfigPath, tld);
-			documentsByPath.put(facesConfigPath, document);
+			tldsByPath.put(tldPath, tld);
+			documentsByPath.put(tldPath, document);
+			trim(tldPath, tld);
 		}
 	}
 	
-	private void trimNames() {
+	private void trim(String tldPath, Tld tld) {
 		
-		Set<String> tlds = tldsByPath.keySet();
+		if( tld.getName() == null || "".equals(tld.getName().trim()) )
+			throw new RuntimeException("TLD in " + tldPath + " has no name");
 		
-		for(String tldPath : tlds) {
+		tld.setName(tld.getName().trim());
+		
+		for(Tag tag : tld.getTags()) {
 			
-			Tld tld = tldsByPath.get(tldPath);
-			if( tld.getName() == null || "".equals(tld.getName().trim()) )
-				throw new RuntimeException("TLD in " + tldPath + " has no name");
-			tld.setName(tld.getName().trim());
+			tldsByTag.put(tag, tld);
 			
-			for(Tag tag : tld.getTags()) {
-				if(tag.getName() == null || "".equals(tag.getName().trim()))
-					throw new RuntimeException("tag in " + tldPath + " has no name");
-				tag.setName(tag.getName().trim());
-			}
+			if(tag.getName() == null || "".equals(tag.getName().trim()))
+				throw new RuntimeException("tag in " + tldPath + " has no name");
+			tag.setName(tag.getName().trim());
 			
+			String tagClass = tag.getTagClass();
+			Class clazz = new ClassUtils().loadClass(tagClass, "tag-class");
+			tagClassesByTag.put(tag, clazz);
 		}
+		
 	}
 	
 	public void testInheritance() {
 
-		Set<String> tlds = tldsByPath.keySet();
+		Set<Tag> tags = tagClassesByTag.keySet();
 		
-		for(String tldPath : tlds) {
+		for(Tag tag : tags) {
 			
-			Tld tld = tldsByPath.get(tldPath);
+			Class clazz = tagClassesByTag.get(tag);
+			Class[] constraints = new Class[] {UIComponentTag.class, UIComponentTagBase.class};
 			
-			for(Tag tag : tld.getTags()) {
-				
-				String tagClass = tag.getTagClass();
-				Class clazz = new ClassUtils().loadClass(tagClass, "tag-class");
-				Class[] constraints = new Class[] {UIComponentTag.class, UIComponentTagBase.class};
-				
-				if( ! new ClassUtils().isAssignableFrom(constraints, clazz) )
-					throw new RuntimeException(tagClass + " configured in " 
-							+ tldPath + " needs to be a ");
+			if( ! new ClassUtils().isAssignableFrom(constraints, clazz) ) {
+				Tld tld = tldsByTag.get(tag);
+				throw new RuntimeException(clazz + " configured in " 
+						+ tld.getName() + " needs to be a " 
+						+ UIComponentTag.class.getName() + " or a " + UIComponentTagBase.class.getName());			
 			}
 		}
-		
-	}
-	
-	public void testRtexprvalueOnePointOne() {
-		
-		// all 1.1 tags should have @rtexprvalue = false ... section 9.3.1.1
-		
-	}
-	
-	public void testTagAttributeTypeOnePointOne() {
-		
-		// all 1.1 tags should have a java.lang.String ... section 9.3.1.1
-		
-	}
-	
-	public void testRtexprvalueUnifiedEl() {
-		
-		// tags w/ U. EL should not have @rtexprvalue
 
 	}
-
-	public void testRtexprvalueValueExpressionOrMethodExpression() {
-
-		// tags w/ U. EL should have ValueExpression or MethodExpression
 	
+	public void testTagAttributeTypes() {
+		
+		new TagAttributeTypesImpl(tldsByPath.values(), tagClassesByTag).test();
+		
+		// TODO tags w/ U. EL should have ValueExpression or MethodExpression
+		
 	}
 	
 	public void testUniqueTagNames() {
 		
-		new UniqueTagNamesTest(tldsByPath).scrutinize(); // delegate 
+		new UniqueTagNamesImpl(tldsByPath).test();
 		
 	}
 	
 	public void testUniqueTagAttributes() {
 	
-		new TagAttributesTest(tldsByPath.values()).scrutinize(); // delegate 
+		new UniqueTagAttributesImpl(tldsByPath.values()).test();
 		
 	}
+	
+//	public void testRtexprvalue() {
+	
+	// all 1.1 tags should have @rtexprvalue = false ... section 9.3.1.1
+	// tags w/ U. EL should not have @rtexprvalue
+	
+//}
 }

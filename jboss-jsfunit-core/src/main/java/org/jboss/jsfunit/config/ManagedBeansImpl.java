@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.jsfunit.config.util.ClassUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -40,7 +41,7 @@ import org.w3c.dom.NodeList;
  * @author Dennis Byrne
  */
 
-public class ManagedBeansTest {
+public class ManagedBeansImpl {
 
 	private final Map<String, Document> documentsByPath;
 	
@@ -51,11 +52,11 @@ public class ManagedBeansTest {
 		add("application");
 		}};
 	
-	public ManagedBeansTest(Map<String, Document> documentsByPath) {
+	public ManagedBeansImpl(Map<String, Document> documentsByPath) {
 		this.documentsByPath = documentsByPath;
 	}
 		
-	public void scrutinize() {
+	public void test() {
 		
 		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
 		Map<String, String> managedBeanNames = new HashMap<String, String>();

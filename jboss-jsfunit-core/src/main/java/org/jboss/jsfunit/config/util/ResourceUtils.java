@@ -20,57 +20,35 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.config.util;
 
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.Tld;
-import junit.framework.TestCase;
+/**
+ * @author Dennis Byrne
+ */
 
-public class UniqueTagNamesTestCase extends TestCase {
-
-	public void testNameCollision() {
+public class ResourceUtils{
+	
+	public String getAsString(InputStream stream, String resourceName) {
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		StringBuffer buffer = new StringBuffer();
+		String temp = null;
 		
 		try {
 			
-			scrutinize("same", "same");
+			while ((temp = reader.readLine()) != null)
+				buffer.append(temp);
 			
-			fail();
-			
-		}catch(Exception e) {}
+		} catch (IOException e) {
+			throw new RuntimeException("Could not read file " + resourceName, e);
+		}
 		
-	}
-	
-	public void testHappyPath() {
-	
-		scrutinize("firstTag", "secondTag");
-		
-	}
-
-	private void scrutinize(String firstTagName, String secondTagName) {
-		
-		Tag first = new Tag();
-		first.setName(firstTagName);
-		
-		Tag second = new Tag();
-		second.setName(secondTagName);
-		
-		final Tld firstTld = new Tld();
-		firstTld.setName("firstTld");
-		firstTld.setTags(new Tag[] {first, second});
-
-		final Tld secondTld = new Tld();
-		secondTld.setName("secondTld");
-		secondTld.setTags(new Tag[] {first, second});
-
-		UniqueTagNamesTest test = new UniqueTagNamesTest(new HashMap<String, Tld>(){{
-				put("firstPath", firstTld);
-				put("secondPath", secondTld);
-			}}
-		);
-		
-		test.scrutinize();
+		return buffer.toString();
 	}
 	
 }

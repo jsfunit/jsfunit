@@ -22,33 +22,44 @@
 
 package org.jboss.jsfunit.config;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-/**
- * @author Dennis Byrne
- */
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.Tld;
 
-class ResourceUtils{
+class UniqueTagNamesImpl {
+
+	private Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
 	
-	public String getAsString(InputStream stream, String resourceName) {
+	public UniqueTagNamesImpl(Map<String, Tld> tldsByPath) {
+		this.tldsByPath = tldsByPath;
+	}
+	
+	public void test() {
 		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		StringBuffer buffer = new StringBuffer();
-		String temp = null;
+		Set<String> tlds = tldsByPath.keySet();
+		Map<String, List<String>> tagNamesByTldName = new HashMap<String, List<String>>();
 		
-		try {
-			
-			while ((temp = reader.readLine()) != null)
-				buffer.append(temp);
-			
-		} catch (IOException e) {
-			throw new RuntimeException("Could not read file " + resourceName, e);
+		for(String tldPath : tlds) {
+			Tld tld = tldsByPath.get(tldPath);
+			for(Tag tag : tld.getTags()) {
+				List<String> tagNames = tagNamesByTldName.get(tld.getName());
+				
+				if(tagNames == null) {
+					tagNames = new LinkedList<String>();
+					tagNamesByTldName.put(tld.getName(), tagNames);
+				}
+				
+				if(tagNames.contains(tag.getName()))
+					throw new RuntimeException("tag '" + tag.getName() + "' occurs in tag library '"
+							+ tld.getName() + "' more than once");
+				tagNames.add(tag.getName());
+			}
 		}
-		
-		return buffer.toString();
 	}
 	
 }

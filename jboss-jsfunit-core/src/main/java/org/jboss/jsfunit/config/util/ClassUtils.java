@@ -20,52 +20,52 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.config.util;
 
-import java.util.ArrayList;
+/**
+ * @author Dennis Byrne
+ */
 
-import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.TagAttribute;
-import net.sf.maventaglib.checker.Tld;
-import junit.framework.TestCase;
-
-public class TagAttributesTestCase extends TestCase {
-
-	public void testNameCollision() {
+public class ClassUtils {
+	
+	public boolean isAssignableFrom(Class[] constraints, Class clazz) {
 		
+		for(Class constraint : constraints) 
+			if(constraint.isAssignableFrom(clazz)) 
+				return true;
+		
+		return false;
+	}
+	
+	public Class loadClass(String clazzName, String elementName) {
+
 		try {
-			
-			scrutinize("same", "same");
-			
-			fail();
-			
-		}catch(Exception e) {}
-		
-	}
-	
-	public void testHappyPath() {
-		
-		scrutinize("id", "value");
-		
-	}
 
-	private void scrutinize(String firstName, String secondName) {
-		
-		TagAttribute id = new TagAttribute();
-		id.setAttributeName(firstName);
-		
-		TagAttribute value = new TagAttribute();
-		value.setAttributeName(secondName);
-		
-		Tag tag = new Tag();
-		tag.setAttributes(new TagAttribute[] {id, value});
-		
-		final Tld tld = new Tld();
-		tld.setTags(new Tag[] {tag});
-		
-		new TagAttributesTest(new ArrayList<Tld>() {{
-			add(tld);
-		}}).scrutinize();
+			return getClass().getClassLoader().loadClass(clazzName.trim()); 
+
+		} catch (ClassNotFoundException e) {
+
+			try {
+
+				return Thread.currentThread().getContextClassLoader().loadClass(clazzName.trim());
+
+			}catch(ClassNotFoundException e2) {
+
+				throw new RuntimeException("could not load class " + clazzName + " for element " + elementName);
+
+			}
+			
+		}
+
 	}
 	
+	public String getConstraintsList(Class[] constraints) {
+		
+		String msg = "";
+		
+		for(int c = 0; c < constraints.length ; c++) 
+			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
+		
+		return msg;
+	}
 }

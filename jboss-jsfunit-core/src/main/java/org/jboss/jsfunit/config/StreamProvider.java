@@ -28,7 +28,7 @@ import java.io.InputStream;
  * @author Dennis Byrne
  */
 
-interface StreamProvider {
+public interface StreamProvider {
 
 	public InputStream getInputStream(String path);
 	

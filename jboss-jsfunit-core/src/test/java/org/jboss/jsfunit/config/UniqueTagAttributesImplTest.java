@@ -22,50 +22,50 @@
 
 package org.jboss.jsfunit.config;
 
-/**
- * @author Dennis Byrne
- */
+import java.util.ArrayList;
 
-class ClassUtils {
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
+import net.sf.maventaglib.checker.Tld;
+import junit.framework.TestCase;
 
-	public boolean isAssignableFrom(Class[] constraints, Class clazz) {
+public class UniqueTagAttributesImplTest extends TestCase {
+
+	public void testNameCollision() {
 		
-		for(Class constraint : constraints) 
-			if(constraint.isAssignableFrom(clazz)) 
-				return true;
-		
-		return false;
-	}
-	
-	public Class loadClass(String clazzName, String elementName) {
-
 		try {
-
-			return getClass().getClassLoader().loadClass(clazzName.trim()); 
-
-		} catch (ClassNotFoundException e) {
-
-			try {
-
-				return Thread.currentThread().getContextClassLoader().loadClass(clazzName.trim());
-
-			}catch(ClassNotFoundException e2) {
-
-				throw new RuntimeException("could not load class " + clazzName + " for element " + elementName);
-
-			}
 			
-		}
-
+			scrutinize("same", "same");
+			
+			fail();
+			
+		}catch(Exception e) {}
+		
 	}
 	
-	public String getConstraintsList(Class[] constraints) {
+	public void testHappyPath() {
 		
-		String msg = "";
+		scrutinize("id", "value");
 		
-		for(int c = 0; c < constraints.length ; c++) 
-			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
-		
-		return msg;
 	}
+
+	private void scrutinize(String firstName, String secondName) {
+		
+		TagAttribute id = new TagAttribute();
+		id.setAttributeName(firstName);
+		
+		TagAttribute value = new TagAttribute();
+		value.setAttributeName(secondName);
+		
+		Tag tag = new Tag();
+		tag.setAttributes(new TagAttribute[] {id, value});
+		
+		final Tld tld = new Tld();
+		tld.setTags(new Tag[] {tag});
+		
+		new UniqueTagAttributesImpl(new ArrayList<Tld>() {{
+			add(tld);
+		}}).test();
+	}
+	
 }

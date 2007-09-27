@@ -23,48 +23,42 @@
 package org.jboss.jsfunit.config;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
+
+import javax.faces.webapp.UIComponentTag;
 
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
 
-class TagAttributesTest {
+class TagAttributeTypesImpl {
 
 	private Collection<Tld> tlds;
+	private Map<Tag, Class> tagClassesByTag; 
 	
-	public TagAttributesTest(Collection<Tld> tlds) {
+	public TagAttributeTypesImpl(Collection<Tld> tlds, Map<Tag, Class> tagClassesByTag) {
 		this.tlds = tlds;
+		this.tagClassesByTag = tagClassesByTag;
 	}
 	
-	public void scrutinize(){
+	public void test(){
 		
-		for(Tld tld : tlds) 
-			for(Tag tag : tld.getTags()) 
-				scrutinizeAttributes(tld, tag);
-	}
-
-	private void scrutinizeAttributes(Tld tld, Tag tag) {
-
-		final List<String> attributeNames = new LinkedList<String>();
-		
-		for (TagAttribute attribute : tag.getAttributes()) {
-
-			String name = attribute.getAttributeName();
-			
-			if (name == null || "".equals(name.trim())) {
-				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
-						+ " has an empty attribute name");
-			} else if (attributeNames.contains(name)) {
-				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
-						+ "@" + name + " is a duplicated attribute.");
-			} 
-			
-			//path + ":" + tag.getName() + "@" + name + " exists, but " + tag.getName() + " has no setter for " + name
-
-			attributeNames.add(name);
+		for(Tld tld : tlds) {
+			for(Tag tag : tld.getTags()) {
+				if( UIComponentTag.class.isAssignableFrom(tagClassesByTag.get(tag))) {
+					for(TagAttribute attribute : tag.getAttributes()) {
+						if( ! String.class.getName().equals(attribute.getAttributeType()) ) {
+							throw new RuntimeException("Tag '" + tag.getName() + "' in TLD " 
+									+ "'" + tld.getName() + "' is a " + UIComponentTag.class.getName()
+									+ ". Becuase it is a JSF 1.1 tag, each tag attribute must be of " 
+									+ "type " + String.class.getName() + "', however attribute '" 
+									+ attribute.getAttributeName() + "' is of type " + attribute.getAttributeType());
+						}
+					}
+				}
+			}
 		}
+		
 	}
 	
 }

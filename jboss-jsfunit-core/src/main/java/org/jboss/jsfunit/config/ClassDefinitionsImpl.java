@@ -44,6 +44,7 @@ import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 
+import org.jboss.jsfunit.config.util.ClassUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -52,7 +53,7 @@ import org.w3c.dom.NodeList;
  * @author Dennis Byrne
  */
 
-public class ClassDefinitionsTest {
+public class ClassDefinitionsImpl {
 
 	private final Map<String, Document> documentsByPath;
 	
@@ -86,11 +87,11 @@ public class ClassDefinitionsTest {
 		
 	}};
 	
-	public ClassDefinitionsTest(Map<String, Document> documentsByPath) {
+	public ClassDefinitionsImpl(Map<String, Document> documentsByPath) {
 		this.documentsByPath = documentsByPath;
 	}
 	
-	public void scrutinize() {
+	public void test() {
 		
 		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
 		
