@@ -20,12 +20,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
+
+import java.io.InputStream;
 
 /**
  * @author Dennis Byrne
  */
 
-class Pojo {
+public interface StreamProvider {
 
+	public InputStream getInputStream(String path);
+	
 }

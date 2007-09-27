@@ -20,50 +20,45 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
 
-class UniqueTagAttributesImpl {
+class UniqueTagNamesImpl {
 
-	private Collection<Tld> tlds;
+	private Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
 	
-	public UniqueTagAttributesImpl(Collection<Tld> tlds) {
-		this.tlds = tlds;
+	public UniqueTagNamesImpl(Map<String, Tld> tldsByPath) {
+		this.tldsByPath = tldsByPath;
 	}
 	
-	public void test(){
+	public void test() {
 		
-		for(Tld tld : tlds) 
-			for(Tag tag : tld.getTags()) 
-				scrutinizeAttributes(tld, tag);
-	}
-
-	private void scrutinizeAttributes(Tld tld, Tag tag) {
-
-		final List<String> attributeNames = new LinkedList<String>();
+		Set<String> tlds = tldsByPath.keySet();
+		Map<String, List<String>> tagNamesByTldName = new HashMap<String, List<String>>();
 		
-		for (TagAttribute attribute : tag.getAttributes()) {
-
-			String name = attribute.getAttributeName();
-			
-			if (name == null || "".equals(name.trim())) {
-				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
-						+ " has an empty attribute name");
-			} else if (attributeNames.contains(name)) {
-				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
-						+ "@" + name + " is a duplicated attribute.");
-			} 
-			
-			//path + ":" + tag.getName() + "@" + name + " exists, but " + tag.getName() + " has no setter for " + name
-
-			attributeNames.add(name);
+		for(String tldPath : tlds) {
+			Tld tld = tldsByPath.get(tldPath);
+			for(Tag tag : tld.getTags()) {
+				List<String> tagNames = tagNamesByTldName.get(tld.getName());
+				
+				if(tagNames == null) {
+					tagNames = new LinkedList<String>();
+					tagNamesByTldName.put(tld.getName(), tagNames);
+				}
+				
+				if(tagNames.contains(tag.getName()))
+					throw new RuntimeException("tag '" + tag.getName() + "' occurs in tag library '"
+							+ tld.getName() + "' more than once");
+				tagNames.add(tag.getName());
+			}
 		}
 	}
 	

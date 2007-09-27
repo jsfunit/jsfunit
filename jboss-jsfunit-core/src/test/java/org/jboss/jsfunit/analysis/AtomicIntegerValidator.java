@@ -20,52 +20,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import java.util.ArrayList;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
-import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.TagAttribute;
-import net.sf.maventaglib.checker.Tld;
-import junit.framework.TestCase;
+/**
+ * @author Dennis Byrne
+ */
 
-public class UniqueTagAttributesImplTest extends TestCase {
+public class AtomicIntegerValidator implements Validator{
 
-	public void testNameCollision() {
-		
-		try {
-			
-			scrutinize("same", "same");
-			
-			fail();
-			
-		}catch(Exception e) {}
-		
-	}
-	
-	public void testHappyPath() {
-		
-		scrutinize("id", "value");
+	public void validate(FacesContext ctx, UIComponent ui, Object object) 
+		throws ValidatorException {
 		
 	}
 
-	private void scrutinize(String firstName, String secondName) {
-		
-		TagAttribute id = new TagAttribute();
-		id.setAttributeName(firstName);
-		
-		TagAttribute value = new TagAttribute();
-		value.setAttributeName(secondName);
-		
-		Tag tag = new Tag();
-		tag.setAttributes(new TagAttribute[] {id, value});
-		
-		final Tld tld = new Tld();
-		tld.setTags(new Tag[] {tag});
-		
-		new UniqueTagAttributesImpl(new ArrayList<Tld>() {{
-			add(tld);
-		}}).test();
-	}
-	
 }

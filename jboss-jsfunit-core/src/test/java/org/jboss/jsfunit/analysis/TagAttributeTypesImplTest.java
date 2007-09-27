@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,6 +29,8 @@ import java.util.Map;
 
 import javax.faces.webapp.UIComponentTag;
 import javax.faces.webapp.UIComponentTagBase;
+
+import org.jboss.jsfunit.analysis.TagAttributeTypesImpl;
 
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;

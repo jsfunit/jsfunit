@@ -20,27 +20,59 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
+import java.util.HashMap;
+
+import org.jboss.jsfunit.analysis.UniqueTagNamesImpl;
+
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.Tld;
 import junit.framework.TestCase;
 
-public class ManagedBean_JSFUNIT_33_TestCase extends TestCase {
+public class UniqueTagNamesImplTest extends TestCase {
 
-	public void testMissingProperty() {
-		
-		String managedProperty = TestUtils.getManagedProperty("notThere", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+	public void testNameCollision() {
 		
 		try {
 			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+			scrutinize("same", "same");
 			
-			fail("should have failed");
+			fail();
 			
-		}catch(Exception e) { }
+		}catch(Exception e) {}
 		
+	}
+	
+	public void testHappyPath() {
+	
+		scrutinize("firstTag", "secondTag");
+		
+	}
+
+	private void scrutinize(String firstTagName, String secondTagName) {
+		
+		Tag first = new Tag();
+		first.setName(firstTagName);
+		
+		Tag second = new Tag();
+		second.setName(secondTagName);
+		
+		final Tld firstTld = new Tld();
+		firstTld.setName("firstTld");
+		firstTld.setTags(new Tag[] {first, second});
+
+		final Tld secondTld = new Tld();
+		secondTld.setName("secondTld");
+		secondTld.setTags(new Tag[] {first, second});
+
+		UniqueTagNamesImpl test = new UniqueTagNamesImpl(new HashMap<String, Tld>(){{
+				put("firstPath", firstTld);
+				put("secondPath", secondTld);
+			}}
+		);
+		
+		test.test();
 	}
 	
 }

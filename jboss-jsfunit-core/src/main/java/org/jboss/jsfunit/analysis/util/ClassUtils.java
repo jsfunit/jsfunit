@@ -20,20 +20,52 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis.util;
 
-import java.io.InputStream;
+/**
+ * @author Dennis Byrne
+ */
 
-class DefaultStreamProvider implements StreamProvider {
-
-	public InputStream getInputStream(String resourceName) {
-
-		InputStream stream = getClass().getClassLoader().getResourceAsStream(resourceName);
-
-		if (stream == null)
-			stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
-
-		return stream;
+public class ClassUtils {
+	
+	public boolean isAssignableFrom(Class[] constraints, Class clazz) {
+		
+		for(Class constraint : constraints) 
+			if(constraint.isAssignableFrom(clazz)) 
+				return true;
+		
+		return false;
 	}
+	
+	public Class loadClass(String clazzName, String elementName) {
 
+		try {
+
+			return getClass().getClassLoader().loadClass(clazzName.trim()); 
+
+		} catch (ClassNotFoundException e) {
+
+			try {
+
+				return Thread.currentThread().getContextClassLoader().loadClass(clazzName.trim());
+
+			}catch(ClassNotFoundException e2) {
+
+				throw new RuntimeException("could not load class " + clazzName + " for element " + elementName);
+
+			}
+			
+		}
+
+	}
+	
+	public String getConstraintsList(Class[] constraints) {
+		
+		String msg = "";
+		
+		for(int c = 0; c < constraints.length ; c++) 
+			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
+		
+		return msg;
+	}
 }

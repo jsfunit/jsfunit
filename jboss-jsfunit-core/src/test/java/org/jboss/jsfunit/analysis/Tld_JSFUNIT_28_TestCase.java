@@ -20,9 +20,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
 import java.util.HashSet;
+
+import org.jboss.jsfunit.analysis.AbstractTldTestCase;
+import org.jboss.jsfunit.analysis.StreamProvider;
 
 import junit.framework.TestCase;
 

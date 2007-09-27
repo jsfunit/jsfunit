@@ -20,52 +20,35 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config.util;
+package org.jboss.jsfunit.analysis.util;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author Dennis Byrne
  */
 
-public class ClassUtils {
+public class ResourceUtils{
 	
-	public boolean isAssignableFrom(Class[] constraints, Class clazz) {
+	public String getAsString(InputStream stream, String resourceName) {
 		
-		for(Class constraint : constraints) 
-			if(constraint.isAssignableFrom(clazz)) 
-				return true;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		StringBuffer buffer = new StringBuffer();
+		String temp = null;
 		
-		return false;
-	}
-	
-	public Class loadClass(String clazzName, String elementName) {
-
 		try {
-
-			return getClass().getClassLoader().loadClass(clazzName.trim()); 
-
-		} catch (ClassNotFoundException e) {
-
-			try {
-
-				return Thread.currentThread().getContextClassLoader().loadClass(clazzName.trim());
-
-			}catch(ClassNotFoundException e2) {
-
-				throw new RuntimeException("could not load class " + clazzName + " for element " + elementName);
-
-			}
 			
+			while ((temp = reader.readLine()) != null)
+				buffer.append(temp);
+			
+		} catch (IOException e) {
+			throw new RuntimeException("Could not read file " + resourceName, e);
 		}
-
+		
+		return buffer.toString();
 	}
 	
-	public String getConstraintsList(Class[] constraints) {
-		
-		String msg = "";
-		
-		for(int c = 0; c < constraints.length ; c++) 
-			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
-		
-		return msg;
-	}
 }

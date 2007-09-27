@@ -21,7 +21,7 @@
  * 
  */
 
-package org.jboss.jsfunit.config.util;
+package org.jboss.jsfunit.analysis.util;
 
 import java.io.InputStream;
 
@@ -29,7 +29,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jboss.jsfunit.config.StreamProvider;
+import org.jboss.jsfunit.analysis.StreamProvider;
 
 public class ParserUtils {
 

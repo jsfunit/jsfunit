@@ -21,7 +21,7 @@
  * 
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -35,7 +35,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.TestCase;
 
-import org.jboss.jsfunit.config.util.ParserUtils;
+import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
 
 /**

@@ -20,16 +20,30 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import java.io.InputStream;
+import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
+import org.jboss.jsfunit.analysis.StreamProvider;
 
-/**
- * @author Dennis Byrne
- */
+import junit.framework.TestCase;
 
-public interface StreamProvider {
-
-	public InputStream getInputStream(String path);
+public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
 	
+	public void testDuplicateProperty() {
+		
+		String managedProperty = TestUtils.getManagedProperty("setter", "value");
+		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty + managedProperty);
+		String facesConfig = TestUtils.getFacesConfig(manageBean);
+		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+		
+		try {
+			
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+			
+			fail("should have failed");
+			
+		}catch(Exception e) { }
+		
+	}
+
 }

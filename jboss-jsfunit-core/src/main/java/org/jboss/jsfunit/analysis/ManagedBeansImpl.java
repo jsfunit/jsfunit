@@ -21,7 +21,7 @@
  * 
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -32,7 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.jboss.jsfunit.config.util.ClassUtils;
+import org.jboss.jsfunit.analysis.util.ClassUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

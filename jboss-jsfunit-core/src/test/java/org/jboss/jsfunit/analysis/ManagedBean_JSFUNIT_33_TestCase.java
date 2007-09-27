@@ -20,37 +20,30 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.webapp.UIComponentClassicTagBase;
-import javax.servlet.jsp.JspException;
+import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
+import org.jboss.jsfunit.analysis.StreamProvider;
 
-public class UIComponentClassicTagBaseChild extends UIComponentClassicTagBase {
+import junit.framework.TestCase;
+
+public class ManagedBean_JSFUNIT_33_TestCase extends TestCase {
+
+	public void testMissingProperty() {
+		
+		String managedProperty = TestUtils.getManagedProperty("notThere", "value");
+		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
+		String facesConfig = TestUtils.getFacesConfig(manageBean);
+		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+		
+		try {
+			
+			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+			
+			fail("should have failed");
+			
+		}catch(Exception e) { }
+		
+	}
 	
-	@Override
-	protected UIComponent createComponent(FacesContext ctx, String string) throws JspException {
-		return null;
-	}
-
-	@Override
-	protected boolean hasBinding() {
-		return false;
-	}
-
-	@Override
-	protected void setProperties(UIComponent ui) {
-	}
-
-	@Override
-	public String getComponentType() {
-		return null;
-	}
-
-	@Override
-	public String getRendererType() {
-		return null;
-	}
-
 }

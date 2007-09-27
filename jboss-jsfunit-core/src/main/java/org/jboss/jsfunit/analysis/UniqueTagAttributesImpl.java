@@ -20,57 +20,51 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
-import junit.framework.TestCase;
 
-public class UniqueTagNamesImplTest extends TestCase {
+class UniqueTagAttributesImpl {
 
-	public void testNameCollision() {
-		
-		try {
-			
-			scrutinize("same", "same");
-			
-			fail();
-			
-		}catch(Exception e) {}
-		
+	private Collection<Tld> tlds;
+	
+	public UniqueTagAttributesImpl(Collection<Tld> tlds) {
+		this.tlds = tlds;
 	}
 	
-	public void testHappyPath() {
-	
-		scrutinize("firstTag", "secondTag");
+	public void test(){
 		
+		for(Tld tld : tlds) 
+			for(Tag tag : tld.getTags()) 
+				scrutinizeAttributes(tld, tag);
 	}
 
-	private void scrutinize(String firstTagName, String secondTagName) {
-		
-		Tag first = new Tag();
-		first.setName(firstTagName);
-		
-		Tag second = new Tag();
-		second.setName(secondTagName);
-		
-		final Tld firstTld = new Tld();
-		firstTld.setName("firstTld");
-		firstTld.setTags(new Tag[] {first, second});
+	private void scrutinizeAttributes(Tld tld, Tag tag) {
 
-		final Tld secondTld = new Tld();
-		secondTld.setName("secondTld");
-		secondTld.setTags(new Tag[] {first, second});
-
-		UniqueTagNamesImpl test = new UniqueTagNamesImpl(new HashMap<String, Tld>(){{
-				put("firstPath", firstTld);
-				put("secondPath", secondTld);
-			}}
-		);
+		final List<String> attributeNames = new LinkedList<String>();
 		
-		test.test();
+		for (TagAttribute attribute : tag.getAttributes()) {
+
+			String name = attribute.getAttributeName();
+			
+			if (name == null || "".equals(name.trim())) {
+				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
+						+ " has an empty attribute name");
+			} else if (attributeNames.contains(name)) {
+				throw new RuntimeException(tld.getName() + ":" + tag.getName() 
+						+ "@" + name + " is a duplicated attribute.");
+			} 
+			
+			//path + ":" + tag.getName() + "@" + name + " exists, but " + tag.getName() + " has no setter for " + name
+
+			attributeNames.add(name);
+		}
 	}
 	
 }

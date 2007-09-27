@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
@@ -37,8 +37,8 @@ import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldParser;
 
-import org.jboss.jsfunit.config.util.ClassUtils;
-import org.jboss.jsfunit.config.util.ParserUtils;
+import org.jboss.jsfunit.analysis.util.ClassUtils;
+import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
 
 /**

@@ -20,30 +20,20 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import junit.framework.TestCase;
+import java.io.InputStream;
 
-/**
- * @author Dennis Byrne
- */
+class DefaultStreamProvider implements StreamProvider {
 
-public class ManagedBeanScope_JSFUNIT_36_TestCase extends TestCase {
+	public InputStream getInputStream(String resourceName) {
 
-	public void testInvalidScope() {
-		
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "foo");
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			fail("should have failed because foo is invalid scope");
-			
-		}catch(Exception e) { }
-		
+		InputStream stream = getClass().getClassLoader().getResourceAsStream(resourceName);
+
+		if (stream == null)
+			stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
+
+		return stream;
 	}
-	
+
 }

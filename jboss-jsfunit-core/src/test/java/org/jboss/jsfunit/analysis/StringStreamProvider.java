@@ -20,35 +20,27 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config.util;
+package org.jboss.jsfunit.analysis;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import org.jboss.jsfunit.analysis.StreamProvider;
 
 /**
  * @author Dennis Byrne
  */
 
-public class ResourceUtils{
+class StringStreamProvider implements StreamProvider {
+
+	private String xml;
 	
-	public String getAsString(InputStream stream, String resourceName) {
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		StringBuffer buffer = new StringBuffer();
-		String temp = null;
-		
-		try {
-			
-			while ((temp = reader.readLine()) != null)
-				buffer.append(temp);
-			
-		} catch (IOException e) {
-			throw new RuntimeException("Could not read file " + resourceName, e);
-		}
-		
-		return buffer.toString();
+	public StringStreamProvider(String xml) {
+		this.xml = xml;
 	}
 	
+	public InputStream getInputStream(String path) {
+		return new ByteArrayInputStream(xml.getBytes());
+	}
+
 }

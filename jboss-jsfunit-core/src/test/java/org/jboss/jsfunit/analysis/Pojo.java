@@ -20,25 +20,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+package org.jboss.jsfunit.analysis;
 
 /**
  * @author Dennis Byrne
  */
 
-class StringStreamProvider implements StreamProvider {
-
-	private String xml;
-	
-	public StringStreamProvider(String xml) {
-		this.xml = xml;
-	}
-	
-	public InputStream getInputStream(String path) {
-		return new ByteArrayInputStream(xml.getBytes());
-	}
+class Pojo {
 
 }

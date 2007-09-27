@@ -20,27 +20,54 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
+import java.util.ArrayList;
+
+import org.jboss.jsfunit.analysis.UniqueTagAttributesImpl;
+
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
+import net.sf.maventaglib.checker.Tld;
 import junit.framework.TestCase;
 
-public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
-	
-	public void testDuplicateProperty() {
-		
-		String managedProperty = TestUtils.getManagedProperty("setter", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty + managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+public class UniqueTagAttributesImplTest extends TestCase {
+
+	public void testNameCollision() {
 		
 		try {
 			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+			scrutinize("same", "same");
 			
-			fail("should have failed");
+			fail();
 			
-		}catch(Exception e) { }
+		}catch(Exception e) {}
+		
+	}
+	
+	public void testHappyPath() {
+		
+		scrutinize("id", "value");
 		
 	}
 
+	private void scrutinize(String firstName, String secondName) {
+		
+		TagAttribute id = new TagAttribute();
+		id.setAttributeName(firstName);
+		
+		TagAttribute value = new TagAttribute();
+		value.setAttributeName(secondName);
+		
+		Tag tag = new Tag();
+		tag.setAttributes(new TagAttribute[] {id, value});
+		
+		final Tld tld = new Tld();
+		tld.setTags(new Tag[] {tag});
+		
+		new UniqueTagAttributesImpl(new ArrayList<Tld>() {{
+			add(tld);
+		}}).test();
+	}
+	
 }

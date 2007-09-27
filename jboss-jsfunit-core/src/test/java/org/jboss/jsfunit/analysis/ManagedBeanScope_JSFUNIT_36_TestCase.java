@@ -20,10 +20,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.config;
+package org.jboss.jsfunit.analysis;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
+import org.jboss.jsfunit.analysis.StreamProvider;
 
 import junit.framework.TestCase;
 
@@ -31,42 +31,22 @@ import junit.framework.TestCase;
  * @author Dennis Byrne
  */
 
-public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
+public class ManagedBeanScope_JSFUNIT_36_TestCase extends TestCase {
 
-	public void testDuplicateManagedBean() {
+	public void testInvalidScope() {
 		
-		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
-		String facesConfig = TestUtils.getFacesConfig(manageBean + manageBean);
+		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "foo");
+		String facesConfig = TestUtils.getFacesConfig(manageBean);
 		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 		
 		try {
 			
 			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 			
-			fail("should have failed");
+			fail("should have failed because foo is invalid scope");
 			
 		}catch(Exception e) { }
 		
 	}
-
-	public void testDuplicateManagedBeansDifferentConfigSource() {
-
-		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-
-		Set<String> facesConfigPaths = new HashSet<String>() {{
-			add("one path");
-			add("two paths");
-		}};
-
-		try {
-
-			new AbstractFacesConfigTestCase(facesConfigPaths, streamProvider) {}.testManagedBeans();
-
-			fail("should have failed");
-
-		}catch(Exception e) { }		
-	}
-
+	
 }
