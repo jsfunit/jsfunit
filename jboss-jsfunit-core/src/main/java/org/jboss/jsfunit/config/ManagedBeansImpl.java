@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
  * @author Dennis Byrne
  */
 
-public class ManagedBeansImpl {
+class ManagedBeansImpl {
 
 	private final Map<String, Document> documentsByPath;
 	

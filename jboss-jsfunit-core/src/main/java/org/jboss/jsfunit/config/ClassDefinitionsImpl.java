@@ -53,7 +53,7 @@ import org.w3c.dom.NodeList;
  * @author Dennis Byrne
  */
 
-public class ClassDefinitionsImpl {
+class ClassDefinitionsImpl {
 
 	private final Map<String, Document> documentsByPath;
 	
