@@ -22,6 +22,9 @@
 
 package org.jboss.jsfunit.analysis;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 class DefaultStreamProvider implements StreamProvider {
@@ -33,6 +36,16 @@ class DefaultStreamProvider implements StreamProvider {
 		if (stream == null)
 			stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
 
+		File file;
+		
+		if(stream == null && ( file = new File(resourceName) ).exists() ) {
+			try {
+				stream = new FileInputStream(file);
+			} catch (FileNotFoundException e) {
+				throw new RuntimeException("File " + resourceName + " exists but it could not be read.");
+			}
+		}
+		
 		return stream;
 	}
 
