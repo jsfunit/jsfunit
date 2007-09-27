@@ -33,6 +33,7 @@ import javax.xml.parsers.DocumentBuilder;
 
 import junit.framework.TestCase;
 import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldParser;
 
@@ -108,6 +109,11 @@ public abstract class AbstractTldTestCase extends TestCase {
 			String tagClass = tag.getTagClass();
 			Class clazz = new ClassUtils().loadClass(tagClass, "tag-class");
 			tagClassesByTag.put(tag, clazz);
+			
+			for(TagAttribute attribute : tag.getAttributes()) {
+				String type = attribute.getAttributeType();
+				type = type == null ? type : type.trim();
+			}
 		}
 		
 	}
@@ -135,8 +141,6 @@ public abstract class AbstractTldTestCase extends TestCase {
 		
 		new TagAttributeTypesImpl(tldsByPath.values(), tagClassesByTag).test();
 		
-		// TODO tags w/ U. EL should have ValueExpression or MethodExpression
-		
 	}
 	
 	public void testUniqueTagNames() {
@@ -151,10 +155,4 @@ public abstract class AbstractTldTestCase extends TestCase {
 		
 	}
 	
-//	public void testRtexprvalue() {
-	
-	// all 1.1 tags should have @rtexprvalue = false ... section 9.3.1.1
-	// tags w/ U. EL should not have @rtexprvalue
-	
-//}
 }
