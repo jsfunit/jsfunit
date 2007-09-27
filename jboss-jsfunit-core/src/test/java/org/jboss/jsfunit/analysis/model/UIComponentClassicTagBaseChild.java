@@ -20,12 +20,37 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.analysis;
+package org.jboss.jsfunit.analysis.model;
 
-/**
- * @author Dennis Byrne
- */
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.webapp.UIComponentClassicTagBase;
+import javax.servlet.jsp.JspException;
 
-class Pojo {
+public class UIComponentClassicTagBaseChild extends UIComponentClassicTagBase {
+	
+	@Override
+	protected UIComponent createComponent(FacesContext ctx, String string) throws JspException {
+		return null;
+	}
+
+	@Override
+	protected boolean hasBinding() {
+		return false;
+	}
+
+	@Override
+	protected void setProperties(UIComponent ui) {
+	}
+
+	@Override
+	public String getComponentType() {
+		return null;
+	}
+
+	@Override
+	public String getRendererType() {
+		return null;
+	}
 
 }

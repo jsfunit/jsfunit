@@ -20,14 +20,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.analysis;
+package org.jboss.jsfunit.analysis.model;
 
-import java.io.Serializable;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
 /**
  * @author Dennis Byrne
  */
 
-class SerializablePojo implements Serializable {
+public class AtomicIntegerValidator implements Validator{
+
+	public void validate(FacesContext ctx, UIComponent ui, Object object) 
+		throws ValidatorException {
+		
+	}
 
 }

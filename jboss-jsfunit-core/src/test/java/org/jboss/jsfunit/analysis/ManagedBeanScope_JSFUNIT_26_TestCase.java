@@ -28,6 +28,8 @@ import java.util.List;
 
 import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
 import org.jboss.jsfunit.analysis.StreamProvider;
+import org.jboss.jsfunit.analysis.model.Pojo;
+import org.jboss.jsfunit.analysis.model.SerializablePojo;
 
 import junit.framework.TestCase;
 

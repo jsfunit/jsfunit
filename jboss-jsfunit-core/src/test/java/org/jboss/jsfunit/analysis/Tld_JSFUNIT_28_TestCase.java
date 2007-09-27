@@ -26,6 +26,8 @@ import java.util.HashSet;
 
 import org.jboss.jsfunit.analysis.AbstractTldTestCase;
 import org.jboss.jsfunit.analysis.StreamProvider;
+import org.jboss.jsfunit.analysis.model.Pojo;
+import org.jboss.jsfunit.analysis.model.UIComponentClassicTagBaseChild;
 
 import junit.framework.TestCase;
 
