@@ -39,6 +39,10 @@ class DefaultStreamProvider implements StreamProvider {
 		File file;
 		
 		if(stream == null && ( file = new File(resourceName) ).exists() ) {
+			
+			if(file.isDirectory())
+				throw new RuntimeException(resourceName + " exists but it needs to be a file.");
+			
 			try {
 				stream = new FileInputStream(file);
 			} catch (FileNotFoundException e) {
