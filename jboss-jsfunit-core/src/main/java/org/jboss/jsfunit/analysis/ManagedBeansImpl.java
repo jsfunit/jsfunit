@@ -126,7 +126,7 @@ class ManagedBeansImpl {
 		if(( "session".equals(scope) || "application".equals(scope) ) ) {
 			Class managedBeanClass = new ClassUtils().loadClass(clazz, "managed-bean-class"); 
 			if( ! Serializable.class.isAssignableFrom(managedBeanClass))
-				fail("Managed bean '" + parent.getNodeValue() + "' is in " 
+				fail("Managed bean '" + name + "' is in " 
 						+ scope + " scope, so it needs to implement " + Serializable.class);
 		}
 	}

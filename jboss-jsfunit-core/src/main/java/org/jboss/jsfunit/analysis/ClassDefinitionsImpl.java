@@ -109,7 +109,10 @@ class ClassDefinitionsImpl {
 		
 		if(CLASS_CONSTRAINTS.keySet().contains(nodeName)) {
 			
-			Class clazz = new ClassUtils().loadClass(node.getTextContent(), nodeName);
+			String clazzName = node.getTextContent();
+			clazzName = clazzName == null ? null : clazzName.trim();
+			
+			Class clazz = new ClassUtils().loadClass(clazzName, nodeName);
 			Class[] constraints = CLASS_CONSTRAINTS.get(nodeName);
 			
 			if( constraints.length > 0 && ! new ClassUtils().isAssignableFrom(constraints, clazz) )
