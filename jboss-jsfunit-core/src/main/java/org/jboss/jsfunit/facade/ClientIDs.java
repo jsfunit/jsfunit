@@ -24,9 +24,11 @@ package org.jboss.jsfunit.facade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.UIViewRoot;
@@ -47,6 +49,9 @@ class ClientIDs
    private List<String> allClientIDs = new ArrayList<String>();
    private Map<String, UIComponent> allComponents = new HashMap<String, UIComponent>();
    
+   // key = clientID; value = set of ancestor clientID's including my own
+   private Map<String, Set> ancestors = new HashMap<String, Set>();
+   
    /**
     * Create a new instance of ClientIDs.
     */
@@ -63,7 +68,8 @@ class ClientIDs
       if (component == null) return;
       
       addClientID(component, facesContext);
-
+      newAncestorEntry(component, facesContext);
+      
       if (component instanceof UIData)
       {
          addUIData((UIData)component, facesContext);
@@ -72,19 +78,50 @@ class ClientIDs
       
       for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
       {
-         addAllIDs((UIComponent)facetsAndChildren.next(), facesContext);
+         UIComponent facetOrChild = (UIComponent)facetsAndChildren.next();
+         addAncestors(component, facetOrChild, facesContext);
+         addAllIDs(facetOrChild, facesContext);
       }
+   }
+   
+   private void newAncestorEntry(UIComponent component, FacesContext facesContext)
+   {
+      String clientID = component.getClientId(facesContext);
+      if (ancestors.get(clientID) == null)
+      {
+         HashSet myAncestors = new HashSet();
+         myAncestors.add(clientID); // I am my own ancestor
+         ancestors.put(clientID, myAncestors);
+      }
+   }
+   
+   private void addAncestors(UIComponent parent, UIComponent child, FacesContext facesContext)
+   {
+      if (child == null) return;
+      addAncestors(parent.getClientId(facesContext), child.getClientId(facesContext));
+   }
+      
+   private void addAncestors(String parentClientID, String childClientID)
+   {
+      Set myAncestors = new HashSet(ancestors.get(parentClientID));
+      myAncestors.add(childClientID); // I am my own ancestor
+      //System.out.println("ancestors: " + childClientID + " = " + myAncestors);
+      ancestors.put(childClientID, myAncestors);
    }
    
    private void addUIData(UIData component, FacesContext facesContext)
    {
+      String parentClientID = component.getClientId(facesContext);
       // TODO: find out if headers and footers are found
       for (int i=0; i < component.getRowCount(); i++)
       {
          component.setRowIndex(i);
+         addAncestors(parentClientID, component.getClientId(facesContext));
          for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
          {
-            addAllIDs((UIComponent)facetsAndChildren.next(), facesContext);
+            UIComponent facetOrChild = (UIComponent)facetsAndChildren.next();
+            addAncestors(component, facetOrChild, facesContext);
+            addAllIDs(facetOrChild, facesContext);
          } 
       }
       
@@ -145,5 +182,16 @@ class ClientIDs
    UIComponent findComponent(String suffix)
    {
       return allComponents.get(findClientID(suffix));
+   }
+   
+   /**
+    * Determines if a component with a given clientID has an ancestor with a
+    * given ancestorClientID.
+    */
+   boolean isAncestor(String clientID, String ancestorClientID)
+   {
+      Set ancestorSet = ancestors.get(clientID);
+      if (ancestorSet == null) return false;
+      return ancestorSet.contains(ancestorClientID);
    }
 }

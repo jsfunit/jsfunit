@@ -31,6 +31,7 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import javax.faces.component.UIComponent;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
@@ -150,8 +151,11 @@ public class JSFClientSession
       
       for (int i=0; i < forms.length; i++)
       {
-         if (clientID.startsWith(forms[i].getID())) return forms[i];
-      }
+         if (this.clientIDs.isAncestor(clientID, forms[i].getID()))
+         {
+            return forms[i];
+         }
+      } 
       
       throw new FormNotFoundException(componentID);
    } 
