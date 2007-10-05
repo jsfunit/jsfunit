@@ -43,7 +43,8 @@ import org.jboss.jsfunit.facade.WebRequestFactory;
 import org.xml.sax.SAXException;
 
 /**
- * This class creates Ajax4jsf HTTP requests for Ajax4jsf components.
+ * This class creates Ajax4jsf HTTP requests for Ajax4jsf components.  It 
+ * should be used for Ajax4jsf 1.1.
  *
  * @author Stan Silvert
  */
@@ -136,15 +137,14 @@ public class Ajax4jsfClient
       Map<UIData, Integer> indiciesToRestore = setRowIndicies(server, componentID);
       
       UIComponent uiComp = server.findComponent(componentID);
-      Map options = AjaxRendererUtils.buildEventOptions(server.getFacesContext(), uiComp);
+      FacesContext ctx = server.getFacesContext();
+      Map options = buildEventOptions(ctx, uiComp);
       
       PostMethodWebRequest req = requestFactory.buildRequest((String)options.get("actionUrl"),
                                                              componentID);
 
       // Tell A4J that it's an AJAX request
-      FacesContext ctx = server.getFacesContext();
-      UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);
-      req.setParameter(AjaxContainerRenderer.AJAX_PARAMETER_NAME, container.getClientId(ctx));
+      setA4JParam(req, ctx, uiComp);
       
       // Add the extra A4J params
       Map params = (Map)options.get("parameters");
@@ -156,6 +156,26 @@ public class Ajax4jsfClient
 
       restoreRowIndices(indiciesToRestore);
       ajaxRequest(req);
+   }
+   
+   /**
+    * The AjaxRendererUtils was placed in a different package for RichFaces 3.1
+    * so we facotr it out here to allow the RichFacesClient to override.
+    */
+   Map buildEventOptions(FacesContext ctx, UIComponent uiComp)
+   {
+      return AjaxRendererUtils.buildEventOptions(ctx, uiComp);
+   }
+   
+   /**
+    * The AjaxRendererUtils and AjaxContainerRenderer were placed in a different 
+    * package for RichFaces 3.1 so we facotr them out here to allow the 
+    * RichFacesClient to override.
+    */
+   void setA4JParam(PostMethodWebRequest req, FacesContext ctx, UIComponent uiComp)
+   {
+      UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);
+      req.setParameter(AjaxContainerRenderer.AJAX_PARAMETER_NAME, container.getClientId(ctx));
    }
    
    /**
