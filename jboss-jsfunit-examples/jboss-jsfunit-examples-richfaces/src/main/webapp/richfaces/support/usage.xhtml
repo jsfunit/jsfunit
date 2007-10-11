@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<p>
+				a4j:support is the most important core component in the RichFaces library. It allows 
+				to add an Ajax capability to the existing non-ajax components. All other Ajax components
+				are based on the same principles a4j:support has.
+			</p>
+			<p> a4j:support should be attached to a direct child of the JSF component that has to be ajaxified.
+				The key attributes are 'event' and 'reRender'.
+			</p>
+			<p>
+				<b>event</b> attribute defines the javascript event the ajax support will be attached to.
+			</p>
+			<p>
+				'reRender' attribute points to the JSF	component(s) that should be re-rendered on the server side
+				and updated on the client when an Ajax Response comes back.
+			</p>
+			<p>
+				The following example shows how the outputText component value is changed while a user is
+				typing in the input field:
+			</p>
+			
+			
+			<div class="sample-container" >
+
+
+				<ui:include src="/richfaces/support/examples/echo.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/support/examples/echo.xhtml"/>
+				</ui:include>			
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/AjaxSupportTest.java"/>
+                                    <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                    <ui:param name="sourcetype" value="#{'java'}"/>
+                                </ui:include>
+								
+			</div>
+
+						
+			<p>
+				a4j:support is wired with the event of the parent component during the Render Response 
+				phase on the server side. Hence, the number of possible events is limited to the ones
+				defined with particular component attributes. The wiring with events dynamically attached
+				on the client side is not supported.
+			</p>
+			
+
+			<p>
+				In case of attaching a4j:support to non-Ajax JSF command component, such as h:commandButton
+				or h:commandLink, it is important to set disableDefault equals true. Otherwise, a non-ajax
+				request will be send just after an Ajax request and the page will be unexpectedly refreshed.
+			</p>
+			
+			<p>
+				For additional information about attributes of this compponent read 
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/richfaces/ajaxAttributes.jsf?c=ajaxattributes">
+					<h:outputText value="'Ajax Attribute' section" />
+				</h:outputLink>. 
+			</p>
+			
+			
+		</ui:define>
+
+	</ui:composition>
+</html>

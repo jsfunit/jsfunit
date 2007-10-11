@@ -124,7 +124,9 @@ public class Ajax4jsfClient
    } 
    
    /**
-    * Fire the AJAX event associated with this component.
+    * Fire the AJAX event associated with this component.  Most of the time,
+    * you can call this simple version of the method.  See the AjaxEvent class
+    * for other event options.
     *
     * @param componentID The JSF component ID or a suffix of the client ID.
     *
@@ -133,7 +135,21 @@ public class Ajax4jsfClient
     */
    public void fireAjaxEvent(String componentID) throws SAXException, IOException
    {
+      fireAjaxEvent(new AjaxEvent(componentID));
+   }
+   
+   /**
+    * Fire the AJAX event associated with this component.  
+    *
+    * @param event The event definition.
+    *
+    * @throws IOException if there is a problem sending the AJAX request.
+    * @throws SAXException if the response page can not be parsed
+    */
+   public void fireAjaxEvent(AjaxEvent event) throws SAXException, IOException
+   {
       JSFServerSession server = new JSFServerSession(client);
+      String componentID = event.getComponentID();
       Map<UIData, Integer> indiciesToRestore = setRowIndicies(server, componentID);
       
       UIComponent uiComp = server.findComponent(componentID);
@@ -146,16 +162,34 @@ public class Ajax4jsfClient
       // Tell A4J that it's an AJAX request
       setA4JParam(req, ctx, uiComp);
       
-      // Add the extra A4J params
+      addExtraA4JParams(req, options);
+
+      restoreRowIndices(indiciesToRestore);
+      
+      addExtraUserParams(req, event);
+      
+      ajaxRequest(req, event.getRefresh());
+   }
+   
+   private void addExtraA4JParams(PostMethodWebRequest req, Map options)
+   {
       Map params = (Map)options.get("parameters");
       for (Iterator i = params.keySet().iterator(); i.hasNext();)
       {
          String param = (String)i.next();
          req.setParameter(param, (String)params.get(param));
       }
-
-      restoreRowIndices(indiciesToRestore);
-      ajaxRequest(req);
+   }
+   
+   private void addExtraUserParams(PostMethodWebRequest req, AjaxEvent event)
+   {
+      Map<String, String> params = event.getExtraRequestParams();
+      for (Iterator<String> i = params.keySet().iterator(); i.hasNext();)
+      {
+         String name = i.next();
+         String value = params.get(name);
+         req.setParameter(name, value);
+      }
    }
    
    /**
@@ -190,15 +224,25 @@ public class Ajax4jsfClient
     * AJAX changes that are "client side only" will not be preserved.
     *
     * @param request A request prepared using the AJAX JSF component library's required params.
+    * @param refresh Send a refresh request if the viewID did not change.
     *
     * @throws IOException if there is a problem submitting the request.
     * @throws SAXException if the response page can not be parsed.
     */
-   private void ajaxRequest(WebRequest request) throws SAXException, IOException
+   private void ajaxRequest(WebRequest request, boolean refresh) throws SAXException, IOException
+   {
+      client.doWebRequest(request);
+      
+      if (refresh)
+      {
+         doRefresh();
+      }
+   }
+   
+   public void doRefresh() throws SAXException, IOException
    {
       JSFServerSession server = new JSFServerSession(this.client);
       String viewId = server.getCurrentViewId();
-      client.doWebRequest(request);
       
       // if viewId did not change, refresh the page
       if (viewId.equals(server.getCurrentViewId()))

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<style>
+			 input[type="button"] {
+			 	background-color:#{a4jSkin.trimColor};
+			 }
+			</style>
+
+			<p>
+			Ajax region is a key ajax component. It limits the part of the component tree to be processed on the server side when 
+			ajax request comes. Processing means invocation during Decode, Validation and Model Update phase.
+		    Most common reasons to use a region are:
+		    <ul>
+		     <li>avoiding the aborting of the JSF lifecycle processing during the validation of other
+		     form input unnecessary for given ajax request;</li>
+		     <li>defining the different strategies when events will be deliveries 
+		     (immediate="true/false")</li>
+		     <li>showing an individual indicator of an ajax status</li>
+		     <li>increasing the performance of the rendering processing (selfRendered="true/false", renderRegionOnly="true/false")</li>
+		    </ul>
+			</p>
+			<p>
+				The following two examples show the situation when a validation error does not 
+				allow to process an ajax input. Type the name. The outputText component should
+				reappear after you. However, in the first case, this activity will be aboted because
+				of the other field with required="true". You will see only the error message 
+				while the "Job" field is empty.
+			</p>
+			<div class="sample-container" >
+
+				<ui:include src="/richfaces/region/examples/validationErrorIssue.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/region/examples/validationErrorIssue.xhtml"/>
+				</ui:include>
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/AjaxRegionValidationErrorTest.java"/>
+                                    <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                    <ui:param name="sourcetype" value="#{'java'}"/>
+                                </ui:include>
+			</div>
+			<p>
+				If no one region is defined explicitly on the page, the whole view plays the role of a region. 
+				Regions might be nested. When the ajax request is invoked by the ajax component, the
+				closest to this component region becomes an actual.
+			</p>
+			<p>
+				Ajax region <b>does not</b> define <b>what</b> the area(s) on the page should be 
+				refreshed when the ajax response is complete. You need to use reRender attribute of
+				the ajax components or use a4j:outputPanel ajaxRendered="true" for this purpose.
+			</p>
+			<p>
+				Ajax region might limit the set of areas to be re-rendered if regionRenderOnly="true". If 
+				this attribute is set, only the marked area(s) inside the given region will be
+				included in the list for re-render. The marked area(s) outside of the 
+				region will be ommited.
+			</p>
+			<p>
+				The area(s) marked for update might be re-rendered directly from the component tree
+				rather than involving jsp (xhtml) page processing if selfRendered attribute is set
+				to true. This might bust the performance to decrease time spending on Render Respose 
+				phase. However, you need to be aware that the artifact that are not included in the 
+				component tree will disappear from your page after the page is updated.<br/>
+				Most known component that is not stored in the component tree is f:verbatim. It is often
+				used to wrap non-jsf content such as pure html tags in JSF 1.1. However, even f:verbatim
+				is not required, the pure html tags are not stored in the component tree and will be
+				revoked from the update area(s) if selfRendered="true".
+			</p>
+			<p>
+				The following example shows the typical situation when the content unexpectedly
+				disappear during the partial page update when selfRendered="true". The right part of the 
+				example works fine, because the text is produced by the standard h:outputText component 
+				that is stored in the component tree. Both forms are wrapped with a4j:region selfRendered="true"
+			</p>
+
+			<div class="sample-container" >
+
+				<ui:include src="/richfaces/region/examples/selfRender.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/region/examples/selfRender.xhtml"/>
+				</ui:include>
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/AjaxRegionSelfRenderTest.java"/>
+                                    <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                    <ui:param name="sourcetype" value="#{'java'}"/>
+                                </ui:include>
+				</div>
+						
+			<rich:spacer height="30" />
+		</ui:define>
+		
+	</ui:composition>
+</html>

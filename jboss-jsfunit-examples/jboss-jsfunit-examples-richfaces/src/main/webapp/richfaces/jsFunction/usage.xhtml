@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<p>a4j:jsFunction component is very similar to a4j:commandButton, but allows to perform
+				an Ajax request from a Javascript code directly. The component sends a request using
+				a standard JSF approach, so the JSF form is required. The following example
+				shows how the part of the page is re-rendered when a user hovers over the names.
+			</p>
+
+
+			<div class="sample-container" >
+
+				<ui:include src="/richfaces/jsFunction/examples/hoverEcho.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/jsFunction/examples/hoverEcho.xhtml"/>
+				</ui:include>	
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/AjaxJsFunctionTest.java"/>
+                                    <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                    <ui:param name="sourcetype" value="#{'java'}"/>
+                                </ui:include>
+			</div>
+			
+			<p>
+				<b>name</b> attribute defines the name of the function that will be generated. You
+				can use it as a regular Javascript function name to invoke. a4j:actionparam
+				is used to pass the function arguments (you can use f:param as well). The order and
+				the number of parameters corresponds to the arguments of the called function. The
+				value(s) of the a4j:actionparam will be replaced with the value of function arguments
+				before the Ajax request is sent. To read more about a4j:action param visit 
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/richfaces/actionparam.jsf?c=actionparam">
+					<h:outputText value="'Ajax Paramemeter' section" />
+				</h:outputLink>.
+			</p>
+			<p>
+				As for any other Ajax components, you can use <b>reRender</b> attribute to update the area(s) of the page
+				after an Ajax Response comes back. Also, you can use <b>data</b> attribute and <b>oncomplete</b> attribute to
+				take the data from the server and use them for Javascript to call them. For additional information about
+				Javascript oriented and other important attributes of a4j:jsFunction read
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/richfaces/ajaxAttributes.jsf?c=ajaxattributes">
+					<h:outputText value="'Ajax Attribute' section" />
+				</h:outputLink>.
+			</p>			
+		</ui:define>
+
+	</ui:composition>
+</html>

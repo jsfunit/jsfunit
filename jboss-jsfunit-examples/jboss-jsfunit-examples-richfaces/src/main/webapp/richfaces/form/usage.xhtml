@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<style type="text/css">
+			.viewsourcepanel {
+				 padding-bottom:0px;
+				 width:100%;
+				 overflow:auto;
+				 border-width:0;
+				 background-color:#FFFFE7;
+			}
+			.viewsourcebody {
+				padding:0;
+			}
+			
+			 input[type="button"], input[type="submit"] {
+			 	background-color:#{a4jSkin.trimColor};
+			 }
+			</style>
+			
+			<p>a4j:form functionality is similar to the standard h:form component except two additional features:
+			<ul>
+				<li>Along with a4j:htmlCommandLink, it fixes the problem of h:commandLink component that cannot be re-rendered without 
+				re-rendering the whole form it belongs to.</li>
+				<li>It might convert all non-ajax action 
+				components (including the third party components) to the ajaxian ones if ajaxSubmit
+				attribute is set to true</li>
+			</ul>
+			</p>
+			<p>
+			h:commandLink renderer generates the javascript code that is used to submit the form when the link
+			is clicked. However, if the h:commandLink is rendered outside of the form, for example, when
+			you point to it with reRender, the wrong code is generated that causes the broken functionality
+			when user clicks this link later. The example of problematic code is below. To fix the code,
+			you need to replace h:form with a4j:form and h:commandLink with a4j:htmlCommandLink.
+			
+			<rich:panel styleClass="viewsourcepanel" bodyClass="viewsourcebody">
+				<rich:insert src="/richfaces/form/snippets/commandLinkProblem.xhtml" highlight="xhtml"/>
+			</rich:panel>
+			
+
+			</p>
+			<p>
+			When ajaxSubmit="true", all standard action components on this form become ajaxable. This
+			approach is similar to the one AjaxAnywhere framework uses. If a form works in an ajax mode, 
+			the standard ajax attribute such as reRender, eventQueue, requestDelay can be used. The
+			following example demonstates the difference between partial and full-page refreshing.
+			In both cases, the regular h:commandButton is used for the form submision.
+			</p>
+			
+			<div class="sample-container" >
+
+                           <ui:include src="/richfaces/form/examples/ajaxSubmit.xhtml"/>
+                           <ui:include src="/templates/include/sourceview.xhtml">
+                                  <ui:param name="sourcepath" value="/richfaces/form/examples/ajaxSubmit.xhtml"/>
+                           </ui:include>
+                           <ui:include src="/templates/include/sourceview.xhtml">
+                              <ui:param name="sourcepath" value="/testsrc/AjaxFormTest.java"/>
+                              <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                              <ui:param name="sourcetype" value="#{'java'}"/>
+                           </ui:include>
+			</div>
+                        <div class="sample-container">
+                           
+                        </div>
+			
+			<p>
+			Note:You should not use a4j:form ajaxSubmit="true" if it contains other ajax command components.
+			Also, due to the security reason, uploadFile form element cannot be convertible to
+			the be ajaxable.
+			</p>
+			<p>
+				For additional information about attributes of this component read
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/richfaces/ajaxAttributes.jsf?c=ajaxattributes">
+					<h:outputText value="'Ajax Attribute' section" />
+				</h:outputLink>.
+			</p>			
+		</ui:define>
+
+	</ui:composition>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<style>
+			 input[type="button"] {
+			 	background-color:#{a4jSkin.trimColor};
+			 }
+			</style>
+			
+			<p>a4j:actionparam is a component that combines together the functionality of f:param and ActionListener. 
+			Additionally to the f:param, this component allows to assign the value to the property of the manager bean
+			directly using the assignTo attribute. 
+			</p>
+			<div class="sample-container">
+				<ui:include src="/richfaces/actionparam/examples/assignTo.xhtml" />
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/actionparam/examples/assignTo.xhtml"/>
+				</ui:include>
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/ActionParamTest.java"/>
+                                    <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                    <ui:param name="sourcetype" value="#{'java'}"/>
+                                </ui:include>
+			</div>
+			<p>
+			You can use a4j:param not only with ajax components, but with non-ajax command component also.
+			In the following example, the used skin of the demo is changed when the whole page is refreshed
+			with the regular non-ajax h:commandLink. Using this feature you can update model values without
+			invoking even a single line of java code on the server side.
+			</p>
+			<div class="sample-container">
+
+				<ui:include src="/richfaces/actionparam/examples/changeSkin.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/actionparam/examples/changeSkin.xhtml"/>
+				</ui:include>
+				
+			</div>
+			<p>Attributes 'name' and 'value' are mandatory. You can specify the converter with 'converter' 
+			attribute if you need to convert the value before the model is updates. Note that 
+			the property is assigned with a parameter value on the UPDATE_MODEL phase. Thus, if
+			the validation of the form is failed, this phase will be skipped and the property
+			is not updated.
+			</p>
+			<p>It is possible to use javascript variable of custom function for the 'value' attribute. In this
+			case the 'noEscape' attribute should be set to true. When noEscape="true", the 'value' can contain
+			any javascript expression or javascript function invocation and the result of them will be send 
+			to the server as a value of a4j:actionparam. The following example demonstrates how to assign 
+			the backing bean with browser screen size values.
+			</p>
+			<div class="sample-container">
+				<ui:include src="/richfaces/actionparam/examples/screenSize.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/actionparam/examples/screenSize.xhtml"/>
+				</ui:include>
+			</div>
+
+		
+		</ui:define>
+
+	</ui:composition>
+</html>

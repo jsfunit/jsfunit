@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+			
+	<rich:separator height="1" />
+	
+	<a4j:form>
+		<h:panelGrid columns="3">
+			<h:outputText value="Name:" />
+			<h:inputText id="inputName" value="#{userBean.name}" />
+			<a4j:commandButton id="SayHelloButton" value="Say Hello" reRender="out" />
+		</h:panelGrid>
+	</a4j:form>
+	<h:panelGroup id="out">
+		<h:outputText value="Hello " rendered="#{not empty userBean.name}" />
+		<h:outputText value="#{userBean.name}" />
+		<h:outputText value="!" rendered="#{not empty userBean.name}" />
+	</h:panelGroup>
+	
+	<rich:separator height="1" style="padding-top:10px" />
+</ui:composition>

@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+			
+	<h:panelGrid columns="2">
+		<rich:panel>
+			<f:facet name="header">
+				<h:outputText value="Form with ajaxSubmit equals true"/>
+			</f:facet>
+			
+			<a4j:form id="ajaxSubmitTrueForm" ajaxSubmit="true" reRender="name">
+				<h:panelGrid id="panelGrid">
+					<h:commandButton id="SetToJohn" value="Set Local Name to John (Ajax)" action="#{userBean.nameItJohn}" />
+					<h:outputText id="name" value="Name:#{userBean.name}" />
+				</h:panelGrid>
+			</a4j:form>
+		</rich:panel>
+	
+		<rich:panel>
+			<f:facet name="header">
+				<h:outputText value="Form with ajaxSubmit equals false"/>
+			</f:facet>
+			
+			<a4j:form id="ajaxSubmitFalseForm">
+				<h:panelGrid id="panelGrid">
+					<h:commandButton id="SetBoth" value="Set Both Name to Mark (non-Ajax)" action="#{userBean.nameItMark}" />
+					<h:outputText id="name" value="Name:#{userBean.name}" />
+				</h:panelGrid>
+			</a4j:form>
+			
+		</rich:panel>
+	
+	</h:panelGrid>
+</ui:composition>

@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+			
+	<rich:separator height="1" />
+
+	<h:panelGrid columns="2" width="100%">
+
+		<a4j:region selfRendered="true">
+			<h:panelGroup>
+				<h:form id="form3">
+					<h:panelGrid columns="2">
+						<h:outputText value="Name" />
+						<h:inputText id="name" value="#{userBean.name}">
+							<a4j:support id="outname_rerender" event="onkeyup" reRender="out3,outname2" />
+						</h:inputText>
+					</h:panelGrid>
+				</h:form>
+				<h:panelGroup id="out3">
+					This text will disappear during the partial update of this panel.
+					The text appears again only after the whole page refresh or a partial
+					update from the region with selfRendered="false" (default value).
+				</h:panelGroup>
+			</h:panelGroup>
+		</a4j:region>
+
+		<a4j:region selfRendered="true">
+			<h:panelGroup>
+				<h:form id="form4">
+					<h:panelGrid columns="2">
+						<h:outputText value="Name" />
+						<h:inputText id="name" value="#{userBean.name}">
+							<a4j:support id="outname_rerender" event="onkeyup" reRender="out4,outname2" />
+						</h:inputText>
+					</h:panelGrid>
+				</h:form>
+				<h:panelGroup id="out4">
+					<h:outputText value="The text of the similar panel will 
+						not disappear because it is printed with h:outputText" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</a4j:region>
+
+	</h:panelGrid>
+	<h:outputText 	id="outname2" style="font-weight:bold"
+					value="Typed Name: #{userBean.name}" />
+	
+	<rich:separator style="padding-top:10px" height="1" />
+
+</ui:composition>

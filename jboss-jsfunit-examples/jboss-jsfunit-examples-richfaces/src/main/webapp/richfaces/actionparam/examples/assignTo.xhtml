@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+  
+<h:form id="form1">
+	<rich:panel id="panel1">
+		<a4j:commandButton id="SetToAlex" value="Set Name to Alex"  reRender="rep" >
+			<a4j:actionparam name="username" value="Alex" assignTo="#{userBean.name}"/>
+		</a4j:commandButton>
+		<rich:spacer width="20" />
+		<a4j:commandButton id="SetToJohn" value="Set Name to John"  reRender="rep" >
+			<a4j:actionparam name="username" value="John" assignTo="#{userBean.name}"/>
+		</a4j:commandButton>
+	</rich:panel>
+	<rich:panel id="panel2">
+		<h:outputText id="rep" value="Selected Name:#{userBean.name}"/>
+	</rich:panel>
+</h:form>
+</ui:composition>

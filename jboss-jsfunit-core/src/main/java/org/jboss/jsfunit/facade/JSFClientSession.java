@@ -75,15 +75,15 @@ public class JSFClientSession
     * Creates a new client interface for testing a JSF application using a
     * customized WebConversation.  To use this constructor, first get a
     * WebConversation from org.jboss.jsfunit.framework.WebConversationFactory.
-    * 
-    * Example:
+    * <br/><br/>
+    * Example:<br/>
     * <code>
-    * WebConversation webConv = WebConversationFactory.makeWebConversation();
-    * webConv.setAuthorization("myuser", "mypassword");
-    * webConv.setHeaderField("Accept-Language", "es-mx,es"); 
-    * JSFClientSession client = new JSFClientSession(webConv, "/index.jsf");
+    * WebConversation webConv = WebConversationFactory.makeWebConversation();<br/>
+    * webConv.setAuthorization("myuser", "mypassword");<br/>
+    * webConv.setHeaderField("Accept-Language", "es-mx,es");<br/> 
+    * JSFClientSession client = new JSFClientSession(webConv, "/index.jsf");<br/>
     * </code>
-    * 
+    * <br/>
     * Note that the initialPage param should be something that maps into the FacesServlet.
     * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
     * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the

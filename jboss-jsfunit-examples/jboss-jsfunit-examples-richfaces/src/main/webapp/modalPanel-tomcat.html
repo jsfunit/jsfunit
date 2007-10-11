@@ -1,0 +1,1006 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+      
+<head>
+<link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTcss/toggleControl.xcss/DATB/eAFjlbr0AAAC6gHS.jsf' /><link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTcss/panel.xcss/DATB/eAFjlbr0AAAC6gHS.jsf' /><link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTcss/panelbar.xcss/DATB/eAFjlbr0AAAC6gHS.jsf' /><link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTcss/tabPanel.xcss/DATB/eAFjlbr0AAAC6gHS.jsf' /><link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/richfaces/renderkit/html/css/modalPanel.xcss/DATB/eAFjlbr0AAAC6gHS.jsf' /><link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTcss/spacer.xcss/DATB/eAFjlbr0AAAC6gHS.jsf' /><link rel='stylesheet'  type='text/css' href='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTcss/highlight.css.jsf' /><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg.ajax4jsf.javascript.PrototypeScript.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg.ajax4jsf.javascript.AjaxScript.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTscripts/togglePanel.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg.ajax4jsf.javascript.ImageCacheScript.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/richfaces/renderkit/html/scripts/browser_info.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTscripts/panelbar.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/ajax4jsf/javascript/scripts/form.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTscripts/tabPanel.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/richfaces/renderkit/html/scripts/utils.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/richfaces/renderkit/html/scripts/modalPanel.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/richfaces/renderkit/html/scripts/modalPanelBorders.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTscripts/scriptaculous/effects.js.jsf'></script><script type='text/javascript' src='/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTorg/richfaces/renderkit/html/script/processEffect.js.jsf'></script><meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+<title>RichFaces - Open Source Rich JSF Components - Modal Panel
+</title>
+<link rel="STYLESHEET" type="text/css" href="/jboss-jsfunit-examples-richfaces/css/common.css" />
+<style type="text/css">
+<![CDATA[
+
+body{
+	background-image : url(/jboss-jsfunit-examples-richfaces/images/page_bg.gif);
+}
+li{
+	list-style : outside url(/jboss-jsfunit-examples-richfaces/images/bullet_arrow.gif);
+}
+.top_navbar td{
+	background-image : url(/jboss-jsfunit-examples-richfaces/images/top_nav_bg.gif);
+}
+.panel_menu{
+	background-image : url(/jboss-jsfunit-examples-richfaces/images/menu_bg.gif);
+}
+.content_tab {
+	background-image : url(/jboss-jsfunit-examples-richfaces/images/tabpanel_custom/tabpanel_bg.jpg);
+}
+.active_tab {
+	background-image : url(/jboss-jsfunit-examples-richfaces/images/tabpanel_custom/tab_unactive_bg.gif);
+}
+.inactive_tab {
+	background-image : url(/jboss-jsfunit-examples-richfaces/images/tabpanel_custom/tab_active_bg.gif);
+}
+h1.hsample {
+	font-size:19px;
+}
+div.esample {
+	border:1px solid #CCCCCC;
+	padding:0px 8px 0px 8px;
+}
+
+]]>
+</style>
+</head>
+
+<body>
+<span style="display:none">v.3.1.1-GA	SVN $Revision: 3271 $ $Date: 2007-10-04 15:40:21 -0700 (Thu, 04 Oct 2007) $</span>
+<div class="page_brick"></div>
+<table class="top_navbar" cellpadding="0" cellspacing="0" border="0">
+<tbody>
+	<tr>
+		<td><a href="http://labs.jboss.com/portal/jbossrichfaces/downloads">Download</a>
+		</td>
+		<td><a href="http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261">Support</a>
+		</td>
+		<td><a href="http://labs.jboss.com/file-access/default/members/jbossrichfaces/freezone/docs/devguide/en/html/index.html">Developer Guide</a>
+		</td>
+	</tr>
+</tbody>
+</table>
+<form id="j_id16" name="j_id16" method="post" action="/jboss-jsfunit-examples-richfaces/richfaces/modalPanel.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_id16" value="j_id16" />
+
+<table class="skin_chooser" cellpadding="0" cellspacing="0" border="0">
+<tbody>
+	<tr>
+		<td>
+			<strong>Skins:</strong>
+		</td>
+		<td><!-- vcp:body/--><div id="j_id16:skin_chooser"><div>
+					<table class="skin_line" cellpadding="0" cellspacing="0" border="0">
+						<tbody>
+							<tr>
+								<td><a href="/jboss-jsfunit-examples-richfaces/richfaces/modalPanel.jsf?s=blueSky">
+										BlueSky</a>
+								</td>
+								<td><a href="/jboss-jsfunit-examples-richfaces/richfaces/modalPanel.jsf?s=classic">
+										Classic</a>
+								</td>
+								<td class="control"><a class="dr-tglctrl rich-tglctrl " href="#" id="j_id16:j_id28" onclick="A4J.AJAX.Submit('_viewRoot','j_id16',event,{'parameters':{'j_id16:j_id28':'j_id16:j_id28'} ,'actionUrl':'/jboss-jsfunit-examples-richfaces/richfaces/modalPanel.jsf'} ); return false;">more &raquo;</a>
+								</td>
+							</tr>
+						</tbody>
+					</table></div></div>
+		</td>
+	</tr>
+</tbody>
+</table><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="_id1" />
+</form>
+<table class="left_menu" cellpadding="0" cellspacing="0" border="0">
+<tbody>
+	<tr>
+		<td><div class="dr-pnl rich-panel panel_documents" id="j_id72"><div class="dr-pnl-b rich-panel-body " id="j_id72_body">
+	<strong>Modal Panel</strong>
+	<ul>
+		<li><a href="http://labs.jboss.com/file-access/default/members/jbossrichfaces/freezone/docs/devguide/en/html/RichFacesComponentsLibrary.html#modalPanel">Developers Guide</a></li>
+		<li><a href="http://labs.jboss.com/file-access/default/members/jbossrichfaces/freezone/docs/tlddoc/rich/modalPanel.html">Tld Documentation</a></li>
+		<li><a href="http://labs.jboss.com/file-access/default/members/jbossrichfaces/freezone/docs/apidoc/org/richfaces/component/UIModalPanel.html">Component Class Documentation</a></li>
+	</ul></div></div>
+			<div class="menu_separator">
+				
+			</div><div class="dr-pnl rich-panel panel_menu" id="j_id84"><div class="dr-pnl-b rich-panel-body " id="j_id84_body"><div class="dr-pnlbar rich-panelbar dr-pnlbar-b " id="j_id85" style="padding: 0px; height: 550px; width: 100%; "><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="ajaxSupport"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Ajax Support</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Ajax Support</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/actionparam.jsf?c=actionparam" style="display:block;height:20px">
+						<span style="display:block;">
+							Action Parameter
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/ajaxAttributes.jsf?c=ajaxattributes" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Attributes
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/form.jsf?c=form" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Form
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/ajaxListener.jsf?c=ajaxListener" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Listener
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/region.jsf?c=region" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Region
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/support.jsf?c=support" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Support
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/commandButton.jsf?c=commandButton" style="display:block;height:20px">
+						<span style="display:block;">
+							Command Button
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/commandLink.jsf?c=commandLink" style="display:block;height:20px">
+						<span style="display:block;">
+							Command Link
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/jsFunction.jsf?c=jsFunction" style="display:block;height:20px">
+						<span style="display:block;">
+							JS Function
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/poll.jsf?c=poll" style="display:block;height:20px">
+						<span style="display:block;">
+							Poll
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/push.jsf?c=push" style="display:block;height:20px">
+						<span style="display:block;">
+							Push
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/status.jsf?c=status" style="display:block;height:20px">
+						<span style="display:block;">
+							Status
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="ajaxResources"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Resources/Beans Handling</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Resources/Beans Handling</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/bundle.jsf?c=loadBundle" style="display:block;height:20px">
+						<span style="display:block;">
+							Bundle
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/keepAlive.jsf?c=keepAlive" style="display:block;height:20px">
+						<span style="display:block;">
+							Keep Alive
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/script.jsf?c=loadScript" style="display:block;height:20px">
+						<span style="display:block;">
+							Script
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/style.jsf?c=loadStyle" style="display:block;height:20px">
+						<span style="display:block;">
+							Style
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="ajaxOutput"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Ajax Output</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Ajax Output</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/include.jsf?c=include" style="display:block;height:20px">
+						<span style="display:block;">
+							Include
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/mediaOutput.jsf?c=mediaOutput" style="display:block;height:20px">
+						<span style="display:block;">
+							Media Output
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/outputPanel.jsf?c=outputPanel" style="display:block;height:20px">
+						<span style="display:block;">
+							Output Panel
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="ajaxMisc"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Ajax Miscellaneous</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Ajax Miscellaneous</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/page.jsf?c=page" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Page
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/portlet.jsf?c=portlet" style="display:block;height:20px">
+						<span style="display:block;">
+							Ajax Portlet
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/htmlCommandLink.jsf?c=htmlCommandLink" style="display:block;height:20px">
+						<span style="display:block;">
+							Html Command Link
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/log.jsf?c=log" style="display:block;height:20px">
+						<span style="display:block;">
+							Log
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richDataIterators"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Data Iteration</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Data Iteration</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataTable.jsf?c=column" style="display:block;height:20px">
+						<span style="display:block;">
+							Column
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataTable.jsf?c=columnGroup" style="display:block;height:20px">
+						<span style="display:block;">
+							Column Group
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataLists.jsf?c=dataDefinitionList" style="display:block;height:20px">
+						<span style="display:block;">
+							Data Definition List
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataFilterSlider.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataFilterSlider.jsf?c=dataFilterSlider" style="display:block;height:20px">
+						<span style="display:block;">
+							Data Filter Slider
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataGrid.jsf?c=dataGrid" style="display:block;height:20px">
+						<span style="display:block;">
+							Data Grid
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataLists.jsf?c=dataList" style="display:block;height:20px">
+						<span style="display:block;">
+							Data List
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataLists.jsf?c=dataOrderedList" style="display:block;height:20px">
+						<span style="display:block;">
+							Data Ordered List
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTable.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataTable.jsf?c=dataTable" style="display:block;height:20px">
+						<span style="display:block;">
+							Data Table
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DataTableScroller.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dataTableScroller.jsf?c=dataTableScroller" style="display:block;height:20px">
+						<span style="display:block;">
+							Data Table Scroller
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/repeat.jsf?c=repeat" style="display:block;height:20px">
+						<span style="display:block;">
+							Repeat
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/scrollableDataTable.jsf?c=scrollableDataTable" style="display:block;height:20px">
+						<span style="display:block;">
+							Scrollable Data Table
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richDragDrop"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Drag-Drop Support</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Drag-Drop Support</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DragIndicator.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dragSupport.jsf?c=dragIndicator" style="display:block;height:20px">
+						<span style="display:block;">
+							Drag Indicator
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DragSupport.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dragSupport.jsf?c=dragSupport" style="display:block;height:20px">
+						<span style="display:block;">
+							Drag Support
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DropSupport.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dragSupport.jsf?c=dndParam" style="display:block;height:20px">
+						<span style="display:block;">
+							Drag-Drop Parameter
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_DropSupport.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dragSupport.jsf?c=dropSupport" style="display:block;height:20px">
+						<span style="display:block;">
+							Drop Support
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richMenu"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Rich Menu</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Rich Menu</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_dropDownMenu.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dropDownMenu.jsf?c=dropDownMenu" style="display:block;height:20px">
+						<span style="display:block;">
+							Drop Down Menu
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_dropDownMenu.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dropDownMenu.jsf?c=menuGroup" style="display:block;height:20px">
+						<span style="display:block;">
+							Menu Group
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_dropDownMenu.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dropDownMenu.jsf?c=menuItem" style="display:block;height:20px">
+						<span style="display:block;">
+							Menu Item
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_dropDownMenu.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/dropDownMenu.jsf?c=menuSeparator" style="display:block;height:20px">
+						<span style="display:block;">
+							Menu Separator
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richTree"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Rich Trees</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Rich Trees</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_Tree.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/treeNodesAdaptor.jsf?c=recursiveTreeNodesAdaptor" style="display:block;height:20px">
+						<span style="display:block;">
+							Recursive Tree Adaptor
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_Tree.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/tree.jsf?c=tree" style="display:block;height:20px">
+						<span style="display:block;">
+							Tree
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_Tree.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/treeNodesAdaptor.jsf?c=treeNodesAdaptor" style="display:block;height:20px">
+						<span style="display:block;">
+							Tree Adaptor
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richOutputs"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Rich Output</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Rich Output</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="active" onmouseover="this.className='active'" onmouseout="this.className='active'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_ModalPanel.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/modalPanel.jsf?c=modalPanel" style="display:block;height:20px">
+						<span style="display:block;">
+							Modal Panel
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_Paint2D.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/paint2D.jsf?c=paint2d" style="display:block;height:20px">
+						<span style="display:block;">
+							Paint2D
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_panel.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/panel.jsf?c=panel" style="display:block;height:20px">
+						<span style="display:block;">
+							Panel
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_PanelBar.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/panelBar.jsf?c=panelBar" style="display:block;height:20px">
+						<span style="display:block;">
+							Panel Bar
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_panelMenu.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/panelMenu.jsf?c=panelMenu" style="display:block;height:20px">
+						<span style="display:block;">
+							Panel Menu
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_separator.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/separator.jsf?c=separator" style="display:block;height:20px">
+						<span style="display:block;">
+							Separator
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_SimpleTogglePanel.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/simpleTogglePanel.jsf?c=simpleTogglePanel" style="display:block;height:20px">
+						<span style="display:block;">
+							Simple Toggle Panel
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_spacer.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/spacer.jsf?c=spacer" style="display:block;height:20px">
+						<span style="display:block;">
+							Spacer
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_tabpanel.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/tabPanel.jsf?c=tabPanel" style="display:block;height:20px">
+						<span style="display:block;">
+							Tab Panel
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_TogglePanel.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/togglePanel.jsf?c=togglePanel" style="display:block;height:20px">
+						<span style="display:block;">
+							Toggle Panel
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_ToolBar.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/toolBar.jsf?c=toolBar" style="display:block;height:20px">
+						<span style="display:block;">
+							Tool Bar
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_panel.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/toolTip.jsf?c=toolTip" style="display:block;height:20px">
+						<span style="display:block;">
+							ToolTip
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richInputs"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Rich Input</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Rich Input</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/calendar.jsf?c=calendar" style="display:block;height:20px">
+						<span style="display:block;">
+							Calendar
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_slider.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/inputNumberSlider.jsf?c=inputNumberSlider" style="display:block;height:20px">
+						<span style="display:block;">
+							Input Number Slider
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_spinner.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/inputNumberSpinner.jsf?c=inputNumberSpinner" style="display:block;height:20px">
+						<span style="display:block;">
+							Input Number Spinner
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_SuggestionBox.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/suggestionBox.jsf?c=suggestionBox" style="display:block;height:20px">
+						<span style="display:block;">
+							Suggestion Box
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><div class="dr-pnlbar rich-panelbar dr-pnlbar-ext " id="richMisc"><div class="dr-pnlbar-h rich-panelbar-header  " style=";">Rich Miscellaneous</div><div class="dr-pnlbar-h-act rich-panelbar-header-act    " style=";;;;display: none;">Rich Miscellaneous</div><div style="display: none; width: 100%;"><table cellpadding="0" style="height: 100%;" width="100%"><tbody><tr><td class="dr-pnlbar-c rich-panelbar-content  " style=";">
+<table border="0" cellpadding="0" cellspacing="1">
+	<tbody>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/effect.jsf?c=effect" style="display:block;height:20px">
+						<span style="display:block;">
+							Effect
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_GoogleMap.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/gmap.jsf?c=gmap" style="display:block;height:20px">
+						<span style="display:block;">
+							Google Map
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/insert.jsf?c=insert" style="display:block;height:20px">
+						<span style="display:block;">
+							Insert
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/message.jsf?c=message" style="display:block;height:20px">
+						<span style="display:block;">
+							Message
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_common.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/messages.jsf?c=messages" style="display:block;height:20px">
+						<span style="display:block;">
+							Messages
+						</span></a>
+				</td>
+			</tr>
+			<tr class="unactive" onmouseover="this.className='active'" onmouseout="this.className='unactive'">
+				<td class="ico"><img src="/jboss-jsfunit-examples-richfaces/images/ico_VirtualEarth.gif" alt="" border="0" height="16" width="16" /></td>
+				<td class="text" width="100%"><a href="/jboss-jsfunit-examples-richfaces/richfaces/virtualEarth.jsf?c=virtualEarth" style="display:block;height:20px">
+						<span style="display:block;">
+							Virtual Earth
+						</span></a>
+				</td>
+			</tr>
+	</tbody>
+</table></td></tr></tbody></table></div></div><input id="j_id85_panelBarInput" name="j_id85" type="hidden" value="richOutputs" /><script type="text/javascript">
+//<![CDATA[
+new Richfaces.PanelBar("j_id85", "");
+//]]>
+</script></div></div></div>
+		</td>
+	</tr>
+</tbody>
+</table><img src="/jboss-jsfunit-examples-richfaces/images/cn_ModalPanel.gif" alt="" border="0" height="40" class="component_name" />
+
+<table cellpadding="0" cellspacing="0" border="0" class="content_container" width="100%">
+<tbody>
+	<tr>
+		<td>
+			<div class="content_container_left_brick"></div>
+		</td>
+		<td width="100%" class="content_container_pdddings">
+<!-- tabpanel begin --><table border="0" cellpadding="0" cellspacing="0" class="rich-tabpanel top_tab" id="j_id199" style="width:100%"><tbody><tr><td align="left" class="dr-bottom-line header_tabs_class"><form id="j_id199:_form" name="j_id199:_form" method="post" style="margin:0; padding:0;" action="/jboss-jsfunit-examples-richfaces/richfaces/modalPanel.jsf"><!--table  border="0" cellpadding="0" cellspacing="0" style="position:relative;top:1px"--><table border="0" cellpadding="0" cellspacing="0"><tr><td><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" style="width: 1px" /></td><td id="j_id200_cell" style="height: 100%; vertical-align: bottom;" class="dr-tbpnl-tbcell-act rich-tabhdr-cell-active"><table border="0" cellpadding="0" cellspacing="0" id="j_id200_shifted" onclick="if (RichFaces.isTabActive('j_id200_lbl')) return false; if (!RichFaces.onTabChange('j_id199','j_id200')) return false;var _formName = A4J.findForm(this).id; var _paramName = 'j_id200_server_submit'; var _params = new Object(); _params[_paramName] = _paramName; _JSFFormSubmit('j_id200', _formName, null, _params);this.onclick = null; _clearJSFFormParameters(_formName, null, [_paramName]);" style="position:relative; top:1px;;height : 100%; "><tr><td class="dr-tbpnl-tbbrdr rich-tabhdr-side-border"><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" /></td><td class="dr-tbpnl-tbtopbrdr rich-tabhdr-side-cell"><table border="0" cellpadding="0" cellspacing="0" style="height: 100%; width: 100%;"><tr><td id="j_id200_lbl" onmouseover="RichFaces.overTab(this);" onmouseout="RichFaces.outTab(this);" class="dr-tbpnl-tb rich-tab-header dr-tbpnl-tb-act rich-tab-active  active_tab  ">Usage</td></tr></table></td><td class="dr-tbpnl-tbbrdr rich-tabhdr-side-border"><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" /></td></tr></table></td><td><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" style="width: 1px" /></td><td id="j_id224_cell" style="height: 100%; vertical-align: bottom;" class="dr-tbpnl-tbcell-inact rich-tabhdr-cell-inactive"><table border="0" cellpadding="0" cellspacing="0" id="j_id224_shifted" onclick="if (RichFaces.isTabActive('j_id224_lbl')) return false; if (!RichFaces.onTabChange('j_id199','j_id224')) return false;var _formName = A4J.findForm(this).id; var _paramName = 'j_id224_server_submit'; var _params = new Object(); _params[_paramName] = _paramName; _JSFFormSubmit('j_id224', _formName, null, _params);this.onclick = null; _clearJSFFormParameters(_formName, null, [_paramName]);" style="position:relative;;height : 100%; "><tr><td class="dr-tbpnl-tbbrdr rich-tabhdr-side-border"><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" /></td><td class="dr-tbpnl-tbtopbrdr rich-tabhdr-side-cell"><table border="0" cellpadding="0" cellspacing="0" style="height: 100%; width: 100%;"><tr><td id="j_id224_lbl" onmouseover="RichFaces.overTab(this);" onmouseout="RichFaces.outTab(this);" class="dr-tbpnl-tb rich-tab-header dr-tbpnl-tb-inact rich-tab-inactive  inactive_tab  ">Tag Information</td></tr></table></td><td class="dr-tbpnl-tbbrdr rich-tabhdr-side-border"><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" /></td></tr></table></td><td><img border="0" height="1" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" style="width: 1px" /></td></tr></table><div style="display: none;"><script type="text/javascript">
+//<![CDATA[
+RichFaces.panelTabs['j_id199']=[{'cellActiveClass':'dr-tbpnl-tbcell-act rich-tabhdr-cell-active','ontabenter':'','id':'j_id200','cellInactiveClass':'dr-tbpnl-tbcell-inact rich-tabhdr-cell-inactive','ontableave':'','activeClass':'dr-tbpnl-tb rich-tab-header dr-tbpnl-tb-act rich-tab-active  active_tab  ','name':'j_id200','inactiveClass':'dr-tbpnl-tb rich-tab-header dr-tbpnl-tb-inact rich-tab-inactive  inactive_tab  '} ,{'cellActiveClass':'dr-tbpnl-tbcell-act rich-tabhdr-cell-active','ontabenter':'','id':'j_id224','cellInactiveClass':'dr-tbpnl-tbcell-inact rich-tabhdr-cell-inactive','ontableave':'','activeClass':'dr-tbpnl-tb rich-tab-header dr-tbpnl-tb-act rich-tab-active  active_tab  ','name':'j_id224','inactiveClass':'dr-tbpnl-tb rich-tab-header dr-tbpnl-tb-inact rich-tab-inactive  inactive_tab  '} ] ;
+//]]>
+</script></div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="_id1" /></form></td></tr><!-- tr>
+				<td class="dr-bottom-line" width="100%"><img src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" height="1" alt="" border="0"/></td>
+			</tr--><tr><td height="100%" id="j_id200"><table border="0" cellpadding="10" cellspacing="0" class="dr-tbpnl-cntnt-pstn rich-tabpanel-content-position" style="position : relative;" width="100%"><tr><td class="dr-tbpnl-cntnt rich-tabpanel-content content_tab " style="; ">
+
+
+		<p>RichFaces Modal Panel is a container that blocks an operation on the base page when the modal 
+		panel is shown.</p>
+		<p>You can show the modal panel using the following javascript function: Richfaces.hideModalPanel(id, params). 
+		For example, this line code invokes the modal panel:
+		<a href="javascript:Richfaces.showModalPanel('mp',{width:450, top:200})">
+		Richfaces.showModalPanel('mp',{width:450, top:200})</a></p>
+		<div class="sample-container">
+			
+		<script>
+//<![CDATA[
+
+		 function getRightTop(ref) {
+		   var position = new Object();
+		   position.top = 0; //ref.offsetTop;
+		   position.left =0; // ref.offsetLeft+ref.clientWidth+6;
+		   return position;
+		 }
+		
+//]]>
+</script><div id="mp" style="display: none;"><input id="mpOpenedState" name="mpOpenedState" type="hidden" /><div class="rich-modalpanel " id="mpContainer" style="position: absolute; display: none; z-index: 2000; background-color: inherit;"><div class="dr-mpnl-mask-div rich-mpnl-mask-div" id="mpDiv" style="z-index: 1;"></div><div class="dr-mpnl-mask-div rich-mpnl-mask-div" id="mpCursorDiv" style="filter: alpha(opacity=1); opacity: 0.01; z-index: -200"></div><div class="dr-mpnl-panel rich-mpnl_panel" id="mpCDiv" style="width: 1px; height: 1px; z-index: 2;"><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerNWU" style="width: 40px; height: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerN" style="width: 40px; height: 4px;z-index: 03;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerNEU" style="width: 40px; height: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerNEL" style="height: 40px; width: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerE" style="height: 40px; width: 4px;z-index: 03;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerSEU" style="height: 40px; width: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerSEL" style="width: 40px; height: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerS" style="width: 40px; height: 4px;z-index: 03;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerSWL" style="width: 40px; height: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerSWU" style="height: 40px; width: 4px;z-index: 13;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerW" style="height: 40px; width: 4px;z-index: 03;"></div><div class="dr-mpnl-resizer rich-mpnl-resizer" id="mpResizerNWL" style="height: 40px; width: 4px;z-index: 13;"></div><div class="dr-mpnl-shadow rich-mpnl-shadow" id="mpShadowDiv" style="top: 4px; left: 4px; opacity:0.1; filter:alpha(opacity=10);"></div><div class="dr-mpnl-pnl" id="mpContentDiv" style="position: absolute; overflow: hidden; z-index: 2; "><a class="dr-mpnl-pnl-a" href="#" id="mpFirstHref">_</a><table border="0" cellpadding="0" cellspacing="0" style="height: 100%; width: 100%;"><tr style="height: 1%;"><td class="dr-mpnl-header rich-mpnl-header-cell" style="position: relative; vertical-align: middle; z-index: 5;" width="100%"><div class="dr-mpnl-pnl-text rich-mpnl-text rich-mpnl-controls " style="float:right; padding-top: 3px; padding-right: 3px"><img src="/jboss-jsfunit-examples-richfaces/images/modal/close.png" alt="" onclick="Richfaces.hideModalPanel('mp')" style="cursor:pointer" /></div><div class="dr-mpnl-pnl-text dr-mpnl-pnl-h rich-mpnl-text rich-mpnl-header " id="mpHeader" style="white-space: nowrap;">Modal Panel Title</div></td></tr><tr style="height: 99%"><td class="dr-mpnl-pnl-b rich-mpnl-body" valign="top">
+				<p>Any JSF content might be inside the panel. In case of using 
+				Facelets or JSF 1.2, it might be any mixed content.</p>
+				
+				<p>The RichFaces modal panel is good with &lt;a4j:include&gt; to create
+				a wizard like behavior.</p>
+				<p>The model panel is open and closed from the javascript function
+				on <i>Richfaces</i> object. The following code 
+				<a href="javascript:Richfaces.hideModalPanel('mp')">hide this panel</a>:
+				Richfaces.hideModalPanel('mp')</p><a class="dr-mpnl-pnl-a" href="#" id="mpLastHref">_</a></td></tr></table></div></div><script type="text/javascript">
+//<![CDATA[
+new ModalPanel('mp',
+				{
+					width: 500,
+					height: 200,
+
+					minWidth: 450,
+					minHeight: 200,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 2000,
+					
+					onshow: '',
+					onhide: '',
+					
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false
+				});
+//]]>
+</script></div></div><script type="text/javascript">
+//<![CDATA[
+
+//]]>
+</script><img class="dr_spr rich-spacer " height="8" id="j_id206" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" />
+			
+			<script>
+//<![CDATA[
+
+				Effect.Transitions.exponential = function(pos) {
+					  return 1-Math.pow(1-pos,2);
+				}
+			
+//]]>
+</script>
+			
+			<style>
+<![CDATA[
+
+			.viewsourcepanel {
+				 padding-bottom:0px;
+				 width:100%;
+				 overflow:auto;
+				 border-width:0;
+				 background-color:#FFFFE7;
+			}
+			.viewsourcebody {
+				padding:0;
+			}
+			.viewsourceheader {
+				background-color:#E6F3F7;
+				background-image:none;
+				border-width:0px;
+				padding:0px;
+				height:6px;
+			}
+			.viewsourcediv {
+				padding:0 10px 10px 10px;
+			}
+			.viewsourcediv pre {
+				margin:0;
+			}
+			
+			.viewsourcelooklink {
+				cursor:pointer;
+				text-decoration:underline;
+				padding-left:5px;
+				color:blue;
+				font-size:11px;
+				font-family:Verdana;
+			}
+			
+			.viewsourcehidelink {
+				text-align:right;
+				cursor:pointer;
+				display:block;
+				background-color:#E6F3F7;
+				text-decoration:none;
+			}
+			
+			
+]]>
+</style>
+			<div><span id="j_id208:look" class="viewsourcelooklink"><script type="text/javascript">
+//<![CDATA[
+
+{
+var pm = Object.extend( Object.extend({type:'Fade'},{targetId:'j_id208:look',attachId:'j_id208:look'}), {targetId:'j_id208:source1'} );
+/* pm.id can have a special meaning, let's check */
+//pm.id = '';
+if (typeof '' == 'object') {pm.attachId= '';if (''=='') pm.targetId=''; };
+if (typeof '' == 'object') pm.targetId= '';
+pm = Object.extend(pm, {duration:0.0});
+var ename = Richfaces.effectEventOnOut('onclick');
+var bindedFunction = function(event){ return Richfaces.processEffect(this); }.bindAsEventListener(pm);
+Event.observe(pm.attachId,ename, bindedFunction, pm.useCapture||false);
+}
+
+//]]>
+</script><script type="text/javascript">
+//<![CDATA[
+
+{
+var pm = Object.extend( Object.extend({type:'Fade'},{targetId:'j_id208:look',attachId:'j_id208:look'}), {} );
+/* pm.id can have a special meaning, let's check */
+//pm.id = '';
+if (typeof '' == 'object') {pm.attachId= '';if (''=='') pm.targetId=''; };
+if (typeof '' == 'object') pm.targetId= '';
+pm = Object.extend(pm, {duration:0.1});
+var ename = Richfaces.effectEventOnOut('onclick');
+var bindedFunction = function(event){ return Richfaces.processEffect(this); }.bindAsEventListener(pm);
+Event.observe(pm.attachId,ename, bindedFunction, pm.useCapture||false);
+}
+
+//]]>
+</script><script type="text/javascript">
+//<![CDATA[
+
+{
+var pm = Object.extend( Object.extend({type:'BlindDown'},{targetId:'j_id208:look',attachId:'j_id208:look'}), {targetId:'j_id208:source1'} );
+/* pm.id can have a special meaning, let's check */
+//pm.id = '';
+if (typeof '' == 'object') {pm.attachId= '';if (''=='') pm.targetId=''; };
+if (typeof '' == 'object') pm.targetId= '';
+pm = Object.extend(pm, {delay:0.1,duration:1.0,from:0.0,to:1.0});
+var ename = Richfaces.effectEventOnOut('onclick');
+var bindedFunction = function(event){ return Richfaces.processEffect(this); }.bindAsEventListener(pm);
+Event.observe(pm.attachId,ename, bindedFunction, pm.useCapture||false);
+}
+
+//]]>
+</script><script type="text/javascript">
+//<![CDATA[
+
+{
+var pm = Object.extend( Object.extend({type:'Appear'},{targetId:'j_id208:look',attachId:'j_id208:look'}), {targetId:'j_id208:source1'} );
+/* pm.id can have a special meaning, let's check */
+//pm.id = '';
+if (typeof '' == 'object') {pm.attachId= '';if (''=='') pm.targetId=''; };
+if (typeof '' == 'object') pm.targetId= '';
+pm = Object.extend(pm, {delay:0.1,duration:0.5,from:0.0,to:1.0});
+var ename = Richfaces.effectEventOnOut('onclick');
+var bindedFunction = function(event){ return Richfaces.processEffect(this); }.bindAsEventListener(pm);
+Event.observe(pm.attachId,ename, bindedFunction, pm.useCapture||false);
+}
+
+//]]>
+</script>View Page Source</span><div class="dr-pnl rich-panel viewsourcepanel" id="j_id208:source1" style="display:none"><div class="dr-pnl-h rich-panel-header viewsourceheader" id="j_id208:source1_header"><img class="dr_spr rich-spacer " height="3px" id="j_id208:j_id215" src="/jboss-jsfunit-examples-richfaces/a4j_3_1_1-SNAPSHOTimages/spacer.gif.jsf" width="1" /></div><div class="dr-pnl-b rich-panel-body viewsourcebody" id="j_id208:source1_body">					
+
+				
+			<div class="viewsourcediv"><div id="j_id208:j_id217"><!-- /richfaces/modalPanel/examples/simplePanel.xhtml : generated by JHighlight v1.0 (http://jhighlight.dev.java.net) -->
+<span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">ui:composition</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">xmlns</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xmlns:ui</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://java.sun.com/jsf/facelets&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xmlns:h</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://java.sun.com/jsf/html&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xmlns:f</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://java.sun.com/jsf/core&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xmlns:a4j</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://richfaces.org/a4j&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xmlns:rich</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://richfaces.org/rich&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">script</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;getRightTop(ref)&nbsp;{</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;position&nbsp;=&nbsp;new&nbsp;Object();</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position.top&nbsp;=&nbsp;0;&nbsp;//ref.offsetTop;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position.left&nbsp;=0;&nbsp;//&nbsp;ref.offsetLeft+ref.clientWidth+6;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;position;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">script</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">rich:modalPanel</span><span class="xml_plain">&nbsp;&nbsp;</span><span class="xml_attribute_name">id</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;mp&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">minHeight</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;200&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">minWidth</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;450&quot;</span><span class="xml_plain">&nbsp;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">height</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;200&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">width</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;500&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">zindex</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;2000&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">f:facet</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;header&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">h:outputText</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">value</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;Modal&nbsp;Panel&nbsp;Title&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_tag_symbols">/&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">f:facet</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">f:facet</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;controls&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">h:graphicImage</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">value</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;/images/modal/close.png&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">style</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;cursor:pointer&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">onclick</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;Richfaces.hideModalPanel('mp')&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_tag_symbols">/&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">f:facet</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">p</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">Any&nbsp;JSF&nbsp;content&nbsp;might&nbsp;be&nbsp;inside&nbsp;the&nbsp;panel.&nbsp;In&nbsp;case&nbsp;of&nbsp;using&nbsp;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facelets&nbsp;or&nbsp;JSF&nbsp;1.2,&nbsp;it&nbsp;might&nbsp;be&nbsp;any&nbsp;mixed&nbsp;content.</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">p</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">p</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">The&nbsp;RichFaces&nbsp;modal&nbsp;panel&nbsp;is&nbsp;good&nbsp;with&nbsp;&amp;lt;a4j:include&amp;gt;&nbsp;to&nbsp;create</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;wizard&nbsp;like&nbsp;behavior.</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">p</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">p</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">The&nbsp;model&nbsp;panel&nbsp;is&nbsp;open&nbsp;and&nbsp;closed&nbsp;from&nbsp;the&nbsp;javascript&nbsp;function</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">i</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">Richfaces</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">i</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">&nbsp;object.&nbsp;The&nbsp;following&nbsp;code&nbsp;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">a</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">href</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;javascript:Richfaces.hideModalPanel('mp')&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">hide&nbsp;this&nbsp;panel</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">a</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain">:</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Richfaces.hideModalPanel('mp')</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">p</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">rich:modalPanel</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain"></span><br />
+<span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">ui:composition</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+</div>
+			</div><span id="j_id208:hide" class="viewsourcehidelink"><script type="text/javascript">
+//<![CDATA[
+
+{
+var pm = Object.extend( Object.extend({type:'BlindUp'},{targetId:'j_id208:hide',attachId:'j_id208:hide'}), {targetId:'j_id208:source1'} );
+/* pm.id can have a special meaning, let's check */
+//pm.id = '';
+if (typeof '' == 'object') {pm.attachId= '';if (''=='') pm.targetId=''; };
+if (typeof '' == 'object') pm.targetId= '';
+pm = Object.extend(pm, {'id': 'j_id208:source1', duration:1.0});
+var ename = Richfaces.effectEventOnOut('onclick');
+var bindedFunction = function(event){ return Richfaces.processEffect(this); }.bindAsEventListener(pm);
+Event.observe(pm.attachId,ename, bindedFunction, pm.useCapture||false);
+}
+
+//]]>
+</script><script type="text/javascript">
+//<![CDATA[
+
+{
+var pm = Object.extend( Object.extend({type:'Appear'},{targetId:'j_id208:hide',attachId:'j_id208:hide'}), {targetId:'j_id208:look'} );
+/* pm.id can have a special meaning, let's check */
+//pm.id = '';
+if (typeof '' == 'object') {pm.attachId= '';if (''=='') pm.targetId=''; };
+if (typeof '' == 'object') pm.targetId= '';
+pm = Object.extend(pm, {delay:1.0, duration:1.0});
+var ename = Richfaces.effectEventOnOut('onclick');
+var bindedFunction = function(event){ return Richfaces.processEffect(this); }.bindAsEventListener(pm);
+Event.observe(pm.attachId,ename, bindedFunction, pm.useCapture||false);
+}
+
+//]]>
+</script><span style="padding-right:5px">&lt;&lt;Hide Source</span></span></div></div>
+			</div>
+					
+		</div>
+		<p>The modal panel has an absolute layout.There is no reason to put in on the page
+		where it is called.If you want to perform submits from this modal panel, you should have a separate form inside it.
+		In this case, the panel must be declared outside of the other form on the same page.
+		I.e. nested forms are not allowed.<br />
+		Those requirements are applied because of the bug in earlier Internet Explorer versions, as
+		the dialog is moved to the top of the browser DOM tree just after it is rendered.</p></td></tr></table></td></tr></tbody></table>
+<!-- tabpanel end -->		
+		</td>
+	</tr>
+</tbody>
+</table><script id="j_id227" type="text/javascript">
+//<![CDATA[
+LOG.registerPopup('M','LogWindow',800,600,LOG.ALL);
+//]]>
+</script>
+</body>
+</html><!-- 
+<table style="height: 100%; width: 100%">
+	<tr>
+		<td colspan="2" style="height: 50px">
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 200px; padding:2px; vertical-align:top">
+			<rich:panel style="height:95%;">
+				<ui:include src="/templates/include/components-navigation.xhtml" />
+			</rich:panel>
+		</td>
+		<td style="padding:2px; vertical-align:top">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="height:50px">
+			<ui:include src="/templates/include/footer.xhtml" />
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+-->

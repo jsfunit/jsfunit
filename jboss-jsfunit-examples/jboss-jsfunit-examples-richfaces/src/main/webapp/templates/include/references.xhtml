@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<ui:composition>
+<f:loadBundle var="path" basename="org/richfaces/demo/common/path"/>
+<rich:panel styleClass="panel_documents">
+	<strong>#{componentNavigator.currentComponent.name}</strong>
+	<ul>
+		<li><h:outputLink value="#{path.dgPath}#{componentNavigator.currentComponent != null ? componentNavigator.currentComponent.devGuideLocation : 'index.html'}">Developers Guide</h:outputLink></li>
+		<li><h:outputLink value="#{path.tldPath}#{componentNavigator.currentComponent !=null ? componentNavigator.currentComponent.tldDocLocation : 'jbossrichfaces/freezone/docs/tlddoc/overview-summary.html'}">Tld Documentation</h:outputLink></li>
+		<li><h:outputLink value="#{path.apiPath}#{componentNavigator.currentComponent !=null ? componentNavigator.currentComponent.javaDocLocation : 'jbossrichfaces/freezone/docs/apidoc/overview-summary.html'}">Component Class Documentation</h:outputLink></li>
+                <li><h:outputLink value="../ServletTestRunner?suite=org.jboss.jsfunit.example.richfaces.RichFacesTestAll&amp;xsl=cactus-report.xsl">Run JSFUnit Tests Against This Demo</h:outputLink></li>
+	</ul>
+</rich:panel>
+</ui:composition>
+</html>
+
