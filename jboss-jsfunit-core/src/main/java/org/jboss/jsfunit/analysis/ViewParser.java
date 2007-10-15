@@ -20,6 +20,10 @@ public class ViewParser {
 		NamedNodeMap attributes = node.getAttributes();
 		NodeList children = node.getChildNodes();
 		
+		if("actionListener".equals(node.getNodeName())) {
+			Node binding = node.getAttributes().getNamedItem("binding");
+			actionListeners.add(binding.getNodeValue());
+		}
 		for(int i = 0; attributes != null && i < attributes.getLength(); i++) {
 			Node attribute = attributes.item(i);
 			if( "actionListener".equals(attribute.getNodeName()) )

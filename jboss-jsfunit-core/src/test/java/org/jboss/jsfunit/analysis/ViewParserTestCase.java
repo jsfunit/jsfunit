@@ -2,6 +2,7 @@ package org.jboss.jsfunit.analysis;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 
@@ -14,6 +15,7 @@ import org.xml.sax.SAXException;
 public class ViewParserTestCase extends TestCase {
 
 	private ViewParser viewParser;
+	private static final String ACTION_LISTENER = "#{bean.foo}";
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -22,10 +24,21 @@ public class ViewParserTestCase extends TestCase {
 		
 	}
 
+	public void testActionListenerTag() throws Exception{
+		
+		viewParser.parse(getDocument("<root><actionListener binding='" + ACTION_LISTENER + "'/></root>"));
+		List actionListeners = viewParser.getActionListeners();
+		assertEquals(1, actionListeners.size());
+		assertEquals(ACTION_LISTENER, actionListeners.get(0));
+		
+	}
+	
 	public void testActionListenerAttribute() throws Exception{
 		
-		viewParser.parse(getDocument("<root actionListener='#{bean.foo}' />"));
-		assertEquals(1, viewParser.getActionListeners().size());
+		viewParser.parse(getDocument("<root actionListener='" + ACTION_LISTENER + "' />"));
+		List actionListeners = viewParser.getActionListeners();
+		assertEquals(1, actionListeners.size());
+		assertEquals(ACTION_LISTENER, actionListeners.get(0));
 		
 	}
 	
