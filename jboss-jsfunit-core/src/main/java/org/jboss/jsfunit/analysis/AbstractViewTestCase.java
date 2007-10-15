@@ -22,8 +22,6 @@
 
 package org.jboss.jsfunit.analysis;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,11 +29,10 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 
+import junit.framework.TestCase;
+
 import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import junit.framework.TestCase;
 
 /**
  * @author Dennis Byrne
@@ -43,38 +40,40 @@ import junit.framework.TestCase;
 
 public class AbstractViewTestCase extends TestCase {
 
-	protected Map<String, Document> documentsByPath;
+	protected Map<String, Document> viewsByPath;
+	protected Map<String, Document> configByPath;
 	
-	public AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths){
-		this(absolutePaths, recursivePaths, new DefaultStreamProvider());
+	public AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths, Set<String> configPaths ){
+		this(absolutePaths, recursivePaths, configPaths, new DefaultStreamProvider());
 	}
 	
-	AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths, 
+	AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths, Set<String> configPaths, 
 			StreamProvider streamProvider){
 	
 		if(streamProvider == null)
 			throw new IllegalArgumentException("stream provider is null");
-		
 		if(absolutePaths == null)
 			throw new IllegalArgumentException("absolutePaths is null");
-		
 		if(recursivePaths == null)
 			throw new IllegalArgumentException("recursivePaths is null");
+		if(configPaths == null)
+			throw new IllegalArgumentException("configPaths is null");
+		if(configPaths.size() == 0)
+			throw new IllegalArgumentException("configPaths empty, must supply at least one");
 		
-		Set<String> allPaths = new HashSet<String>();
-		
-		allPaths.addAll(absolutePaths);
-		
+		Set<String> allPaths = new HashSet<String>(absolutePaths);
 		for(String path : recursivePaths) 
 			allPaths.addAll(explode(path));
 		
 		if(allPaths.size() == 0)
 			throw new IllegalArgumentException("No view templates found. At least one must be specified");
 
-		parseResources(allPaths, streamProvider);
+		parseResources(allPaths, streamProvider, viewsByPath);
+		parseResources(configPaths, streamProvider, configByPath);
 	}
 
-	private void parseResources(Set<String> allPaths, StreamProvider streamProvider) {
+	private void parseResources(Set<String> allPaths, StreamProvider streamProvider,
+			final Map<String, Document> documentsByPath) {
 
 		DocumentBuilder builder = ParserUtils.getDocumentBuilder();
 
@@ -91,6 +90,12 @@ public class AbstractViewTestCase extends TestCase {
 	private Set<String> explode(String path) {
 		
 		throw new UnsupportedOperationException();
+		
+	}
+	
+	public void testActionListeners() {
+		
+		throw new UnsupportedOperationException();		
 		
 	}
 

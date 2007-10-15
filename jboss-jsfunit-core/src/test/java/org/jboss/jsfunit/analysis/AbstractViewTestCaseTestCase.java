@@ -20,10 +20,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-
 package org.jboss.jsfunit.analysis;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -31,10 +31,14 @@ public class AbstractViewTestCaseTestCase extends TestCase{
 	
 	public void testConstructor() {
 		
+		Set<String> empty = new HashSet<String>();
+		Set<String> notEmpty = new HashSet<String>() {{
+			add("somepath");
+		}};
+		
 		try {
 			
-			HashSet<String> empty = new HashSet<String>();
-			new AbstractViewTestCase(empty, empty, new DefaultStreamProvider()) {};
+			new AbstractViewTestCase(empty, empty, empty, new DefaultStreamProvider()) {};
 			
 			fail();
 			
