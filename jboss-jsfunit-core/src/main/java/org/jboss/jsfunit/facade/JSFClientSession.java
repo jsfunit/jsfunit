@@ -31,8 +31,10 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import javax.faces.component.UIComponent;
 import org.jboss.jsfunit.framework.WebConversationFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
@@ -48,6 +50,7 @@ public class JSFClientSession
    private WebConversation webConversation;
    private WebResponse webResponse;
    private ClientIDs clientIDs;
+   private Document updatedDOM;
    private WebRequestFactory requestFactory;
    
    /**
@@ -120,9 +123,10 @@ public class JSFClientSession
    }
    
    /**
-    * Package-private method used by ServerFacade
+    * Get the ClientIDs helper class which provides useful information and
+    * lookups for the components in the server-side component tree.
     */
-   ClientIDs getClientIDs()
+   public ClientIDs getClientIDs()
    {
       return this.clientIDs;
    }
@@ -178,6 +182,7 @@ public class JSFClientSession
    {
       this.webResponse = this.webConversation.getResponse(request);
       this.clientIDs = new ClientIDs();
+      this.updatedDOM = this.webResponse.getDOM();
    }
    
    /**
@@ -191,6 +196,16 @@ public class JSFClientSession
    }
    
    /**
+    * Get the current state of the DOM including any changes made through
+    * the setParameter() method.  WebResponse.getDOM() will only include the
+    * state of the DOM after the last request was completed.
+    */
+   public Document getUpdatedDOM()
+   {
+      return this.updatedDOM;
+   }
+   
+   /**
     * Get the HttpUnit WebConversation used by this instance.
     *
     * @return The WebConversation
@@ -198,6 +213,12 @@ public class JSFClientSession
    public WebConversation getWebConversation()
    { 
       return this.webConversation;
+   }
+   
+   private void setValueOnDOM(String clientID, String value) throws SAXException
+   {
+      Element element = DOMUtil.findElementWithID(clientID, this.updatedDOM);
+      element.setAttribute("value", value);
    }
    
    /**
@@ -215,6 +236,7 @@ public class JSFClientSession
    {
       String clientID = this.clientIDs.findClientID(componentID);
       getForm(clientID).setParameter(clientID, value);
+      setValueOnDOM(clientID, value[0]);
    }
    
    /**
@@ -235,6 +257,34 @@ public class JSFClientSession
    {
       String clientID = this.clientIDs.findClientID(componentID);
       getForm(clientID).setCheckbox(clientID, state);
+      updateCheckboxInDOM(clientID, state);
+   }
+   
+   private void updateCheckboxInDOM(String clientID, boolean state)
+   {
+      Element element = DOMUtil.findElementWithID(clientID, this.updatedDOM);
+      Attr attr = element.getAttributeNode("checked");
+      
+      if ((attr == null) && !state) return;
+      
+      if ((attr != null) && !state) 
+      {
+         element.removeAttributeNode(attr);
+         return;
+      }
+      
+      if ((attr != null) && state) 
+      {
+         attr.setValue("checked");
+         return;
+      }
+      
+      if ((attr == null) && state)
+      {
+         Attr newAttr = this.updatedDOM.createAttribute("checked");
+         newAttr.setValue("checked");
+         element.setAttributeNode(newAttr);
+      }
    }
    
    /**

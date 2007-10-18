@@ -22,8 +22,6 @@
 
 package org.jboss.jsfunit.example.ajax4jsf;
 
-import com.meterware.httpunit.WebForm;
-import com.meterware.httpunit.parsing.HTMLParserFactory;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -68,12 +66,10 @@ public class A4JTest extends ServletTestCase
       ajaxClient.fireAjaxEvent("a4jsupport");
       assertEquals("foob", server.getManagedBeanValue("#{textbean.text}"));
       
-      // Note that for request scoped params, Ajax4jsf does not update the
-      // backing bean or even the component view.
       client.setParameter("input_text_request_scope", "foo");
       ajaxClient.fireAjaxEvent("a4jsupport_request_scope");
-      assertEquals("", server.getComponentValue("input_text_request_scope"));
-      assertEquals("", 
+      assertEquals("foo", server.getComponentValue("input_text_request_scope"));
+      assertEquals("foo", 
                   server.getManagedBeanValue("#{request_scope_textbean.text}"));
       
       // If you do a regular submit instead of an ajax request, request scoped 
@@ -147,7 +143,7 @@ public class A4JTest extends ServletTestCase
       ajaxClient.fireAjaxEvent("0:command_link_up");
       assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[0]}"));
-
+      
       ajaxClient.fireAjaxEvent("1:command_link_down");
       ajaxClient.fireAjaxEvent("1:command_link_down"); // do this one twice
       assertEquals(3, server.getManagedBeanValue("#{bean.requestCounter}"));

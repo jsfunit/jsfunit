@@ -22,12 +22,9 @@
 package org.jboss.jsfunit.example.richfaces;
 
 import java.io.IOException;
-import java.util.Iterator;
-import javax.faces.application.FacesMessage;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.a4jsupport.AjaxEvent;
 import org.jboss.jsfunit.a4jsupport.RichFacesClient;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
@@ -52,16 +49,12 @@ public class AjaxRegionSelfRenderTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("form3:name", "foobar");     
-      
-      AjaxEvent event = new AjaxEvent("form3:outname_rerender");
-      event.setRefresh(false);
-      ajaxClient.fireAjaxEvent(event);
+      ajaxClient.fireAjaxEvent("form3:outname_rerender");
 
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertTrue(userBeanValue.equals("foobar"));
       String text = "This text will disappear during the partial update";
       assertFalse(client.getWebResponse().getText().contains(text));
-      ajaxClient.doRefresh();
    }
    
    public void testUsingOutputTextTag() throws IOException, SAXException
@@ -71,15 +64,11 @@ public class AjaxRegionSelfRenderTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("form4:name", "foobar");     
-
-      AjaxEvent event = new AjaxEvent("form4:outname_rerender");
-      event.setRefresh(false);
-      ajaxClient.fireAjaxEvent(event);
+      ajaxClient.fireAjaxEvent("form4:outname_rerender");
  
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertTrue(userBeanValue.equals("foobar"));
       String text = "not disappear because it is printed with h:outputText";
       assertTrue(client.getWebResponse().getText().contains(text));
-      ajaxClient.doRefresh();
    }
 }

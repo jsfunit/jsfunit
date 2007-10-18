@@ -116,6 +116,11 @@ public class JSFServerSession
    public Object getComponentValue(String componentID)
    {
       UIComponent component = findComponent(componentID);
+      if (!(component instanceof ValueHolder))
+      {
+         throw new ClassCastException(componentID + " must be an instance of ValueHolder.");
+      }
+      
       return ((ValueHolder)component).getValue();
    }
    

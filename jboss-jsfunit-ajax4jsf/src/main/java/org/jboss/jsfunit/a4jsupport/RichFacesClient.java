@@ -39,7 +39,7 @@ import org.jboss.jsfunit.facade.JSFClientSession;
  */
 public class RichFacesClient extends Ajax4jsfClient
 {
-   
+
    public RichFacesClient(JSFClientSession client)
    {
       super(client);

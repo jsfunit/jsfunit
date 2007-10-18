@@ -22,8 +22,6 @@
 package org.jboss.jsfunit.example.richfaces;
 
 import java.io.IOException;
-import java.util.Iterator;
-import javax.faces.application.FacesMessage;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
@@ -37,40 +35,48 @@ import org.xml.sax.SAXException;
  *
  * @author Stan Silvert
  */
-public class AjaxRegionValidationErrorTest extends ServletTestCase
-{
-   public static Test suite()
+public class AjaxKeepaliveTest extends ServletTestCase
+{ 
+   public void testWithoutKeepalive() throws IOException, SAXException
    {
-      return new TestSuite( AjaxRegionValidationErrorTest.class );
-   }
-
-   public void testNoAjaxRegion() throws IOException, SAXException
-   {
-      JSFClientSession client = new JSFClientSession("/richfaces/region.jsf");
+      JSFClientSession client = new JSFClientSession("/richfaces/keepAlive.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
+
+      client.setParameter("form1:firstAddend", "2");
+      ajaxClient.fireAjaxEvent("form1:firstAddendAjax");
+      assertEquals(2, server.getManagedBeanValue("#{rsBean.addent1}"));
       
-      client.setParameter("form1:inname", "f");     
-      ajaxClient.fireAjaxEvent("form1:outname_rerender");
+      client.setParameter("form1:secondAddend", "3");
+      ajaxClient.fireAjaxEvent("form1:secondAddendAjax");
+      assertEquals(3, server.getManagedBeanValue("#{rsBean.addent2}"));
       
-      Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
-      assertTrue((userBeanValue == null) || (userBeanValue.equals("")));
-      FacesMessage message = (FacesMessage)server.getFacesContext().getMessages().next();
-      assertTrue(message.getDetail().contains("Value is required"));
+      ajaxClient.fireAjaxEvent("form1:btn");
+      assertNotNull(server.getManagedBeanValue("#{rsBean}"));
+      assertNull(server.getManagedBeanValue("#{rsBean.sum}"));
+   } 
+   
+   public void testWithKeepalive() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/richfaces/keepAlive.jsf");
+      RichFacesClient ajaxClient = new RichFacesClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+
+      client.setParameter("form2:firstAddend", "2");
+      ajaxClient.fireAjaxEvent("form2:firstAddendAjax");
+      assertEquals(2, server.getManagedBeanValue("#{rsBean2.addent1}"));
+      
+      client.setParameter("form2:secondAddend", "3");
+      ajaxClient.fireAjaxEvent("form2:secondAddendAjax");
+      assertEquals(3, server.getManagedBeanValue("#{rsBean2.addent2}"));
+      
+      ajaxClient.fireAjaxEvent("form2:btn2");
+      assertNotNull(server.getManagedBeanValue("#{rsBean2}"));
+      assertEquals(5, server.getManagedBeanValue("#{rsBean2.sum}"));
    }
    
-   public void testWithAjaxRegion() throws IOException, SAXException
+   public static Test suite()
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/region.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
-      
-      client.setParameter("form2:inname", "f");     
-      ajaxClient.fireAjaxEvent("form2:outname_rerender");
-      
-      Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
-      assertEquals("f", userBeanValue);
-      Iterator messages = server.getFacesContext().getMessages();
-      assertFalse(messages.hasNext());
+      return new TestSuite( AjaxKeepaliveTest.class );
    }
 }

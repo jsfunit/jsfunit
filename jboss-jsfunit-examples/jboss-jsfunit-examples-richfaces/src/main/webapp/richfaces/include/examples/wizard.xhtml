@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<style type="text/css">
+		.col1 { vertical-align:top;	}
+		.col2 {	vertical-align:top;	width:450px; }
+		.wizard { width:400px; }
+		.wform td {	vertical-align:top;	}
+		.wfcol1 { width:60px; vertical-align:top; }
+		.wfcol2 { vertical-align:top; }
+		.wfcol3 { vertical-align:top; }
+		.s1row td { height:30px; }
+		.rich-message { color:red;	}
+		
+		.navPanel {
+			position:absolute;
+			bottom:0;
+			height:23px;
+			margin:0;
+			padding:2px;
+		}
+		
+		.navPanel input[type="button"] {
+			background-color: #{richSkin.additionalBackgroundColor};
+		}
+		
+	</style>
+
+	<rich:separator height="1" style="padding:10px"/>
+	<h:panelGrid width="100%" columns="2" columnClasses="col1,col2">
+		<f:verbatim>
+			The demo shows the example of three-steps wizard created
+			using a4j:include. The navigation rules defined in the
+			faces-config.xml are used to navigate between the steps
+			of the wizard.
+		
+		</f:verbatim>
+		<a4j:keepAlive beanName="profile" />
+		<rich:panel styleClass="wizard">
+			<f:facet name="header">
+			<h:outputText value="Using a4j:include for Wizard-like behaviour" />
+			</f:facet>
+			<h:form id="form1">
+				<a4j:include id="wizpage" viewId="/richfaces/include/examples/wstep1.xhtml" />
+			</h:form>
+		</rich:panel>
+	
+	</h:panelGrid>
+	<rich:separator height="1" style="padding:10px"/>
+
+</ui:composition>

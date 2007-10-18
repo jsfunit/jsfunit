@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+			
+	<rich:separator height="1" />
+	
+		<style type="text/css">
+			.pcolumn {
+				padding:10px;
+				vertical-align:top;
+			}
+		</style>
+	
+		<h:panelGrid columns="2" width="100%" columnClasses="pcolumn">
+
+			<f:verbatim>
+				This example <b>will not work</b> as expected. The expression for 'enabled' attribute
+				equals true only after UPDATE model phase when the rsBean properties are
+				updated with submitted values. So, the component is rendered as enabled
+				on the RENDER RESPONSE phase.<br />
+				However, those values do not make sence during the next Ajax request. The
+				rsBean is created from scratch as soon as it is a new request. JSF makes a
+				decision what is process on the second (APPLY VALUES) phase. At this moment,
+				the expression for 'disabled' still equals false. Therefore, the processing
+				for button is bypassed. The action does not invoked as a result.
+				phase
+			</f:verbatim>				
+
+			<f:verbatim>
+				This example will work properly. The code is almost the same as for
+				example on the left. Used managed been is based on the same class. The only
+				difference is <b>a4j:keepAlive beanName="rsBean2"</b>. This statment
+				declares to keep the value of the rsBean2 between the Ajax requests.<br/>
+				The rsBean2 is still a request scope bean as it is defined in the
+				faces-config.xml file. a4j:keepAlive stores the rsBean at the end of the 
+				JSF lifecycle. At the beginning of the next cycle, it updates with
+				the rsBean2 with the stored data. Therefore, the expression for 'disabled'
+				equals true on the second phase. The button is processed and the action is
+				invoked.
+			</f:verbatim>				
+
+
+			<h:panelGroup>
+				<h:form id="form1">
+					<h:inputText id="firstAddend" size="4" label="First Addent" value="#{rsBean.addent1}">
+						<a4j:support id="firstAddendAjax" event="onkeyup"/> <!--reRender="btn" /> -->
+					</h:inputText>
+					<h:outputText value="+"/>
+					<h:inputText  id="secondAddend" size="4" label="Second Addent"  value="#{rsBean.addent2}">
+						<a4j:support id="secondAddendAjax" event="onkeyup" reRender="btn" />						
+					</h:inputText>
+					<a4j:commandButton style="margin:0 5px" id="btn" action="#{rsBean.doSum}" 
+						 value="=" reRender="sum"
+						 disabled="#{rsBean.addent1 == null or rsBean.addent2==null}"/>
+					<h:outputText id="sum" value="#{rsBean.sum}" />
+				</h:form>
+			</h:panelGroup>
+		
+			<h:panelGroup>
+				<a4j:keepAlive id="keepAliveBean2" beanName="rsBean2" />
+				<h:form id="form2">
+					<h:inputText id="firstAddend" size="4" label="First Addent" value="#{rsBean2.addent1}">
+						<a4j:support id="firstAddendAjax" event="onkeyup" reRender="btn2" />
+					</h:inputText>
+					<h:outputText value="+"/>
+					<h:inputText id="secondAddend" size="4" label="Second Addent"  value="#{rsBean2.addent2}">
+						<a4j:support id="secondAddendAjax" event="onkeyup" reRender="btn2" />						
+					</h:inputText>
+					<a4j:commandButton style="margin:0 5px" id="btn2" action="#{rsBean2.doSum}" 
+						 value="=" reRender="sum2"
+						 disabled="#{rsBean2.addent1 == null or rsBean2.addent2==null}"/>
+					<h:outputText id="sum2" value="#{rsBean2.sum}" />
+				</h:form>
+				<a4j:outputPanel ajaxRendered="true">
+					<h:messages />
+				</a4j:outputPanel>
+			</h:panelGroup>
+		
+
+		
+		</h:panelGrid>
+		<rich:separator height="1" style="padding-top:10px" />
+</ui:composition>

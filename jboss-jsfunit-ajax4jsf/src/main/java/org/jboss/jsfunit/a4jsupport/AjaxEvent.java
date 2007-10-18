@@ -27,35 +27,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * There are two situations where you need to create an AjaxEvent.  The first is
- * when you want to add your own parameters to the AJAX request.  This is needed
- * if you use the a4j:jsFunction tag and you need to set param1, param2, etc.
- * <br/><br/>
- * The second situation is when you need to supress the automatic refresh of the
- * page.  Because AJAX events don't fully render the page, the client and the server 
- * state can become out of sync.  So if the JSF viewID did not change 
- * (i.e. you didn't go to a new page) change then a second request will be sent 
- * to sync up the client and server state.    
- * <br/><br/>
- * However, the refresh itself has one known side-effect in that 
- * FacesMessages will go away on both client and server side.  So if you need
- * to test a FacesMessage after calling Ajax4jsfClient.fireAjaxEvent(), set 
- * refresh to <code>false</code>, then test for the message, and call 
- * Ajax4jsfClient.doRefresh() manually.
+ * AjaxEvent is used when you need to add your own parameters to the AJAX request.  
+ * This is needed if you use the a4j:jsFunction tag and you need to set param1, 
+ * param2, etc.
  *
  * @author ssilvert
  */
 public class AjaxEvent
 {
    private String componentID;
-   private boolean refresh = true;
    private Map<String, String> extraReqParams = new HashMap<String, String>();
 
    /**
-    * Create a new AjaxEvent
+    * Create a new AjaxEvent with refresh <code>true</code>.
     *
     * @param componentID The JSF component ID or a suffix of the client ID.
     */
+   
    public AjaxEvent(String componentID)
    {
       if (componentID == null)
@@ -77,28 +65,9 @@ public class AjaxEvent
    }
    
    /**
-    * Get the refresh flag.  See the javadoc of this class.
-    *
-    * @return The refresh flag.
-    */
-   public boolean getRefresh()
-   {
-      return refresh;
-   }
-   
-   /**
-    * Set the refresh flag.  See the javadoc of this class.
-    *
-    * @param refresh The refresh flag.
-    */
-   public void setRefresh(boolean refresh)
-   {
-      this.refresh = refresh;
-   }
-   
-   /**
     * Add an extra request param to the AJAX request.  Note that the name is
-    * not a component ID.  It is a simple name/value pair.
+    * not a component ID.  This is a simple name/value pair to be added as a
+    * request param during the Ajax request.
     *
     * @param name The name of the request param
     * @param value The value.

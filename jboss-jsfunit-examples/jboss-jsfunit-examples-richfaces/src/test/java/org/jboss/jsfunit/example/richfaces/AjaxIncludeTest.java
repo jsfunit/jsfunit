@@ -22,8 +22,8 @@
 package org.jboss.jsfunit.example.richfaces;
 
 import java.io.IOException;
-import java.util.Iterator;
-import javax.faces.application.FacesMessage;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
@@ -37,40 +37,37 @@ import org.xml.sax.SAXException;
  *
  * @author Stan Silvert
  */
-public class AjaxRegionValidationErrorTest extends ServletTestCase
+public class AjaxIncludeTest extends ServletTestCase
 {
-   public static Test suite()
+   public void testWizard() throws IOException, SAXException, ParserConfigurationException, TransformerException
    {
-      return new TestSuite( AjaxRegionValidationErrorTest.class );
-   }
-
-   public void testNoAjaxRegion() throws IOException, SAXException
-   {
-      JSFClientSession client = new JSFClientSession("/richfaces/region.jsf");
+      JSFClientSession client = new JSFClientSession("/richfaces/include.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
       
-      client.setParameter("form1:inname", "f");     
-      ajaxClient.fireAjaxEvent("form1:outname_rerender");
+      client.setParameter("fn", "Stan");
+      client.setParameter("ln", "Silvert");
+      client.setParameter("comp", "JBoss");
+      ajaxClient.fireAjaxEvent("wizardNext");
       
-      Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
-      assertTrue((userBeanValue == null) || (userBeanValue.equals("")));
-      FacesMessage message = (FacesMessage)server.getFacesContext().getMessages().next();
-      assertTrue(message.getDetail().contains("Value is required"));
+      client.setParameter("notes", "Here is my note");
+      ajaxClient.fireAjaxEvent("wizardNext");
+      assertEquals("Here is my note", server.getManagedBeanValue("#{profile.notes}"));
+      
+      String page = client.getWebResponse().getText();
+      assertTrue(page.contains("Stan"));
+      assertTrue(page.contains("Silvert"));
+      assertTrue(page.contains("JBoss"));
+      assertTrue(page.contains("Here is my note"));
+      
+      ajaxClient.fireAjaxEvent("wizardPrevious"); // back to Notes input page
+      ajaxClient.fireAjaxEvent("wizardPrevious"); // back to first input page
+      assertTrue(page.contains("value=\"Stan\""));
+      assertEquals("Stan", server.getManagedBeanValue("#{profile.firstName}"));
    }
    
-   public void testWithAjaxRegion() throws IOException, SAXException
+   public static Test suite()
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/region.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
-      
-      client.setParameter("form2:inname", "f");     
-      ajaxClient.fireAjaxEvent("form2:outname_rerender");
-      
-      Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
-      assertEquals("f", userBeanValue);
-      Iterator messages = server.getFacesContext().getMessages();
-      assertFalse(messages.hasNext());
+      return new TestSuite( AjaxIncludeTest.class );
    }
 }

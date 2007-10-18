@@ -44,7 +44,7 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
  *
  * @author Stan Silvert
  */
-class ClientIDs
+public class ClientIDs
 {
    private List<String> allClientIDs = new ArrayList<String>();
    private Map<String, UIComponent> allComponents = new HashMap<String, UIComponent>();
@@ -151,7 +151,7 @@ class ClientIDs
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     */
-   String findClientID(String suffix)
+   public String findClientID(String suffix)
    {
       if (suffix == null) throw new NullPointerException();
       
@@ -179,7 +179,7 @@ class ClientIDs
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     */
-   UIComponent findComponent(String suffix)
+   public UIComponent findComponent(String suffix)
    {
       return allComponents.get(findClientID(suffix));
    }
@@ -188,7 +188,7 @@ class ClientIDs
     * Determines if a component with a given clientID has an ancestor with a
     * given ancestorClientID.
     */
-   boolean isAncestor(String clientID, String ancestorClientID)
+   public boolean isAncestor(String clientID, String ancestorClientID)
    {
       Set ancestorSet = ancestors.get(clientID);
       if (ancestorSet == null) return false;

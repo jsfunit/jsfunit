@@ -39,6 +39,7 @@ import javax.servlet.http.HttpSession;
 public class WebConversationFactory
 {
    public static String JSF_UNIT_CONVERSATION_FLAG = WebConversationFactory.class.getName() + ".testing_flag";
+   public static String WAR_URL = WebConversationFactory.class.getName() + ".WARURL";
    
    private static ThreadLocal tlsession = new ThreadLocal()
    {
@@ -59,7 +60,8 @@ public class WebConversationFactory
    public static void setThreadLocals(HttpServletRequest req)
    {
       tlsession.set(req.getSession());
-      warURL.set(makeWARURL(req));
+      String stringWARURL = makeWARURL(req);
+      warURL.set(stringWARURL);
    }
    
    protected static HttpSession getSessionFromThreadLocal()
@@ -67,7 +69,7 @@ public class WebConversationFactory
       return (HttpSession)tlsession.get();
    }
    
-   private static String makeWARURL(HttpServletRequest req)
+   public static String makeWARURL(HttpServletRequest req)
    {
      return req.getScheme() + "://" + req.getServerName() + ":" + 
             req.getServerPort() + req.getContextPath();

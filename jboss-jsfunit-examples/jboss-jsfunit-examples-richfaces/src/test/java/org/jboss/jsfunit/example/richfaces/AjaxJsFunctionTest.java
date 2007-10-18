@@ -22,8 +22,6 @@
 package org.jboss.jsfunit.example.richfaces;
 
 import java.io.IOException;
-import java.util.Iterator;
-import javax.faces.application.FacesMessage;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;

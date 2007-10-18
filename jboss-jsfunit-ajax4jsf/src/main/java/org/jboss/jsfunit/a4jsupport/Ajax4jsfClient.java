@@ -22,9 +22,7 @@
 
 package org.jboss.jsfunit.a4jsupport;
 
-import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.PostMethodWebRequest;
-import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
@@ -35,11 +33,14 @@ import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import org.ajax4jsf.framework.renderer.AjaxContainerRenderer;
 import org.ajax4jsf.framework.renderer.AjaxRendererUtils;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.facade.WebRequestFactory;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
@@ -52,6 +53,8 @@ public class Ajax4jsfClient
 {
    private JSFClientSession client;
    private WebRequestFactory requestFactory;
+   
+   private String ajaxResponse;
    
    public Ajax4jsfClient(JSFClientSession client)
    {
@@ -122,6 +125,14 @@ public class Ajax4jsfClient
          uiData.setRowIndex(rowIndices.get(uiData).intValue());
       }
    } 
+
+   /**
+    * This method returns the last Ajax response.
+    */
+   public String getAjaxResponse()
+   {
+      return this.ajaxResponse;
+   }
    
    /**
     * Fire the AJAX event associated with this component.  Most of the time,
@@ -133,7 +144,8 @@ public class Ajax4jsfClient
     * @throws IOException if there is a problem sending the AJAX request.
     * @throws SAXException if the response page can not be parsed
     */
-   public void fireAjaxEvent(String componentID) throws SAXException, IOException
+   public void fireAjaxEvent(String componentID) 
+         throws SAXException, IOException
    {
       fireAjaxEvent(new AjaxEvent(componentID));
    }
@@ -146,7 +158,8 @@ public class Ajax4jsfClient
     * @throws IOException if there is a problem sending the AJAX request.
     * @throws SAXException if the response page can not be parsed
     */
-   public void fireAjaxEvent(AjaxEvent event) throws SAXException, IOException
+   public void fireAjaxEvent(AjaxEvent event) 
+         throws SAXException, IOException
    {
       JSFServerSession server = new JSFServerSession(client);
       String componentID = event.getComponentID();
@@ -155,7 +168,6 @@ public class Ajax4jsfClient
       UIComponent uiComp = server.findComponent(componentID);
       FacesContext ctx = server.getFacesContext();
       Map options = buildEventOptions(ctx, uiComp);
-      
       PostMethodWebRequest req = requestFactory.buildRequest((String)options.get("actionUrl"),
                                                              componentID);
 
@@ -168,7 +180,20 @@ public class Ajax4jsfClient
       
       addExtraUserParams(req, event);
       
-      ajaxRequest(req, event.getRefresh());
+      Document oldDoc = client.getUpdatedDOM();
+      client.doWebRequest(req);
+      WebResponse newResponse = client.getWebResponse();
+      
+      this.ajaxResponse = client.getWebResponse().getText();
+
+      try {
+         WebRequest refreshRequest = JSFAJAX.processResponse(oldDoc, newResponse, options);
+         if (refreshRequest != null) client.doWebRequest(refreshRequest);
+      } catch (ParserConfigurationException e) {
+         throw new RuntimeException(e);
+      } catch (TransformerException e) {
+         throw new RuntimeException(e);
+      }
    }
    
    private void addExtraA4JParams(PostMethodWebRequest req, Map options)
@@ -211,45 +236,5 @@ public class Ajax4jsfClient
       UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);
       req.setParameter(AjaxContainerRenderer.AJAX_PARAMETER_NAME, container.getClientId(ctx));
    }
-   
-   /**
-    * Sends WebRequest to the server and then does a "refresh".  
-    * 
-    * Each AJAX-enabled component library has its own "protocol" for sending AJAX requests to the 
-    * server via javascript.  Because JSFUnit/HttpUnit can't reliably handle javascript, each 
-    * AJAX-enabled JSF component library must prepare the WebRequest and submit it through this method.
-    *
-    * When an AJAX request is sent through this method, a second "refresh" request is submitted to the
-    * server.  This allows the client to sync up with the component tree on the server side.  Therefore,
-    * AJAX changes that are "client side only" will not be preserved.
-    *
-    * @param request A request prepared using the AJAX JSF component library's required params.
-    * @param refresh Send a refresh request if the viewID did not change.
-    *
-    * @throws IOException if there is a problem submitting the request.
-    * @throws SAXException if the response page can not be parsed.
-    */
-   private void ajaxRequest(WebRequest request, boolean refresh) throws SAXException, IOException
-   {
-      client.doWebRequest(request);
-      
-      if (refresh)
-      {
-         doRefresh();
-      }
-   }
-   
-   public void doRefresh() throws SAXException, IOException
-   {
-      JSFServerSession server = new JSFServerSession(this.client);
-      String viewId = server.getCurrentViewId();
-      
-      // if viewId did not change, refresh the page
-      if (viewId.equals(server.getCurrentViewId()))
-      {
-         String url = client.getWebResponse().getURL().toString();
-         client.doWebRequest(new GetMethodWebRequest(url));
-      }
-   }
-   
+
 }

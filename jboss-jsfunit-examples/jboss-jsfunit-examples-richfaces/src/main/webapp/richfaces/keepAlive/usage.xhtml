@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+
+			<p>
+			a4j:keepAlive extends the live cycle for request scope beans. In general, each Ajax
+			request works inside the own request scope. Therefore, the state of the component
+			tree rendered based on the variable from one request scope does not correspond to the
+			state of the same tree processed during the next Ajax request. This causes one of
+			the most widespread problem when the form elements (buttons or fields) can't be correctly proceeded with Ajax if the  'rendered' attribute is mapped to the request scoped variable
+			
+			</p>
+			<p>Using the session scope variables solves the above mentioned problem. However,
+			using a session scope might be inappropriate from the architectural point of view.
+			a4j:keepAlive allows to reuse the same value for a request scope bean between
+			several Ajax requests. 
+			</p>
+			<p>
+			<b>beanName</b> attribute references to a request scope bean name you'd like  
+			to re-use during the Ajax requests. 
+			</p>
+			<p><b>ajaxOnly</b> attribute is a flag that declares whether the value of the bean
+			should be available during a non-Ajax request. If ajaxOnly="true", a request
+			scope bean will keep the same value during Ajax requests from the given page, but
+			it will be re-created as a regular request scope bean when a non-Ajax request
+			will send from this page.
+			</p>
+	
+			<div class="sample-container" >
+
+				<ui:include src="/richfaces/keepAlive/examples/enabledIssue.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/keepAlive/examples/enabledIssue.xhtml"/>
+				</ui:include>	
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/AjaxKeepaliveTest.java"/>
+                                    <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                    <ui:param name="sourcetype" value="#{'java'}"/>
+                                </ui:include>
+			</div>
+			
+		</ui:define>
+
+	</ui:composition>
+</html>

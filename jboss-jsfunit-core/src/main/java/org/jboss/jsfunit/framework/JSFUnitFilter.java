@@ -23,13 +23,18 @@
 package org.jboss.jsfunit.framework;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.jboss.jsfunit.context.JSFUnitFacesContext;
 
 /**
@@ -76,15 +81,45 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  */
 public class JSFUnitFilter implements Filter
 {
+   public static final String ALT_RESPONSE = JSFUnitFilter.class.getName() + "ALT_RESPONSE";
+   
+   private ServletContext servletContext;
 
+   private void putWarURLinApplication(HttpServletRequest request)
+   {
+      if (servletContext.getAttribute(WebConversationFactory.WAR_URL) != null) return;
+      
+      servletContext.setAttribute(WebConversationFactory.WAR_URL, 
+                                  WebConversationFactory.makeWARURL(request));
+   }
+   
    public void doFilter(ServletRequest req, 
                         ServletResponse res, 
                         FilterChain filterChain) throws IOException, ServletException
    {
+      HttpServletRequest request = (HttpServletRequest)req;
+      HttpServletResponse response = (HttpServletResponse)res;
+      putWarURLinApplication(request);
+      
+      String altResponseString = removeAltResponse(request);
+      if (altResponseString != null)
+      {
+         sendAltResponse(response, altResponseString);
+         return;
+      }
+      
       try 
       {
-        WebConversationFactory.setThreadLocals((HttpServletRequest)req);
+        
+        WebConversationFactory.setThreadLocals(request);
         System.setProperty("cactus.contextURL", WebConversationFactory.getWARURL());
+        
+        if (isSnoopRequest(request)) 
+        {
+           snoop(request, response);
+           return;
+        }
+        
         filterChain.doFilter(req, res);
       } 
       finally 
@@ -93,9 +128,48 @@ public class JSFUnitFilter implements Filter
          WebConversationFactory.removeThreadLocals();
       }
    }
+   
+   private boolean isSnoopRequest(HttpServletRequest request)
+   {
+      return request.getParameter("jsfunit.snoop") != null;
+   }
+   
+   private String removeAltResponse(HttpServletRequest request)
+   {
+      HttpSession session = request.getSession();
+      String altResponseString = (String)session.getAttribute(ALT_RESPONSE);
+      session.removeAttribute(ALT_RESPONSE);
+      return altResponseString;
+   }
+   
+   private void sendAltResponse(HttpServletResponse response, 
+                                String altResponseString)
+                                throws IOException
+   {
+      response.setContentType("text/html");
+      PrintWriter writer = response.getWriter();
+      writer.print(altResponseString);
+      writer.flush();
+   }
 
+   private void snoop(HttpServletRequest request, HttpServletResponse response)
+         throws IOException
+   {
+      PrintWriter writer = response.getWriter();
+      writer.println("<p>HttpSession Values</p>");
+      HttpSession session = request.getSession();
+      
+      for (Enumeration attribs = session.getAttributeNames(); attribs.hasMoreElements();)
+      {
+         String attribute = (String)attribs.nextElement();
+         writer.print(attribute + " = " + session.getAttribute(attribute).toString());
+         writer.println("<br/>");
+      }
+   }
+   
    public void init(FilterConfig filterConfig) throws ServletException
    {
+      this.servletContext = filterConfig.getServletContext();
    }
    
    public void destroy()

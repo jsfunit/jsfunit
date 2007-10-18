@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<ui:composition template="/templates/component-sample.xhtml">
+	<ui:define name="sample">
+
+ 
+		<p>a4j:include functionality is equal to the facelets ui:include functionality, plus, it enables the
+		partial page navigation in an Ajax mode. The standard JSF navigation rules are used to define the
+		navigation between the view.
+		</p>
+		<p>
+			<b>viewId</b> attribute specifies the view id of a page that will be included. It should be 
+			a full context-relative path of the resource in order to use as from-view and to-view in the
+			JSF navigation cases. 
+		</p>
+		
+		<div class="sample-container">
+				<ui:include src="/richfaces/include/examples/wizard.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/include/examples/wizard.xhtml"/>
+					<ui:param name="openlabel" value="View Page Source" />
+				</ui:include>				
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/include/examples/wstep1.xhtml"/>
+					<ui:param name="openlabel" value="View wstep1.xhtml Source" />
+				</ui:include>				
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/include/examples/wstep2.xhtml"/>
+					<ui:param name="openlabel" value="View wstep2.xhtml Source" />
+				</ui:include>				
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/include/examples/finalStep.xhtml"/>
+					<ui:param name="openlabel" value="View finalStep.xhtml Source" />
+				</ui:include>				
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/include/snippet/navigation.xml"/>
+					<ui:param name="openlabel" value="View faces-config.xml Navigation Rules" />
+					<ui:param name="sourcetype" value="xml" />
+				</ui:include>	
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                        <ui:param name="sourcepath" value="/testsrc/AjaxIncludeTest.java"/>
+                                        <ui:param name="openlabel" value="View JSFUnit Source"/>
+                                        <ui:param name="sourcetype" value="java"/>
+                                </ui:include>
+		</div>
+
+		<p>
+			The Ajax command component (button, link, jsFunction, etc) should be located inside the
+			a4j:include in order to have a partial navigation. When the navigation is
+			performed, a part of the component tree content is replaced with the content of a view given
+			by a navigation rule. 
+		</p>
+		<p>	The content of the a4j:include is not isolated from the whole view. You can point to the other
+		parts of the view with reRender if you want to update them while you navigate inside the
+		a4j:include.
+		</p>
+
+
+	</ui:define>
+
+</ui:composition>
+</html>
