@@ -19,39 +19,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.jboss.jsfunit.example.richfaces;
 
+import java.io.IOException;
+import javax.xml.transform.TransformerException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.a4jsupport.RichFacesClient;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
+import org.xml.sax.SAXException;
 
 /**
- * Peform all JSFUnit tests on RichFaces demo application.
+ * Peform JSFUnit tests on RichFaces demo application.
  *
  * @author Stan Silvert
  */
-public class RichFacesTestAll extends ServletTestCase
+public class AjaxRepeaterTest extends ServletTestCase
 {
+   public void testRepeater() 
+         throws IOException, SAXException, TransformerException
+   {
+      JSFClientSession client = new JSFClientSession("/richfaces/repeat.jsf");
+      RichFacesClient ajaxClient = new RichFacesClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+      
+      client.setParameter("0:proposedPrice", "10");
+      ajaxClient.fireAjaxEvent("0:rerenderRow");
+
+      Double margin = (Double)server.getManagedBeanValue("#{salesReport.items[0].proposedGrossMargin}");
+      assertEquals(-1.0d, margin.doubleValue());
+      Double price = (Double)server.getManagedBeanValue("#{salesReport.items[0].proposedPrice}");
+      assertEquals(10.0d, price.doubleValue());
+   }
+   
    public static Test suite()
    {
-      TestSuite suite = new TestSuite();
-      suite.addTestSuite(ActionParamTest.class);
-      suite.addTestSuite(AjaxFormTest.class);
-      suite.addTestSuite(AjaxRegionValidationErrorTest.class);
-      suite.addTestSuite(AjaxRegionSelfRenderTest.class);
-      suite.addTestSuite(AjaxSupportTest.class);
-      suite.addTestSuite(AjaxCommandButtonTest.class);
-      suite.addTestSuite(AjaxCommandLinkTest.class);
-      suite.addTestSuite(AjaxJsFunctionTest.class);
-      suite.addTestSuite(AjaxKeepaliveTest.class);
-      suite.addTestSuite(AjaxIncludeTest.class);
-      suite.addTestSuite(AjaxOutputPanelTest.class);
-      suite.addTestSuite(RichDataFilterSliderTest.class);
-      suite.addTestSuite(RichDataTableScrollerTest.class);
-      suite.addTestSuite(AjaxRepeaterTest.class);
-      return suite;
+      return new TestSuite( AjaxRepeaterTest.class );
    }
-
-   
 }

@@ -232,11 +232,34 @@ public class JSFClientSession
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void setParameter(String componentID, String... value) throws SAXException
+   public void setParameter(String componentID, String value) throws SAXException
    {
       String clientID = this.clientIDs.findClientID(componentID);
       getForm(clientID).setParameter(clientID, value);
-      setValueOnDOM(clientID, value[0]);
+      setValueOnDOM(clientID, value);
+   }
+   
+   /**
+    * Sets a parameter on a rendered input component.  This method is used for
+    * components that render extra HTML inputs.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param renderedInputID The full ID of the input tag rendered by the 
+    *                        JSF component.
+    *
+    * @param value The value to set before the form is submitted.
+    * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void setParameter(String componentID, String renderedInputID, String value)
+         throws SAXException
+   {
+      String clientID = this.clientIDs.findClientID(componentID);
+      WebForm form = getForm(clientID);
+      form.setParameter(renderedInputID, value);
+      setValueOnDOM(renderedInputID, value);
    }
    
    /**
@@ -434,5 +457,4 @@ public class JSFClientSession
       
       req.setParameter(clientID, clientID); // for the RI
    }
-   
 }

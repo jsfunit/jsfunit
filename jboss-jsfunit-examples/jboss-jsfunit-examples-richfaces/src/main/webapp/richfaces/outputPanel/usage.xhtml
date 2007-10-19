@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+				
+			<p><code>a4j:outputPanel</code> is rendered as a &lt;span&gt; html element if the 
+			<code>'layout'</code> attribute is equal <code>'inline'</code> 
+			(default value) or as a &lt;div&gt; html element if <code>layout="block"</code>. 
+			You can use this component for a layout purpose even if the page has no Ajax functionality.
+			</p>
+			<p>If Ajax functionality presents on the page, the component offers two additional
+			features:
+			<ul>
+			<li>Marking the area of the page as automatically re-rendered on each Ajax request event
+			without any necessity to mentioned this area in the <code>reRender</code> attribute of Ajax
+			component. Attribute <code>ajaxRendered="true"</code> turn on this feature. Note, that the effect of using
+			 ajaxRendered="true" still might be overridden with the limitToList attribute of the Ajax component
+			 or <code>renderRegionOnly</code> attribute of the <code>a4j:region</code> component.</li> 
+			<li>Marking the placeholder for any JSF component in case of it is not rendered due to
+			<code>rendered="false"</code>. This might be important when the component becomes rendered during the next
+			Ajax response. As soon as the placeholder is unknown, the rendered component doesn't
+			appear on a page. To turn on the feature for marking the placeholder, you need to have the
+			attribute <code>layout="none"</code>.</li>
+			</ul>
+			</p>		
+			<p>When <code>layout="none"</code>, the span <code>style="display:none"</code> is
+			rendered and assigns the id of the child component if the component is not rendered. 
+			Otherwise, it does not become rendered at all.<br/>
+			The following example shows the cases of usage described above:</p>
+			<div class="sample-container" >
+
+				<ui:include src="/richfaces/outputPanel/examples/noneLayout.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/outputPanel/examples/noneLayout.xhtml"/>
+				</ui:include>
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/AjaxOutputPanelTest.java"/>
+                                    <ui:param name="openlabel" value="View JSFUnit Source"/>
+                                    <ui:param name="sourcetype" value="java"/>
+                                </ui:include>
+																										
+			</div>
+		</ui:define>
+
+	</ui:composition>
+</html>

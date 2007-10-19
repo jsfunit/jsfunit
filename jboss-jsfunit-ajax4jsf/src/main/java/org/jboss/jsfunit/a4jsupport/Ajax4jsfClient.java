@@ -51,7 +51,7 @@ import org.xml.sax.SAXException;
  */
 public class Ajax4jsfClient
 {
-   private JSFClientSession client;
+   protected JSFClientSession client;
    private WebRequestFactory requestFactory;
    
    private String ajaxResponse;

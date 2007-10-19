@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+		<style>
+		</style>
+			
+		<h:form>
+			<rich:spacer height="30" />
+			<rich:scrollableDataTable rowKeyVar="rkv" frozenColCount="1" height="400px" width="700px" id="carList" rows="40" columnClasses="col"
+				value="#{dataTableScrollerBean.allCars}" var="category" sortMode="multi">
+
+				<rich:column id="make" sortable="true">
+					<f:facet name="header">
+						<h:outputText styleClass="headerText" value="Make" />
+					</f:facet>
+					<h:outputText value="#{category.make}" />
+				</rich:column>
+				<rich:column id="model" sortable="true">
+					<f:facet name="header">
+						<h:outputText styleClass="headerText" value="Model" />
+					</f:facet>
+					<h:outputText value="#{category.model}" />
+				</rich:column>
+				<rich:column id="price" sortable="true">
+					<f:facet name="header">
+						<h:outputText styleClass="headerText" value="Price" />
+					</f:facet>
+					<h:outputText value="#{category.price}" />
+				</rich:column>
+				<rich:column id="mileage" sortable="true">
+					<f:facet name="header">
+						<h:outputText styleClass="headerText" value="Mileage" />
+					</f:facet>
+					<h:outputText value="#{category.mileage}" />
+				</rich:column>
+				<rich:column width="200px" id="vin" sortable="true">
+					<f:facet name="header">
+						<h:outputText styleClass="headerText" value="VIN" />
+					</f:facet>
+					<h:outputText value="#{category.vin}" />
+				</rich:column>
+				<rich:column id="stock" sortable="true">
+					<f:facet name="header">
+						<h:outputText styleClass="headerText" value="Stock" />
+					</f:facet>
+					<h:outputText value="#{category.stock}" />
+				</rich:column>
+
+
+
+			</rich:scrollableDataTable>
+		</h:form>
+
+</ui:composition>

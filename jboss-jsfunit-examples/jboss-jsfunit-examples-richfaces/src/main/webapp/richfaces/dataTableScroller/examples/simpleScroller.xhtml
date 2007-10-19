@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+		<style>
+		 .col {
+		 	width:100px;
+		 }
+		</style>
+			
+		<h:form id="form1">
+			<rich:datascroller id="myScroller" align="left"  for="carList" maxPages="20" />
+			<rich:spacer height="30" />
+			<rich:dataTable width="483" id="carList" rows="10" columnClasses="col"
+				value="#{dataTableScrollerBean.allCars}" var="category">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<h:column>
+							<h:outputText styleClass="headerText" value="Make" />
+						</h:column>
+						<h:column>
+							<h:outputText styleClass="headerText" value="Model" />
+						</h:column>
+						<h:column>
+							<h:outputText styleClass="headerText" value="Price" />
+						</h:column>
+						<h:column>
+							<h:outputText styleClass="headerText" value="Mileage" />
+						</h:column>
+					</rich:columnGroup>
+				</f:facet>
+
+				<h:column>
+					<h:outputText id="make" value="#{category.make}" />
+				</h:column>
+				<h:column>
+					<h:outputText id="model" value="#{category.model}" />
+				</h:column>
+				<h:column>
+					<h:outputText id="price" value="#{category.price}" />
+				</h:column>
+				<h:column>
+					<h:outputText id="mileage" value="#{category.mileage}" />
+				</h:column>
+
+
+
+			</rich:dataTable>
+		</h:form>
+
+</ui:composition>

@@ -19,39 +19,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.jboss.jsfunit.example.richfaces;
 
+import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.a4jsupport.RichFacesClient;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
+import org.xml.sax.SAXException;
 
 /**
- * Peform all JSFUnit tests on RichFaces demo application.
+ * Peform JSFUnit tests on RichFaces demo application.
  *
  * @author Stan Silvert
  */
-public class RichFacesTestAll extends ServletTestCase
-{
+public class AjaxOutputPanelTest extends ServletTestCase
+{ 
+   public void testLayoutNone() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/richfaces/outputPanel.jsf");
+      RichFacesClient ajaxClient = new RichFacesClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+
+      client.setParameter("text1", "foo");
+      ajaxClient.fireAjaxEvent("rerender1");
+      String page = client.getWebResponse().getText();
+      assertFalse(page.contains("Approved Text: foo"));
+      
+      client.setParameter("text2", "foo");
+      ajaxClient.fireAjaxEvent("rerender2");
+      page = client.getWebResponse().getText();
+      assertTrue(page.contains("Approved Text: foo"));
+   } 
+   
    public static Test suite()
    {
-      TestSuite suite = new TestSuite();
-      suite.addTestSuite(ActionParamTest.class);
-      suite.addTestSuite(AjaxFormTest.class);
-      suite.addTestSuite(AjaxRegionValidationErrorTest.class);
-      suite.addTestSuite(AjaxRegionSelfRenderTest.class);
-      suite.addTestSuite(AjaxSupportTest.class);
-      suite.addTestSuite(AjaxCommandButtonTest.class);
-      suite.addTestSuite(AjaxCommandLinkTest.class);
-      suite.addTestSuite(AjaxJsFunctionTest.class);
-      suite.addTestSuite(AjaxKeepaliveTest.class);
-      suite.addTestSuite(AjaxIncludeTest.class);
-      suite.addTestSuite(AjaxOutputPanelTest.class);
-      suite.addTestSuite(RichDataFilterSliderTest.class);
-      suite.addTestSuite(RichDataTableScrollerTest.class);
-      suite.addTestSuite(AjaxRepeaterTest.class);
-      return suite;
+      return new TestSuite( AjaxOutputPanelTest.class );
    }
-
-   
 }

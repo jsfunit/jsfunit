@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+
+	<h:form id="form1">
+		<a4j:outputPanel id="table">
+		<table border="1">
+			<tbody>
+				<tr>
+					<th><h:outputText value="Product Code" /></th>
+					<th><h:outputText value="Proposed Price" /></th>
+					<th><h:outputText value="Sales Cost" /></th>
+					<th style="width: 150px"><h:outputText value="Reason" /></th>
+					<th><h:outputText value="Proposed Gross Margin" /></th>
+				</tr>
+				<a4j:repeat value="#{salesReport.items}" var="item" binding="#{updateBean.repeater}">
+					<tr>
+						<td align="center">
+							<h:outputText value="#{item.productCode}" />
+						</td>
+						<td>
+							<h:inputText id="proposedPrice" binding="#{updateBean.priceRef}"
+							immediate="false" value="#{item.proposedPrice}" size="7">
+								<a4j:support id="rerenderRow" immediate="true" 
+                                                                             action="#{updateBean.change}"
+									     event="onchange" reRender="reason,margin" />
+							</h:inputText>
+						</td>
+						<td>
+							<h:outputText value="#{item.salesCost}" />
+						</td>
+						<td>
+							<h:selectOneMenu id="reason" required="true"
+								value="#{item.reason}">
+								<f:selectItems value="#{item.reasons}" />
+							</h:selectOneMenu>
+						</td>
+						<td>
+							<h:outputText id="margin"
+								value="#{item.proposedGrossMargin}">
+								<f:convertNumber pattern="$###0.000" />
+							</h:outputText>
+						</td>
+					</tr>
+				</a4j:repeat>
+			</tbody>
+		</table>
+		</a4j:outputPanel>
+		<rich:messages />
+	</h:form>
+
+</ui:composition>

@@ -23,13 +23,10 @@
 package org.jboss.jsfunit.a4jsupport;
 
 import com.meterware.httpunit.GetMethodWebRequest;
-import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.faces.context.FacesContext;
@@ -113,8 +110,11 @@ public class JSFAJAX
       for (int i=0; i < idsToReplace.length; i++)
       {
          Element oldElement = DOMUtil.findElementWithID(idsToReplace[i], oldDoc);
+         if (oldElement == null) continue; // this happens in AjaxOutputPanelTest.testLayoutNone()
          Element newElement = DOMUtil.findElementWithID(idsToReplace[i], newDoc);
-         oldElement.getParentNode().replaceChild(oldDoc.importNode(newElement, true), oldElement);
+         Node parent = oldElement.getParentNode();
+         Node importedNode = oldDoc.importNode(newElement, true);
+         parent.replaceChild(importedNode, oldElement);
       }
       
       replaceAjaxViewState(oldDoc, newDoc);
