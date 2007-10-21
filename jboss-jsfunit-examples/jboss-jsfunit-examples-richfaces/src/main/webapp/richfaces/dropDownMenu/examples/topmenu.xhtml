@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<h:form id="form1">
+	
+		<rich:toolBar>
+			<rich:dropDownMenu id="File" value="File">
+			
+				<rich:menuItem id="New" submitMode="ajax" value="New" action="#{ddmenu.doNew}">
+				</rich:menuItem>
+				<rich:menuItem id="Open" submitMode="ajax"  value="Open" action="#{ddmenu.doOpen}"/>
+				<rich:menuGroup id="SaveAs" value="Save As...">
+					<rich:menuItem id="TextFile" submitMode="ajax" value="Text File"  action="#{ddmenu.doSaveText}"/>
+					<rich:menuItem id="PDFFile" submitMode="ajax" value="PDF File"  action="#{ddmenu.doPDF}"/>
+				</rich:menuGroup>
+				<rich:menuItem id="Close" submitMode="ajax" value="Close" action="#{ddmenu.doClose}"/>
+				<rich:menuSeparator id="menuSeparator11"/>
+				<rich:menuItem id="Exit" submitMode="ajax" value="Exit"  action="#{ddmenu.doExit}"/>
+			
+			</rich:dropDownMenu>
+			
+			<rich:dropDownMenu>
+	
+				<f:facet name="label">
+					<h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
+						<h:graphicImage value="/richfaces/toolBar/images/yellow_lamp.gif"/>
+						<h:outputText value="Links" />
+					</h:panelGrid>
+				</f:facet>
+	
+				<rich:menuItem submitMode="none" onclick="document.location.href='http://labs.jboss.com/jbossrichfaces/'">
+					<f:facet name="icon">
+						<h:graphicImage value="/richfaces/toolBar/images/webapp_welcome.gif" />
+					</f:facet>
+					<h:outputLink value="http://labs.jboss.com/jbossrichfaces/">
+						<h:outputText value="RichFaces Home Page"></h:outputText>
+					</h:outputLink>
+				</rich:menuItem>
+	
+				<rich:menuItem submitMode="none" onclick="document.location.href='http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261'">
+					<f:facet name="icon">
+						<h:graphicImage value="/richfaces/toolBar/images/timer_task.gif" />
+					</f:facet>
+					<h:outputLink value="http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261">
+						<h:outputText value="RichFaces Forum"></h:outputText>
+					</h:outputLink>
+				</rich:menuItem>
+                                <rich:menuItem submitMode="none" onclick="document.location.href='http://labs.jboss.com/jsfunit/'">
+					<f:facet name="icon">
+						<h:graphicImage value="/richfaces/toolBar/images/webapp_welcome.gif" />
+					</f:facet>
+					<h:outputLink id="jsfunitHomePageLink" value="http://labs.jboss.com/jsfunit/">
+						<h:outputText value="JSFUnit Home Page"></h:outputText>
+					</h:outputLink>
+				</rich:menuItem>
+                                <rich:menuItem submitMode="none" onclick="document.location.href='http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=269'">
+					<f:facet name="icon">
+						<h:graphicImage value="/richfaces/toolBar/images/timer_task.gif" />
+					</f:facet>
+					<h:outputLink value="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=269">
+						<h:outputText value="JSFUnit Forum"></h:outputText>
+					</h:outputLink>
+				</rich:menuItem>
+	
+			</rich:dropDownMenu>
+		</rich:toolBar>
+	</h:form>					
+	<a4j:outputPanel ajaxRendered="true">
+		<h:outputText value="Current Selection: "></h:outputText>
+		<h:outputText style="font-weight:bold" value="#{ddmenu.current}"></h:outputText>
+	</a4j:outputPanel>
+
+</ui:composition>

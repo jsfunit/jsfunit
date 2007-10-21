@@ -131,4 +131,30 @@ public class RichFacesClient extends Ajax4jsfClient
       event.setExtraRequestParam(clientID, value);
       fireAjaxEvent(event);
    }
+   
+   /**
+    * Drag a component with rich:dragSupport to a component with rich:dropSupport.
+    *
+    * @param dragComponentID The JSF component ID or a suffix of the client ID
+    *                        for the rich:dragSupport component.
+    * @param dropTargetComponentID The JSF component ID or a suffix of the client ID
+    *                              for the target rich:dropSupport component.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws IOException if there is a problem submitting the form
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
+         throws SAXException, IOException
+   {
+      String dragClientID = client.getClientIDs().findClientID(dragComponentID);
+      String dropClientID = client.getClientIDs().findClientID(dropTargetComponentID);
+      AjaxEvent event = new AjaxEvent(dropClientID);
+      event.setExtraRequestParam("dragSourceId", dragClientID);
+      event.setExtraRequestParam("dropTargetId", dropClientID);
+      event.setExtraRequestParam(dragClientID, dragClientID);
+      fireAjaxEvent(event);
+   }
 }

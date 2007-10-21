@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+
+
+			
+			<p>RichFaces Drop Down menu is a component that allows to organize the hierarchical menu
+			similar to one that almost every desktop application has.
+			</p>
+	
+			<div class="sample-container">
+
+				<ui:include src="/richfaces/dropDownMenu/examples/topmenu.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/dropDownMenu/examples/topmenu.xhtml"/>
+				</ui:include>	
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                  <ui:param name="sourcepath" value="/testsrc/RichDropDownMenuTest.java"/>
+                                  <ui:param name="openlabel" value="View JSFUnit Source"/>
+                                  <ui:param name="sourcetype" value="java"/>
+                                </ui:include>
+
+			</div>			
+			<p>The drop down menu has a label that always appears on the page and invisible panel
+			 that appears with a particular client side event (onmouseover, onclick etc). The event is
+			 defined with an 'event' attribute.</p>
+			 <p>Drop Down Menu can contains a set of Menu Items, Menu Groups and Menu Separators. 
+			 Group plays a role of label for secondary levels on the menu. Separator is represented with 
+			 horizontal lines between the items or groups. An item is an active element that might produce
+			 Ajax or non-Ajax requests. The submittion mode is defined with 'submitMode' attribute that has
+			 three possible options - "server", "ajax" or "none". Mode "none" does not produce any request, but
+			 allows you to provide your own functionality inside the menu item with an inline content.
+			</p>
+			<p>You can place a block of drop down menus horizontally or vertially how it is shown below.
+			</p>
+
+			<div class="sample-container">
+
+				<ui:include src="/richfaces/dropDownMenu/examples/sidemenu.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/dropDownMenu/examples/sidemenu.xhtml"/>
+				</ui:include>		
+			
+	
+			</div>
+		</ui:define>
+
+	</ui:composition>
+</html>

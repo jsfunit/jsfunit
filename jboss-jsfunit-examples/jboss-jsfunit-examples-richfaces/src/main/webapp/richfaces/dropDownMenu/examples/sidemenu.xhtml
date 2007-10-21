@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<style>
+		.optionList {
+		  height:22px;
+		}
+		.vertical-menu-cell {
+			padding:0px 4px 0px 4px;
+		}
+	
+	</style>
+
+	<h:form>
+
+		<h:panelGrid class="vertical-menu-cell" columnClasses="optionList" columns="1" cellspacing="0" cellpadding="0">
+			<rich:dropDownMenu style="border:1px solid #{a4jSkin.panelBorderColor}" value="Option1" direction="bottom-right" jointPoint="tr">
+				<rich:menuItem value="Suboption1-1" />
+				<rich:menuItem value="Suboption1-2">
+					<f:facet name="icon">
+					<h:graphicImage value="/richfaces/toolBar/images/print.gif" />
+					</f:facet>
+				
+				</rich:menuItem>
+				<rich:menuItem value="Suboption1-3" />
+			</rich:dropDownMenu>
+			<rich:dropDownMenu style="border:1px solid #{a4jSkin.panelBorderColor}" value="Option2"  direction="bottom-right"  jointPoint="tr">
+				<rich:menuItem value="Suboption2-1" />
+				<rich:menuItem value="Suboption2-2" />
+				<rich:menuGroup value="Group2" direction="#{bean.groupDirection}">
+					<rich:menuItem value="SuboptionG2-2-1" />
+					<rich:menuItem value="SuboptionG2-2-2" />
+				</rich:menuGroup>
+				
+				<rich:menuItem value="Suboption2-3" />
+			</rich:dropDownMenu>
+			<rich:dropDownMenu style="border:1px solid #{a4jSkin.panelBorderColor}" value="Option3"  direction="bottom-right"  jointPoint="tr">
+				<rich:menuItem value="Suboption3-1" />
+				<rich:menuItem value="Suboption3-2" />
+				<rich:menuItem value="Suboption3-3" />
+			</rich:dropDownMenu>
+		 
+		</h:panelGrid>
+	</h:form>	
+
+
+</ui:composition>

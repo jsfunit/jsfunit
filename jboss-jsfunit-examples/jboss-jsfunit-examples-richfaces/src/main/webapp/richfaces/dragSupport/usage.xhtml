@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<ui:composition template="/templates/component-sample.xhtml">
+	<ui:define name="sample">
+
+ 
+		<p>The Richfaces Drag-n-Drop component suite includes three components: dragSupport, dropSupport
+		and dragIndicator.</p>
+		<p>dragSupport is used to point to the JSF component that becomes draggable. dragSupport
+		is similar to Ajax4jsf &lt;a4j:support&gt;. If you want to add a draggable feature to the existing 
+		component, attach dragSupport as a child component to it.
+		</p>
+		<p>dropSupport is similar to the dragSupport, but it's used to define the drag zone. dropSupport
+		has a built-in Ajax support. I.e. it allows to send an Ajax request and re-render the specified
+		area on a page when the Ajax response is returned back. With the dropListener attribute you can
+		point to a method of the backing bean that accepts dropEvent as a parameter. This event contains
+		information provided by dropValue and dragValue attributes of dropSupport and dragSupport.
+		</p>
+
+		<p>Drag Indicator is a special visual representation of a dragged object. It contains
+		a drag marker and a drag label by default, but you can freely define the necessary layout using 
+		a "single" facet for drag-n-drop of a single object or "multiple" for drag-n-drop on the group of 
+		objects</p>
+
+		
+		<p>
+		<i>Note: The parent component for dragSupport and dropSupport should be designed to render
+		its children and has two attribute &quot;onmouseover&quot; and &quot;onmouseout&quot;. You can use &lt;a4j:outputPanel&gt; as
+		a container if the component is not satisfy this requirements. Use &lt;a4j:outputPanel&gt; layout="block"
+		to wrap the component with a block type layout. We will work to eliminate this restriction in
+		future.</i>
+		</p>
+		
+		  <p>The following example demonstrates the drag-n-drop functionality on practice. The left list
+		  contains the examples of Ajax frameworks. Do you know them? The demo helps you to sort them out. 
+		  Drag one and drag over the headers of three panels. If the draggable framework is suitable for a certain 
+		  framework family, it will be accepted. Otherwise, the drag indicator shows the "reject" icon.</p>
+				
+		<div class="sample-container">
+				<ui:include src="/richfaces/dragSupport/examples/dnd.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/dragSupport/examples/dnd.xhtml"/>
+					<ui:param name="openlabel" value="View Page Source" />
+				</ui:include>	
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                  <ui:param name="sourcepath" value="/testsrc/RichDragAndDropTest.java"/>
+                                  <ui:param name="openlabel" value="View JSFUnit Source"/>
+                                  <ui:param name="sourcetype" value="java"/>
+                               </ui:include>
+		
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -59,7 +59,7 @@
   <filter-name>ajax4jsf</filter-name>
   <filter-class>org.ajax4jsf.Filter</filter-class>
  </filter>
-<!-- 
+<!--
  <filter-mapping>
    <filter-name>RequestDumper</filter-name>
    <url-pattern>/*</url-pattern>
