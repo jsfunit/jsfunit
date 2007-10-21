@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 public class ViewParserTestCase extends TestCase {
 
 	private ViewParser viewParser;
-	private static final String ACTION_LISTENER = "#{bean.foo}";
+	private static final String EL = "#{bean.foo}";
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -24,21 +24,30 @@ public class ViewParserTestCase extends TestCase {
 		
 	}
 
+	public void testAction() throws Exception{
+		
+		viewParser.parse(getDocument("<root><actionListener action='" + EL + "'/></root>"));
+		List actionListeners = viewParser.getActions();
+		assertEquals(1, actionListeners.size());
+		assertEquals(EL, actionListeners.get(0));
+		
+	}
+	
 	public void testActionListenerTag() throws Exception{
 		
-		viewParser.parse(getDocument("<root><actionListener binding='" + ACTION_LISTENER + "'/></root>"));
+		viewParser.parse(getDocument("<root><actionListener binding='" + EL + "'/></root>"));
 		List actionListeners = viewParser.getActionListeners();
 		assertEquals(1, actionListeners.size());
-		assertEquals(ACTION_LISTENER, actionListeners.get(0));
+		assertEquals(EL, actionListeners.get(0));
 		
 	}
 	
 	public void testActionListenerAttribute() throws Exception{
 		
-		viewParser.parse(getDocument("<root actionListener='" + ACTION_LISTENER + "' />"));
+		viewParser.parse(getDocument("<root actionListener='" + EL + "' />"));
 		List actionListeners = viewParser.getActionListeners();
 		assertEquals(1, actionListeners.size());
-		assertEquals(ACTION_LISTENER, actionListeners.get(0));
+		assertEquals(EL, actionListeners.get(0));
 		
 	}
 	
@@ -46,7 +55,7 @@ public class ViewParserTestCase extends TestCase {
 		
 		viewParser.parse(getDocument("<root a='foo'/>"));
 		assertEquals(0, viewParser.getActionListeners().size()); 
-
+		assertEquals(0, viewParser.getActions().size());
 	}
 
 	private Document getDocument(String xml) throws SAXException, IOException {
