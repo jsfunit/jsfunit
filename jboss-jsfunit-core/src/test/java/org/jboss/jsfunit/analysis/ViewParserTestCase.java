@@ -35,6 +35,10 @@ import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class ViewParserTestCase extends TestCase {
 
 	private ViewParser viewParser;

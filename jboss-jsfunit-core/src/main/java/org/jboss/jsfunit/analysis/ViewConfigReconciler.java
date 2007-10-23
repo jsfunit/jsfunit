@@ -22,34 +22,33 @@
 
 package org.jboss.jsfunit.analysis;
 
-import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
-import org.jboss.jsfunit.analysis.StreamProvider;
-import org.jboss.jsfunit.analysis.model.Pojo;
+import java.util.List;
+import java.util.Map;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import org.w3c.dom.Document;
 
 /**
  * @author Dennis Byrne
  */
 
-public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
+public class ViewConfigReconciler {
+
+	private Map<String, List<String>> actionListeners ;
+	private Map<String, List<String>> actions ;
+	protected Map<String, Document> configByPath;
 	
-	public void testDuplicateProperty() {
+	ViewConfigReconciler(Map<String, List<String>> actionListeners, 
+						 Map<String, List<String>> actions,
+						 Map<String, Document> configByPath){
+		this.actionListeners = actionListeners;
+		this.actions = actions;
+		this.configByPath = configByPath;
+	}
+	
+	void reconcile() {
 		
-		String managedProperty = TestUtils.getManagedProperty("setter", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty + managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			throw new RuntimeException("should have failed");
-			
-		}catch(AssertionFailedError e) { }
+		throw new UnsupportedOperationException("in progress");
 		
 	}
-
+	
 }

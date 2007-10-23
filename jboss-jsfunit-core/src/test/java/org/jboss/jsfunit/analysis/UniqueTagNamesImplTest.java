@@ -31,6 +31,10 @@ import net.sf.maventaglib.checker.Tld;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class UniqueTagNamesImplTest extends TestCase {
 
 	public void testNameCollision() {

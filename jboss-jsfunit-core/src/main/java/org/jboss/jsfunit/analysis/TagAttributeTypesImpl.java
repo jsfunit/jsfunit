@@ -32,6 +32,10 @@ import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.Tld;
 import static junit.framework.Assert.fail;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class TagAttributeTypesImpl {
 
 	private Collection<Tld> tlds;

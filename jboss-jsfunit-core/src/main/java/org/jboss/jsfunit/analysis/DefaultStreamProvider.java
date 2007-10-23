@@ -27,6 +27,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class DefaultStreamProvider implements StreamProvider {
 
 	public InputStream getInputStream(String resourceName) {

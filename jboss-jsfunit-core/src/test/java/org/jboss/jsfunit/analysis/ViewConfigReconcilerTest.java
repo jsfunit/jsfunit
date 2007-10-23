@@ -22,34 +22,18 @@
 
 package org.jboss.jsfunit.analysis;
 
-import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
-import org.jboss.jsfunit.analysis.StreamProvider;
-import org.jboss.jsfunit.analysis.model.Pojo;
-
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
  * @author Dennis Byrne
  */
 
-public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
-	
-	public void testDuplicateProperty() {
+public class ViewConfigReconcilerTest extends TestCase {
+
+	public void testReconcile() {
 		
-		String managedProperty = TestUtils.getManagedProperty("setter", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty + managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			throw new RuntimeException("should have failed");
-			
-		}catch(AssertionFailedError e) { }
+		// in progress
 		
 	}
-
+	
 }

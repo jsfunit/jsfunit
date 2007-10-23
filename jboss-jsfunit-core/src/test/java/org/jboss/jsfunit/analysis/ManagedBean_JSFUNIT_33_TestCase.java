@@ -29,6 +29,10 @@ import org.jboss.jsfunit.analysis.model.Pojo;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class ManagedBean_JSFUNIT_33_TestCase extends TestCase {
 
 	public void testMissingProperty() {

@@ -27,6 +27,10 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class AbstractViewTestCaseTestCase extends TestCase{
 	
 	public void testConstructor() {

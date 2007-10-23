@@ -31,6 +31,10 @@ import static junit.framework.Assert.fail;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
 
+/**
+ * @author Dennis Byrne
+ */
+
 class UniqueTagNamesImpl {
 
 	private Map<String, Tld> tldsByPath = new HashMap<String, Tld>();

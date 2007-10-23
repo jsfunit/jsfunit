@@ -32,6 +32,10 @@ import org.jboss.jsfunit.analysis.model.UIComponentClassicTagBaseChild;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
+/**
+ * @author Dennis Byrne
+ */
+
 public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
 	public void testHappyPathUIComponentClassicTagBase() {
