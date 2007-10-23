@@ -23,6 +23,8 @@
 
 package org.jboss.jsfunit.analysis.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -30,6 +32,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jboss.jsfunit.analysis.StreamProvider;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+/**
+ * @author Dennis Byrne
+ */
 
 public class ParserUtils {
 
@@ -67,4 +75,8 @@ public class ParserUtils {
 		return xml;
 	}
 	
+	public static Document getDocument(String xml) throws SAXException, IOException {
+		DocumentBuilder documentBuilder = ParserUtils.getDocumentBuilder();
+		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
+	}
 }

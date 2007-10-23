@@ -40,7 +40,7 @@ public class TestUtils {
 	public static final String getFacesConfig(String body) {
 		
 		return "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><!DOCTYPE faces-config PUBLIC "
-			+ "\"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN\""
+			+ "\"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN\" "
 			+ "\"http://java.sun.com/dtd/web-facesconfig_1_1.dtd\">"
 			+ "<faces-config>"
 			+ body

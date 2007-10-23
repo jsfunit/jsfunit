@@ -22,18 +22,12 @@
 
 package org.jboss.jsfunit.analysis;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import static org.jboss.jsfunit.analysis.util.ParserUtils.getDocument;
+
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-
 import junit.framework.TestCase;
-
-import org.jboss.jsfunit.analysis.util.ParserUtils;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 /**
  * @author Dennis Byrne
@@ -93,11 +87,6 @@ public class ViewParserTestCase extends TestCase {
 		assertEquals(0, viewParser.getActionListeners().size()); 
 		assertEquals(0, viewParser.getActions().size());
 		
-	}
-
-	private Document getDocument(String xml) throws SAXException, IOException {
-		DocumentBuilder documentBuilder = ParserUtils.getDocumentBuilder();
-		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 	}
 
 }

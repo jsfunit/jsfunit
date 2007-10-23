@@ -22,7 +22,16 @@
 
 package org.jboss.jsfunit.analysis;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import junit.framework.TestCase;
+
+import org.jboss.jsfunit.analysis.model.ManagedBean;
+import org.jboss.jsfunit.analysis.util.ParserUtils;
+import org.w3c.dom.Document;
 
 /**
  * @author Dennis Byrne
@@ -30,10 +39,28 @@ import junit.framework.TestCase;
 
 public class ViewConfigReconcilerTest extends TestCase {
 
-	public void testReconcile() {
+	public void testNoProblem() throws Exception{
 		
-		// in progress
+		String manageBean = TestUtils.getManagedBean("bean", ManagedBean.class, "none");
+		String facesConfig = TestUtils.getFacesConfig(manageBean);
+		final Document facesConfigDocument = ParserUtils.getDocument(facesConfig);
+		Map<String, Document> configByPath = new HashMap<String, Document>(){{
+			put("path2config", facesConfigDocument);
+		}};
 		
+		Map<String, List<String>> actions = new HashMap<String, List<String>>(){{
+			put("path2view", new ArrayList<String>() {{
+				add("#{bean.beanAction}");
+			}});
+		}};
+		
+		Map<String, List<String>> actionListeners = new HashMap<String, List<String>>(){{
+			put("path2view", new ArrayList<String>() {{
+				add("#{bean.beanActionListener}");
+			}});
+		}};
+		
+		new ViewConfigReconciler(actionListeners, actions, configByPath).reconcile();
 	}
 	
 }

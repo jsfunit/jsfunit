@@ -1,3 +1,4 @@
+
 /*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
@@ -19,36 +20,18 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.jboss.jsfunit.analysis.model;
 
-package org.jboss.jsfunit.analysis;
-
-import java.util.List;
-import java.util.Map;
-
-import org.w3c.dom.Document;
+import javax.faces.event.ActionEvent;
 
 /**
  * @author Dennis Byrne
  */
 
-public class ViewConfigReconciler {
+public class ManagedBean {
 
-	private Map<String, List<String>> actionListeners ;
-	private Map<String, List<String>> actions ;
-	protected Map<String, Document> configByPath;
+	public String beanAction() { return null; }
 	
-	ViewConfigReconciler(Map<String, List<String>> actionListeners, 
-						 Map<String, List<String>> actions,
-						 Map<String, Document> configByPath){
-		this.actionListeners = actionListeners;
-		this.actions = actions;
-		this.configByPath = configByPath;
-	}
-	
-	void reconcile() {
-		
-		
-		
-	}
+	public void beanActionListener(ActionEvent event) { };
 	
 }
