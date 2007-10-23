@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<style type="text/css">
+		.ecol1 { width:250px; vertical-align: top; }
+		.ecol2 { vertical-align: top; border-left:1px solid #CCC; }
+	</style>
+
+	<h:form id="form1">
+
+		<h:panelGrid id="panel1" columns="2"  width="100%" columnClasses="ecol1, ecol2">
+			<a4j:outputPanel id="calendar" layout="block">
+					<rich:calendar id="myCalendar"
+                                                value="#{calendarBean.selectedDate}"
+						locale="#{calendarBean.locale}"
+						popup="#{calendarBean.popup}"
+						datePattern="#{calendarBean.pattern}"
+					 />
+			</a4j:outputPanel>
+		
+		
+			<h:panelGrid id="panel2" columns="2">
+				<h:outputText value="Popup Mode:" />
+				<h:selectBooleanCheckbox id="popupMode" value="#{calendarBean.popup}">
+					<a4j:support id="setPopupMode" event="onclick"  reRender="calendar"/>						
+				</h:selectBooleanCheckbox>
+					
+				<h:outputText value="Select Locale" />
+				<h:selectOneRadio id="Locale" value="en/US" valueChangeListener="#{calendarBean.selectLocale}">
+					<a4j:support id="selectLocale" event="onclick" reRender="calendar"/>
+					<f:selectItem itemLabel="US" itemValue="en/US"/>
+					<f:selectItem itemLabel="DE" itemValue="de/DE"/>
+					<f:selectItem itemLabel="FR" itemValue="fr/FR"/>
+					<f:selectItem itemLabel="RU" itemValue="ru/RU"/>
+				</h:selectOneRadio>	
+
+				<h:outputText value="Select Date Pattern:"/>
+				<h:selectOneMenu id="pattern" value="#{calendarBean.pattern}">
+					<a4j:support id="setPattern" event="onchange" reRender="calendar"/>
+					<f:selectItem itemLabel="d/M/yy" itemValue="d/M/yy"/>
+					<f:selectItem itemLabel="dd/M/yy" itemValue="dd/M/yy"/>
+					<f:selectItem itemLabel="d/MMM/y" itemValue="d/MMM/y"/>
+					<f:selectItem itemLabel="MMM d, yyyy" itemValue="MMM d, yyyy"/>												
+				</h:selectOneMenu>
+				
+			</h:panelGrid>	
+	
+		</h:panelGrid>
+	</h:form>	
+</ui:composition>

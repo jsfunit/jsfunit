@@ -52,6 +52,7 @@ public class RichFacesTestAll extends ServletTestCase
       suite.addTestSuite(RichDataTableScrollerTest.class);
       suite.addTestSuite(RichDragAndDropTest.class);
       suite.addTestSuite(RichDropDownMenuTest.class);
+      suite.addTestSuite(RichCalendarTest.class);
       return suite;
    }
 

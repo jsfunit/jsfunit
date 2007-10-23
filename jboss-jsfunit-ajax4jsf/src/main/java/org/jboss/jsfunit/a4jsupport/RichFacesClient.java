@@ -24,12 +24,17 @@ package org.jboss.jsfunit.a4jsupport;
 
 import com.meterware.httpunit.PostMethodWebRequest;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.xml.transform.TransformerException;
 import org.ajax4jsf.renderkit.AjaxContainerRenderer;
 import org.ajax4jsf.renderkit.AjaxRendererUtils;
+import org.jboss.jsfunit.facade.DOMUtil;
 import org.jboss.jsfunit.facade.JSFClientSession;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
@@ -82,8 +87,60 @@ public class RichFacesClient extends Ajax4jsfClient
     */
    public void setSliderValue(String componentID, String value) throws SAXException
    {
+      setSuffixxedValue(componentID, value, "slider_val");
+   }
+   
+   
+   /**
+    * Set a parameter value on a RichCalendar component.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void setCalendarValue(String componentID, String value)
+         throws SAXException, IOException
+   {
+      String clientID = client.getClientIDs().findClientID(componentID);
+      clientID += "InputDate";
+      Document doc = client.getUpdatedDOM();
+      Element input = DOMUtil.findElementWithID(clientID, doc);
+      if (input.getAttribute("readonly").equals("true")) 
+      {
+         input.removeAttribute("readonly");
+         refreshPageFromDOM();
+      }
+      
+      setSuffixxedValue(componentID, value, "InputDate");
+   }
+   
+   private void refreshPageFromDOM() throws SAXException, IOException
+   {
+      Document doc = client.getUpdatedDOM();
+      try 
+      {
+         JSFAJAX.addResponseStringToSession(DOMUtil.docToHTMLString(doc));
+         client.doWebRequest(JSFAJAX.createJSFUnitFilterRequest());
+      } 
+      catch (TransformerException e) 
+      {
+         throw new RuntimeException(e);
+      }
+      catch (MalformedURLException e)
+      {
+         throw new RuntimeException(e);
+      }
+   }
+   
+   private void setSuffixxedValue(String componentID, String value, String suffix)
+         throws SAXException
+   {
       String renderedInputID = client.getClientIDs().findClientID(componentID);
-      renderedInputID += "slider_val";
+      renderedInputID += suffix;
       client.setParameter(componentID, renderedInputID, value);
    }
    

@@ -54,6 +54,10 @@
           <groupId>rhino</groupId>
           <artifactId>js</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>nekohtml</groupId>
+          <artifactId>nekohtml</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 

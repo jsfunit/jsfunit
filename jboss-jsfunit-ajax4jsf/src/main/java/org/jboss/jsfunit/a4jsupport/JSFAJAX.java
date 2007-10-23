@@ -121,7 +121,7 @@ public class JSFAJAX
       
       addResponseStringToSession(DOMUtil.docToHTMLString(oldDoc));
       
-      return makeJSFUnitFilterRequest();
+      return createJSFUnitFilterRequest();
    }
    
    // TODO heed this from JSFAJAX.js
@@ -160,12 +160,12 @@ public class JSFAJAX
       }
    }
    
-   private static void addResponseStringToSession(String responseString)
+   static void addResponseStringToSession(String responseString)
    {
       getSession().setAttribute(JSFUnitFilter.ALT_RESPONSE, responseString);
    }
    
-   private static WebRequest makeJSFUnitFilterRequest() throws MalformedURLException
+   static WebRequest createJSFUnitFilterRequest() throws MalformedURLException
    {
       String urlString = "/ServletRedirector";
       GetMethodWebRequest request = new GetMethodWebRequest(getWarURL() + urlString);

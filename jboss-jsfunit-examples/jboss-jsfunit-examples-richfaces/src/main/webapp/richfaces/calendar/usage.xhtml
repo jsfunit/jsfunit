@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<p>
+				rich:calendar allows to select the date using monthly calendar elements on pages.
+				It is possible to use the component in a popup and inline code. At a popup mode Calendar 
+				is initially rendered as input for date and button on the right side to call a popup. 
+				In case of an inline mode, the monthly calendar is located on a page initially.
+			 </p>
+			
+			<div class="sample-container" >
+
+				<ui:include src="/richfaces/calendar/examples/calSample.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/calendar/examples/calSample.xhtml"/>
+				</ui:include>
+                                <ui:include src="/templates/include/sourceview.xhtml">
+                                    <ui:param name="sourcepath" value="/testsrc/RichCalendarTest.java"/>
+                                    <ui:param name="openlabel" value="View JSFUnit Source"/>
+                                    <ui:param name="sourcetype" value="java"/>
+                                </ui:include>
+													
+			</div>
+			<p>
+			<b>locale</b> attribute is defined as a Locale. The default value is set to the Locale of the current page.
+			The name of the month and week days names depend of the Locale. 
+			</p>
+						
+			<p>
+			<b>popup</b> attribute is a flag that directs to the calendar mode. If true, the popup mode is used.
+			Otherwise, the inline mode is set.
+			</p>
+						
+			<p>
+			<b>showInput</b> attribute defines whether the input field should be rendered in a popup mode. If
+			set to false, only the button (calendar icon) appears on the page.
+			</p>
+						
+			<p>
+			<b>enableManualInput</b> attribute allows to input the date in a text field manually.
+			The default value is false. It means a user can only select the date from the calendar element.
+			</p>
+						
+						
+		</ui:define>
+
+	</ui:composition>
+</html>
