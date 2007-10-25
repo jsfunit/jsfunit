@@ -31,6 +31,7 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import javax.xml.transform.TransformerException;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -182,7 +183,15 @@ public class JSFClientSession
    {
       this.webResponse = this.webConversation.getResponse(request);
       this.clientIDs = new ClientIDs();
-      this.updatedDOM = this.webResponse.getDOM();
+      
+      try 
+      {
+         this.updatedDOM = DOMUtil.convertToDomLevel2(this.webResponse.getDOM());
+      }
+      catch (TransformerException e)
+      {
+         throw new RuntimeException(e);
+      }
    }
    
    /**
@@ -243,9 +252,9 @@ public class JSFClientSession
     * Sets a parameter on a rendered input component.  This method is used for
     * setting values on components that render extra HTML input tags.
     *
-    * @param componentID The JSF component ID or a suffix of the client ID.
-    * @param renderedInputID The full ID of the input tag rendered by the 
-    *                        JSF component.
+    * @param clientID The fully-qualified JSF client ID.
+    * @param inputID The value of the id attribute as rendered on the input tag.
+    * @param inputName The value of the name attribute as rendered on the input tag.
     * @param value The value to set before the form is submitted.
     *
     * @throws SAXException if the current response page can not be parsed
@@ -253,13 +262,13 @@ public class JSFClientSession
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void setParameter(String componentID, String renderedInputID, String value)
+   
+   public void setParameter(String clientID, String inputID, String inputName, String value)
          throws SAXException
    {
-      String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(clientID);
-      form.setParameter(renderedInputID, value);
-      setValueOnDOM(renderedInputID, value);
+      form.setParameter(inputName, value);
+      setValueOnDOM(inputID, value);
    }
    
    /**

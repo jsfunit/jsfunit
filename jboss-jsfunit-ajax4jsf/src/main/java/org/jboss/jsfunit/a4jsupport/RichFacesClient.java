@@ -85,9 +85,60 @@ public class RichFacesClient extends Ajax4jsfClient
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void setSliderValue(String componentID, String value) throws SAXException
+   public void setDataFilterSlider(String componentID, String value) throws SAXException
    {
       setSuffixxedValue(componentID, value, "slider_val");
+   }
+   
+   /**
+    * Set the value of a InputNumberSlider.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws IOException if an internal refresh is needed and there is an 
+    *                     error sending a request to the server.
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void setInputNumberSlider(String componentID, String value) 
+         throws SAXException, IOException
+   {
+      String clientID = client.getClientIDs().findClientID(componentID);
+      Document doc = client.getUpdatedDOM();
+      Element input = DOMUtil.findElementWithID(clientID + "Input", doc);
+      if (input.getAttribute("type").equals("hidden"))
+      {
+         input.setAttribute("type", "text");
+         refreshPageFromDOM();
+      }
+      
+      client.setParameter(clientID, clientID + "Input", clientID, value);
+   }
+   
+   /**
+    * Set the value of an InputNumberSpinner.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws IOException if an internal refresh is needed and there is an 
+    *                     error sending a request to the server.
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void setInputNumberSpinner(String componentID, String value)
+         throws SAXException, IOException
+   {
+      String clientID = client.getClientIDs().findClientID(componentID);
+      Element docElement = client.getUpdatedDOM().getDocumentElement();
+      Element input = DOMUtil.findElementWithAttribValue("name", clientID, docElement);
+      input.setAttribute("value", value);
+      refreshPageFromDOM();
    }
    
    
@@ -139,9 +190,9 @@ public class RichFacesClient extends Ajax4jsfClient
    private void setSuffixxedValue(String componentID, String value, String suffix)
          throws SAXException
    {
-      String renderedInputID = client.getClientIDs().findClientID(componentID);
-      renderedInputID += suffix;
-      client.setParameter(componentID, renderedInputID, value);
+      String clientID = client.getClientIDs().findClientID(componentID);
+      String renderedInputID = clientID + suffix;
+      client.setParameter(clientID, renderedInputID, renderedInputID, value);
    }
    
    /**

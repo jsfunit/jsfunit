@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+	<a4j:form id="form1" ajaxSubmit="true" reRender="spinner1, spinner2">
+		<p>
+			Here is an example of default inputNumberSpinner:
+			<rich:inputNumberSpinner id="spinner1" value="50"/>
+		</p>
+		<p>
+				Here is one more inputNumberSpinner with manual input disabled:
+			<rich:inputNumberSpinner id="spinner2" enableManualInput="false" 
+                                                 value="50" step="10"/>
+		</p>
+	</a4j:form>
+
+</ui:composition>

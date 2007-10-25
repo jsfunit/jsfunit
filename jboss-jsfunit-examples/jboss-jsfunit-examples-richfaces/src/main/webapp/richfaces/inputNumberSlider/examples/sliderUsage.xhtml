@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<a4j:form id="form1" ajaxSubmit="true" reRender="slider1, slider2, slider3">
+		<p>
+			Here is an example of default inputNumberSlider:
+			<rich:inputNumberSlider id="slider1" value="50"/>
+		</p>
+		<p>
+			Here is "minimalistic" input:
+			<rich:inputNumberSlider id="slider2" value="50" showInput="false" enableManualInput="false" showBoundaryValues="false" showToolTip="false"/>
+		</p>
+		<p>
+			Another variation of input:
+			<rich:inputNumberSlider id="slider3" value="500" width="500" maxValue="1000" step="50" showToolTip="false" />
+		</p>
+	</a4j:form>
+</ui:composition>

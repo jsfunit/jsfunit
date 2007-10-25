@@ -40,12 +40,12 @@ import org.xml.sax.SAXException;
  */
 public class RichDataFilterSliderTest extends ServletTestCase
 {
-   public void testSlider() throws IOException, SAXException, TransformerException
+   public void testDataFilterSlider() throws IOException, SAXException, TransformerException
    {
       JSFClientSession client = new JSFClientSession("/richfaces/dataFilterSlider.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);
       
-      ajaxClient.setSliderValue("slider_1", "60000");  
+      ajaxClient.setDataFilterSlider("slider_1", "60000");  
       ajaxClient.fireAjaxEvent("form1");
       // The data table is built with random data, so there's nothing to 
       // reliably assert about it except the make of the car.

@@ -19,43 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.jboss.jsfunit.example.richfaces;
 
+import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.a4jsupport.RichFacesClient;
+import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.JSFServerSession;
+import org.xml.sax.SAXException;
 
 /**
- * Peform all JSFUnit tests on RichFaces demo application.
+ * Peform JSFUnit tests on RichFaces demo application.
  *
  * @author Stan Silvert
  */
-public class RichFacesTestAll extends ServletTestCase
+public class RichInputNumberSpinnerTest extends ServletTestCase
 {
+   public void testNumberSliders() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/richfaces/inputNumberSpinner.jsf");
+      RichFacesClient ajaxClient = new RichFacesClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+      
+      ajaxClient.setInputNumberSpinner("spinner1", "45");
+      ajaxClient.setInputNumberSpinner("spinner2", "90");
+      ajaxClient.fireAjaxEvent("form1");
+      
+      String value = (String)server.getComponentValue("spinner1");
+      assertEquals("45", value);
+      value = (String)server.getComponentValue("spinner2");
+      assertEquals("90", value);
+   }
+   
    public static Test suite()
    {
-      TestSuite suite = new TestSuite();
-      suite.addTestSuite(ActionParamTest.class);
-      suite.addTestSuite(AjaxFormTest.class);
-      suite.addTestSuite(AjaxRegionValidationErrorTest.class);
-      suite.addTestSuite(AjaxRegionSelfRenderTest.class);
-      suite.addTestSuite(AjaxSupportTest.class);
-      suite.addTestSuite(AjaxCommandButtonTest.class);
-      suite.addTestSuite(AjaxCommandLinkTest.class);
-      suite.addTestSuite(AjaxJsFunctionTest.class);
-      suite.addTestSuite(AjaxKeepaliveTest.class);
-      suite.addTestSuite(AjaxIncludeTest.class);
-      suite.addTestSuite(AjaxOutputPanelTest.class);
-      suite.addTestSuite(AjaxRepeaterTest.class);
-      suite.addTestSuite(RichDataFilterSliderTest.class);
-      suite.addTestSuite(RichDataTableScrollerTest.class);
-      suite.addTestSuite(RichDragAndDropTest.class);
-      suite.addTestSuite(RichDropDownMenuTest.class);
-      suite.addTestSuite(RichCalendarTest.class);
-      suite.addTestSuite(RichInputNumberSliderTest.class);
-      suite.addTestSuite(RichInputNumberSpinnerTest.class);
-      return suite;
+      return new TestSuite( RichInputNumberSpinnerTest.class );
    }
-
 }

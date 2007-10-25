@@ -96,7 +96,9 @@ public class JSFAJAX
          idsToReplace = metaTag.getAttribute("content").split(",");
       }
       
-      return updatePage(oldDoc, newResponse.getDOM(), idsToReplace);
+      return updatePage(oldDoc, 
+                        DOMUtil.convertToDomLevel2(newResponse.getDOM()), 
+                        idsToReplace);
    }
    
    
@@ -105,8 +107,6 @@ public class JSFAJAX
                                         String[] idsToReplace)
          throws SAXException, ParserConfigurationException, IOException, TransformerException
    {
-      oldDoc = DOMUtil.convertToDomLevel2(oldDoc);
-      newDoc = DOMUtil.convertToDomLevel2(newDoc);
       for (int i=0; i < idsToReplace.length; i++)
       {
          Element oldElement = DOMUtil.findElementWithID(idsToReplace[i], oldDoc);
