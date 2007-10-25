@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+		<p>
+		Tab panel is used to create "tabbed" pages. RichFaces tab panel can be switched in 3 ways: using "normal" server-side update, using "ajax" style update, when only tab panel area is updated on the page, and using "client" type, without any interaction with the server.
+		Note, that in case of a "client" switch type, all tabs are rendered at the same time.
+		</p>
+		<div id="itme" class="sample-container">
+			
+			<ui:include src="/richfaces/tabPanel/examples/switchTypes.xhtml"/>
+			<ui:include src="/templates/include/sourceview.xhtml">
+				<ui:param name="sourcepath" value="/richfaces/tabPanel/examples/switchTypes.xhtml"/>
+			</ui:include>	
+                        <ui:include src="/templates/include/sourceview.xhtml">
+                          <ui:param name="sourcepath" value="/testsrc/RichTabPanelTest.java"/>
+                          <ui:param name="openlabel" value="View JSFUnit Source"/>
+                          <ui:param name="sourcetype" value="java"/>
+                        </ui:include>
+		</div>
+		
+		</ui:define>
+
+	</ui:composition>
+</html>

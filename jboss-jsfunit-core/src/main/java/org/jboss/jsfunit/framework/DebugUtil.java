@@ -44,22 +44,27 @@ public class DebugUtil
     */
    public static void dumpComponentTree(FacesContext facesContext)
    {
-      dumpComponentTree(facesContext.getViewRoot(), facesContext);
+      dumpComponentTree(facesContext.getViewRoot(), facesContext, "");
    }
    
    /**
     * Dump the component tree to standard out starting with the given component.
     */
-   public static void dumpComponentTree(UIComponent component, FacesContext facesContext)
+   public static void dumpComponentTree(UIComponent component, 
+                                        FacesContext facesContext,
+                                        String spacing)
    {
       if (component == null) return;
 
-      System.out.println(component.getClientId(facesContext));
+      System.out.print(spacing);
+      System.out.print(component.getClientId(facesContext));
+      System.out.print("  ");
+      System.out.println(component.getClass().getName());
       
       for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
       {
          UIComponent facetOrChild = (UIComponent)facetsAndChildren.next();
-         dumpComponentTree(facetOrChild, facesContext);
+         dumpComponentTree(facetOrChild, facesContext, spacing + "  ");
       }
    }
    

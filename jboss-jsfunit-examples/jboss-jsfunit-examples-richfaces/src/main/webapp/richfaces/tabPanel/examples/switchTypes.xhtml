@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+	<p>
+	Here is an example of default tab panel with 3 tabs.
+	<rich:tabPanel id="defaultTabPanel">
+		<rich:tab id="defaultFirst" label="First">
+			Here is tab #1
+		</rich:tab>
+		<rich:tab id="defaultSecond" label="Second">
+			Here is tab #2
+		</rich:tab>
+		<rich:tab id="defaultThird" label="Third">
+			Here is tab #3
+		</rich:tab>
+	</rich:tabPanel>
+	</p>
+	<p>
+	Here is an example of tab panel switched in "ajax" style. Second tab is disabled.
+	<rich:tabPanel id="ajaxTabPanel" switchType="ajax">
+		<rich:tab id="ajaxFirst" label="First">
+			Here is tab #1
+		</rich:tab>
+		<rich:tab id="ajaxSecond" label="Second" disabled="true">
+			Here is tab #2
+		</rich:tab>
+		<rich:tab id="ajaxThird" label="Third">
+			Here is tab #3
+		</rich:tab>
+	</rich:tabPanel>
+	</p>
+	<p>
+	Here is an example of tab panel switched completely on client.
+	<rich:tabPanel id="clientTabPanel" switchType="client">
+		<rich:tab id="clientFirst" label="First">
+			Here is tab #1
+		</rich:tab>
+		<rich:tab id="clientSecond" label="Second">
+			Here is tab #2
+		</rich:tab>
+		<rich:tab id="clientThird" label="Third">
+			Here is tab #3
+		</rich:tab>
+	</rich:tabPanel>
+	</p>
+
+</ui:composition>

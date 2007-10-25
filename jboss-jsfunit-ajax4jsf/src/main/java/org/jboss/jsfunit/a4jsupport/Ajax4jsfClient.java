@@ -37,8 +37,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.ajax4jsf.framework.renderer.AjaxContainerRenderer;
 import org.ajax4jsf.framework.renderer.AjaxRendererUtils;
+import org.jboss.jsfunit.facade.ClientIDs;
 import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.facade.WebRequestFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -52,9 +52,9 @@ import org.xml.sax.SAXException;
 public class Ajax4jsfClient
 {
    protected JSFClientSession client;
-   private WebRequestFactory requestFactory;
+   protected WebRequestFactory requestFactory;
    
-   private String ajaxResponse;
+   protected String ajaxResponse;
    
    public Ajax4jsfClient(JSFClientSession client)
    {
@@ -85,9 +85,11 @@ public class Ajax4jsfClient
     * @return A map of UIData components for which the row index has been changed, along with the
     *         original row index.
     */
-   private Map<UIData, Integer> setRowIndicies(JSFServerSession server, String componentID) throws SAXException, IOException
+   protected Map<UIData, Integer> setRowIndicies(String componentID) 
+         throws SAXException, IOException
    {
-      String clientID = server.findClientID(componentID);
+      ClientIDs clientIDs = client.getClientIDs();
+      String clientID = clientIDs.findClientID(componentID);
       
       Map<UIData,Integer> rowIndices = new HashMap<UIData,Integer>();
       String[] terms = clientID.split(Character.toString(NamingContainer.SEPARATOR_CHAR));
@@ -96,7 +98,7 @@ public class Ajax4jsfClient
          try
          {
             int rowIndex = Integer.parseInt(terms[i]);
-            UIComponent parent = server.findComponent(makeClientID(terms, i));
+            UIComponent parent = clientIDs.findComponent(makeClientID(terms, i));
             if (parent instanceof UIData)
             {
                UIData uiData = (UIData)parent;
@@ -117,7 +119,7 @@ public class Ajax4jsfClient
     * Restore all the UIData row indices to their original values.  Probably,
     * this will always be -1, but just in case...
     */   
-   private void restoreRowIndices(Map<UIData, Integer> rowIndices)
+   protected void restoreRowIndices(Map<UIData, Integer> rowIndices)
    {
       for (Iterator<UIData> i = rowIndices.keySet().iterator(); i.hasNext();)
       {
@@ -161,25 +163,26 @@ public class Ajax4jsfClient
    public void fireAjaxEvent(AjaxEvent event) 
          throws SAXException, IOException
    {
-      JSFServerSession server = new JSFServerSession(client);
+      ClientIDs clientIDs = client.getClientIDs();
       String componentID = event.getComponentID();
-      Map<UIData, Integer> indiciesToRestore = setRowIndicies(server, componentID);
+      Map<UIData, Integer> indiciesToRestore = setRowIndicies(componentID);
       
-      UIComponent uiComp = server.findComponent(componentID);
-      FacesContext ctx = server.getFacesContext();
-      Map options = buildEventOptions(ctx, uiComp);
+      UIComponent uiComp = clientIDs.findComponent(componentID);
+      Map options = buildEventOptions(uiComp);
+      
       PostMethodWebRequest req = requestFactory.buildRequest((String)options.get("actionUrl"),
                                                              componentID);
 
-      // Tell A4J that it's an AJAX request
-      setA4JParam(req, ctx, uiComp);
-      
+      setA4JParam(req, uiComp);
       addExtraA4JParams(req, options);
-
       restoreRowIndices(indiciesToRestore);
-      
       addExtraUserParams(req, event);
-      
+      doAjaxRequest(req, options);
+   }
+   
+   protected void doAjaxRequest(PostMethodWebRequest req, Map options)
+         throws SAXException, IOException
+   {
       Document oldDoc = client.getUpdatedDOM();
       client.doWebRequest(req);
       WebResponse newResponse = client.getWebResponse();
@@ -196,7 +199,7 @@ public class Ajax4jsfClient
       }
    }
    
-   private void addExtraA4JParams(PostMethodWebRequest req, Map options)
+   protected void addExtraA4JParams(PostMethodWebRequest req, Map options)
    {
       Map params = (Map)options.get("parameters");
       for (Iterator i = params.keySet().iterator(); i.hasNext();)
@@ -206,7 +209,7 @@ public class Ajax4jsfClient
       }
    }
    
-   private void addExtraUserParams(PostMethodWebRequest req, AjaxEvent event)
+   protected void addExtraUserParams(PostMethodWebRequest req, AjaxEvent event)
    {
       Map<String, String> params = event.getExtraRequestParams();
       for (Iterator<String> i = params.keySet().iterator(); i.hasNext();)
@@ -221,8 +224,9 @@ public class Ajax4jsfClient
     * The AjaxRendererUtils was placed in a different package for RichFaces 3.1
     * so we facotr it out here to allow the RichFacesClient to override.
     */
-   Map buildEventOptions(FacesContext ctx, UIComponent uiComp)
+   Map buildEventOptions(UIComponent uiComp)
    {
+      FacesContext ctx = FacesContext.getCurrentInstance();
       return AjaxRendererUtils.buildEventOptions(ctx, uiComp);
    }
    
@@ -231,8 +235,9 @@ public class Ajax4jsfClient
     * package for RichFaces 3.1 so we facotr them out here to allow the 
     * RichFacesClient to override.
     */
-   void setA4JParam(PostMethodWebRequest req, FacesContext ctx, UIComponent uiComp)
+   void setA4JParam(PostMethodWebRequest req, UIComponent uiComp)
    {
+      FacesContext ctx = FacesContext.getCurrentInstance();
       UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);
       req.setParameter(AjaxContainerRenderer.AJAX_PARAMETER_NAME, container.getClientId(ctx));
    }

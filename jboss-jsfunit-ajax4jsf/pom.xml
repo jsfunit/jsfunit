@@ -36,7 +36,14 @@
     <dependency>
       <groupId>org.richfaces.framework</groupId>
       <artifactId>richfaces-impl</artifactId>
-      <version>3.1.0</version>
+      <version>3.1.1-GA</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.richfaces.ui</groupId>
+      <artifactId>richfaces-ui</artifactId>
+      <version>3.1.1-GA</version>
       <scope>provided</scope>
     </dependency>
 

@@ -37,7 +37,7 @@ import org.xml.sax.SAXException;
  */
 public class RichInputNumberSpinnerTest extends ServletTestCase
 {
-   public void testNumberSliders() throws IOException, SAXException
+   public void testNumberSpinners() throws IOException, SAXException
    {
       JSFClientSession client = new JSFClientSession("/richfaces/inputNumberSpinner.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);

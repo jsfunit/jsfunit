@@ -24,7 +24,6 @@ package org.jboss.jsfunit.facade;
 
 import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;
-import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import org.xml.sax.SAXException;
 
@@ -91,8 +90,7 @@ public class WebRequestFactory
    public PostMethodWebRequest buildRequest(String componentID)
          throws SAXException
    {
-      WebForm form = this.client.getForm(componentID);
-      return buildRequest(form.getAction(), form);
+      return buildRequest(this.client.getForm(componentID));
    }
    
    /**
@@ -114,6 +112,26 @@ public class WebRequestFactory
    {
       WebForm form = this.client.getForm(componentID);
       return buildRequest(actionURL, form);
+   }
+   
+   /**
+    * Return a PostMethodWebRequest built from a WebForm object.  
+    * The request will contain all the form's current param values and will
+    * use the action URL from the form.
+    *
+    * With the returned PostMethodWebRequest, you can add your own params to
+    * the form before submitting.
+    *
+    * @param form The WebForm to base the PostMethodWebRequest on.
+    *
+    * @return A PostMethodWebRequest based on the WebForm.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    */
+   public PostMethodWebRequest buildRequest(WebForm form)
+         throws SAXException
+   {
+      return buildRequest(form.getAction(), form);
    }
    
 }

@@ -39,7 +39,7 @@ public class AjaxEvent
    private Map<String, String> extraReqParams = new HashMap<String, String>();
 
    /**
-    * Create a new AjaxEvent with refresh <code>true</code>.
+    * Create a new AjaxEvent.
     *
     * @param componentID The JSF component ID or a suffix of the client ID.
     */

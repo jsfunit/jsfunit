@@ -23,16 +23,22 @@
 package org.jboss.jsfunit.a4jsupport;
 
 import com.meterware.httpunit.PostMethodWebRequest;
+import com.meterware.httpunit.WebForm;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import javax.xml.transform.TransformerException;
 import org.ajax4jsf.renderkit.AjaxContainerRenderer;
 import org.ajax4jsf.renderkit.AjaxRendererUtils;
+import org.jboss.jsfunit.facade.ClientIDs;
 import org.jboss.jsfunit.facade.DOMUtil;
 import org.jboss.jsfunit.facade.JSFClientSession;
+import org.jboss.jsfunit.facade.WebRequestFactory;
+import org.richfaces.component.UITab;
+import org.richfaces.component.UITabPanel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -57,8 +63,9 @@ public class RichFacesClient extends Ajax4jsfClient
     * so we facotr it out here to allow the RichFacesClient to override.
     */
    @Override
-   Map buildEventOptions(FacesContext ctx, UIComponent uiComp)
+   Map buildEventOptions(UIComponent uiComp)
    {
+      FacesContext ctx = FacesContext.getCurrentInstance();
       return AjaxRendererUtils.buildEventOptions(ctx, uiComp);
    }
    
@@ -68,8 +75,9 @@ public class RichFacesClient extends Ajax4jsfClient
     * RichFacesClient to override.
     */
    @Override
-   void setA4JParam(PostMethodWebRequest req, FacesContext ctx, UIComponent uiComp)
+   void setA4JParam(PostMethodWebRequest req, UIComponent uiComp)
    {
+      FacesContext ctx = FacesContext.getCurrentInstance();
       UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);
       req.setParameter(AjaxContainerRenderer.AJAX_PARAMETER_NAME, container.getClientId(ctx));
    }
@@ -265,4 +273,51 @@ public class RichFacesClient extends Ajax4jsfClient
       event.setExtraRequestParam(dragClientID, dragClientID);
       fireAjaxEvent(event);
    }
+   
+   public void clickTab(String tabPanelComponentID, String tabComponentID)
+         throws SAXException, IOException
+   {
+      UITab tab = (UITab)client.getClientIDs().findComponent(tabComponentID);
+      if (tab.isDisabled()) return;
+      
+      UITabPanel panel = (UITabPanel)client.getClientIDs().findComponent(tabPanelComponentID);
+      String switchType = panel.getSwitchType();
+      if (switchType.equals("server")) clickServerTab(tabPanelComponentID, tabComponentID);
+      if (switchType.equals("ajax")) clickAjaxTab(tabPanelComponentID, tabComponentID);
+   }
+   
+   public void clickAjaxTab(String tabPanelComponentID, String tabComponentID)
+         throws SAXException, IOException
+   {
+      ClientIDs clientIDs = client.getClientIDs();
+      Map<UIData, Integer> indiciesToRestore = setRowIndicies(tabComponentID);
+      
+      UIComponent uiComp = clientIDs.findComponent(tabComponentID);
+      Map options = buildEventOptions(uiComp);
+      
+      String tabPanelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
+      WebForm form = client.getWebResponse().getFormWithID(tabPanelClientID + ":_form");
+      PostMethodWebRequest req = requestFactory.buildRequest(form);
+
+      setA4JParam(req, uiComp);
+      addExtraA4JParams(req, options);
+      restoreRowIndices(indiciesToRestore);
+      doAjaxRequest(req, options);
+   }
+   
+   private void clickServerTab(String tabPanelComponentID, String tabComponentID)
+         throws SAXException, IOException
+   {
+      String panelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
+      String tabClientID = client.getClientIDs().findClientID(tabComponentID);
+      String formID = panelClientID + ":_form";
+      WebForm form = client.getWebResponse().getFormWithID(formID);
+      WebRequestFactory reqFactory = new WebRequestFactory(client);
+      PostMethodWebRequest postRequest = reqFactory.buildRequest(form);
+      postRequest.setParameter(formID + ":_idcl", tabClientID);
+      postRequest.setParameter(tabClientID + "_server_submit", 
+                               tabClientID + "_server_submit");
+      client.doWebRequest(postRequest);
+   }
+   
 }
