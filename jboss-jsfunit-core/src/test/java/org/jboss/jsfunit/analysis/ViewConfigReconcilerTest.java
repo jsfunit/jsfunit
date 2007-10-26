@@ -69,7 +69,8 @@ public class ViewConfigReconcilerTest extends TestCase {
 	public void testNoProblem() throws Exception{
 		
 		new ViewConfigReconciler(goodActionListeners, goodActions, configByPath).reconcile();
-		
+		new ViewConfigReconciler(goodActionListeners, new HashMap<String, List<String>>(), configByPath).reconcile();
+		new ViewConfigReconciler(new HashMap<String, List<String>>(), goodActions, configByPath).reconcile();
 	}
 	
 	public void testMissingBeanAction() {
