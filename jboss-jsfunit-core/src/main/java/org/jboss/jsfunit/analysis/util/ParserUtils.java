@@ -62,20 +62,25 @@ public class ParserUtils {
 		
 		String xml = new ResourceUtils().getAsString(stream, resourcePath);
 		
+		return stripDTD(xml);
+	}
+	
+	private static String stripDTD(String xml) {
 		// TODO find a better way to prevent DOM from going to the Internet
 		int indexOfFaces = xml.indexOf("<faces-config");
 		int indexOfTaglib = xml.indexOf("<taglib");
-		
+
 		if(indexOfFaces > 0) {
 			xml = xml.substring(indexOfFaces, xml.length());
 		}else if(indexOfTaglib > 0) {
 			xml = xml.substring(indexOfTaglib, xml.length());
 		}
-		
-		return xml;
+
+		return xml;		
 	}
 	
 	public static Document getDocument(String xml) throws SAXException, IOException {
+		xml = stripDTD(xml);
 		DocumentBuilder documentBuilder = ParserUtils.getDocumentBuilder();
 		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 	}

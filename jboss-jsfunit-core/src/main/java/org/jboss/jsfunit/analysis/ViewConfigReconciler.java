@@ -22,10 +22,15 @@
 
 package org.jboss.jsfunit.analysis;
 
+import static junit.framework.Assert.fail;
+
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Dennis Byrne
@@ -33,22 +38,65 @@ import org.w3c.dom.Document;
 
 public class ViewConfigReconciler {
 
-	private Map<String, List<String>> actionListeners ;
+	//private Map<String, List<String>> actionListeners ;
 	private Map<String, List<String>> actions ;
-	protected Map<String, Document> configByPath;
+	private Map<String, Document> configByPath;
 	
 	ViewConfigReconciler(Map<String, List<String>> actionListeners, 
 						 Map<String, List<String>> actions,
 						 Map<String, Document> configByPath){
-		this.actionListeners = actionListeners;
+		
+		//this.actionListeners = actionListeners;
 		this.actions = actions;
 		this.configByPath = configByPath;
 	}
 	
 	void reconcile() {
 		
+		Iterator<String> paths = (Iterator<String>) actions.keySet().iterator();
 		
+		for( ; paths.hasNext() ; ) {
+			String path = paths.next();
+			List<String> els = actions.get(path);
+			for( String el : els ) {
+				if(isEl(el)) {
+					String unwrapped = el.substring(2, el.length() - 1);
+					String bean = unwrapped.substring(0, unwrapped.indexOf('.'));
+					Iterator<String> configPaths = configByPath.keySet().iterator();
+					for( ; configPaths.hasNext() ; )
+						verifyBeanExists(path, bean, configByPath.get(configPaths.next()), el);
+				}
+			}
+		}
 		
 	}
+
+	private void verifyBeanExists(String path, String bean, Document document, String el) {
+
+		if(document == null)
+			throw new NullPointerException("document was null");
+		
+		NodeList list = document.getElementsByTagName("managed-bean-name");
+		
+		boolean found = false;
+		for(int c = 0; c < list.getLength(); c++) {
+			Node node = list.item(c);
+			if( bean.equals(node.getTextContent())) {
+				found = true;
+				break;
+			}
+		}
+		
+		if(! found)
+			fail(path + " has an action " + el + " which references a "
+					+ " managed bean '" + bean + "', but no managed bean by this name can be found.");
+	}
 	
+	private boolean isEl(String questionable) {
+		return (questionable != null 
+				&& questionable.length() > 3 
+				&& questionable.charAt(0) == '#'
+				&& questionable.charAt(1) == '{'
+				&& questionable.charAt(questionable.length() - 1) == '}');
+	}
 }

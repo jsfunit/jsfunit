@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.jboss.jsfunit.analysis.model.ManagedBean;
@@ -39,28 +40,54 @@ import org.w3c.dom.Document;
 
 public class ViewConfigReconcilerTest extends TestCase {
 
-	public void testNoProblem() throws Exception{
+	private Map<String, Document> configByPath;
+	private Map<String, List<String>> goodActionListeners;
+	private Map<String, List<String>> goodActions;
+	
+	protected void setUp() throws Exception {
 		
 		String manageBean = TestUtils.getManagedBean("bean", ManagedBean.class, "none");
 		String facesConfig = TestUtils.getFacesConfig(manageBean);
 		final Document facesConfigDocument = ParserUtils.getDocument(facesConfig);
-		Map<String, Document> configByPath = new HashMap<String, Document>(){{
+		configByPath = new HashMap<String, Document>(){{
 			put("path2config", facesConfigDocument);
 		}};
 		
-		Map<String, List<String>> actions = new HashMap<String, List<String>>(){{
-			put("path2view", new ArrayList<String>() {{
-				add("#{bean.beanAction}");
-			}});
-		}};
-		
-		Map<String, List<String>> actionListeners = new HashMap<String, List<String>>(){{
+		goodActionListeners = new HashMap<String, List<String>>(){{
 			put("path2view", new ArrayList<String>() {{
 				add("#{bean.beanActionListener}");
 			}});
 		}};
 		
-		new ViewConfigReconciler(actionListeners, actions, configByPath).reconcile();
+		goodActions = new HashMap<String, List<String>>(){{
+			put("path2view", new ArrayList<String>() {{
+				add("#{bean.beanAction}");
+			}});
+		}};
+	}
+
+	public void testNoProblem() throws Exception{
+		
+		new ViewConfigReconciler(goodActionListeners, goodActions, configByPath).reconcile();
+		
+	}
+	
+	public void testMissingBean() {
+		
+		Map<String, List<String>> actions = new HashMap<String, List<String>>(){{
+			put("path2view", new ArrayList<String>() {{
+				add("#{badbean.action}");
+			}});
+		}};
+		
+		try {
+			
+			new ViewConfigReconciler(goodActionListeners, actions, configByPath).reconcile();
+			
+			throw new RuntimeException();
+			
+		}catch(AssertionFailedError e) { }
+		
 	}
 	
 }
