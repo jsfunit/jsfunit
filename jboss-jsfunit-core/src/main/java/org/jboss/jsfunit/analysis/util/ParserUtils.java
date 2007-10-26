@@ -100,9 +100,7 @@ public class ParserUtils {
 		
 		try {
 			
-			XPathExpression expr = xpath.compile(xpathQuery);
-			
-			return (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+			return (NodeList) xpath.evaluate(xpathQuery, document, XPathConstants.NODESET);
 			
 		}catch(Exception e) {
 			throw new RuntimeException("Could not run XPath query '" + xpathQuery + "' on document " + filePath);
