@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/main.xhtml">
+	<ui:define name="title">JSFUnit/RichFaces - Unit Testing with Rich JSF Components</ui:define>
+	<ui:define name="body">
+		<p>Welcome to the
+                <h:outputLink value="http://labs.jboss.com/jsfunit" target="_blank">
+			<strong>JSFUnit</strong>
+		</h:outputLink> and
+                <h:outputLink value="http://labs.jboss.com/jbossrichfaces" target="_blank">
+			<strong>Rich Faces 3.1</strong>
+		</h:outputLink> demo!</p>
+                <h4>About JBoss JSFUnit</h4>
+		<p>JSFUnit is a test framework for JSF applications. It is designed 
+                to allow complete integration testing and unit testing of JSF applications 
+                using a simplified API. JSFUnit tests run inside the container, which 
+                provides the developer full access to managed beans, the FacesContext, 
+                EL Expressions, and the internal JSF component tree. At the same time, 
+                you also have access to parsed HTML output of each client request.</p>
+		<h4>About RichFaces</h4>
+		<p>RichFaces is a rich component library for JavaServer Faces
+		built on an advanced open source framework (Ajax4jsf). It allows easy integration of AJAX capabilities into enterprise-level business
+		application development.</p>
+		<p>RichFaces enriches the Ajax4jsf framework in two important
+		ways. First, it expands a number of visual ready-to-use components.
+		Secondly, it fully implements the skinnability feature of the Ajax4jsf
+		framework including a large number of predefined skins. Using
+		skinnability, it is much easier to manage the look-and-feel of an
+		application.</p>
+		<h4>About This Demo</h4>
+		<p>This demo Web application showcases the most important
+		functionality available in RichFaces components. For each component
+		or component set selected in the left-hand sidebar, you can see it in action. Also, you can immediately see the effect of predefined
+		skins on the application whole look-and-feel.
+		</p>
+                <p>In addition, you can see samples of JSFUnit source that tests the demo.  Look for 'View JSFUnit Source' to see the test for each
+                   component.  You can interactively run the full suite of tests by clicking the link in the upper lefthand corner.  However, JSFUnit tests run
+                   equally well as part of a build utilizing continuous integration.
+                </p>
+	</ui:define>
+</ui:composition>
+</html>
