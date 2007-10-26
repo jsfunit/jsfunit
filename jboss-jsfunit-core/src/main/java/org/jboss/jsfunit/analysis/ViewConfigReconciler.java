@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -38,37 +37,44 @@ import org.w3c.dom.NodeList;
 
 public class ViewConfigReconciler {
 
-	//private Map<String, List<String>> actionListeners ;
+	private Map<String, List<String>> actionListeners ;
 	private Map<String, List<String>> actions ;
 	private Map<String, Document> configByPath;
 	
 	ViewConfigReconciler(Map<String, List<String>> actionListeners, 
 						 Map<String, List<String>> actions,
 						 Map<String, Document> configByPath){
-		
-		//this.actionListeners = actionListeners;
+		this.actionListeners = actionListeners;
 		this.actions = actions;
 		this.configByPath = configByPath;
 	}
 	
 	void reconcile() {
 		
-		Iterator<String> paths = (Iterator<String>) actions.keySet().iterator();
+		reconcileEL((Iterator<String>) actions.keySet().iterator(), actions);
+		reconcileEL((Iterator<String>) actionListeners.keySet().iterator(), actionListeners);
+		
+	}
+
+	private void reconcileEL(Iterator<String> paths, Map<String, List<String>> elByPath) {
 		
 		for( ; paths.hasNext() ; ) {
 			String path = paths.next();
-			List<String> els = actions.get(path);
-			for( String el : els ) {
-				if(isEl(el)) {
-					String unwrapped = el.substring(2, el.length() - 1);
-					String bean = unwrapped.substring(0, unwrapped.indexOf('.'));
-					Iterator<String> configPaths = configByPath.keySet().iterator();
-					for( ; configPaths.hasNext() ; )
-						verifyBeanExists(path, bean, configByPath.get(configPaths.next()), el);
-				}
-			}
+			reconcileEl(path, elByPath.get(path));
 		}
 		
+	}
+
+	private void reconcileEl(String path, List<String> els) {
+		for( String el : els ) {
+			if(isEl(el)) {
+				String unwrapped = el.substring(2, el.length() - 1);
+				String beanName = unwrapped.substring(0, unwrapped.indexOf('.'));
+				Iterator<String> configPaths = configByPath.keySet().iterator();
+				for( ; configPaths.hasNext() ; )
+					verifyBeanExists(path, beanName, configByPath.get(configPaths.next()), el);
+			}
+		}
 	}
 
 	private void verifyBeanExists(String path, String bean, Document document, String el) {
@@ -80,15 +86,13 @@ public class ViewConfigReconciler {
 		
 		boolean found = false;
 		for(int c = 0; c < list.getLength(); c++) {
-			Node node = list.item(c);
-			if( bean.equals(node.getTextContent())) {
-				found = true;
-				break;
+			if( bean.equals(list.item(c).getTextContent())) {
+				found = true; break;
 			}
 		}
 		
 		if(! found)
-			fail(path + " has an action " + el + " which references a "
+			fail(path + " has an EL expression '" + el + "' which references a "
 					+ " managed bean '" + bean + "', but no managed bean by this name can be found.");
 	}
 	
