@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -51,12 +52,14 @@ public class ViewConfigReconciler {
 	
 	void reconcile() {
 		
-		reconcileEL((Iterator<String>) actions.keySet().iterator(), actions);
-		reconcileEL((Iterator<String>) actionListeners.keySet().iterator(), actionListeners);
+		reconcileEL(actions);
+		reconcileEL(actionListeners);
 		
 	}
 
-	private void reconcileEL(Iterator<String> paths, Map<String, List<String>> elByPath) {
+	private void reconcileEL(Map<String, List<String>> elByPath) {
+		
+		Iterator<String> paths = elByPath.keySet().iterator();
 		
 		for( ; paths.hasNext() ; ) {
 			String path = paths.next();
@@ -67,35 +70,27 @@ public class ViewConfigReconciler {
 
 	private void reconcileEl(String path, List<String> els) {
 		for( String el : els ) {
-			if(isEl(el)) {
-				String unwrapped = el.substring(2, el.length() - 1);
-				String beanName = unwrapped.substring(0, unwrapped.indexOf('.'));
-				Iterator<String> configPaths = configByPath.keySet().iterator();
-				for( ; configPaths.hasNext() ; )
-					verifyBeanExists(path, beanName, configByPath.get(configPaths.next()), el);
-			}
+			if(isEl(el)) 
+				reconcile(path, el);
 		}
 	}
 
-	private void verifyBeanExists(String path, String bean, Document document, String el) {
-
-		if(document == null)
-			throw new NullPointerException("document was null");
+	private void reconcile(String path, String el) {
 		
-		NodeList list = document.getElementsByTagName("managed-bean-name");
+		String unwrapped = el.substring(2, el.length() - 1);
+		String beanName = unwrapped.substring(0, unwrapped.indexOf('.'));
+		Iterator<String> configPaths = configByPath.keySet().iterator();
 		
-		boolean found = false;
-		for(int c = 0; c < list.getLength(); c++) {
-			if( bean.equals(list.item(c).getTextContent())) {
-				found = true; break;
-			}
+		for( ; configPaths.hasNext() ; ) {
+			String query = "//managed-bean-name[text()='" + beanName + "']/text()";
+			NodeList list = new ParserUtils().query(configByPath.get(configPaths.next()), query, path);
+			if( list.getLength() != 1)
+				fail(path + " has an EL expression '" + el + "' which references a "
+						+ " managed bean '" + beanName + "', but no managed bean by this name can be found.");
 		}
 		
-		if(! found)
-			fail(path + " has an EL expression '" + el + "' which references a "
-					+ " managed bean '" + bean + "', but no managed bean by this name can be found.");
 	}
-	
+
 	private boolean isEl(String questionable) {
 		return (questionable != null 
 				&& questionable.length() > 3 

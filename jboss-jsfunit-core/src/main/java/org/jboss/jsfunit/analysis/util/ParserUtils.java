@@ -30,9 +30,14 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 import org.jboss.jsfunit.analysis.StreamProvider;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -83,5 +88,25 @@ public class ParserUtils {
 		xml = stripDTD(xml);
 		DocumentBuilder documentBuilder = ParserUtils.getDocumentBuilder();
 		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
+	}
+	
+	public static NodeList query(Document document, String xpathQuery, String filePath) {
+		
+		if(document == null)
+			throw new NullPointerException("document was null " + filePath);
+		
+		XPathFactory factory = XPathFactory.newInstance();
+		XPath xpath = factory.newXPath();
+		
+		try {
+			
+			XPathExpression expr = xpath.compile(xpathQuery);
+			
+			return (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+			
+		}catch(Exception e) {
+			throw new RuntimeException("Could not run XPath query '" + xpathQuery + "' on document " + filePath);
+		}
+		
 	}
 }
