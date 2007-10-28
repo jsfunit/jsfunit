@@ -68,10 +68,9 @@ public class AbstractViewTestCase extends TestCase {
 	
 		if(streamProvider == null)
 			throw new IllegalArgumentException("stream provider is null");
-		if(absolutePaths == null)
-			throw new IllegalArgumentException("absolutePaths is null");
-		if(recursivePaths == null)
-			throw new IllegalArgumentException("recursivePaths is null");
+		if(absolutePaths == null && recursivePaths == null)
+			throw new IllegalArgumentException("absolutePaths and recursivePaths are null ... "
+					+ AbstractViewTestCase.class.getName() + " needs at least one path to a view");
 		if(configPaths == null)
 			throw new IllegalArgumentException("configPaths is null");
 		if(configPaths.size() == 0)
