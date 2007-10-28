@@ -22,9 +22,11 @@
 
 package org.jboss.jsfunit.analysis;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,8 +66,10 @@ public class AbstractViewTestCase extends TestCase {
 			throw new IllegalArgumentException("configPaths empty, must supply at least one");
 		
 		Set<String> allPaths = new HashSet<String>(absolutePaths);
-		for(String path : recursivePaths) 
-			allPaths.addAll(explode(path));
+		for(String path : recursivePaths) {
+			explode(new File(path), allPaths, "xhtml");
+			explode(new File(path), allPaths, "jsp");
+		}
 		
 		if(allPaths.size() == 0)
 			throw new IllegalArgumentException("No view templates found. At least one must be specified");
@@ -96,11 +100,21 @@ public class AbstractViewTestCase extends TestCase {
 		}
 	}
 
-	private Set<String> explode(String path) {
+	public static void explode(File file, final Set<String> files, String ext) {
 		
-		throw new UnsupportedOperationException();
-		
-	}
+        if (file.isDirectory() ) {
+            
+        	String[] children = file.list();
+            for (int i=0; i<children.length; i++)
+                explode(new File(file, children[i]), files, ext);
+            
+        } else if(file.getName().endsWith(ext)) {
+			
+        	files.add(file.getAbsolutePath());
+        	
+        }
+        
+    }
 
 	public void testActions() {
 		
