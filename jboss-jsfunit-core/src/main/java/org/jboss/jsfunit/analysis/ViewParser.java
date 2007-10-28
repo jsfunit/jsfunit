@@ -67,7 +67,7 @@ public class ViewParser {
 		NamedNodeMap attributes = node.getAttributes();
 		NodeList children = node.getChildNodes();
 		
-		if("actionListener".equals(node.getNodeName())) {
+		if("f:actionListener".equals(node.getNodeName())) {
 			Node binding = attributes.getNamedItem("binding");
 			if(binding != null)
 				addActionListener(path, binding.getNodeValue());

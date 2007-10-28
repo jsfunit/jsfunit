@@ -96,7 +96,7 @@ public class ViewConfigReconciler {
 			NodeList list = new ParserUtils().query(configByPath.get(configPaths.next()), query, path);
 			
 			if( list.getLength() == 0)
-				fail(path + " has an EL expression '" + el + "' which references a "
+				fail(path + " has an EL expression '" + el + "' which references a"
 						+ " managed bean '" + beanName + "', but no managed bean by this name can be found.");
 			else if (list.getLength() > 1)
 				fail(path + " has two managed beans named '" + beanName + "'");
