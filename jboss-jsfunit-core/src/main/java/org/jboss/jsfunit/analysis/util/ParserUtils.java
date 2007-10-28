@@ -46,12 +46,19 @@ import org.xml.sax.SAXException;
 
 public class ParserUtils {
 
-	public static DocumentBuilder getDocumentBuilder() {
-
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	private static XPathFactory xPathFactory = XPathFactory.newInstance();
+	private static DocumentBuilderFactory factory ;
+	
+	static {
+		
+		factory = DocumentBuilderFactory.newInstance();
 		factory.setIgnoringComments(true);
 		factory.setIgnoringElementContentWhitespace(true);
 		
+	}
+	
+	public static DocumentBuilder getDocumentBuilder() {
+
 		try {
 			 return factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
@@ -86,7 +93,7 @@ public class ParserUtils {
 	
 	public static Document getDocument(String xml) throws SAXException, IOException {
 		xml = stripDTD(xml);
-		DocumentBuilder documentBuilder = ParserUtils.getDocumentBuilder();
+		DocumentBuilder documentBuilder = getDocumentBuilder();
 		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 	}
 	
@@ -95,8 +102,7 @@ public class ParserUtils {
 		if(document == null)
 			throw new NullPointerException("document was null " + filePath);
 		
-		XPathFactory factory = XPathFactory.newInstance();
-		XPath xpath = factory.newXPath();
+		XPath xpath = xPathFactory.newXPath();
 		
 		try {
 			
