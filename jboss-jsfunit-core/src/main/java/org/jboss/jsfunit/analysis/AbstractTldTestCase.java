@@ -50,7 +50,7 @@ public abstract class AbstractTldTestCase extends TestCase {
 	protected Map<String, Tld> tldsByPath = new HashMap<String, Tld>();
 	protected Map<String, Document> documentsByPath = new HashMap<String, Document>();
 	private StreamProvider streamProvider;
-	// with mvn-tagib had a Tag.getTld()
+	// wish mvn-tagib had a Tag.getTld()
 	private Map<Tag, Tld> tldsByTag = new HashMap<Tag, Tld>();
 	// wish mvn-taglib had a 'Class getTagClass()'
 	private Map<Tag, Class> tagClassesByTag = new HashMap<Tag, Class>();
