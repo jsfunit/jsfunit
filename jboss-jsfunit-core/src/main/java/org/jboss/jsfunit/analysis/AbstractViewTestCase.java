@@ -24,6 +24,7 @@ package org.jboss.jsfunit.analysis;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -68,9 +69,15 @@ public class AbstractViewTestCase extends TestCase {
 	
 		if(streamProvider == null)
 			throw new IllegalArgumentException("stream provider is null");
+		
 		if(absolutePaths == null && recursivePaths == null)
 			throw new IllegalArgumentException("absolutePaths and recursivePaths are null ... "
 					+ AbstractViewTestCase.class.getName() + " needs at least one path to a view");
+		if(absolutePaths == null)
+			absolutePaths = new HashSet<String>();
+		if(recursivePaths == null)
+			recursivePaths = new HashSet<String>();
+		
 		if(configPaths == null)
 			throw new IllegalArgumentException("configPaths is null");
 		if(configPaths.size() == 0)
@@ -84,16 +91,20 @@ public class AbstractViewTestCase extends TestCase {
 		
 		if(allPaths.size() == 0)
 			throw new IllegalArgumentException("No view templates found. At least one must be specified");
-
+		
+		viewsByPath = new HashMap<String, Document>();
+		configByPath = new HashMap<String, Document>();
+		parser = new ViewParser();
+		
 		parseResources(allPaths, streamProvider, viewsByPath);
 		parseResources(configPaths, streamProvider, configByPath);
 		
-		parser = new ViewParser();
-		Iterator<String> paths = configByPath.keySet().iterator();
+		Iterator<String> paths = viewsByPath.keySet().iterator();
 		for( ; paths.hasNext() ;) {
 			String path = paths.next();
-			parser.parse(configByPath.get(path), path);
+			parser.parse(viewsByPath.get(path), path);
 		}
+		
 	}
 
 	private void parseResources(Set<String> allPaths, StreamProvider streamProvider,
