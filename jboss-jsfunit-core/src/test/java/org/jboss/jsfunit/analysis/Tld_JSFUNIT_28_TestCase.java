@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.analysis;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.jboss.jsfunit.analysis.AbstractTldTestCase;
 import org.jboss.jsfunit.analysis.StreamProvider;
@@ -95,7 +96,7 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 
 		try {
 
-			new AbstractTldTestCase(null) {};
+			new AbstractTldTestCase((Set<String>)null) {};
 
 			fail();
 

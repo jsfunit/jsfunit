@@ -53,7 +53,7 @@ public class ClassDefinitionsTestCase extends TestCase{
 
 		try {
 
-			new AbstractFacesConfigTestCase(null){ };
+			new AbstractFacesConfigTestCase((Set<String>)null){ };
 
 			fail("should fail if created w/ null");
 

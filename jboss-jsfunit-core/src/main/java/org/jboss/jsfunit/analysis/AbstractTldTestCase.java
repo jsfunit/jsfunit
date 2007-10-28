@@ -24,6 +24,7 @@ package org.jboss.jsfunit.analysis;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,6 +58,10 @@ public abstract class AbstractTldTestCase extends TestCase {
 	
 	public AbstractTldTestCase(Set<String> tldPaths) {
 		this(tldPaths, new DefaultStreamProvider());
+	}
+
+	public AbstractTldTestCase(final String tldPath) {
+		this(new HashSet<String>() {{add(tldPath);}}, new DefaultStreamProvider());
 	}
 	
 	AbstractTldTestCase(Set<String> tldPaths, StreamProvider streamProvider) {

@@ -25,6 +25,7 @@ package org.jboss.jsfunit.analysis;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,6 +48,10 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 	
 	public AbstractFacesConfigTestCase(Set<String> facesConfigPaths) {
 		this(facesConfigPaths, new DefaultStreamProvider());
+	}
+
+	public AbstractFacesConfigTestCase(final String facesConfigPath) {
+		this(new HashSet<String>() {{add(facesConfigPath);}}, new DefaultStreamProvider());
 	}
 	
 	AbstractFacesConfigTestCase(Set<String> facesConfigPaths, StreamProvider streamProvider) {
