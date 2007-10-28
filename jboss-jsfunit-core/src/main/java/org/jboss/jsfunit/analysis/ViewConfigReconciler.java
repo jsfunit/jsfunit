@@ -102,12 +102,12 @@ public class ViewConfigReconciler {
 				fail(path + " has two managed beans named '" + beanName + "'");
 			
 			Node managedBeanClassName = list.item(0).getNextSibling();
-			verifyMethodExists(managedBeanClassName, methodName, path);
+			verifyMethodExists(managedBeanClassName, methodName, path, beanName, el);
 		}
 		
 	}
 
-	private void verifyMethodExists(Node managedBeanClassName, String methodName, String path) {
+	private void verifyMethodExists(Node managedBeanClassName, String methodName, String path, String beanName, String el) {
 		
 		Class managedBeanClass = new ClassUtils().loadClass(managedBeanClassName.getTextContent(), "managed-bean-class");
 		Method[] methods = managedBeanClass.getMethods();
@@ -116,8 +116,8 @@ public class ViewConfigReconciler {
 				return;
 		}
 		
-		fail(managedBeanClass.getName() + " is missing method " + methodName 
-				+ " which is referenced via EL in " + path);
+		fail(path + " contains EL " + el + ", but managed bean " + beanName + "->" + managedBeanClass.getName() 
+				+ " does not have a " + methodName + " method.");
 	}
 
 	private boolean isEl(String questionable) {
