@@ -91,11 +91,47 @@ public class ViewConfigReconcilerTest extends TestCase {
 		
 	}
 	
+	public void testMissingAction() {
+
+		Map<String, List<String>> actions = new HashMap<String, List<String>>(){{
+			put("path2view", new ArrayList<String>() {{
+				add("#{bean.badaction}");
+			}});
+		}};
+		
+		try {
+			
+			new ViewConfigReconciler(goodActionListeners, actions, configByPath).reconcile();
+			
+			throw new RuntimeException();
+			
+		}catch(AssertionFailedError e) { }		
+		
+	}
+	
 	public void testMissingBeanActionListener() {
 		
 		Map<String, List<String>> actionListeners = new HashMap<String, List<String>>(){{
 			put("path2view", new ArrayList<String>() {{
 				add("#{badbean.actionListener}");
+			}});
+		}};
+		
+		try {
+			
+			new ViewConfigReconciler(actionListeners, goodActions, configByPath).reconcile();
+			
+			throw new RuntimeException();
+			
+		}catch(AssertionFailedError e) { }
+		
+	}
+	
+	public void testMissingActionListener() {
+		
+		Map<String, List<String>> actionListeners = new HashMap<String, List<String>>(){{
+			put("path2view", new ArrayList<String>() {{
+				add("#{bean.badactionListener}");
 			}});
 		}};
 		

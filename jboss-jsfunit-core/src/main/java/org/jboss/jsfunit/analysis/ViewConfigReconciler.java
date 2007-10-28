@@ -24,12 +24,15 @@ package org.jboss.jsfunit.analysis;
 
 import static junit.framework.Assert.fail;
 
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.jsfunit.analysis.util.ClassUtils;
 import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -78,17 +81,38 @@ public class ViewConfigReconciler {
 	private void reconcile(String path, String el) {
 		
 		String unwrapped = el.substring(2, el.length() - 1);
-		String beanName = unwrapped.substring(0, unwrapped.indexOf('.'));
+		int indexOfDot = unwrapped.indexOf('.');
+		String beanName = unwrapped.substring(0, indexOfDot);
+		String methodName = unwrapped.substring(indexOfDot + 1, unwrapped.length());
 		Iterator<String> configPaths = configByPath.keySet().iterator();
 		
 		for( ; configPaths.hasNext() ; ) {
-			String query = "//managed-bean-name[text()='" + beanName + "']/text()";
+			String query = "//managed-bean-name[text()='" + beanName + "']";
 			NodeList list = new ParserUtils().query(configByPath.get(configPaths.next()), query, path);
-			if( list.getLength() != 1)
+			
+			if( list.getLength() == 0)
 				fail(path + " has an EL expression '" + el + "' which references a "
 						+ " managed bean '" + beanName + "', but no managed bean by this name can be found.");
+			else if (list.getLength() > 1)
+				fail(path + " has two managed beans named '" + beanName + "'");
+			
+			Node managedBeanClassName = list.item(0).getNextSibling();
+			verifyMethodExists(managedBeanClassName, methodName, path);
 		}
 		
+	}
+
+	private void verifyMethodExists(Node managedBeanClassName, String methodName, String path) {
+		
+		Class managedBeanClass = new ClassUtils().loadClass(managedBeanClassName.getTextContent(), "managed-bean-class");
+		Method[] methods = managedBeanClass.getMethods();
+		for(Method method : methods) {
+			if(methodName.equals(method.getName()))
+				return;
+		}
+		
+		fail(managedBeanClass.getName() + " is missing method " + methodName 
+				+ " which is referenced via EL in " + path);
 	}
 
 	private boolean isEl(String questionable) {
