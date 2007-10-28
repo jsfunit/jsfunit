@@ -53,13 +53,18 @@ public class ViewConfigReconciler {
 		this.configByPath = configByPath;
 	}
 	
-	void reconcile() {
+	void reconcileActions() {
 		
 		reconcileEL(actions);
+		
+	}
+	
+	void reconcileActionListeners() {
+		
 		reconcileEL(actionListeners);
 		
 	}
-
+	
 	private void reconcileEL(Map<String, List<String>> elByPath) {
 		
 		Iterator<String> paths = elByPath.keySet().iterator();

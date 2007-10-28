@@ -68,9 +68,14 @@ public class ViewConfigReconcilerTest extends TestCase {
 
 	public void testNoProblem() throws Exception{
 		
-		new ViewConfigReconciler(goodActionListeners, goodActions, configByPath).reconcile();
-		new ViewConfigReconciler(goodActionListeners, new HashMap<String, List<String>>(), configByPath).reconcile();
-		new ViewConfigReconciler(new HashMap<String, List<String>>(), goodActions, configByPath).reconcile();
+		new ViewConfigReconciler(goodActionListeners, goodActions, configByPath).reconcileActions();
+		new ViewConfigReconciler(goodActionListeners, goodActions, configByPath).reconcileActionListeners();
+		
+		new ViewConfigReconciler(goodActionListeners, new HashMap<String, List<String>>(), configByPath).reconcileActions();
+		new ViewConfigReconciler(goodActionListeners, new HashMap<String, List<String>>(), configByPath).reconcileActionListeners();
+		
+		new ViewConfigReconciler(new HashMap<String, List<String>>(), goodActions, configByPath).reconcileActions();
+		new ViewConfigReconciler(new HashMap<String, List<String>>(), goodActions, configByPath).reconcileActionListeners();
 	}
 	
 	public void testMissingBeanAction() {
@@ -83,7 +88,7 @@ public class ViewConfigReconcilerTest extends TestCase {
 		
 		try {
 			
-			new ViewConfigReconciler(goodActionListeners, actions, configByPath).reconcile();
+			new ViewConfigReconciler(goodActionListeners, actions, configByPath).reconcileActions();
 			
 			throw new RuntimeException();
 			
@@ -101,7 +106,7 @@ public class ViewConfigReconcilerTest extends TestCase {
 		
 		try {
 			
-			new ViewConfigReconciler(goodActionListeners, actions, configByPath).reconcile();
+			new ViewConfigReconciler(goodActionListeners, actions, configByPath).reconcileActions();
 			
 			throw new RuntimeException();
 			
@@ -119,7 +124,7 @@ public class ViewConfigReconcilerTest extends TestCase {
 		
 		try {
 			
-			new ViewConfigReconciler(actionListeners, goodActions, configByPath).reconcile();
+			new ViewConfigReconciler(actionListeners, goodActions, configByPath).reconcileActionListeners();
 			
 			throw new RuntimeException();
 			
@@ -137,7 +142,7 @@ public class ViewConfigReconcilerTest extends TestCase {
 		
 		try {
 			
-			new ViewConfigReconciler(actionListeners, goodActions, configByPath).reconcile();
+			new ViewConfigReconciler(actionListeners, goodActions, configByPath).reconcileActionListeners();
 			
 			throw new RuntimeException();
 			

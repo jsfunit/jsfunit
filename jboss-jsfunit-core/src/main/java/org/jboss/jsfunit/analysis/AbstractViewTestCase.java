@@ -24,6 +24,7 @@ package org.jboss.jsfunit.analysis;
 
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,6 +43,7 @@ public class AbstractViewTestCase extends TestCase {
 
 	protected Map<String, Document> viewsByPath;
 	protected Map<String, Document> configByPath;
+	protected ViewParser parser;
 	
 	public AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths, Set<String> configPaths ){
 		this(absolutePaths, recursivePaths, configPaths, new DefaultStreamProvider());
@@ -70,6 +72,13 @@ public class AbstractViewTestCase extends TestCase {
 
 		parseResources(allPaths, streamProvider, viewsByPath);
 		parseResources(configPaths, streamProvider, configByPath);
+		
+		parser = new ViewParser();
+		Iterator<String> paths = configByPath.keySet().iterator();
+		for( ; paths.hasNext() ;) {
+			String path = paths.next();
+			parser.parse(configByPath.get(path), path);
+		}
 	}
 
 	private void parseResources(Set<String> allPaths, StreamProvider streamProvider,
@@ -92,10 +101,16 @@ public class AbstractViewTestCase extends TestCase {
 		throw new UnsupportedOperationException();
 		
 	}
+
+	public void testActions() {
+		
+		new ViewConfigReconciler(null, parser.getActions(), configByPath).reconcileActions();
+		
+	}
 	
 	public void testActionListeners() {
 		
-		throw new UnsupportedOperationException();		
+		new ViewConfigReconciler(parser.getActionListeners(), null, configByPath).reconcileActionListeners();
 		
 	}
 
