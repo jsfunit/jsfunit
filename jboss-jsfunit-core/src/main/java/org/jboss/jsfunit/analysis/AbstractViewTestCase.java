@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,11 +97,8 @@ public class AbstractViewTestCase extends TestCase {
 		parseResources(allPaths, streamProvider, viewsByPath);
 		parseResources(configPaths, streamProvider, configByPath);
 		
-		Iterator<String> paths = viewsByPath.keySet().iterator();
-		for( ; paths.hasNext() ;) {
-			String path = paths.next();
+		for(String path : viewsByPath.keySet() )
 			parser.parse(viewsByPath.get(path), path);
-		}
 		
 	}
 

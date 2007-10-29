@@ -25,7 +25,6 @@ package org.jboss.jsfunit.analysis;
 import static junit.framework.Assert.fail;
 
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -67,12 +66,8 @@ public class ViewConfigReconciler {
 	
 	private void reconcileEL(Map<String, List<String>> elByPath) {
 		
-		Iterator<String> paths = elByPath.keySet().iterator();
-		
-		for( ; paths.hasNext() ; ) {
-			String path = paths.next();
+		for( String path : elByPath.keySet() )
 			reconcileEl(path, elByPath.get(path));
-		}
 		
 	}
 
@@ -85,14 +80,13 @@ public class ViewConfigReconciler {
 	private void reconcile(String path, String el) {
 		
 		String unwrapped = el.substring(2, el.length() - 1);
-		int indexOfDot = unwrapped.indexOf('.');
+		final int indexOfDot = unwrapped.indexOf('.');
 		String beanName = unwrapped.substring(0, indexOfDot);
 		String methodName = unwrapped.substring(indexOfDot + 1, unwrapped.length());
-		Iterator<String> configPaths = configByPath.keySet().iterator();
 		String query = "//managed-bean-name[text()='" + beanName + "']";
 		
-		for( ; configPaths.hasNext() ; ) {
-			NodeList list = new ParserUtils().query(configByPath.get(configPaths.next()), query, path);
+		for( String configPath : configByPath.keySet() ) {
+			NodeList list = new ParserUtils().query(configByPath.get(configPath), query, path);
 			
 			if( list.getLength() == 0)
 				fail(path + " has an EL expression '" + el + "' which references a"

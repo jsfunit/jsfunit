@@ -25,7 +25,6 @@ package org.jboss.jsfunit.analysis;
 
 import static junit.framework.Assert.fail;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.application.ApplicationFactory;
@@ -94,12 +93,8 @@ class ClassDefinitionsImpl {
 	
 	public void test() {
 		
-		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
-		
-		for( ; facesConfigPaths.hasNext() ; ) {
-			String facesConfigPath = facesConfigPaths.next();
+		for( String facesConfigPath : documentsByPath.keySet() )
 			classDefinitions(documentsByPath.get(facesConfigPath), facesConfigPath);
-		}
 		
 	}
 	

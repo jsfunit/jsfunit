@@ -125,9 +125,7 @@ public abstract class AbstractTldTestCase extends TestCase {
 	
 	public void testInheritance() {
 
-		Set<Tag> tags = tagClassesByTag.keySet();
-		
-		for(Tag tag : tags) {
+		for(Tag tag : tagClassesByTag.keySet()) {
 			
 			Class clazz = tagClassesByTag.get(tag);
 			Class[] constraints = new Class[] {UIComponentTag.class, UIComponentTagBase.class};

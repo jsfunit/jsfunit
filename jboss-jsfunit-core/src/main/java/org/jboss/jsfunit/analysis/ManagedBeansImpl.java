@@ -23,11 +23,12 @@
 
 package org.jboss.jsfunit.analysis;
 
+import static junit.framework.Assert.fail;
+
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,6 @@ import org.jboss.jsfunit.analysis.util.ClassUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import static junit.framework.Assert.fail;
 /**
  * @author Dennis Byrne
  */
@@ -58,14 +58,10 @@ class ManagedBeansImpl {
 		
 	public void test() {
 		
-		Iterator<String> facesConfigPaths = documentsByPath.keySet().iterator();
 		Map<String, String> managedBeanNames = new HashMap<String, String>();
 		
-		for( ; facesConfigPaths.hasNext() ; ) {
-			String facesConfigPath = facesConfigPaths.next();
+		for( String facesConfigPath : documentsByPath.keySet() )
 			managedBeans(documentsByPath.get(facesConfigPath), facesConfigPath, managedBeanNames);
-		}
-		
 	}
 		
 	private void managedBeans(Node node, String facesConfigPath, final Map<String, String> managedBeanNames) {
