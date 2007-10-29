@@ -70,10 +70,9 @@ class ManagedBeansImpl {
 		
 	private void managedBeans(Node node, String facesConfigPath, final Map<String, String> managedBeanNames) {
 		
-		String nodeName = node.getNodeName();
 		NodeList children = node.getChildNodes();
 		
-		if("managed-bean".equals(nodeName)) { 
+		if("managed-bean".equals(node.getNodeName())) { 
 			doManagedBean(node, facesConfigPath, children, managedBeanNames);
 		}else { 
 			for(int i = 0; i < children.getLength(); i++)
@@ -84,6 +83,7 @@ class ManagedBeansImpl {
 	private void doManagedBean(Node parent, String facesConfigPath, 
 			NodeList children, final Map<String, String> managedBeanNames) {
 		
+		// should've used jaxb or digestor, or at least XPath
 		String name = null;
 		String clazz = null;
 		String scope = null;

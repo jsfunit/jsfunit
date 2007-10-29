@@ -53,15 +53,15 @@ public class AbstractViewTestCase extends TestCase {
 	}
 
 	public AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths, final String configPath ){
-		this(absolutePaths, recursivePaths, new HashSet<String>() {{add(configPath);}}, new DefaultStreamProvider());
+		this(absolutePaths, recursivePaths, new HashSet<String>() {{add(configPath);}});
 	}
 
 	public AbstractViewTestCase(Set<String> absolutePaths, final String recursivePath, final String configPath ){
-		this(absolutePaths, new HashSet<String>() {{add(recursivePath);}}, new HashSet<String>() {{add(configPath);}}, new DefaultStreamProvider());
+		this(absolutePaths, new HashSet<String>() {{add(recursivePath);}}, new HashSet<String>() {{add(configPath);}});
 	}
 
 	public AbstractViewTestCase(final String absolutePath, final String recursivePath, final String configPath ){
-		this(new HashSet<String>() {{add(absolutePath);}}, new HashSet<String>() {{add(recursivePath);}}, new HashSet<String>() {{add(configPath);}}, new DefaultStreamProvider());
+		this(new HashSet<String>() {{add(absolutePath);}}, new HashSet<String>() {{add(recursivePath);}}, new HashSet<String>() {{add(configPath);}});
 	}	
 	
 	AbstractViewTestCase(Set<String> absolutePaths, Set<String> recursivePaths, Set<String> configPaths, 

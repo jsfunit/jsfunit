@@ -48,23 +48,24 @@ class TagAttributeTypesImpl {
 	
 	public void test(){
 		
-		for(Tld tld : tlds) {
-			for(Tag tag : tld.getTags()) {
-				if( UIComponentTag.class.isAssignableFrom(tagClassesByTag.get(tag))) {
-					for(TagAttribute attribute : tag.getAttributes()) {
-						if( ! String.class.getName().equals(attribute.getAttributeType()) ) {
-							fail("Tag '" + tag.getName() + "' in TLD " 
-									+ "'" + tld.getName() + "' is a " + UIComponentTag.class.getName()
-									+ ". Becuase it is a JSF 1.1 tag, each tag attribute must be of " 
-									+ "type " + String.class.getName() + ", however attribute '" 
-									+ attribute.getAttributeName() + "' is of type " + attribute.getAttributeType()
-									+ ". See JSF Spec 1.2 section 9.3.1.1 for more information.");
-						}
-					}
+		for(Tld tld : tlds) 
+			for(Tag tag : tld.getTags()) 
+				doTag(tld, tag);
+	}
+
+	private void doTag(Tld tld, Tag tag) {
+		if( UIComponentTag.class.isAssignableFrom(tagClassesByTag.get(tag))) {
+			for(TagAttribute attribute : tag.getAttributes()) {
+				if( ! String.class.getName().equals(attribute.getAttributeType()) ) {
+					fail("Tag '" + tag.getName() + "' in TLD " 
+							+ "'" + tld.getName() + "' is a " + UIComponentTag.class.getName()
+							+ ". Becuase it is a JSF 1.1 tag, each tag attribute must be of " 
+							+ "type " + String.class.getName() + ", however attribute '" 
+							+ attribute.getAttributeName() + "' is of type " + attribute.getAttributeType()
+							+ ". See JSF Spec 1.2 section 9.3.1.1 for more information.");
 				}
 			}
 		}
-		
 	}
 	
 }

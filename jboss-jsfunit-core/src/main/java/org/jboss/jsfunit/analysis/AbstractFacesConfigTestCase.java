@@ -51,7 +51,7 @@ public abstract class AbstractFacesConfigTestCase extends TestCase {
 	}
 
 	public AbstractFacesConfigTestCase(final String facesConfigPath) {
-		this(new HashSet<String>() {{add(facesConfigPath);}}, new DefaultStreamProvider());
+		this(new HashSet<String>() {{add(facesConfigPath);}});
 	}
 	
 	AbstractFacesConfigTestCase(Set<String> facesConfigPaths, StreamProvider streamProvider) {

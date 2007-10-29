@@ -61,7 +61,7 @@ public abstract class AbstractTldTestCase extends TestCase {
 	}
 
 	public AbstractTldTestCase(final String tldPath) {
-		this(new HashSet<String>() {{add(tldPath);}}, new DefaultStreamProvider());
+		this(new HashSet<String>() {{add(tldPath);}});
 	}
 	
 	AbstractTldTestCase(Set<String> tldPaths, StreamProvider streamProvider) {

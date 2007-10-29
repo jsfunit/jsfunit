@@ -66,8 +66,6 @@ class UniqueTagAttributesImpl {
 						+ " is duplicated.");
 			} 
 			
-			//path + ":" + tag.getName() + "@" + name + " exists, but " + tag.getName() + " has no setter for " + name
-
 			attributeNames.add(name);
 		}
 	}

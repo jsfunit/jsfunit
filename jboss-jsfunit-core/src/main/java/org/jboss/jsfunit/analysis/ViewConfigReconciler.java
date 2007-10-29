@@ -77,10 +77,9 @@ public class ViewConfigReconciler {
 	}
 
 	private void reconcileEl(String path, List<String> els) {
-		for( String el : els ) {
-			if(isEl(el)) 
-				reconcile(path, el);
-		}
+		
+		for( String el : els ) 
+			if(isEl(el)) reconcile(path, el);
 	}
 
 	private void reconcile(String path, String el) {
@@ -90,9 +89,9 @@ public class ViewConfigReconciler {
 		String beanName = unwrapped.substring(0, indexOfDot);
 		String methodName = unwrapped.substring(indexOfDot + 1, unwrapped.length());
 		Iterator<String> configPaths = configByPath.keySet().iterator();
+		String query = "//managed-bean-name[text()='" + beanName + "']";
 		
 		for( ; configPaths.hasNext() ; ) {
-			String query = "//managed-bean-name[text()='" + beanName + "']";
 			NodeList list = new ParserUtils().query(configByPath.get(configPaths.next()), query, path);
 			
 			if( list.getLength() == 0)
@@ -110,11 +109,10 @@ public class ViewConfigReconciler {
 	private void verifyMethodExists(Node managedBeanClassName, String methodName, String path, String beanName, String el) {
 		
 		Class managedBeanClass = new ClassUtils().loadClass(managedBeanClassName.getTextContent(), "managed-bean-class");
-		Method[] methods = managedBeanClass.getMethods();
-		for(Method method : methods) {
+		
+		for(Method method : managedBeanClass.getMethods())
 			if(methodName.equals(method.getName()))
 				return;
-		}
 		
 		fail(path + " contains EL " + el + ", but managed bean " + beanName + "->" + managedBeanClass.getName() 
 				+ " does not have a " + methodName + " method.");
