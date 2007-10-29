@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jboss.jsfunit.analysis.util.ClassUtils;
+import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,25 +60,18 @@ class ManagedBeansImpl {
 	public void test() {
 		
 		Map<String, String> managedBeanNames = new HashMap<String, String>();
+		String xpath = "//managed-bean";
 		
-		for( String facesConfigPath : documentsByPath.keySet() )
-			managedBeans(documentsByPath.get(facesConfigPath), facesConfigPath, managedBeanNames);
-	}
-		
-	private void managedBeans(Node node, String facesConfigPath, final Map<String, String> managedBeanNames) {
-		
-		NodeList children = node.getChildNodes();
-		
-		if("managed-bean".equals(node.getNodeName())) { 
-			doManagedBean(node, facesConfigPath, children, managedBeanNames);
-		}else { 
-			for(int i = 0; i < children.getLength(); i++)
-				managedBeans(children.item(i), facesConfigPath, managedBeanNames);
+		for( String facesConfigPath : documentsByPath.keySet() ) {
+			NodeList managedBeans = new ParserUtils().query(documentsByPath.get(facesConfigPath), xpath, facesConfigPath);
+			for(int i = 0; i < managedBeans.getLength(); i++) {
+				Node managedBean = managedBeans.item(i);
+				doManagedBean(managedBean, facesConfigPath, managedBean.getChildNodes(), managedBeanNames);
+			}
 		}
 	}
-
-	private void doManagedBean(Node parent, String facesConfigPath, 
-			NodeList children, final Map<String, String> managedBeanNames) {
+		
+	private void doManagedBean(Node parent, String facesConfigPath, NodeList children, final Map<String, String> managedBeanNames) {
 		
 		// should've used jaxb or digestor, or at least XPath
 		String name = null;

@@ -114,4 +114,16 @@ public class ParserUtils {
 		}
 		
 	}
+	
+	public static String querySingle(Node node, String xpathQuery, final String filePath) {
+		
+		NodeList list = query(node, xpathQuery, filePath);
+		int count = list.getLength();
+		
+		if(count > 1)
+			throw new RuntimeException("query " + xpathQuery + " returned " 
+					+ list.getLength() + " results. Should have been one.");
+		
+		return count == 1 ? list.item(0).getTextContent() : null;
+	}
 }
