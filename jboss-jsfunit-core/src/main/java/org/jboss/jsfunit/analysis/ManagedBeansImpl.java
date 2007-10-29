@@ -59,49 +59,49 @@ class ManagedBeansImpl {
 		
 	public void test() {
 		
-		Map<String, String> managedBeanNames = new HashMap<String, String>();
+		final Map<String, String> managedBeanNames = new HashMap<String, String>();
 		String xpath = "//managed-bean";
 		
 		for( String facesConfigPath : documentsByPath.keySet() ) {
 			NodeList managedBeans = new ParserUtils().query(documentsByPath.get(facesConfigPath), xpath, facesConfigPath);
 			for(int i = 0; i < managedBeans.getLength(); i++) {
 				Node managedBean = managedBeans.item(i);
-				doManagedBean(managedBean, facesConfigPath, managedBean.getChildNodes(), managedBeanNames);
+				doManagedBean(managedBean, facesConfigPath, managedBeanNames);
 			}
 		}
 	}
 		
-	private void doManagedBean(Node parent, String facesConfigPath, NodeList children, final Map<String, String> managedBeanNames) {
+	private void doManagedBean(Node parent, String facesConfigPath, final Map<String, String> managedBeanNames) {
 		
-		// should've used jaxb or digestor, or at least XPath
-		String name = null;
-		String clazz = null;
-		String scope = null;
+		// should've used jaxb or digestor
+		String name = new ParserUtils().querySingle(parent, "./managed-bean-name/text()", facesConfigPath);
+		if(name == null || "".equals(name))
+			throw new RuntimeException("could not determine name of " + parent.getNodeName() + 
+					" in " + facesConfigPath);
+		
+		String clazz = new ParserUtils().querySingle(parent, "./managed-bean-class/text()", facesConfigPath);
+		if(clazz == null || "".equals(clazz))
+			throw new RuntimeException("could not determine class of " + parent.getNodeName() + " '" 
+					+ name + "' in " + facesConfigPath);
+		
+		String scope = new ParserUtils().querySingle(parent, "./managed-bean-scope/text()", facesConfigPath);
+		if(scope == null || "".equals(scope))
+			throw new RuntimeException("could not determine scope of " + parent.getNodeName() + " '" 
+					+ name + "' in " + facesConfigPath);
+		
+		doManagedBean(facesConfigPath, parent.getChildNodes(), managedBeanNames, name, clazz, scope);
+	}
+
+	private void doManagedBean(String facesConfigPath, NodeList children, 
+			final Map<String, String> managedBeanNames, String name, String clazz, String scope) {
+		
 		List<String> propertyNames = new LinkedList<String>();
 		
 		for(int i = 0 ; i < children.getLength(); i++) {
 			Node child = children.item(i);
-			String nodeName = child.getNodeName();
-			String text = child.getTextContent();
-			if("managed-bean-name".equals(nodeName)) 
-				name = text;
-			else if("managed-bean-scope".equals(nodeName)) 
-				scope = text;
-			else if("managed-bean-class".equals(nodeName)) 
-				clazz = text;
-			else if("managed-property".equals(nodeName))
+			if("managed-property".equals(child.getNodeName()))
 				doManagedBeanProperty(child, propertyNames, name, facesConfigPath, clazz);
 		}
-		
-		if(scope == null || "".equals(scope))
-			throw new RuntimeException("could not determine scope of " + parent.getNodeName() + " '" 
-					+ name + "' in " + facesConfigPath);
-		if(clazz == null || "".equals(clazz))
-			throw new RuntimeException("could not determine class of " + parent.getNodeName() + " '" 
-					+ name + "' in " + facesConfigPath);
-		if(name == null || "".equals(name))
-			throw new RuntimeException("could not determine name of " + parent.getNodeName() + 
-					" in " + facesConfigPath);
 		
 		if(managedBeanNames.keySet().contains(name))
 			fail("The managed bean '" + name + "' in '" + facesConfigPath 
@@ -119,6 +119,7 @@ class ManagedBeansImpl {
 				fail("Managed bean '" + name + "' is in " 
 						+ scope + " scope, so it needs to implement " + Serializable.class);
 		}
+		
 	}
 
 	private void doManagedBeanProperty(Node parent, final List<String> propertyNames, 
