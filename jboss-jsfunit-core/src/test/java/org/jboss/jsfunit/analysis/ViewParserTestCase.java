@@ -56,7 +56,7 @@ public class ViewParserTestCase extends TestCase {
 	
 	public void testActionListenerTag() throws Exception{
 		
-		viewParser.parse(getDocument("<root><f:actionListener binding='" + EL + "'/></root>"), "foo");
+		viewParser.parse(getDocument("<root><actionListener binding='" + EL + "'/></root>"), "foo");
 		Map<String, List<String>> actionListeners = viewParser.getActionListeners();
 		assertEquals(1, actionListeners.size());
 		assertEquals(EL, actionListeners.get("foo").get(0));

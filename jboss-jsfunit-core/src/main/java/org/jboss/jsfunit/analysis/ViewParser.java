@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.jsfunit.analysis.util.ParserUtils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -64,26 +65,17 @@ public class ViewParser {
 	
 	public void parse(Node node, String path) {
 		
-		NamedNodeMap attributes = node.getAttributes();
-		NodeList children = node.getChildNodes();
+		NodeList bindings = new ParserUtils().query(node, "//actionListener/@binding", path);
+		for(int i = 0; i < bindings.getLength(); i++)
+			addActionListener(path, bindings.item(i).getNodeValue());
 		
-		if("f:actionListener".equals(node.getNodeName())) {
-			Node binding = attributes.getNamedItem("binding");
-			if(binding != null)
-				addActionListener(path, binding.getNodeValue());
-		}
-		
-		for(int i = 0; attributes != null && i < attributes.getLength(); i++) {
-			Node action = attributes.getNamedItem("action");
-			Node actionListener = attributes.getNamedItem("actionListener");
-			if( actionListener != null )
-				addActionListener(path, actionListener.getNodeValue());
-			if(action != null)
-				addAction(path, action.getNodeValue());
-		}
-		
-		for(int c = 0 ; c < children.getLength(); c++) 
-			parse(children.item(c), path);
+		NodeList actionListeners = new ParserUtils().query(node, "*/@actionListener", path);
+		for(int i = 0; i < actionListeners.getLength(); i++)
+			addActionListener(path, actionListeners.item(i).getNodeValue());
+
+		NodeList actions = new ParserUtils().query(node, "*//@action", path);
+		for(int i = 0; i < actions.getLength(); i++)
+			addAction(path, actions.item(i).getNodeValue());
 	}
 
 }

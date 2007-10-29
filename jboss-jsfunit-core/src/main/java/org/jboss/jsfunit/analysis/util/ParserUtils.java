@@ -37,6 +37,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.jboss.jsfunit.analysis.StreamProvider;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -97,16 +98,16 @@ public class ParserUtils {
 		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 	}
 	
-	public static NodeList query(Document document, String xpathQuery, String filePath) {
+	public static NodeList query(Node node, String xpathQuery, final String filePath) {
 		
-		if(document == null)
+		if(node == null)
 			throw new NullPointerException("document was null " + filePath);
 		
 		XPath xpath = xPathFactory.newXPath();
 		
 		try {
 			
-			return (NodeList) xpath.evaluate(xpathQuery, document, XPathConstants.NODESET);
+			return (NodeList) xpath.evaluate(xpathQuery, node, XPathConstants.NODESET);
 			
 		}catch(Exception e) {
 			throw new RuntimeException("Could not run XPath query '" + xpathQuery + "' on document " + filePath);
