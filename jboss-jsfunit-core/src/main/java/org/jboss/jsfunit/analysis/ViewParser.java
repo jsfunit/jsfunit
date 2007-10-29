@@ -69,7 +69,7 @@ public class ViewParser {
 		for(int i = 0; i < bindings.getLength(); i++)
 			addActionListener(path, bindings.item(i).getNodeValue());
 		
-		NodeList actionListeners = new ParserUtils().query(node, "*/@actionListener", path);
+		NodeList actionListeners = new ParserUtils().query(node, "*//@actionListener", path);
 		for(int i = 0; i < actionListeners.getLength(); i++)
 			addActionListener(path, actionListeners.item(i).getNodeValue());
 

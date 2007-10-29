@@ -74,8 +74,8 @@ public class ViewParserTestCase extends TestCase {
 	
 	public void testTwoDocuments() throws Exception{
 		
-		viewParser.parse(getDocument("<root actionListener='" + EL + "' />"), "foo");
-		viewParser.parse(getDocument("<root actionListener='" + EL + "' />"), "foo2");
+		viewParser.parse(getDocument("<root><commandButton actionListener='" + EL + "' /></root>"), "foo");
+		viewParser.parse(getDocument("<commandButton actionListener='" + EL + "' />"), "foo2");
 		Map<String, List<String>> actionListeners = viewParser.getActionListeners();
 		assertEquals(2, actionListeners.size());
 		
