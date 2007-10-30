@@ -43,23 +43,23 @@ public class RichDropDownMenuTest extends ServletTestCase
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
       
-      ajaxClient.fireAjaxEvent("New");
+      ajaxClient.ajaxSubmit("New");
       String selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
       assertEquals(selection, "New");
       
-      ajaxClient.fireAjaxEvent("Open");
+      ajaxClient.ajaxSubmit("Open");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
       assertEquals(selection, "Open");
       
-      ajaxClient.fireAjaxEvent("TextFile");
+      ajaxClient.ajaxSubmit("TextFile");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
       assertEquals(selection, "Save as Text File");
       
-      ajaxClient.fireAjaxEvent("Close");
+      ajaxClient.ajaxSubmit("Close");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
       assertEquals(selection, "Close");
       
-      ajaxClient.fireAjaxEvent("Exit");
+      ajaxClient.ajaxSubmit("Exit");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
       assertEquals(selection, "Exit");
    }

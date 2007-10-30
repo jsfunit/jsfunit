@@ -46,7 +46,7 @@ public class RichDataFilterSliderTest extends ServletTestCase
       RichFacesClient ajaxClient = new RichFacesClient(client);
       
       ajaxClient.setDataFilterSlider("slider_1", "60000");  
-      ajaxClient.fireAjaxEvent("form1");
+      ajaxClient.ajaxSubmit("form1");
       // The data table is built with random data, so there's nothing to 
       // reliably assert about it except the make of the car.
       
@@ -56,7 +56,7 @@ public class RichDataFilterSliderTest extends ServletTestCase
       
       // Click the link to change make to Chevy.  I happen to know it is the
       // first in the list.
-      ajaxClient.fireAjaxEvent("form1:carIndex:0:switchMake");
+      ajaxClient.ajaxSubmit("form1:carIndex:0:switchMake");
       doc = DOMUtil.convertToDomLevel2(client.getUpdatedDOM());
       element = DOMUtil.findElementWithID("form1:carList:0:make", doc);
       assertEquals("Chevrolet", element.getTextContent());

@@ -57,7 +57,7 @@ public class RichDragAndDropTest extends ServletTestCase
       String frameworkName = (String)server.getManagedBeanValue("#{dndBean.containerPHP[0].name}");
       assertEquals("Flexible Ajax", frameworkName); // 1st element is "Flexible Ajax" ^^^^^
       
-      ajaxClient.fireAjaxEvent("reset");
+      ajaxClient.ajaxSubmit("reset");
       phpList = (List)server.getManagedBeanValue("#{dndBean.containerPHP}");
       assertEquals(0, phpList.size()); // now it's gone again
    }

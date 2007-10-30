@@ -51,7 +51,7 @@ public class AjaxRegionValidationErrorTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("form1:inname", "f");     
-      ajaxClient.fireAjaxEvent("form1:outname_rerender");
+      ajaxClient.ajaxSubmit("form1:outname_rerender");
       
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertTrue((userBeanValue == null) || (userBeanValue.equals("")));
@@ -66,7 +66,7 @@ public class AjaxRegionValidationErrorTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("form2:inname", "f");     
-      ajaxClient.fireAjaxEvent("form2:outname_rerender");
+      ajaxClient.ajaxSubmit("form2:outname_rerender");
       
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertEquals("f", userBeanValue);

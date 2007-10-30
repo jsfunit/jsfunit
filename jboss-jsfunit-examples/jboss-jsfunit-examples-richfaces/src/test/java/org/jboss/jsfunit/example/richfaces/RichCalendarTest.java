@@ -48,7 +48,7 @@ public class RichCalendarTest extends ServletTestCase
       
       ajaxClient.setCalendarValue("myCalendar", "Oct 31, 2007");
       client.setParameter("form1:Locale", "de/DE");
-      ajaxClient.fireAjaxEvent("form1:selectLocale");
+      ajaxClient.ajaxSubmit("form1:selectLocale");
       
       Date date = (Date)server.getManagedBeanValue("#{calendarBean.selectedDate}");
       String pattern = (String)server.getManagedBeanValue("#{calendarBean.pattern}");

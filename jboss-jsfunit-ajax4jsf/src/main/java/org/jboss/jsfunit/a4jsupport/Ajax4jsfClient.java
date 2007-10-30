@@ -137,7 +137,7 @@ public class Ajax4jsfClient
    }
    
    /**
-    * Fire the AJAX event associated with this component.  Most of the time,
+    * Do the AJAX submit logic associated with this component.  Most of the time,
     * you can call this simple version of the method.  See the AjaxEvent class
     * for other event options.
     *
@@ -146,25 +146,25 @@ public class Ajax4jsfClient
     * @throws IOException if there is a problem sending the AJAX request.
     * @throws SAXException if the response page can not be parsed
     */
-   public void fireAjaxEvent(String componentID) 
+   public void ajaxSubmit(String componentID) 
          throws SAXException, IOException
    {
-      fireAjaxEvent(new AjaxEvent(componentID));
+      ajaxSubmit(componentID, new HashMap<String, String>());
    }
    
    /**
-    * Fire the AJAX event associated with this component.  
+    * Do the AJAX submit logic associated with this component.  
     *
-    * @param event The event definition.
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param userParams Extra params to send with the submit.
     *
     * @throws IOException if there is a problem sending the AJAX request.
     * @throws SAXException if the response page can not be parsed
     */
-   public void fireAjaxEvent(AjaxEvent event) 
+   public void ajaxSubmit(String componentID, Map<String, String> userParams) 
          throws SAXException, IOException
    {
       ClientIDs clientIDs = client.getClientIDs();
-      String componentID = event.getComponentID();
       Map<UIData, Integer> indiciesToRestore = setRowIndicies(componentID);
       
       UIComponent uiComp = clientIDs.findComponent(componentID);
@@ -176,7 +176,7 @@ public class Ajax4jsfClient
       setA4JParam(req, uiComp);
       addExtraA4JParams(req, options);
       restoreRowIndices(indiciesToRestore);
-      addExtraUserParams(req, event);
+      addExtraUserParams(req, userParams);
       doAjaxRequest(req, options);
    }
    
@@ -209,9 +209,8 @@ public class Ajax4jsfClient
       }
    }
    
-   protected void addExtraUserParams(PostMethodWebRequest req, AjaxEvent event)
+   protected void addExtraUserParams(PostMethodWebRequest req, Map<String, String> params)
    {
-      Map<String, String> params = event.getExtraRequestParams();
       for (Iterator<String> i = params.keySet().iterator(); i.hasNext();)
       {
          String name = i.next();

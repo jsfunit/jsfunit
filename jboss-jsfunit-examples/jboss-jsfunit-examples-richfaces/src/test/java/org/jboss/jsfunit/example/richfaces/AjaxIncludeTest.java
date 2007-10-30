@@ -48,10 +48,10 @@ public class AjaxIncludeTest extends ServletTestCase
       client.setParameter("fn", "Stan");
       client.setParameter("ln", "Silvert");
       client.setParameter("comp", "JBoss");
-      ajaxClient.fireAjaxEvent("wizardNext");
+      ajaxClient.ajaxSubmit("wizardNext");
       
       client.setParameter("notes", "Here is my note");
-      ajaxClient.fireAjaxEvent("wizardNext");
+      ajaxClient.ajaxSubmit("wizardNext");
       assertEquals("Here is my note", server.getManagedBeanValue("#{profile.notes}"));
       
       String page = client.getWebResponse().getText();
@@ -60,8 +60,8 @@ public class AjaxIncludeTest extends ServletTestCase
       assertTrue(page.contains("JBoss"));
       assertTrue(page.contains("Here is my note"));
       
-      ajaxClient.fireAjaxEvent("wizardPrevious"); // back to Notes input page
-      ajaxClient.fireAjaxEvent("wizardPrevious"); // back to first input page
+      ajaxClient.ajaxSubmit("wizardPrevious"); // back to Notes input page
+      ajaxClient.ajaxSubmit("wizardPrevious"); // back to first input page
       assertTrue(page.contains("value=\"Stan\""));
       assertEquals("Stan", server.getManagedBeanValue("#{profile.firstName}"));
    }

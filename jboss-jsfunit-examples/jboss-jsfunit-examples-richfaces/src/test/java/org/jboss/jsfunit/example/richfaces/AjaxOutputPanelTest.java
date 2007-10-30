@@ -44,12 +44,12 @@ public class AjaxOutputPanelTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
 
       client.setParameter("text1", "foo");
-      ajaxClient.fireAjaxEvent("rerender1");
+      ajaxClient.ajaxSubmit("rerender1");
       String page = client.getWebResponse().getText();
       assertFalse(page.contains("Approved Text: foo"));
       
       client.setParameter("text2", "foo");
-      ajaxClient.fireAjaxEvent("rerender2");
+      ajaxClient.ajaxSubmit("rerender2");
       page = client.getWebResponse().getText();
       assertTrue(page.contains("Approved Text: foo"));
    } 

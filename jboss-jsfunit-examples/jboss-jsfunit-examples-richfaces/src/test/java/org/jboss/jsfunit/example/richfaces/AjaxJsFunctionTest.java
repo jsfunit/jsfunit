@@ -22,10 +22,11 @@
 package org.jboss.jsfunit.example.richfaces;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.a4jsupport.AjaxEvent;
 import org.jboss.jsfunit.a4jsupport.RichFacesClient;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
@@ -46,11 +47,11 @@ public class AjaxJsFunctionTest extends ServletTestCase
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
 
-      AjaxEvent event = new AjaxEvent("updateName");
+      Map<String, String> param = new HashMap<String, String>();
       for (String name : Names)
       {
-         event.setExtraRequestParam("param1", name);
-         ajaxClient.fireAjaxEvent(event);
+         param.put("param1", name);
+         ajaxClient.ajaxSubmit("updateName", param);
          assertEquals(name, server.getManagedBeanValue("#{userBean.name}"));
       }
    }

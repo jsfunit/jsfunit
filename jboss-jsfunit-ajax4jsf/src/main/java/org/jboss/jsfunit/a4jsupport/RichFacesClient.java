@@ -26,6 +26,7 @@ import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
@@ -239,13 +240,13 @@ public class RichFacesClient extends Ajax4jsfClient
       clickDataTableScroller(componentID, control.toString());
    }
    
-   private void clickDataTableScroller(String componentID, String value)
+   private void clickDataTableScroller(String componentID, String control)
          throws SAXException, IOException
    {
-      AjaxEvent event = new AjaxEvent(componentID);
       String clientID = client.getClientIDs().findClientID(componentID);
-      event.setExtraRequestParam(clientID, value);
-      fireAjaxEvent(event);
+      Map<String, String> params = new HashMap<String, String>(1);
+      params.put(clientID, control);
+      ajaxSubmit(clientID, params);
    }
    
    /**
@@ -267,13 +268,31 @@ public class RichFacesClient extends Ajax4jsfClient
    {
       String dragClientID = client.getClientIDs().findClientID(dragComponentID);
       String dropClientID = client.getClientIDs().findClientID(dropTargetComponentID);
-      AjaxEvent event = new AjaxEvent(dropClientID);
-      event.setExtraRequestParam("dragSourceId", dragClientID);
-      event.setExtraRequestParam("dropTargetId", dropClientID);
-      event.setExtraRequestParam(dragClientID, dragClientID);
-      fireAjaxEvent(event);
+      Map<String, String> params = new HashMap<String, String>(3);
+      params.put("dragSourceId", dragClientID);
+      params.put("dropTargetId", dropClientID);
+      params.put(dragClientID, dragClientID);
+      ajaxSubmit(dropClientID, params);
    }
    
+   /**
+    * Click a tab on a TabPanel.  Note that this method is a no-op if the tab
+    * is in a disabled state or if the TabPanel is in client mode.  In client
+    * mode, the tab click does not generate an ajax submit but only changes 
+    * the visible tab already present on the client.  JSFUnit does not 
+    * currently deal with these kinds of "client only" operations.
+    *
+    * @param tabPanelComponentID The JSF component ID or a suffix of the client ID
+    *                            for the rich:tabPanel component.
+    * @param tabPanelComponentID The JSF component ID or a suffix of the client ID
+    *                            for the rich:tab component.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws IOException if there is a problem submitting the form
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
    public void clickTab(String tabPanelComponentID, String tabComponentID)
          throws SAXException, IOException
    {
@@ -286,7 +305,7 @@ public class RichFacesClient extends Ajax4jsfClient
       if (switchType.equals("ajax")) clickAjaxTab(tabPanelComponentID, tabComponentID);
    }
    
-   public void clickAjaxTab(String tabPanelComponentID, String tabComponentID)
+   private void clickAjaxTab(String tabPanelComponentID, String tabComponentID)
          throws SAXException, IOException
    {
       ClientIDs clientIDs = client.getClientIDs();

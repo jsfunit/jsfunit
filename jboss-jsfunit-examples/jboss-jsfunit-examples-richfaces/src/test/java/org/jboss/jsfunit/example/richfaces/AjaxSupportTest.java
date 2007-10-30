@@ -49,7 +49,7 @@ public class AjaxSupportTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("name", "Hello World");     
-      ajaxClient.fireAjaxEvent("rerenderOuttext");
+      ajaxClient.ajaxSubmit("rerenderOuttext");
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertTrue(userBeanValue.equals("Hello World"));
       assertTrue(client.getWebResponse().getText().contains("Hello World"));

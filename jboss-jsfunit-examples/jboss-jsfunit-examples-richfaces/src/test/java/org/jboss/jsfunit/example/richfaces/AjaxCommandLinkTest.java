@@ -49,7 +49,7 @@ public class AjaxCommandLinkTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("inputName", "World");     
-      ajaxClient.fireAjaxEvent("SayHelloLink");
+      ajaxClient.ajaxSubmit("SayHelloLink");
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertEquals("World", userBeanValue);
    }

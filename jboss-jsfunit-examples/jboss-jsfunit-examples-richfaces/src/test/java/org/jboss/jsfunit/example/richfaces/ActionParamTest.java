@@ -48,10 +48,10 @@ public class ActionParamTest extends ServletTestCase
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
       
-      ajaxClient.fireAjaxEvent("SetToAlex");
+      ajaxClient.ajaxSubmit("SetToAlex");
       assertEquals("Alex", server.getManagedBeanValue("#{userBean.name}"));
       
-      ajaxClient.fireAjaxEvent("SetToJohn");
+      ajaxClient.ajaxSubmit("SetToJohn");
       assertEquals("John", server.getManagedBeanValue("#{userBean.name}"));
    }
 }

@@ -49,7 +49,7 @@ public class AjaxRegionSelfRenderTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("form3:name", "foobar");     
-      ajaxClient.fireAjaxEvent("form3:outname_rerender");
+      ajaxClient.ajaxSubmit("form3:outname_rerender");
 
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertTrue(userBeanValue.equals("foobar"));
@@ -64,7 +64,7 @@ public class AjaxRegionSelfRenderTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("form4:name", "foobar");     
-      ajaxClient.fireAjaxEvent("form4:outname_rerender");
+      ajaxClient.ajaxSubmit("form4:outname_rerender");
  
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertTrue(userBeanValue.equals("foobar"));

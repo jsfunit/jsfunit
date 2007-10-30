@@ -46,7 +46,7 @@ public class AjaxRepeaterTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("0:proposedPrice", "10");
-      ajaxClient.fireAjaxEvent("0:rerenderRow");
+      ajaxClient.ajaxSubmit("0:rerenderRow");
 
       Double margin = (Double)server.getManagedBeanValue("#{salesReport.items[0].proposedGrossMargin}");
       assertEquals(-1.0d, margin.doubleValue());

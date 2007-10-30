@@ -58,16 +58,16 @@ public class A4JTest extends ServletTestCase
       
       // Note: input_text is session scoped
       client.setParameter("input_text", "foo");
-      ajaxClient.fireAjaxEvent("a4jsupport");
+      ajaxClient.ajaxSubmit("a4jsupport");
       assertEquals("foo", server.getManagedBeanValue("#{textbean.text}"));
       
       // simulate hitting the "b" key on the field
       client.setParameter("input_text", "foob");
-      ajaxClient.fireAjaxEvent("a4jsupport");
+      ajaxClient.ajaxSubmit("a4jsupport");
       assertEquals("foob", server.getManagedBeanValue("#{textbean.text}"));
       
       client.setParameter("input_text_request_scope", "foo");
-      ajaxClient.fireAjaxEvent("a4jsupport_request_scope");
+      ajaxClient.ajaxSubmit("a4jsupport_request_scope");
       assertEquals("foo", server.getComponentValue("input_text_request_scope"));
       assertEquals("foo", 
                   server.getManagedBeanValue("#{request_scope_textbean.text}"));
@@ -94,7 +94,7 @@ public class A4JTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("list", "Lott, Charlie");
-      ajaxClient.fireAjaxEvent("a4jsupport");
+      ajaxClient.ajaxSubmit("a4jsupport");
       assertEquals("Mr.", 
                server.getManagedBeanValue("#{userList.currentUser.prefix}"));
       assertEquals("Charlie", 
@@ -107,7 +107,7 @@ public class A4JTest extends ServletTestCase
                server.getManagedBeanValue("#{userList.currentUser.jobTitle}"));
       
       client.setParameter("list", "Story, Leslie");
-      ajaxClient.fireAjaxEvent("a4jsupport");
+      ajaxClient.ajaxSubmit("a4jsupport");
       assertEquals("Mrs.", 
                server.getManagedBeanValue("#{userList.currentUser.prefix}"));
       assertEquals("Leslie", 
@@ -140,20 +140,20 @@ public class A4JTest extends ServletTestCase
       Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
       JSFServerSession server = new JSFServerSession(client);
       
-      ajaxClient.fireAjaxEvent("0:command_link_up");
+      ajaxClient.ajaxSubmit("0:command_link_up");
       assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[0]}"));
       
-      ajaxClient.fireAjaxEvent("1:command_link_down");
-      ajaxClient.fireAjaxEvent("1:command_link_down"); // do this one twice
+      ajaxClient.ajaxSubmit("1:command_link_down");
+      ajaxClient.ajaxSubmit("1:command_link_down"); // do this one twice
       assertEquals(3, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(-2, server.getManagedBeanValue("#{bean.collection[1]}"));
       
-      ajaxClient.fireAjaxEvent("2:command_link_up");
+      ajaxClient.ajaxSubmit("2:command_link_up");
       assertEquals(4, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[2]}"));
       
-      ajaxClient.fireAjaxEvent("8:command_link_up");
+      ajaxClient.ajaxSubmit("8:command_link_up");
       assertEquals(5, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[8]}"));
    }

@@ -188,11 +188,4 @@ public class JSFAJAX
       return (String)appMap.get(WebConversationFactory.WAR_URL);
    }
    
-   private static HttpServletRequest getServletRequest()
-   {
-      return (HttpServletRequest)FacesContext.getCurrentInstance()
-                                             .getExternalContext()
-                                             .getRequest();
-   }
-   
 }

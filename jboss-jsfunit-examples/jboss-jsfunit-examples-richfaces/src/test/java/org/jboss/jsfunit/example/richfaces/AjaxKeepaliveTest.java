@@ -44,14 +44,14 @@ public class AjaxKeepaliveTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
 
       client.setParameter("form1:firstAddend", "2");
-      ajaxClient.fireAjaxEvent("form1:firstAddendAjax");
+      ajaxClient.ajaxSubmit("form1:firstAddendAjax");
       assertEquals(2, server.getManagedBeanValue("#{rsBean.addent1}"));
       
       client.setParameter("form1:secondAddend", "3");
-      ajaxClient.fireAjaxEvent("form1:secondAddendAjax");
+      ajaxClient.ajaxSubmit("form1:secondAddendAjax");
       assertEquals(3, server.getManagedBeanValue("#{rsBean.addent2}"));
       
-      ajaxClient.fireAjaxEvent("form1:btn");
+      ajaxClient.ajaxSubmit("form1:btn");
       assertNotNull(server.getManagedBeanValue("#{rsBean}"));
       assertNull(server.getManagedBeanValue("#{rsBean.sum}"));
    } 
@@ -63,14 +63,14 @@ public class AjaxKeepaliveTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
 
       client.setParameter("form2:firstAddend", "2");
-      ajaxClient.fireAjaxEvent("form2:firstAddendAjax");
+      ajaxClient.ajaxSubmit("form2:firstAddendAjax");
       assertEquals(2, server.getManagedBeanValue("#{rsBean2.addent1}"));
       
       client.setParameter("form2:secondAddend", "3");
-      ajaxClient.fireAjaxEvent("form2:secondAddendAjax");
+      ajaxClient.ajaxSubmit("form2:secondAddendAjax");
       assertEquals(3, server.getManagedBeanValue("#{rsBean2.addent2}"));
       
-      ajaxClient.fireAjaxEvent("form2:btn2");
+      ajaxClient.ajaxSubmit("form2:btn2");
       assertNotNull(server.getManagedBeanValue("#{rsBean2}"));
       assertEquals(5, server.getManagedBeanValue("#{rsBean2.sum}"));
    }

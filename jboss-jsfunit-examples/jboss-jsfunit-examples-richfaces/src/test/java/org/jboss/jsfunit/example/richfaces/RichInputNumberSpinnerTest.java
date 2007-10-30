@@ -45,7 +45,7 @@ public class RichInputNumberSpinnerTest extends ServletTestCase
       
       ajaxClient.setInputNumberSpinner("spinner1", "45");
       ajaxClient.setInputNumberSpinner("spinner2", "90");
-      ajaxClient.fireAjaxEvent("form1");
+      ajaxClient.ajaxSubmit("form1");
       
       String value = (String)server.getComponentValue("spinner1");
       assertEquals("45", value);

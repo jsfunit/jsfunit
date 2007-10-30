@@ -56,7 +56,7 @@ public class AjaxFormTest extends ServletTestCase
       assertEquals("Name:Mark", server.getComponentValue("ajaxSubmitTrueForm:name"));
       assertEquals("Name:Mark", server.getComponentValue("ajaxSubmitFalseForm:name"));
       
-      ajaxClient.fireAjaxEvent("SetToJohn");
+      ajaxClient.ajaxSubmit("SetToJohn");
       assertEquals("Jonh", server.getManagedBeanValue("#{userBean.name}"));
       assertEquals("Name:Jonh", server.getComponentValue("ajaxSubmitTrueForm:name"));
       assertEquals("Name:Jonh", server.getComponentValue("ajaxSubmitFalseForm:name"));

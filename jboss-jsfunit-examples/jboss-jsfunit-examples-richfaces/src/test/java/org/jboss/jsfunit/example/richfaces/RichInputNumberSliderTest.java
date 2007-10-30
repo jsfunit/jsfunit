@@ -46,7 +46,7 @@ public class RichInputNumberSliderTest extends ServletTestCase
       ajaxClient.setInputNumberSlider("slider1", "45");
       ajaxClient.setInputNumberSlider("slider2", "55");
       ajaxClient.setInputNumberSlider("slider3", "945");
-      ajaxClient.fireAjaxEvent("form1");
+      ajaxClient.ajaxSubmit("form1");
       
       String value = (String)server.getComponentValue("slider1");
       assertEquals("45", value);

@@ -49,7 +49,7 @@ public class AjaxCommandButtonTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       client.setParameter("inputName", "World");     
-      ajaxClient.fireAjaxEvent("SayHelloButton");
+      ajaxClient.ajaxSubmit("SayHelloButton");
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertEquals("World", userBeanValue);
       assertTrue(client.getWebResponse().getText().contains("Hello World"));
