@@ -7,8 +7,8 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>jboss-jsfunit-ajax4jsf</artifactId>
-  <name>JSFUnit Ajax4jsf</name>
+  <artifactId>jboss-jsfunit-richfaces</artifactId>
+  <name>JSFUnit RichFaces Support</name>
   <packaging>jar</packaging>      
   
   <reporting>
