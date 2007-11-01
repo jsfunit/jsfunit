@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.a4jsupport;
+package org.jboss.jsfunit.richfaces;
 
 import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;

@@ -25,7 +25,7 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.a4jsupport.RichFacesClient;
+import org.jboss.jsfunit.richfaces.RichFacesClient;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
 import org.richfaces.component.UITabPanel;
