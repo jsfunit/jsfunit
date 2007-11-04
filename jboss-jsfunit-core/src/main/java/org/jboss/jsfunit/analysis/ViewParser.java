@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.jboss.jsfunit.analysis.util.ParserUtils;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

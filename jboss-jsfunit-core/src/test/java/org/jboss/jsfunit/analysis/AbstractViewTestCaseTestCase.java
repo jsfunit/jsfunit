@@ -33,16 +33,24 @@ import junit.framework.TestCase;
 
 public class AbstractViewTestCaseTestCase extends TestCase{
 	
+	private final Set<String> empty = new HashSet<String>();
+	private final Set<String> notEmpty = new HashSet<String>() {{
+		add("somepath");
+	}};
+	
 	public void testConstructor() {
-		
-		Set<String> empty = new HashSet<String>();
-		Set<String> notEmpty = new HashSet<String>() {{
-			add("somepath");
-		}};
 		
 		try {
 			
 			new AbstractViewTestCase(empty, empty, empty, new DefaultStreamProvider()) {};
+			
+			fail();
+			
+		}catch(Exception e) {}
+		
+		try {
+			
+			new AbstractViewTestCase(empty, empty, notEmpty, new DefaultStreamProvider()) {};
 			
 			fail();
 			

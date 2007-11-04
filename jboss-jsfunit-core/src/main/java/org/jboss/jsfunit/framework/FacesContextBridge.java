@@ -22,7 +22,6 @@
 
 package org.jboss.jsfunit.framework;
 
-import javax.el.ELContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.jboss.jsfunit.context.JSFUnitFacesContext;

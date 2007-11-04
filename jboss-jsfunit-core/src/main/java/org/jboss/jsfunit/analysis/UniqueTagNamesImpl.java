@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import static junit.framework.Assert.fail;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.Tld;
@@ -45,10 +44,9 @@ class UniqueTagNamesImpl {
 	
 	public void test() {
 		
-		Set<String> tlds = tldsByPath.keySet();
 		Map<String, List<String>> tagNamesByTldName = new HashMap<String, List<String>>();
 		
-		for(String tldPath : tlds) {
+		for(String tldPath : tldsByPath.keySet()) {
 			Tld tld = tldsByPath.get(tldPath);
 			for(Tag tag : tld.getTags()) {
 				List<String> tagNames = tagNamesByTldName.get(tld.getName());

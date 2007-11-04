@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.context;
 
 import java.util.Iterator;
+
 import javax.el.ELContext;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
@@ -33,7 +34,6 @@ import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
