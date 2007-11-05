@@ -75,23 +75,10 @@ public class ParserUtils {
 		if(stream == null)
 			throw new RuntimeException("Could not locate faces config file '" + resourcePath + "'" );
 		
-		String xml = new ResourceUtils().getAsString(stream, resourcePath);
-		
-		return stripDTD(xml);
-	}
-	
-	private static String stripDTD(String xml) {
-		// TODO find a better way to prevent DOM from going to the Internet
-		int indexOfTaglib = xml.indexOf("<taglib");
-
-		if(indexOfTaglib > 0) 
-			xml = xml.substring(indexOfTaglib, xml.length());
-
-		return xml;		
+		return new ResourceUtils().getAsString(stream, resourcePath);
 	}
 	
 	public static Document getDocument(String xml) throws SAXException, IOException {
-		xml = stripDTD(xml);
 		DocumentBuilder documentBuilder = getDocumentBuilder();
 		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 	}

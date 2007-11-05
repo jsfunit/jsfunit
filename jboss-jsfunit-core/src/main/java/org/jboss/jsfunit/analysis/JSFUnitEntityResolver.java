@@ -41,6 +41,8 @@ public class JSFUnitEntityResolver implements EntityResolver {
 	private static final Map<String, String> RESOURCES_BY_SYSTEM_ID = new HashMap<String, String>() {{
 		put("http://java.sun.com/dtd/web-facesconfig_1_1.dtd", "web-facesconfig_1_1.dtd");
 		put("http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd", "web-facesconfig_1_2.xsd");
+		put("http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd", "web-jsptaglibrary_1_2.dtd");
+		put("http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd", "web-jsptaglibrary_2_1.xsd");
 	}};
 	
 	public InputSource resolveEntity(String pid, String sid) throws SAXException, IOException {
