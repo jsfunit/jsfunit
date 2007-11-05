@@ -34,6 +34,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
+import org.jboss.jsfunit.analysis.JSFUnitEntityResolver;
 import org.jboss.jsfunit.analysis.StreamProvider;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -60,7 +61,9 @@ public class ParserUtils {
 	public static DocumentBuilder getDocumentBuilder() {
 
 		try {
-			 return factory.newDocumentBuilder();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setEntityResolver(new JSFUnitEntityResolver());
+			return builder;
 		} catch (ParserConfigurationException e) {
 			throw new RuntimeException("Could not create a " + DocumentBuilder.class.getName());
 		}
@@ -79,14 +82,10 @@ public class ParserUtils {
 	
 	private static String stripDTD(String xml) {
 		// TODO find a better way to prevent DOM from going to the Internet
-		int indexOfFaces = xml.indexOf("<faces-config");
 		int indexOfTaglib = xml.indexOf("<taglib");
 
-		if(indexOfFaces > 0) {
-			xml = xml.substring(indexOfFaces, xml.length());
-		}else if(indexOfTaglib > 0) {
+		if(indexOfTaglib > 0) 
 			xml = xml.substring(indexOfTaglib, xml.length());
-		}
 
 		return xml;		
 	}
