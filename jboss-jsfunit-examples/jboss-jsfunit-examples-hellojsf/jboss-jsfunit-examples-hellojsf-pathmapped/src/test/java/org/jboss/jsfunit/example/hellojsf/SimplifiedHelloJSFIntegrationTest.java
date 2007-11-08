@@ -105,7 +105,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
 
       // Test navigation to initial viewID
-      assertEquals("/index.jsp", server.getCurrentViewId());
+      assertEquals("/index.jsp", server.getCurrentViewID());
 
       // Assert that the prompt component is in the component tree and rendered
       UIComponent prompt = server.findComponent("prompt");
@@ -125,7 +125,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // Test that I was returned to the initial view because of input error
-      assertEquals("/index.jsp", server.getCurrentViewId());
+      assertEquals("/index.jsp", server.getCurrentViewID());
       
       // Should be only one FacesMessge generated for this test.
       // It is for the component input_foo_text.
@@ -161,7 +161,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // Test navigation to a new view
-      assertEquals("/finalgreeting.jsp", server.getCurrentViewId());
+      assertEquals("/finalgreeting.jsp", server.getCurrentViewID());
 
       // Test the greeting
       assertEquals("Bye Stan. I enjoyed our chat.", server.getComponentValue("finalgreeting"));

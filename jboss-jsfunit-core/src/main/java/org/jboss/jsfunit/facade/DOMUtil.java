@@ -44,7 +44,7 @@ import org.xml.sax.SAXException;
 /**
  * This class contains various methods for searching and manipulating a DOM.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public class DOMUtil
 {

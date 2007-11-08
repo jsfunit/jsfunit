@@ -25,6 +25,8 @@ package org.jboss.jsfunit.example.hellojsf;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
+import java.util.Iterator;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -71,8 +73,8 @@ public class FacadeAPITest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // Test navigation to initial viewID
-      assertEquals("/index.jsp", server.getCurrentViewId());
-      assertEquals(server.getCurrentViewId(), server.getFacesContext().getViewRoot().getViewId());
+      assertEquals("/index.jsp", server.getCurrentViewID());
+      assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
    }
    
    public void testSetParamAndSubmit() throws IOException, SAXException
@@ -122,7 +124,7 @@ public class FacadeAPITest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // test that we are back on the first page
-      assertEquals("/index.jsp", server.getCurrentViewId());  
+      assertEquals("/index.jsp", server.getCurrentViewID());  
    }
    
    public void testClickCommandLink() throws IOException, SAXException
@@ -132,7 +134,7 @@ public class FacadeAPITest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // test that we are back on the first page
-      assertEquals("/index.jsp", server.getCurrentViewId());
+      assertEquals("/index.jsp", server.getCurrentViewID());
    }
    
    public void testCommandLinkWithoutViewChange() throws IOException, SAXException
@@ -142,7 +144,7 @@ public class FacadeAPITest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // test that we are still on the same page
-      assertEquals("/finalgreeting.jsp", server.getCurrentViewId());
+      assertEquals("/finalgreeting.jsp", server.getCurrentViewID());
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException
@@ -170,6 +172,28 @@ public class FacadeAPITest extends ServletTestCase
       client.clickLink("SourceSimplifiedHelloJSFIntegrationTest");
       WebResponse response = client.getWebResponse();
       assertTrue(response.getText().contains("public class SimplifiedHelloJSFIntegrationTest"));
+   }
+   
+   public void testFacesMessages() throws IOException, SAXException
+   {
+      client.setParameter("input_foo_text", "A"); // input too short - validation error
+      client.submit("submit_button");
+
+      // Test that I was returned to the initial view because of input error
+      JSFServerSession server = new JSFServerSession(client);
+      assertEquals("/index.jsp", server.getCurrentViewID());
+      
+      // Should be only one FacesMessge generated for the page.
+      Iterator<FacesMessage> allMessages = server.getFacesMessages();
+      allMessages.next();
+      assertFalse(allMessages.hasNext());
+      
+      Iterator<FacesMessage> checkboxMessages = server.getFacesMessages("funcheck");
+      assertFalse(checkboxMessages.hasNext());
+      
+      Iterator<FacesMessage> fooTextMessages = server.getFacesMessages("input_foo_text");
+      FacesMessage message = fooTextMessages.next();
+      assertTrue(message.getDetail().contains("input_foo_text"));
    }
    
 }

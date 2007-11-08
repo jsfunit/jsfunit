@@ -67,8 +67,8 @@ public class FacadeAPITest extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // Test navigation to initial viewID
-      assertEquals("/index.jsp", server.getCurrentViewId());
-      assertEquals(server.getCurrentViewId(), server.getFacesContext().getViewRoot().getViewId());
+      assertEquals("/index.jsp", server.getCurrentViewID());
+      assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
    }
    
    public void testSetParamAndSubmit() throws IOException, SAXException
@@ -90,7 +90,7 @@ public class FacadeAPITest extends ServletTestCase
       client.submit("goodbye_button");  // go to finalgreeting page
       client.submit(); // only one submit button on finalgreeting page
       JSFServerSession server = new JSFServerSession(client);
-      assertEquals("/index.jsp", server.getCurrentViewId());  // test that we are back on the first page
+      assertEquals("/index.jsp", server.getCurrentViewID());  // test that we are back on the first page
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException

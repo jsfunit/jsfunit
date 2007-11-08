@@ -123,7 +123,7 @@ public class JSF1_2Test extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // test that we are back on the first page
-      assertEquals("/index.jsp", server.getCurrentViewId());  
+      assertEquals("/index.jsp", server.getCurrentViewID());  
    }
    
    public void testClickCommandLink() throws IOException, SAXException
@@ -133,7 +133,7 @@ public class JSF1_2Test extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // test that we are back on the first page
-      assertEquals("/index.jsp", server.getCurrentViewId());
+      assertEquals("/index.jsp", server.getCurrentViewID());
    }
    
    public void testCommandLinkWithoutViewChange() throws IOException, SAXException
@@ -143,7 +143,7 @@ public class JSF1_2Test extends ServletTestCase
       JSFServerSession server = new JSFServerSession(client);
       
       // test that we are still on the same page
-      assertEquals("/finalgreeting.jsp", server.getCurrentViewId());
+      assertEquals("/finalgreeting.jsp", server.getCurrentViewID());
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException

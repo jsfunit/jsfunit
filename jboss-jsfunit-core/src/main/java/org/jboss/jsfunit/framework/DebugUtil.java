@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
  * For now, this just contains a couple of simple utility methods to dump
  * the client IDs in the component tree.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public class DebugUtil
 {

@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
  * placed in different packages.  Therefore, you need to use the RichFacesClient
  * instead of Ajax4jsfClient if you use RichFaces 3.1 or later.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public class RichFacesClient extends Ajax4jsfClient
 {

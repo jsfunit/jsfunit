@@ -22,6 +22,8 @@
 
 package org.jboss.jsfunit.facade;
 
+import java.util.Iterator;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
@@ -30,7 +32,6 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
 /**
  * The JSFServerSession provides a simplified API that wraps parts of the JSF API 
  * for things that you would commonly do in testing.
- * 
  * 
  * @author Stan Silvert
  */
@@ -41,8 +42,6 @@ public class JSFServerSession
    /**
     * Create a new JSFServerSession.
     * 
-    * 
-    * 
     * @param client The JSFClientSession for the current web conversation.
     */
    public JSFServerSession(JSFClientSession client)
@@ -52,11 +51,11 @@ public class JSFServerSession
    }
    
    /**
-    * Return the current view Id from the component tree.
+    * Return the current view ID from the component tree.
     *
-    * @return The current View Id.
+    * @return The current View ID.
     */
-   public String getCurrentViewId()
+   public String getCurrentViewID()
    {
       return getFacesContext().getViewRoot().getViewId();
    }
@@ -84,21 +83,6 @@ public class JSFServerSession
    public UIComponent findComponent(String componentID)
    {
       return client.getClientIDs().findComponent(componentID);
-   }
-   
-   /**
-    * Find a clientID given the componentID.  
-    *
-    * @param componentID The JSF component ID or client ID suffix.
-    *
-    * @return The clientID.
-    *
-    * @throws ComponentIDNotFoundException if the component can not be found 
-    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
-    */
-   public String findClientID(String componentID)
-   {
-      return client.getClientIDs().findClientID(componentID);
    }
    
    /**
@@ -137,5 +121,34 @@ public class JSFServerSession
       return facesContext.getApplication()
                          .createValueBinding(elExpression)
                          .getValue(facesContext);
+   }
+   
+   /**
+    * Return all the FacesMessages generated with the last JSF request.
+    *
+    * @param componentID The JSF component ID or client ID suffix.
+    *
+    * @return The FacesMessages
+    */
+   public Iterator<FacesMessage> getFacesMessages()
+   {
+      return getFacesContext().getMessages();
+   }
+   
+   /**
+    * Return all the FacesMessages generated for a component in the last 
+    * JSF request.
+    *
+    * @param componentID The JSF component ID or client ID suffix.
+    *
+    * @return the FacesMessages.
+    *
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    */
+   public Iterator<FacesMessage> getFacesMessages(String componentID)
+   {
+      String clientID = this.client.getClientIDs().findClientID(componentID);
+      return getFacesContext().getMessages(clientID);
    }
 }

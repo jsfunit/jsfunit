@@ -42,39 +42,8 @@ import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 /**
- * JSFUnit is designed to allow complete integration testing and debugging of
- * JSF applications at the JSF level.  In short, it gives you
- * access to the state of the FacesContext and managed beans after every
- * request.  With the FacesContext in hand, you are able to do integration testing
- * of JSF applications at the proper level of abstraction.
- *
- * The typical usage pattern of JSFUnit is to submit a request with httpunit and then
- * examine both the raw HTML output (httpunit tests) and JSF internals (JSFUnit tests).
- * The httpunit-style tests are not shown here.
- *
- * The JSFUnit tests below demonstrate testing:
- * - Navigation:      "Did this input take me to the correct view?"
- * - View Components: "Does the JSF component tree contain the correct components?"
- *                    "Do these components have the expected state?"
- * - Managed Beans:   "What is the state of my managed beans?"  This can include managed beans in
- *                    Seam-defined scopes such as conversation scope.  The tests below only
- *                    demonstrate request scope, but you can find anything reachable with the EL.
- * - Validation:      "Does invalid input generate the proper FacesMessage and error to the user."
- *
- * Tests not shown below:
- * - EL Expressions:     You use the Expression Language (EL) to examine the state of your
- *                       managed beans.  JSFUnit allows you to invoke any EL expression.
- *                       So, it is also possible to use the EL to invoke actions
- *                       from JSFUnit without submitting a request.  This is not deomonstrated
- *                       below, but it is relatively easy to do.
- * - Application Config: Because you have access to FacesContext, you can also call
- *                       FacesContext.getApplication().  From there you can test to make sure
- *                       your application configuration is correct.  This would include tests
- *                       for proper installation of converters, validators, component types,
- *                       locales, and resource bundles.
- *
- * This class tests the HelloJSF application.  This is a simple Hello World
- * application written in JSF with a single managed bean bound to the name "foo" in request scope.
+ * This class does tests using only the JSFUnit framework package.  See 
+ * the FacadeAPITest for examples using a simpler API.
  *
  * @author Stan Silvert
  */

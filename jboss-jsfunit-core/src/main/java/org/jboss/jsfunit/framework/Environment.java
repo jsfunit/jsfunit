@@ -25,7 +25,7 @@ package org.jboss.jsfunit.framework;
 /**
  * Contains methods to determine the test environment.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public class Environment
 {

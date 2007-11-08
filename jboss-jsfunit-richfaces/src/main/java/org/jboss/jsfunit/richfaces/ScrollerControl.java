@@ -25,7 +25,7 @@ package org.jboss.jsfunit.richfaces;
 /**
  * Enum for "arrow" buttons on a DataTableScroller.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public enum ScrollerControl
 {

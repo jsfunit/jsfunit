@@ -250,11 +250,11 @@ public class JSFClientSession
    
    /**
     * Sets a parameter on a rendered input component.  This method is used for
-    * setting values on components that render extra HTML input tags.
+    * setting values on custom components that render extra HTML input tags.
     *
-    * @param clientID The fully-qualified JSF client ID.
-    * @param inputID The value of the id attribute as rendered on the input tag.
-    * @param inputName The value of the name attribute as rendered on the input tag.
+    * @param clientID The fully-qualified JSF client ID of the component.
+    * @param inputID The value of the id attribute of the extra input tag.
+    * @param inputName The value of the name attribute of the extra input tag.
     * @param value The value to set before the form is submitted.
     *
     * @throws SAXException if the current response page can not be parsed

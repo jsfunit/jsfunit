@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
  * This class contains static methods similar to those in the RichFaces
  * JSFAJAX javascript library.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public class JSFAJAX
 {
