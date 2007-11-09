@@ -78,6 +78,12 @@
         </xsd:documentation>
     </xsd:annotation>
 
+  <xsd:annotation>
+    <xsd:documentation>
+    	This software in this distribution is under the CDDL license.
+    </xsd:documentation>
+  </xsd:annotation>
+
     <xsd:annotation>
         <xsd:documentation>
 
