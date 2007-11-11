@@ -18,17 +18,16 @@
 -->
 
 <!--
-    DTD for the JavaServer Faces Application Configuration File (Version 1.1)
+    DTD for the JavaServer Faces Application Configuration File (Version 1.0)
 
     To support validation of your configuration file(s), include the following
     DOCTYPE element at the beginning (after the "xml" declaration):
 
     <!DOCTYPE faces-config PUBLIC
-     "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
-     "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+     "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+     "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
 
 -->
-
 
 <!-- ==================== Defined Types =================================== -->
 <!ENTITY % Action "CDATA">
@@ -42,17 +41,14 @@
 <!ENTITY % ViewIdPattern "CDATA">
 <!-- ==================== Top Level Elements ============================== -->
 <!ELEMENT faces-config    ((application|factory|component|converter|managed-bean|navigation-rule|referenced-bean|render-kit|lifecycle|validator)*)>
-<!ATTLIST faces-config    xmlns CDATA #IMPLIED>
+<!ATTLIST faces-config    xmlns CDATA #FIXED "http://java.sun.com/JSF/Configuration">
 <!-- ==================== Definition Elements ============================= -->
 <!ELEMENT application     ((action-listener|default-render-kit-id|message-bundle|navigation-handler|view-handler|state-manager|property-resolver|variable-resolver|locale-config)*)>
 <!ELEMENT factory     ((application-factory|faces-context-factory|lifecycle-factory|render-kit-factory)*)>
 <!ELEMENT attribute       (description*, display-name*, icon*, attribute-name, attribute-class, default-value?, suggested-value?, attribute-extension*)>
 <!ELEMENT attribute-extension ANY>
-<!ELEMENT component       (description*, display-name*, icon*, component-type, component-class, facet*, attribute*, property*, component-extension*)>
+<!ELEMENT component       (description*, display-name*, icon*, component-type, component-class, attribute*, property*, component-extension*)>
 <!ELEMENT component-extension ANY>
-<!ELEMENT facet       (description*, display-name*, icon*, facet-name, facet-extension*)>
-<!ELEMENT facet-extension ANY>
-<!ELEMENT facet-name (#PCDATA)>
 <!ELEMENT converter       (description*, display-name*, icon*, (converter-id | converter-for-class), converter-class, attribute*, property*)>
 <!ELEMENT icon            (small-icon?, large-icon?)>
 <!ATTLIST icon            xml:lang        %Language;      #IMPLIED>
@@ -69,7 +65,7 @@
 <!ELEMENT property-extension ANY>
 <!ELEMENT referenced-bean (description*, display-name*, icon*, referenced-bean-name, referenced-bean-class)>
 <!ELEMENT render-kit      (description*, display-name*, icon*, render-kit-id?, render-kit-class?, renderer*)>
-<!ELEMENT renderer        (description*, display-name*, icon*, component-family, renderer-type, renderer-class, facet*, attribute*, renderer-extension*)>
+<!ELEMENT renderer        (description*, display-name*, icon*, component-family, renderer-type, renderer-class, attribute*, renderer-extension*)>
 <!ELEMENT renderer-extension ANY>
 <!ELEMENT validator       (description*, display-name*, icon*, validator-id, validator-class, attribute*, property*)>
 <!ELEMENT list-entries    (value-class?, (null-value|value)*)>
@@ -151,9 +147,6 @@
 <!ATTLIST display-name                      id ID #IMPLIED>
 <!ATTLIST faces-config                      id ID #IMPLIED>
 <!ATTLIST faces-context-factory             id ID #IMPLIED>
-<!ATTLIST facet                             id ID #IMPLIED>
-<!ATTLIST facet-extension                   id ID #IMPLIED>
-<!ATTLIST facet-name                        id ID #IMPLIED>
 <!ATTLIST factory                           id ID #IMPLIED>
 <!ATTLIST from-action                       id ID #IMPLIED>
 <!ATTLIST from-outcome                      id ID #IMPLIED>
