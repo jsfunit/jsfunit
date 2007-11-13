@@ -47,7 +47,6 @@
     <dependency>
       <groupId>httpunit</groupId>
       <artifactId>httpunit</artifactId>
-      <version>1.6.1</version>
       <scope>compile</scope>
       <exclusions>        
         <exclusion>
