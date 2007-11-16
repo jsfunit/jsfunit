@@ -84,33 +84,6 @@
     
     <profile>
       <id>jee5</id>
-      <dependencies> 
-        <dependency>
-          <groupId>javax.faces</groupId>
-          <artifactId>jsf-api</artifactId>
-          <version>1.2_04-p02</version>
-          <scope>provided</scope>
-        </dependency>
-        <!--
-        <dependency>
-          <groupId>javax.faces</groupId>
-          <artifactId>jsf-impl</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>javax.el</groupId>
-          <artifactId>el-api</artifactId>
-          <version>1.0</version>
-          <scope>provided</scope>
-        </dependency>  
-
-        <dependency>
-          <groupId>com.sun.el</groupId>
-          <artifactId>el-ri</artifactId>
-          <version>1.0</version>
-          <scope>provided</scope>
-        </dependency>  -->
-      </dependencies>
       <build>    
         <plugins>
           <plugin>
