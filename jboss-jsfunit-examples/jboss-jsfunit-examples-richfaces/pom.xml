@@ -119,6 +119,7 @@
             <version>2.0.2</version>
             <configuration>
               <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
+              <warSourceExcludes>WEB-INF/lib/jsf-api*.jar,WEB-INF/lib/jsf-impl*.jar,WEB-INF/lib/jstl-*.jar,WEB-INF/lib/el-*.jar</warSourceExcludes>
             </configuration>
           </plugin>
         </plugins>
