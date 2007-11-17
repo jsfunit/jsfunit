@@ -73,7 +73,7 @@ public class ParserUtils {
 		InputStream stream = streamProvider.getInputStream(resourcePath);
 		
 		if(stream == null)
-			throw new RuntimeException("Could not locate faces config file '" + resourcePath + "'" );
+			throw new RuntimeException("Could not locate file '" + resourcePath + "'" );
 		
 		return new ResourceUtils().getAsString(stream, resourcePath);
 	}

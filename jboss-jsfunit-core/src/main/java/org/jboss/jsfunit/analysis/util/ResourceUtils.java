@@ -48,6 +48,12 @@ public class ResourceUtils{
 			throw new RuntimeException("Could not read file " + resourceName, e);
 		}
 		
+		try {
+			reader.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Could not close stream for " + resourceName);
+		}
+		
 		return buffer.toString();
 	}
 	

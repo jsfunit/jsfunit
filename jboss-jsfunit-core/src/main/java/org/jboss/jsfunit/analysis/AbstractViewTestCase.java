@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.analysis;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -108,12 +109,22 @@ public class AbstractViewTestCase extends TestCase {
 		DocumentBuilder builder = ParserUtils.getDocumentBuilder();
 
 		for(String path : allPaths) {
+			InputStream stream = null;
 			try {
-				InputStream stream = streamProvider.getInputStream(path);
+				stream = streamProvider.getInputStream(path);
 				documentsByPath.put(path, builder.parse(stream));
 			} catch (Exception e) {
 				throw new RuntimeException("Could not parse file '" + path + "'", e);
+			}finally {
+				
+				if(stream != null)
+					try {
+						stream.close();
+					} catch (IOException e) {
+						throw new RuntimeException("Could not close stream for " + path);
+					}
 			}
+			
 		}
 	}
 
