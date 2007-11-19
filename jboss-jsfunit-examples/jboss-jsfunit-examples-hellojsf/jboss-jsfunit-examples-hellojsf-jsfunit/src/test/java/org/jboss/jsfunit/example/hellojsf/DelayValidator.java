@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-
- <!--
+/*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -20,21 +18,32 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- -->
- 
- 
-<!DOCTYPE faces-config PUBLIC
-  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
-  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+ */
 
-<faces-config>
+package org.jboss.jsfunit.example.hellojsf;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
+
+/**
+ * Sleeps 1.5 seconds during validation phase.
+ *
+ * @author Stan Silvert
+ */
+public class DelayValidator implements Validator
+{
+   public void validate(FacesContext facesContext, UIComponent uIComponent, Object object) throws ValidatorException
+   {
+      try
+      {
+         Thread.sleep(1500);
+      }
+      catch (InterruptedException e)
+      {
+         throw new RuntimeException(e);
+      }
+   }
    
-  <factory>
-    <faces-context-factory>org.jboss.jsfunit.context.JSFUnitFacesContextFactory</faces-context-factory>
-  </factory>
-    
-  <lifecycle>
-    <phase-listener>org.jboss.jsfunit.framework.JSFTimerPhaseListener</phase-listener>
-  </lifecycle>  
-
-</faces-config>
+}

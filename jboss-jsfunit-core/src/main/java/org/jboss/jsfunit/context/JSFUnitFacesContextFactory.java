@@ -28,7 +28,7 @@ import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.Lifecycle;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
+import org.jboss.jsfunit.framework.JSFTimer;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 
 /**
@@ -53,13 +53,16 @@ public class JSFUnitFacesContextFactory extends FacesContextFactory
                                        Lifecycle lifecycle) throws FacesException
    {
       HttpServletRequest req = (HttpServletRequest)request;
+      
       if (isJSFUnitRequest(req))
       {
          req.getSession().removeAttribute(JSFUnitFacesContext.SESSION_KEY); // must remove before creating any new FacesContext
          FacesContext realFacesContext = parent.getFacesContext(context, request, response, lifecycle);
+         clearJSFTimer(req);
          return new JSFUnitFacesContext(realFacesContext, request);
       }
       
+      clearJSFTimer(req);
       return parent.getFacesContext(context, request, response, lifecycle);
    }
    
@@ -76,4 +79,11 @@ public class JSFUnitFacesContextFactory extends FacesContextFactory
       return false;
    }
    
+   private void clearJSFTimer(HttpServletRequest req)
+   {
+      if (req.getSession().getAttribute(JSFTimer.SESSION_KEY) != null)
+      {
+         JSFTimer.clear();
+      }
+   }
 }

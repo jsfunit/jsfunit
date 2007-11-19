@@ -2,7 +2,12 @@
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
    
-   <filter>
+    <context-param>
+      <param-name>javax.faces.CONFIG_FILES</param-name>
+      <param-value>/WEB-INF/validator-config.xml</param-value>
+    </context-param>
+    
+    <filter>
      <filter-name>JSFUnitFilter</filter-name>
      <filter-class>org.jboss.jsfunit.framework.JSFUnitFilter</filter-class>
    </filter>
