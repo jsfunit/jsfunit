@@ -59,7 +59,7 @@ public class FormAuthenticationTest extends ServletTestCase
         {
         	JSFServerSession server = new JSFServerSession (client);
         	// check that the page can be accessed
-        	assertEquals ("/login.jsp", server.getCurrentViewId());
+        	assertEquals ("/login.jsp", server.getCurrentViewID());
         	// check that we can see something on the secured page
         	WebForm loginform = client.getWebResponse().getFormWithID("loginform");
         	loginform.setParameter("j_username", "admin");

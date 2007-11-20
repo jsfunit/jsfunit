@@ -131,7 +131,12 @@
               <directory>${basedir}/src/resources</directory>
               <targetPath>WEB-INF</targetPath> 
               <filtering>true</filtering> 
-            </resource> 
+            </resource>
+            <resource>
+              <directory>${basedir}/src/resources</directory>
+              <targetPath>META-INF</targetPath>
+              <filtering>true</filtering>
+            </resource>
           </webResources>
         </configuration>
       </plugin>
