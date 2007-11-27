@@ -73,6 +73,13 @@ public class Bean {
 
             throw new IllegalStateException("Could not find target index.");
         }
+        
+        // tests for case where f:param points to a Long instead of a String
+        // See JSFUNIT-56 in jira
+        public Long getLong()
+        {
+           return new Long(1);
+        }
 
 	public synchronized int getRequestCounter() {
 		return requestCounter;

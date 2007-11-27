@@ -158,4 +158,16 @@ public class A4JTest extends ServletTestCase
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[8]}"));
    }
    
+   /**
+    * Test for http://jira.jboss.com/jira/browse/JSFUNIT-56
+    */
+   public void testCommandLinkWithLongParam() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/pages/a4j-repeat-rerender_JSFUNIT-56.jsf");
+      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+      
+      ajaxClient.ajaxSubmit("0:fparam_command_link_up");
+   }
+   
 }

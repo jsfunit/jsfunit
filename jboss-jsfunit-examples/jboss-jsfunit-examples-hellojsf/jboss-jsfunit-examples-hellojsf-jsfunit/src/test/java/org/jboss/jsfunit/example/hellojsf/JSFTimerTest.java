@@ -25,11 +25,8 @@ package org.jboss.jsfunit.example.hellojsf;
 import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.WebRequest;
 import java.io.IOException;
-import java.util.Map;
-import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.context.JSFUnitFacesContext;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.framework.JSFTimer;
 import org.jboss.jsfunit.framework.WebConversationFactory;
@@ -42,19 +39,6 @@ import org.xml.sax.SAXException;
  */
 public class JSFTimerTest extends ServletTestCase
 {
-   
-   public void testGetTimerWithoutRequest() throws SAXException, IOException
-   {
-      try
-      {
-         JSFTimer.getTimer();
-         fail("Expected IllegalStateException");
-      }
-      catch (IllegalStateException e)
-      {
-         // OK
-      }
-   }
    
    public void testSimpleTiming() throws SAXException, IOException
    {

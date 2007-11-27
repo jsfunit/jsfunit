@@ -205,7 +205,15 @@ public class Ajax4jsfClient
       for (Iterator i = params.keySet().iterator(); i.hasNext();)
       {
          String param = (String)i.next();
-         req.setParameter(param, (String)params.get(param));
+         Object value = params.get(param);
+         if (value != null)
+         {
+            req.setParameter(param, value.toString());
+         }
+         else
+         {
+            req.setParameter(param, (String)null);
+         }
       }
    }
    
