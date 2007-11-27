@@ -75,8 +75,8 @@ public class JSFTimerTest extends ServletTestCase
       JSFClientSession client = new JSFClientSession("/index_longValidator.faces");
       JSFTimer timer = JSFTimer.getTimer();
       
-      // RestoreView should be skipped for a new session
-      assertEquals(0, timer.getPhaseTime(PhaseId.RESTORE_VIEW));
+      // ProcessValidations should be skipped for a new session
+      assertEquals(0, timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS));
       
       client.setParameter("input_foo_text", "Stan"); 
       client.submit("submit_button");
