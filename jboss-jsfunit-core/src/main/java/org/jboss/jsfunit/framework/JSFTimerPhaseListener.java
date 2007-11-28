@@ -22,12 +22,12 @@
 
 package org.jboss.jsfunit.framework;
 
-import java.util.Map;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
 /**
+ * This PhaseListener provides time stamps for each phase of the JSF lifecycle.
  *
  * @author Stan Silvert
  */

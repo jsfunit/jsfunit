@@ -52,7 +52,6 @@ public class JSFTimerTest extends ServletTestCase
       JSFClientSession client = new JSFClientSession("/index.faces");
       JSFTimer timer = JSFTimer.getTimer();
       
-      assertEquals(0, timer.getPhaseTime(PhaseId.RESTORE_VIEW));
       assertEquals(0, timer.getPhaseTime(PhaseId.APPLY_REQUEST_VALUES));
       assertEquals(0, timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS));
       assertEquals(0, timer.getPhaseTime(PhaseId.UPDATE_MODEL_VALUES));

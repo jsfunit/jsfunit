@@ -97,7 +97,10 @@ public class JSFTimer
       
       try
       {
-         if (facesContext == null) facesContext = FacesContextBridge.getCurrentInstance();
+         if (facesContext == null) 
+         {
+            facesContext = FacesContextBridge.getCurrentInstance();
+         }
       } 
       catch (NullPointerException e)
       {
