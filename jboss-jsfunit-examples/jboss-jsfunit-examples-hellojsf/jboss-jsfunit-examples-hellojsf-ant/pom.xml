@@ -157,10 +157,10 @@
                    <dependency groupId="cactus" 
                                artifactId="cactus"
                                version="13-1.7.1"/>
-                   <dependency groupId="org.jboss" 
+                   <dependency groupId="org.jboss.jsfunit" 
                                artifactId="jboss-jsfunit-core"
                                version="${project.version}"/>
-                   <dependency groupId="org.jboss" 
+                   <dependency groupId="org.jboss.jsfunit" 
                                artifactId="jboss-jsfunit-ant"
                                version="${project.version}"/>
                 </dependencies>
