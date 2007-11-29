@@ -33,8 +33,4 @@
     <faces-context-factory>org.jboss.jsfunit.context.JSFUnitFacesContextFactory</faces-context-factory>
   </factory>
     
-  <lifecycle>
-    <phase-listener>org.jboss.jsfunit.framework.JSFTimerPhaseListener</phase-listener>
-  </lifecycle>  
-
 </faces-config>
