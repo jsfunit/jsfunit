@@ -10,7 +10,7 @@
   <groupId>org.jboss.jsfunit</groupId>
   <artifactId>jboss-jsfunit</artifactId>
   <packaging>pom</packaging>
-  <version>1.0-beta-1</version>
+  <version>1.0-beta-2-SNAPSHOT</version>
   <description>JSFUnit is an integration test framework for JavaServer Faces.  JSFUnit tests run inside the container, which provides the developer full access to managed beans, the FacesContext, and the internal JSF component tree.  At the same time, you also have access to the HTML output of each client request.</description>
   <name>JSFUnit</name>
   <url>http://www.jsfunit.org</url>
@@ -41,9 +41,9 @@
   </developers>
 
   <scm>
-    <connection>scm:svn:http://anonsvn.jboss.org/repos/jsfunit/tags/jboss-jsfunit-1.0-beta-1</connection>
-    <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/tags/jboss-jsfunit-1.0-beta-1</developerConnection>
-    <url>http://fisheye.jboss.org/browse/JSFUnit/tags/jboss-jsfunit-1.0-beta-1</url>
+    <connection>scm:svn:http://anonsvn.jboss.org/repos/jsfunit/trunk</connection>
+    <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/trunk</developerConnection>
+    <url>http://fisheye.jboss.org/browse/JSFUnit</url>
   </scm>
     
   <reporting>
