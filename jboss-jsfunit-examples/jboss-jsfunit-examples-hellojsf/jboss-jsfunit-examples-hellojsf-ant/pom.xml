@@ -118,7 +118,7 @@
     </dependency>
     
     <dependency>
-      <groupId>org.jboss</groupId>
+      <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jboss-jsfunit-core</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
