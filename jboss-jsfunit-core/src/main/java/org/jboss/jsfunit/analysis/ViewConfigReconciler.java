@@ -84,6 +84,7 @@ public class ViewConfigReconciler {
 		String beanName = unwrapped.substring(0, indexOfDot);
 		String methodName = unwrapped.substring(indexOfDot + 1, unwrapped.length());
 		String query = "//managed-bean-name[text()='" + beanName + "']";
+		final String subQuery = "./managed-bean-class";
 		
 		for( String configPath : configByPath.keySet() ) {
 			NodeList list = new ParserUtils().query(configByPath.get(configPath), query, path);
@@ -94,8 +95,15 @@ public class ViewConfigReconciler {
 			else if (list.getLength() > 1)
 				fail(path + " has two managed beans named '" + beanName + "'");
 			
-			Node managedBeanClassName = list.item(0).getNextSibling();
-			verifyMethodExists(managedBeanClassName, methodName, path, beanName, el);
+			Node managedBeanName = list.item(0);
+			NodeList managedBeanClasses = new ParserUtils().query(managedBeanName.getParentNode(), subQuery, path);
+			
+			if( managedBeanClasses.getLength() == 0 )
+				fail(path + " has a managed-bean element w/out a managed-bean-class element");
+			else if(managedBeanClasses.getLength() > 1)
+				fail(path + " has a managed-bean element w/out > 1 managed-bean-class elements");
+			
+			verifyMethodExists(managedBeanClasses.item(0), methodName, path, beanName, el);
 		}
 		
 	}
