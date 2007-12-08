@@ -182,6 +182,12 @@ public class JSFClientSession
    public void doWebRequest(WebRequest request) throws SAXException, IOException
    {
       this.webResponse = this.webConversation.getResponse(request);
+      updateInternalState();
+   }
+    
+   // update clientIDs and updatedDOM
+   private void updateInternalState() throws SAXException
+   {
       this.clientIDs = new ClientIDs();
       
       try 
@@ -338,7 +344,7 @@ public class JSFClientSession
                                          "version of the submit() method.");
       
       this.webResponse = forms[0].submit();
-      this.clientIDs = new ClientIDs();
+      updateInternalState();
    }
    
    /**
@@ -362,7 +368,7 @@ public class JSFClientSession
       WebForm form = getForm(clientID);
       SubmitButton button = form.getSubmitButtonWithID(clientID);
       this.webResponse = form.submit(button);
-      this.clientIDs = new ClientIDs();
+      updateInternalState();
    }
    
    /**
@@ -388,7 +394,7 @@ public class JSFClientSession
       String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(clientID);
       this.webResponse = form.submitNoButton();
-      this.clientIDs = new ClientIDs();
+      updateInternalState();
    }
    
    /**
