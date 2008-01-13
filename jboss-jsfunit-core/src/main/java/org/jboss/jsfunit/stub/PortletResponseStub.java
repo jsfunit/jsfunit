@@ -28,6 +28,7 @@ import javax.portlet.PortletResponse;
  * <p>Stub implementation of <code>PortletResponse</code>.</p>
  *
  * $Id: PortletResponseStub.java 516091 2007-03-08 16:25:17Z greddin $
+ * @author Apache Software Foundation
  */
 
 public class PortletResponseStub implements PortletResponse {

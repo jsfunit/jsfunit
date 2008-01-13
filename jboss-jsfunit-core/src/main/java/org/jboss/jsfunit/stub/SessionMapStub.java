@@ -38,7 +38,7 @@ import javax.servlet.http.HttpSession;
  * <p>Stub impementation of <code>Map</code> for the session scope
  * attributes managed by {@link ExternalContextStub}.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 class SessionMapStub implements Map {

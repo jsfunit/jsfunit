@@ -37,7 +37,7 @@ import javax.servlet.http.HttpSessionContext;
 /**
  * <p>Stub implementation of <code>HttpSession</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class HttpSessionStub implements HttpSession {

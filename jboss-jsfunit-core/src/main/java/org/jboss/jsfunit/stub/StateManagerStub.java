@@ -31,7 +31,7 @@ import javax.faces.context.FacesContext;
 /**
  * <p>Stub implementation of <code>StateManager</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 public class StateManagerStub extends StateManager {
 

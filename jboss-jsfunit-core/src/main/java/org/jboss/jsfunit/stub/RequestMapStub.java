@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
  * <p>Stub impementation of <code>Map</code> for the request scope
  * attributes managed by {@link ExternalContextStub}.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 class RequestMapStub implements Map {

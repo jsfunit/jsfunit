@@ -31,6 +31,7 @@ import javax.el.VariableMapper;
  * <p>Stub implementation of <code>VariableMapper</code>.</p>
  *
  * @since 1.0.4
+ * @author Apache Software Foundation
  */
 
 public class VariableMapperStub extends VariableMapper {

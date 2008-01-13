@@ -32,6 +32,7 @@ import javax.el.ValueExpression;
 /**
  * <p>Stub implementation of <code>ExpressionFactory</code>.</p>
  *
+ * @author Apache Software Foundation
  * @since 1.0.4
  */
 public class ExpressionFactoryStub extends ExpressionFactory {

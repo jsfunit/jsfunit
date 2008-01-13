@@ -37,6 +37,8 @@ import javax.faces.context.FacesContext;
  * <li>A literal string that contains no expression delimiters.</li>
  * <li>An expression that starts with "#{" or "${", and ends with "}".</li>
  * </ul>
+ * 
+ * @author Apache Software Foundation
  */
 public class ValueExpressionStub extends ValueExpression {
     

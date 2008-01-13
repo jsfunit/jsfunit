@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  * added by JavaServer Faces 1.2.</p>
  *
  * $Id: ExternalContextStub12.java 464373 2006-10-16 04:21:54Z rahul $
+ * @author Apache Software Foundation
  *
  * @since 1.0.4
  */

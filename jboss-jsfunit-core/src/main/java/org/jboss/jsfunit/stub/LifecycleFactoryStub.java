@@ -32,7 +32,7 @@ import javax.faces.lifecycle.LifecycleFactory;
 /**
  * <p>Stub implementation of <code>LifecycleFactory</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class LifecycleFactoryStub extends LifecycleFactory {

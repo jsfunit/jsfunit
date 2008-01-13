@@ -34,6 +34,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * <p>Stub implementation of <code>MethodExpression</code>.</p>
+ * @author Apache Software Foundation
  */
 public class MethodExpressionStub extends MethodExpression {
     

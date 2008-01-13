@@ -29,6 +29,7 @@ import javax.servlet.ServletOutputStream;
  * <p>Stub implementation of <code>ServletOutputStream</code>.</p>
  *
  * $Id: ServletOutputStreamStub.java 464373 2006-10-16 04:21:54Z rahul $
+ * @author Apache Software Foundation
  */
 
 public class ServletOutputStreamStub extends ServletOutputStream {

@@ -45,7 +45,7 @@ import javax.faces.render.RenderKitFactory;
 /**
  * <p>Stub implementation of <code>FacesContext</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class FacesContextStub extends FacesContext {

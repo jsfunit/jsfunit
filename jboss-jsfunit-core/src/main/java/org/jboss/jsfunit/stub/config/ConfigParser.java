@@ -59,6 +59,7 @@ import org.xml.sax.SAXException;
  * of the <code>parse()</code> methods.</p>
  *
  * @since 1.1
+ * @author Apache Software Foundation
  */
 public final class ConfigParser {
     

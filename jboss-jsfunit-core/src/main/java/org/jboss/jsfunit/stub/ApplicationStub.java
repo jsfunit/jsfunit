@@ -48,7 +48,7 @@ import javax.faces.validator.Validator;
 /**
  * <p>Stub implementation of <code>Application</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ApplicationStub extends Application {

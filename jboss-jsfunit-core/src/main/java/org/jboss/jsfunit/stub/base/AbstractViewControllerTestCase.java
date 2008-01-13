@@ -33,6 +33,8 @@ import java.util.Iterator;
  * <code>super.setUp()</code> and <code>super.tearDown()</code> respectively,
  * and that you implement your own <code>suite()</code> method that exposes
  * the test methods for your test case.</p>
+ * 
+ * @author Apache Software Foundation
  */
 public abstract class AbstractViewControllerTestCase extends AbstractJsfTestCase {
 

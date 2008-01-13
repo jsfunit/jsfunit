@@ -37,6 +37,7 @@ import javax.faces.el.PropertyResolver;
  * 5.6.1.6, for requirements implemented by this class.</p>
  *
  * @since 1.0.4
+ * @author Apache Software Foundation
  */
 public class FacesPropertyResolverChainWrapper extends AbstractELResolver {
     

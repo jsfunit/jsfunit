@@ -53,7 +53,7 @@ import javax.servlet.ServletException;
  * <code>File</code> object pointing at a directory that simulates a
  * web application structure.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ServletContextStub implements ServletContext {

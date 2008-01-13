@@ -31,6 +31,7 @@ import javax.el.FunctionMapper;
  * <p>Stub implementation of <code>FunctionMapper</code>.</p>
  *
  * @since 1.0.4
+ * @author Apache Software Foundation
  */
 
 public class FunctionMapperStub extends FunctionMapper {

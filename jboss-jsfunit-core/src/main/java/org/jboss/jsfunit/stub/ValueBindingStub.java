@@ -40,6 +40,7 @@ import javax.faces.el.VariableResolver;
 
 /**
  * <p>Stub implementation of <code>ValueBinding</code>.</p>
+ * @author Apache Software Foundation
  */
 
 public class ValueBindingStub extends ValueBinding implements StateHolder {

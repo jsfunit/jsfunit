@@ -33,7 +33,7 @@ import javax.faces.context.FacesContext;
 /**
  * <p>Stub implementation of <code>NavigationHandler</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class NavigationHandlerStub extends NavigationHandler {

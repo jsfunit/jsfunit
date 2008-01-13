@@ -29,7 +29,7 @@ import javax.faces.application.ApplicationFactory;
 /**
  * <p>Stub implementation of <code>ApplicationFactory</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ApplicationFactoryStub extends ApplicationFactory {

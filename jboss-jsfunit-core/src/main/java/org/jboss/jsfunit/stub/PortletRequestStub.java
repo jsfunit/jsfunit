@@ -39,6 +39,7 @@ import javax.portlet.WindowState;
  * <p> Stub implementation of <code>PortletRequest</code>. </p>
  *
  * $Id: PortletRequestStub.java 516091 2007-03-08 16:25:17Z greddin $
+ * @author Apache Software Foundation
  */
 
 public class PortletRequestStub implements PortletRequest {

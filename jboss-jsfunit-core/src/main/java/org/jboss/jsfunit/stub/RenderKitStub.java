@@ -37,7 +37,7 @@ import javax.faces.render.ResponseStateManager;
 /**
  * <p>Stub implementation of <code>RenderKit</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class RenderKitStub extends RenderKit {

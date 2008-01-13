@@ -37,7 +37,7 @@ import javax.servlet.ServletContext;
  * <p>Stub impementation of <code>Map</code> for the application scope
  * attributes managed by {@link ExternalContextStub}.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 class ApplicationMapStub implements Map {

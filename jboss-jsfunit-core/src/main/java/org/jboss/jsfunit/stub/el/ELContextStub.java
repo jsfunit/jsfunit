@@ -35,6 +35,7 @@ import javax.faces.context.FacesContext;
  * <p>Stub implementation of <code>ELContext</code>.</p>
  *
  * @since 1.0.4
+ * @author Apache Software Foundation
  */
 
 public class ELContextStub extends ELContext {

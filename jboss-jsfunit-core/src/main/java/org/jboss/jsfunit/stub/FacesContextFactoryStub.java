@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * <p>Stub implementation of <code>FacesContextFactory</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class FacesContextFactoryStub extends FacesContextFactory {

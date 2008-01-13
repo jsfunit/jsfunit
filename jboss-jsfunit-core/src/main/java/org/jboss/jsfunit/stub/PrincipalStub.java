@@ -26,6 +26,7 @@ import java.security.Principal;
 
 /**
  * <p>Stub implementation of <code>Principal</code>.</p>
+ * @author Apache Software Foundation
  */
 public class PrincipalStub implements Principal {
 

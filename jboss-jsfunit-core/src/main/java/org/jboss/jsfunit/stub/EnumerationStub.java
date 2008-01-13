@@ -29,7 +29,7 @@ import java.util.Iterator;
  * <p>Stub implementation of an <code>Enumeration</code> wrapper around
  * an <code>Iterator</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 class EnumerationStub implements Enumeration {

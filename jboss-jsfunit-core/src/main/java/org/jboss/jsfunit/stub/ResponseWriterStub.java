@@ -29,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 
 /**
  * <p>Stub implementation of <code>javax.faces.context.ResponseWriter</code>.</p>
+ * @author Apache Software Foundation
  */
 public class ResponseWriterStub extends ResponseWriter {
 

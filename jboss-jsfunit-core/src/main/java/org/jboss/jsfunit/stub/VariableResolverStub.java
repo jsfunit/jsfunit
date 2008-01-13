@@ -37,7 +37,7 @@ import javax.faces.el.VariableResolver;
  * <code>sessionScope</code>, plus it knows how to search in ascending
  * scopes for non-reserved names.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class VariableResolverStub extends VariableResolver {

@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * <p>Stub implementation of <code>HttpServletResponse</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class HttpServletResponseStub implements HttpServletResponse {

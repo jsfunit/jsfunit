@@ -57,7 +57,7 @@ import org.jboss.jsfunit.stub.el.ExpressionFactoryStub;
  * added by JavaServer Faces 1.2.</p>
  *
  * $Id: ApplicationStub12.java 503872 2007-02-05 21:10:06Z rahul $
- *
+ * @author Apache Software Foundation
  * @since 1.0.4
  */
 public class ApplicationStub12 extends ApplicationStub {

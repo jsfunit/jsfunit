@@ -44,6 +44,8 @@ import javax.faces.el.ValueBinding;
  *     "." must conform to the limitations of {@link ValueBindingStub}.</li>
  * <li>The name of the method to be executed cannot be delimited by "[]".</li>
  * </ul>
+ * 
+ * @author Apache Software Foundation
  */
 
 public class MethodBindingStub extends MethodBinding implements StateHolder {

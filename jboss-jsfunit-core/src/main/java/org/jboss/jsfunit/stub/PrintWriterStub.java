@@ -30,6 +30,7 @@ import java.io.PrintWriter;
  * <p>Stub implementation of <code>PrintWriter</code>.</p>
  *
  * $Id: PrintWriterStub.java 464373 2006-10-16 04:21:54Z rahul $
+ * @author Apache Software Foundation
  */
 
 public class PrintWriterStub extends PrintWriter {

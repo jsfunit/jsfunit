@@ -35,7 +35,7 @@ import javax.faces.el.PropertyResolver;
 /**
  * <p>Stub implementation of <code>PropertyResolver</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class PropertyResolverStub extends PropertyResolver {

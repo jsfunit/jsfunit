@@ -33,7 +33,7 @@ import javax.faces.render.RenderKitFactory;
 /**
  * <p>Stub implementation of <code>RenderKitFactory</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class RenderKitFactoryStub extends RenderKitFactory {

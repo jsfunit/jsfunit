@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * <p>Stub implementation of <code>ValueExpression</code> that wraps a variable.</p>
+ * @author Apache Software Foundation
  */
 public class VariableValueExpressionStub extends ValueExpression {
     

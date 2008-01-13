@@ -27,6 +27,7 @@ import javax.el.ELResolver;
 
 /**
  * <p>Convenience base class for EL resolvers.</p>
+ * @author Apache Software Foundation
  */
 abstract class AbstractELResolver extends ELResolver {
     

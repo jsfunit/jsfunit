@@ -32,7 +32,7 @@ import javax.faces.render.RenderKitFactory;
 /**
  * <p>Stub implementation of <code>ViewHandler</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ViewHandlerStub extends ViewHandler {

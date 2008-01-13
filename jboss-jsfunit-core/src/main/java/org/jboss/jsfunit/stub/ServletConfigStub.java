@@ -31,7 +31,7 @@ import javax.servlet.ServletContext;
 /**
  * <p>Stub implementation of <code>ServletConfig</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ServletConfigStub implements ServletConfig {

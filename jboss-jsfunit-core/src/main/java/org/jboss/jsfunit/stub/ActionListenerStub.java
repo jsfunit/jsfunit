@@ -29,7 +29,7 @@ import javax.faces.event.ActionListener;
 /**
  * <p>Stub implementation of the default <code>ActionListenerStub</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ActionListenerStub implements ActionListener {

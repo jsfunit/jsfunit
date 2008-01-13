@@ -45,7 +45,7 @@ import javax.servlet.http.HttpSession;
 /**
  * <p>Stub implementation of <code>ExternalContext</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ExternalContextStub extends ExternalContext {

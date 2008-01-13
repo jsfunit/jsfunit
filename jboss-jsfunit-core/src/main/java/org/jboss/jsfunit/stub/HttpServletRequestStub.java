@@ -50,7 +50,7 @@ import javax.servlet.http.HttpSession;
 /**
  * <p>Stub implementation of <code>HttpServletContext</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class HttpServletRequestStub implements HttpServletRequest {

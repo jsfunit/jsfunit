@@ -33,7 +33,7 @@ import javax.servlet.ServletResponse;
 /**
  * <p>Stub implementation of <code>Servlet</code>.</p>
  *
- * $Id$
+ * @author Apache Software Foundation
  */
 
 public class ServletStub implements Servlet {
