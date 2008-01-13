@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @since 1.0.4
  */
 
-public class MockExternalContext12 extends MockExternalContext {
+public class MockExternalContext12 extends ExternalContextStub {
 
 
     // ------------------------------------------------------------ Constructors

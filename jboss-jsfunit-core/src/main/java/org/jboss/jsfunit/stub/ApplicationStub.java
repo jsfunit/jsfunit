@@ -46,7 +46,7 @@ import javax.faces.validator.Validator;
  * $Id$
  */
 
-public class MockApplication extends Application {
+public class ApplicationStub extends Application {
 
 
     // ------------------------------------------------------------ Constructors
@@ -54,9 +54,9 @@ public class MockApplication extends Application {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockApplication() {
+    public ApplicationStub() {
 
-        setActionListener(new MockActionListener());
+        setActionListener(new ActionListenerStub());
         components = new HashMap();
         converters = new HashMap();
         converters1 = new HashMap();

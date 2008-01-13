@@ -28,7 +28,7 @@ import javax.el.PropertyNotFoundException;
 import javax.el.PropertyNotWritableException;
 import javax.faces.context.FacesContext;
 
-import org.jboss.jsfunit.stub.MockApplication12;
+import org.jboss.jsfunit.stub.ApplicationStub12;
 
 /**
  * <p><code>ELResolver</code> implementation that accesses resource bundles
@@ -71,8 +71,8 @@ public class FacesResourceBundleELResolver extends AbstractELResolver {
         // Create the variables we will need
         List descriptors = new ArrayList();
         FacesContext fcontext = (FacesContext) context.getContext(FacesContext.class);
-        MockApplication12 application =
-                (MockApplication12) fcontext.getApplication();
+        ApplicationStub12 application =
+                (ApplicationStub12) fcontext.getApplication();
         String key = null;
         Object value = null;
 

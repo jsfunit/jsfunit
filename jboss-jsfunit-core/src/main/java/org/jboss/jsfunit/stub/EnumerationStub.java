@@ -27,7 +27,7 @@ import java.util.Iterator;
  * $Id$
  */
 
-class MockEnumeration implements Enumeration {
+class EnumerationStub implements Enumeration {
 
 
     // ------------------------------------------------------------ Constructors
@@ -38,7 +38,7 @@ class MockEnumeration implements Enumeration {
      *
      * @param iterator The <code>Iterator</code> to be wrapped
      */
-    public MockEnumeration(Iterator iterator) {
+    public EnumerationStub(Iterator iterator) {
 
         this.iterator = iterator;
 

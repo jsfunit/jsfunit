@@ -127,7 +127,7 @@ public class MockHttpSession implements HttpSession {
     /** {@inheritDoc} */
     public Enumeration getAttributeNames() {
 
-        return new MockEnumeration(attributes.keySet().iterator());
+        return new EnumerationStub(attributes.keySet().iterator());
 
     }
 

@@ -22,12 +22,12 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
 /**
- * <p>Mock implementation of the default <code>ActionListener</code>.</p>
+ * <p>Mock implementation of the default <code>ActionListenerStub</code>.</p>
  *
  * $Id$
  */
 
-public class MockActionListener implements ActionListener {
+public class ActionListenerStub implements ActionListener {
 
 
     // ------------------------------------------------------------ Constructors
@@ -36,7 +36,7 @@ public class MockActionListener implements ActionListener {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockActionListener() {
+    public ActionListenerStub() {
     }
 
 
@@ -46,7 +46,7 @@ public class MockActionListener implements ActionListener {
     // ------------------------------------------------------ Instance Variables
 
 
-    // -------------------------------------------------- ActionListener Methods
+    // -------------------------------------------------- ActionListenerStub Methods
 
 
     /**

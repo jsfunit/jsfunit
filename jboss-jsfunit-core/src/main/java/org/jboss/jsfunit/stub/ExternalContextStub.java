@@ -43,7 +43,7 @@ import javax.servlet.http.HttpSession;
  * $Id$
  */
 
-public class MockExternalContext extends ExternalContext {
+public class ExternalContextStub extends ExternalContext {
 
 
     // ------------------------------------------------------------ Constructors
@@ -56,14 +56,14 @@ public class MockExternalContext extends ExternalContext {
      * @param request <code>HttpServetRequest</code> for this request
      * @param response <code>HttpServletResponse</code> for this request
      */
-    public MockExternalContext(ServletContext context,
+    public ExternalContextStub(ServletContext context,
                                HttpServletRequest request,
                                HttpServletResponse response) {
 
         this.context = context;
         this.request = request;
         this.response = response;
-        applicationMap = new MockApplicationMap(context);
+        applicationMap = new ApplicationMapStub(context);
         requestMap = new MockRequestMap(request);
 
     }

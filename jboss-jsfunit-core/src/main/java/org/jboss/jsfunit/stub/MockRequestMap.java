@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>Mock impementation of <code>Map</code> for the request scope
- * attributes managed by {@link MockExternalContext}.</p>
+ * attributes managed by {@link ExternalContextStub}.</p>
  *
  * $Id$
  */

@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * <p>Mock impementation of <code>Map</code> for the session scope
- * attributes managed by {@link MockExternalContext}.</p>
+ * attributes managed by {@link ExternalContextStub}.</p>
  *
  * $Id$
  */

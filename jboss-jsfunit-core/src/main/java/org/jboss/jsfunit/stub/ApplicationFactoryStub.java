@@ -27,7 +27,7 @@ import javax.faces.application.ApplicationFactory;
  * $Id$
  */
 
-public class MockApplicationFactory extends ApplicationFactory {
+public class ApplicationFactoryStub extends ApplicationFactory {
 
 
     // ------------------------------------------------------------ Constructors
@@ -36,7 +36,7 @@ public class MockApplicationFactory extends ApplicationFactory {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockApplicationFactory() {
+    public ApplicationFactoryStub() {
 
     }
 
@@ -64,8 +64,8 @@ public class MockApplicationFactory extends ApplicationFactory {
             Class clazz = null;
             try {
                 clazz = this.getClass().getClassLoader().loadClass
-                  ("org.jboss.jsfunit.stub.MockApplication12");
-                this.application = (MockApplication) clazz.newInstance();
+                  ("org.jboss.jsfunit.stub.ApplicationStub12");
+                this.application = (ApplicationStub) clazz.newInstance();
             } catch (NoClassDefFoundError e) {
                 clazz = null; // We are not running in a JSF 1.2 environment
             } catch (ClassNotFoundException e) {
@@ -78,8 +78,8 @@ public class MockApplicationFactory extends ApplicationFactory {
             if (clazz == null) {
                 try {
                     clazz = this.getClass().getClassLoader().loadClass
-                      ("org.jboss.jsfunit.stub.MockApplication");
-                    this.application = (MockApplication) clazz.newInstance();
+                      ("org.jboss.jsfunit.stub.ApplicationStub");
+                    this.application = (ApplicationStub) clazz.newInstance();
                 } catch (RuntimeException e) {
                     throw e;
                 } catch (Exception e) {

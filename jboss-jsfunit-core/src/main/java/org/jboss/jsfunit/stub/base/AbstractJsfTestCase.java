@@ -28,8 +28,8 @@ import javax.faces.render.RenderKitFactory;
 
 import junit.framework.TestCase;
 
-import org.jboss.jsfunit.stub.MockApplication;
-import org.jboss.jsfunit.stub.MockExternalContext;
+import org.jboss.jsfunit.stub.ApplicationStub;
+import org.jboss.jsfunit.stub.ExternalContextStub;
 import org.jboss.jsfunit.stub.MockFacesContext;
 import org.jboss.jsfunit.stub.MockFacesContextFactory;
 import org.jboss.jsfunit.stub.MockHttpServletRequest;
@@ -47,9 +47,9 @@ import org.jboss.jsfunit.stub.MockServletContext;
  * protected variables are initialized in the <code>setUp()</code> method, and
  * cleaned up in the <code>tearDown()</code> method:</p>
  * <ul>
- * <li><code>application</code> (<code>MockApplication</code>)</li>
+ * <li><code>application</code> (<code>ApplicationStub</code>)</li>
  * <li><code>config</code> (<code>MockServletConfig</code>)</li>
- * <li><code>externalContext</code> (<code>MockExternalContext</code>)</li>
+ * <li><code>externalContext</code> (<code>ExternalContextStub</code>)</li>
  * <li><code>facesContext</code> (<code>MockFacesContext</code>)</li>
  * <li><code>lifecycle</code> (<code>MockLifecycle</code>)</li>
  * <li><code>request</code> (<code>MockHttpServletRequest</code></li>
@@ -112,7 +112,7 @@ public abstract class AbstractJsfTestCase extends TestCase {
         // Set up JSF API Objects
         FactoryFinder.releaseFactories();
         FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
-        "org.jboss.jsfunit.stub.MockApplicationFactory");
+        "org.jboss.jsfunit.stub.ApplicationFactoryStub");
         FactoryFinder.setFactory(FactoryFinder.FACES_CONTEXT_FACTORY,
         "org.jboss.jsfunit.stub.MockFacesContextFactory");
         FactoryFinder.setFactory(FactoryFinder.LIFECYCLE_FACTORY,
@@ -121,7 +121,7 @@ public abstract class AbstractJsfTestCase extends TestCase {
         "org.jboss.jsfunit.stub.MockRenderKitFactory");
 
         externalContext =
-            new MockExternalContext(servletContext, request, response);
+            new ExternalContextStub(servletContext, request, response);
         lifecycleFactory = (MockLifecycleFactory)
         FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
         lifecycle = (MockLifecycle)
@@ -133,14 +133,14 @@ public abstract class AbstractJsfTestCase extends TestCase {
                 request,
                 response,
                 lifecycle);
-        externalContext = (MockExternalContext) facesContext.getExternalContext();
+        externalContext = (ExternalContextStub) facesContext.getExternalContext();
         UIViewRoot root = new UIViewRoot();
         root.setViewId("/viewId");
         root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         facesContext.setViewRoot(root);
         ApplicationFactory applicationFactory = (ApplicationFactory)
           FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
-        application = (MockApplication) applicationFactory.getApplication();
+        application = (ApplicationStub) applicationFactory.getApplication();
         facesContext.setApplication(application);
         RenderKitFactory renderKitFactory = (RenderKitFactory)
         FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
@@ -179,9 +179,9 @@ public abstract class AbstractJsfTestCase extends TestCase {
 
 
     // Mock object instances for our tests
-    protected MockApplication         application = null;
+    protected ApplicationStub         application = null;
     protected MockServletConfig       config = null;
-    protected MockExternalContext     externalContext = null;
+    protected ExternalContextStub     externalContext = null;
     protected MockFacesContext        facesContext = null;
     protected MockFacesContextFactory facesContextFactory = null;
     protected MockLifecycle           lifecycle = null;

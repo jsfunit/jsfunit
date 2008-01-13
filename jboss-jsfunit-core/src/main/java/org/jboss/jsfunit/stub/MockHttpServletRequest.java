@@ -543,7 +543,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     /** {@inheritDoc} */
     public Enumeration getAttributeNames() {
 
-        return new MockEnumeration(attributes.keySet().iterator());
+        return new EnumerationStub(attributes.keySet().iterator());
 
     }
 
@@ -644,7 +644,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     /** {@inheritDoc} */
     public Enumeration getParameterNames() {
 
-        return new MockEnumeration(parameters.keySet().iterator());
+        return new EnumerationStub(parameters.keySet().iterator());
 
     }
 

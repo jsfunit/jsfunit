@@ -51,11 +51,11 @@ import org.jboss.jsfunit.stub.el.MockExpressionFactory;
  * <p>Mock implementation of <code>ExternalContext</code> that includes the semantics
  * added by JavaServer Faces 1.2.</p>
  *
- * $Id: MockApplication12.java 503872 2007-02-05 21:10:06Z rahul $
+ * $Id: ApplicationStub12.java 503872 2007-02-05 21:10:06Z rahul $
  *
  * @since 1.0.4
  */
-public class MockApplication12 extends MockApplication {
+public class ApplicationStub12 extends ApplicationStub {
     
 
     // ------------------------------------------------------------ Constructors
@@ -64,7 +64,7 @@ public class MockApplication12 extends MockApplication {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockApplication12() {
+    public ApplicationStub12() {
 
         super();
 

@@ -125,8 +125,8 @@ public class MockFacesContextFactory extends FacesContextFactory {
                                         Object response,
                                         Lifecycle lifecycle) throws FacesException {
 
-        // Select the appropriate MockExternalContext implementation class
-        Class clazz = MockExternalContext.class;
+        // Select the appropriate ExternalContextStub implementation class
+        Class clazz = ExternalContextStub.class;
         if (jsf12) {
             try {
                 clazz = this.getClass().getClassLoader().loadClass
@@ -148,10 +148,10 @@ public class MockFacesContextFactory extends FacesContextFactory {
             throw new FacesException(e);
         }
 
-        // Construct an appropriate MockExternalContext instance
-        MockExternalContext externalContext = null;
+        // Construct an appropriate ExternalContextStub instance
+        ExternalContextStub externalContext = null;
         try {
-            externalContext = (MockExternalContext) mecConstructor.newInstance
+            externalContext = (ExternalContextStub) mecConstructor.newInstance
               (new Object[] { context, request, response });
         } catch (RuntimeException e) {
             throw e;

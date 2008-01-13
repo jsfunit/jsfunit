@@ -30,12 +30,12 @@ import javax.servlet.ServletContext;
 
 /**
  * <p>Mock impementation of <code>Map</code> for the application scope
- * attributes managed by {@link MockExternalContext}.</p>
+ * attributes managed by {@link ExternalContextStub}.</p>
  *
  * $Id$
  */
 
-class MockApplicationMap implements Map {
+class ApplicationMapStub implements Map {
 
 
     // ------------------------------------------------------------ Constructors
@@ -46,7 +46,7 @@ class MockApplicationMap implements Map {
      *
      * @param context ServletContext whose attributes we are wrapping
      */
-    public MockApplicationMap(ServletContext context) {
+    public ApplicationMapStub(ServletContext context) {
 
         this.context = context;
 

@@ -131,9 +131,9 @@ public class MockPortletSession implements PortletSession {
     public Enumeration getAttributeNames(int scope) {
 
         if (scope == PORTLET_SCOPE) {
-            return new MockEnumeration(portletAttributes.keySet().iterator());
+            return new EnumerationStub(portletAttributes.keySet().iterator());
         } else if (scope == APPLICATION_SCOPE) {
-            return new MockEnumeration(applicationAttributes.keySet()
+            return new EnumerationStub(applicationAttributes.keySet()
                     .iterator());
         }
 
