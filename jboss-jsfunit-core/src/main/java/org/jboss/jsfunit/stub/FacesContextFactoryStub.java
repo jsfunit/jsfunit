@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p>Mock implementation of <code>FacesContextFactory</code>.</p>
+ * <p>Stub implementation of <code>FacesContextFactory</code>.</p>
  *
  * $Id$
  */
@@ -52,7 +52,7 @@ public class FacesContextFactoryStub extends FacesContextFactory {
 
         Class clazz = null;
 
-        // Try to load the 1.2 version of our mock FacesContext class
+        // Try to load the 1.2 version of our stub FacesContext class
         try {
             clazz = this.getClass().getClassLoader().loadClass("org.jboss.jsfunit.stub.FacesContextStub12");
             constructor = clazz.getConstructor(facesContextSignature);
@@ -87,7 +87,7 @@ public class FacesContextFactoryStub extends FacesContextFactory {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

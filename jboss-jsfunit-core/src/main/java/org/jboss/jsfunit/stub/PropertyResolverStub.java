@@ -33,7 +33,7 @@ import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.PropertyResolver;
 
 /**
- * <p>Mock implementation of <code>PropertyResolver</code>.</p>
+ * <p>Stub implementation of <code>PropertyResolver</code>.</p>
  *
  * $Id$
  */
@@ -51,7 +51,7 @@ public class PropertyResolverStub extends PropertyResolver {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

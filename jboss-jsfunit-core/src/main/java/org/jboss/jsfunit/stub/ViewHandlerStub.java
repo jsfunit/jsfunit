@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKitFactory;
 
 /**
- * <p>Mock implementation of <code>ViewHandler</code>.</p>
+ * <p>Stub implementation of <code>ViewHandler</code>.</p>
  *
  * $Id$
  */
@@ -48,7 +48,7 @@ public class ViewHandlerStub extends ViewHandler {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

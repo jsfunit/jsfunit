@@ -39,7 +39,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p>Mock implementation of <code>HttpServletResponse</code>.</p>
+ * <p>Stub implementation of <code>HttpServletResponse</code>.</p>
  *
  * $Id$
  */
@@ -56,7 +56,7 @@ public class HttpServletResponseStub implements HttpServletResponse {
     public HttpServletResponseStub() { }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

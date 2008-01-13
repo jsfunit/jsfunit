@@ -29,7 +29,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 /**
- * <p>Mock implementation of <code>ServletConfig</code>.</p>
+ * <p>Stub implementation of <code>ServletConfig</code>.</p>
  *
  * $Id$
  */
@@ -58,7 +58,7 @@ public class ServletConfigStub implements ServletConfig {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

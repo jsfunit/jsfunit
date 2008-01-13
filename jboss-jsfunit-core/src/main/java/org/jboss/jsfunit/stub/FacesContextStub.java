@@ -43,7 +43,7 @@ import javax.faces.render.RenderKitFactory;
 
 
 /**
- * <p>Mock implementation of <code>FacesContext</code>.</p>
+ * <p>Stub implementation of <code>FacesContext</code>.</p>
  *
  * $Id$
  */
@@ -72,7 +72,7 @@ public class FacesContextStub extends FacesContext {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

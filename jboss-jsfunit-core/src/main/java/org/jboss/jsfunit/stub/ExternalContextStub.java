@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * <p>Mock implementation of <code>ExternalContext</code>.</p>
+ * <p>Stub implementation of <code>ExternalContext</code>.</p>
  *
  * $Id$
  */
@@ -74,7 +74,7 @@ public class ExternalContextStub extends ExternalContext {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables
@@ -91,7 +91,7 @@ public class ExternalContextStub extends ExternalContext {
     private Map requestParameterMap = new HashMap();
 
 
-    // ------------------------------------------------- setters for the mock object
+    // ------------------------------------------------- setters for the stub object
 
 
     /**

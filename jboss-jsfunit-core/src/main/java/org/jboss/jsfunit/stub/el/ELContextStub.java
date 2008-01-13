@@ -32,19 +32,19 @@ import javax.el.VariableMapper;
 import javax.faces.context.FacesContext;
 
 /**
- * <p>Mock implementation of <code>ELContext</code>.</p>
+ * <p>Stub implementation of <code>ELContext</code>.</p>
  *
  * @since 1.0.4
  */
 
-public class MockELContext extends ELContext {
+public class ELContextStub extends ELContext {
     
 
     // ------------------------------------------------------------ Constructors
 
 
-    /** Creates a new instance of MockELContext */
-    public MockELContext() {
+    /** Creates a new instance of ELContextStub */
+    public ELContextStub() {
     }
     
 
@@ -52,13 +52,13 @@ public class MockELContext extends ELContext {
 
 
     private Map contexts = new HashMap();
-    private FunctionMapper functionMapper = new MockFunctionMapper();
+    private FunctionMapper functionMapper = new FunctionMapperStub();
     private Locale locale = Locale.getDefault();
     private boolean propertyResolved;
-    private VariableMapper variableMapper = new MockVariableMapper();
+    private VariableMapper variableMapper = new VariableMapperStub();
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
 

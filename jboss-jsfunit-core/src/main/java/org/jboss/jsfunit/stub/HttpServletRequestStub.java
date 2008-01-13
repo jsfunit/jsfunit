@@ -48,7 +48,7 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * <p>Mock implementation of <code>HttpServletContext</code>.</p>
+ * <p>Stub implementation of <code>HttpServletContext</code>.</p>
  *
  * $Id$
  */
@@ -95,7 +95,7 @@ public class HttpServletRequestStub implements HttpServletRequest {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

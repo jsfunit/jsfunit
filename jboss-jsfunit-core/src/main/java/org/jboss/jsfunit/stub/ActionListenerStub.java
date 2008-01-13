@@ -27,7 +27,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
 /**
- * <p>Mock implementation of the default <code>ActionListenerStub</code>.</p>
+ * <p>Stub implementation of the default <code>ActionListenerStub</code>.</p>
  *
  * $Id$
  */
@@ -45,7 +45,7 @@ public class ActionListenerStub implements ActionListener {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

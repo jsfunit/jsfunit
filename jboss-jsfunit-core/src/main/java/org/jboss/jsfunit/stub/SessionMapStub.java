@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * <p>Mock impementation of <code>Map</code> for the session scope
+ * <p>Stub impementation of <code>Map</code> for the session scope
  * attributes managed by {@link ExternalContextStub}.</p>
  *
  * $Id$
@@ -61,7 +61,7 @@ class SessionMapStub implements Map {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

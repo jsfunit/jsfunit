@@ -183,7 +183,7 @@ public abstract class AbstractJsfTestCase extends TestCase {
     // ------------------------------------------------------ Instance Variables
 
 
-    // Mock object instances for our tests
+    // Stub object instances for our tests
     protected ApplicationStub         application = null;
     protected ServletConfigStub       config = null;
     protected ExternalContextStub     externalContext = null;

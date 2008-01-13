@@ -30,7 +30,7 @@ import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 
 /**
- * <p>Mock implementation of <code>LifecycleFactory</code>.</p>
+ * <p>Stub implementation of <code>LifecycleFactory</code>.</p>
  *
  * $Id$
  */
@@ -52,7 +52,7 @@ public class LifecycleFactoryStub extends LifecycleFactory {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

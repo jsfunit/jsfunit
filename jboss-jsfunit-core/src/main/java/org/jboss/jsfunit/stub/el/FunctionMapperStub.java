@@ -22,25 +22,25 @@
 
 package org.jboss.jsfunit.stub.el;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import javax.el.ValueExpression;
-import javax.el.VariableMapper;
+import javax.el.FunctionMapper;
 
 /**
- * <p>Mock implementation of <code>VariableMapper</code>.</p>
+ * <p>Stub implementation of <code>FunctionMapper</code>.</p>
  *
  * @since 1.0.4
  */
 
-public class MockVariableMapper extends VariableMapper {
+public class FunctionMapperStub extends FunctionMapper {
     
 
     // ------------------------------------------------------------ Constructors
 
 
-    /** Creates a new instance of MockVariableMapper */
-    public MockVariableMapper() {
+    /** Creates a new instance of FunctionMapperStub */
+    public FunctionMapperStub() {
     }
     
 
@@ -48,35 +48,33 @@ public class MockVariableMapper extends VariableMapper {
 
 
     /**
-     * <p>Map of <code>ValueExpression</code>s, keyed by variable name.</p>
+     * <p>Map of <code>Method</code> descriptors for static methods, keyed by
+     * a string composed of the prefix (or "" if none), a ":", and the local name.</p>
      */
-    private Map expressions = new HashMap();
+    private Map functions = new HashMap();
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
+
+
+    /**
+     * <p>Store a mapping of the specified prefix and localName to the
+     * specified method, which must be static.</p>
+     */
+    public void mapFunction(String prefix, String localName, Method method) {
+
+        functions.put(prefix + ":" + localName, method);
+
+    }
 
 
     // -------------------------------------------------- FunctionMapper Methods
 
 
     /** {@inheritDoc} */
-    public ValueExpression resolveVariable(String variable) {
+    public Method resolveFunction(String prefix, String localName) {
 
-        return (ValueExpression) expressions.get(variable);
-
-    }
-
-
-    /** {@inheritDoc} */
-    public ValueExpression setVariable(String variable, ValueExpression expression) {
-
-        ValueExpression original = (ValueExpression) expressions.get(variable);
-        if (expression == null) {
-            expressions.remove(variable);
-        } else {
-            expressions.put(variable, expression);
-        }
-        return original;
+        return (Method) functions.get(prefix + ":" + localName);
 
     }
 

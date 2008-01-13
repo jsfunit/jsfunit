@@ -33,9 +33,9 @@ import javax.el.MethodInfo;
 import javax.faces.context.FacesContext;
 
 /**
- * <p>Mock implementation of <code>MethodExpression</code>.</p>
+ * <p>Stub implementation of <code>MethodExpression</code>.</p>
  */
-public class MockMethodExpression extends MethodExpression {
+public class MethodExpressionStub extends MethodExpression {
     
 
     // ------------------------------------------------------------ Constructors
@@ -54,7 +54,7 @@ public class MockMethodExpression extends MethodExpression {
      * @param signature Parameter signature of the method to be called
      * @param expectedType Expected type of the result
      */
-    public MockMethodExpression(String expression, Class[] signature, Class expectedType) {
+    public MethodExpressionStub(String expression, Class[] signature, Class expectedType) {
 
         if (expression == null) {
             throw new NullPointerException("Expression string cannot be null");

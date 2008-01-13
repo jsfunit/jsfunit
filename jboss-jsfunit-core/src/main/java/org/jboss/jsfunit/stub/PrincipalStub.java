@@ -25,7 +25,7 @@ package org.jboss.jsfunit.stub;
 import java.security.Principal;
 
 /**
- * <p>Mock implementation of <code>Principal</code>.</p>
+ * <p>Stub implementation of <code>Principal</code>.</p>
  */
 public class PrincipalStub implements Principal {
 
@@ -60,7 +60,7 @@ public class PrincipalStub implements Principal {
     private String name = null;
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

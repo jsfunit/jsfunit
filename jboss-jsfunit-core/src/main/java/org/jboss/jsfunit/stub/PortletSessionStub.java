@@ -30,7 +30,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 
 /**
- * <p> Mock implementation of <code>PortletSession</code>. </p>
+ * <p> Stub implementation of <code>PortletSession</code>. </p>
  * 
  * $Id: PortletSessionStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
@@ -62,7 +62,7 @@ public class PortletSessionStub implements PortletSession {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
     /**
      * <p> Set the <code>PortletContext</code> associated with this session.

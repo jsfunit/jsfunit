@@ -50,10 +50,10 @@ import org.jboss.jsfunit.stub.el.FacesPropertyResolverChainWrapper;
 import org.jboss.jsfunit.stub.el.FacesResourceBundleELResolver;
 import org.jboss.jsfunit.stub.el.FacesScopedAttributeELResolver;
 import org.jboss.jsfunit.stub.el.FacesVariableResolverChainWrapper;
-import org.jboss.jsfunit.stub.el.MockExpressionFactory;
+import org.jboss.jsfunit.stub.el.ExpressionFactoryStub;
 
 /**
- * <p>Mock implementation of <code>ExternalContext</code> that includes the semantics
+ * <p>Stub implementation of <code>ExternalContext</code> that includes the semantics
  * added by JavaServer Faces 1.2.</p>
  *
  * $Id: ApplicationStub12.java 503872 2007-02-05 21:10:06Z rahul $
@@ -74,7 +74,7 @@ public class ApplicationStub12 extends ApplicationStub {
         super();
 
         // Configure our expression factory and EL resolvers
-        expressionFactory = new MockExpressionFactory();
+        expressionFactory = new ExpressionFactoryStub();
 
     }
 
@@ -113,7 +113,7 @@ public class ApplicationStub12 extends ApplicationStub {
     private List resolvers = new ArrayList();
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

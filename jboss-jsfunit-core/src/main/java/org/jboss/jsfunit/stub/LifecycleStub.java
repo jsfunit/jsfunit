@@ -30,7 +30,7 @@ import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
 
 /**
- * <p>Mock implementation of <code>Lifecycle</code>.</p>
+ * <p>Stub implementation of <code>Lifecycle</code>.</p>
  *
  * $Id$
  */
@@ -38,7 +38,7 @@ import javax.faces.lifecycle.Lifecycle;
 public class LifecycleStub extends Lifecycle {
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

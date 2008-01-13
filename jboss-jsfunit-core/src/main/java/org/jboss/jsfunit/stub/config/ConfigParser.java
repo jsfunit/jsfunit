@@ -38,7 +38,7 @@ import org.xml.sax.SAXException;
 
 /**
  * <p>Utility class to parse JavaServer Faces configuration resources, and
- * register JSF artifacts with the mock object hierarchy.</p>
+ * register JSF artifacts with the stub object hierarchy.</p>
  *
  * <p>The following artifacts are registered:</p>
  * <ul>
@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
  * </ul>
  *
  * <p>Note that any declared <em>factory</em> instances are explicitly
- * <strong>NOT</strong> registered, allowing the mock object hierarchy
+ * <strong>NOT</strong> registered, allowing the stub object hierarchy
  * of the Shale Test Framework to manage these APIs.</p>
  *
  * <p><strong>USAGE NOTE</strong> - If you are using an instance of this
@@ -129,7 +129,7 @@ public final class ConfigParser {
 
     /**
      * <p>Parse the specified JavaServer Faces configuration resource, causing
-     * the appropriate JSF artifacts to be registered with the mock object
+     * the appropriate JSF artifacts to be registered with the stub object
      * hierarchy.</p>
      *
      * @param url <code>URL</code> of the configuration resource to parse
@@ -159,7 +159,7 @@ public final class ConfigParser {
     /**
      * <p>Parse the specified set of JavaServer Faces configuration resources,
      * in the listed order, causing the appropriate JSF artifacts to be registered
-     * with the mock object hierarchy.</p>
+     * with the stub object hierarchy.</p>
      *
      * @param urls <code>URL</code>s of the configuration resources to parse
      *

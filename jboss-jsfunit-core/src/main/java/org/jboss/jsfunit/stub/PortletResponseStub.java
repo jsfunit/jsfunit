@@ -25,7 +25,7 @@ package org.jboss.jsfunit.stub;
 import javax.portlet.PortletResponse;
 
 /**
- * <p>Mock implementation of <code>PortletResponse</code>.</p>
+ * <p>Stub implementation of <code>PortletResponse</code>.</p>
  *
  * $Id: PortletResponseStub.java 516091 2007-03-08 16:25:17Z greddin $
  */

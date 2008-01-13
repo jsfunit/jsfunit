@@ -28,9 +28,9 @@ import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 
 /**
- * <p>Mock implementation of <code>ValueExpression</code> that wraps a variable.</p>
+ * <p>Stub implementation of <code>ValueExpression</code> that wraps a variable.</p>
  */
-public class MockVariableValueExpression extends ValueExpression {
+public class VariableValueExpressionStub extends ValueExpression {
     
 
     // ------------------------------------------------------------ Constructors
@@ -48,7 +48,7 @@ public class MockVariableValueExpression extends ValueExpression {
      * @param instance Variable instance to be wrapped
      * @param expectedType Expected type of the result
      */
-    public MockVariableValueExpression(Object instance, Class expectedType) {
+    public VariableValueExpressionStub(Object instance, Class expectedType) {
 
         if (instance == null) {
             throw new NullPointerException("Instance cannot be null");

@@ -31,7 +31,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
- * <p>Mock implementation of <code>NavigationHandler</code>.</p>
+ * <p>Stub implementation of <code>NavigationHandler</code>.</p>
  *
  * $Id$
  */
@@ -48,7 +48,7 @@ public class NavigationHandlerStub extends NavigationHandler {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

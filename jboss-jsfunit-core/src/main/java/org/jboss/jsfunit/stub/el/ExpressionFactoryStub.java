@@ -30,18 +30,18 @@ import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 
 /**
- * <p>Mock implementation of <code>ExpressionFactory</code>.</p>
+ * <p>Stub implementation of <code>ExpressionFactory</code>.</p>
  *
  * @since 1.0.4
  */
-public class MockExpressionFactory extends ExpressionFactory {
+public class ExpressionFactoryStub extends ExpressionFactory {
     
 
     // ------------------------------------------------------------ Constructors
 
 
-    /** Creates a new instance of MockExpressionFactory */
-    public MockExpressionFactory() {
+    /** Creates a new instance of ExpressionFactoryStub */
+    public ExpressionFactoryStub() {
     }
     
 
@@ -54,7 +54,7 @@ public class MockExpressionFactory extends ExpressionFactory {
     private static final Integer ZERO = new Integer(0);
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
 
@@ -141,7 +141,7 @@ public class MockExpressionFactory extends ExpressionFactory {
                                                    Class expectedType,
                                                    Class[] signature) {
 
-        return new MockMethodExpression(expression, signature, expectedType);
+        return new MethodExpressionStub(expression, signature, expectedType);
 
     }
 
@@ -151,7 +151,7 @@ public class MockExpressionFactory extends ExpressionFactory {
                                                  String expression,
                                                  Class expectedType) {
 
-        return new MockValueExpression(expression, expectedType);
+        return new ValueExpressionStub(expression, expectedType);
 
     }
 
@@ -160,7 +160,7 @@ public class MockExpressionFactory extends ExpressionFactory {
     public ValueExpression createValueExpression(Object instance,
                                                  Class expectedType) {
 
-        return new MockVariableValueExpression(instance, expectedType);
+        return new VariableValueExpressionStub(instance, expectedType);
 
     }
 

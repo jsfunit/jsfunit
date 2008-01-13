@@ -31,7 +31,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * <p>Mock implementation of <code>Servlet</code>.</p>
+ * <p>Stub implementation of <code>Servlet</code>.</p>
  *
  * $Id$
  */
@@ -59,7 +59,7 @@ public class ServletStub implements Servlet {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

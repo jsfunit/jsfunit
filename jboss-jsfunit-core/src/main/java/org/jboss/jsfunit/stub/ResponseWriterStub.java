@@ -28,7 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 
 /**
- * <p>Mock implementation of <code>javax.faces.context.ResponseWriter</code>.</p>
+ * <p>Stub implementation of <code>javax.faces.context.ResponseWriter</code>.</p>
  */
 public class ResponseWriterStub extends ResponseWriter {
 
@@ -60,7 +60,7 @@ public class ResponseWriterStub extends ResponseWriter {
     private Writer writer = null;
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

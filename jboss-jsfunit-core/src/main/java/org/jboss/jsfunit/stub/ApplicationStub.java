@@ -46,7 +46,7 @@ import javax.faces.render.RenderKitFactory;
 import javax.faces.validator.Validator;
 
 /**
- * <p>Mock implementation of <code>Application</code>.</p>
+ * <p>Stub implementation of <code>Application</code>.</p>
  *
  * $Id$
  */
@@ -110,7 +110,7 @@ public class ApplicationStub extends Application {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

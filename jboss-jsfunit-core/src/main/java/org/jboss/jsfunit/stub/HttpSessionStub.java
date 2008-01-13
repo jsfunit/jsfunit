@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionContext;
 
 /**
- * <p>Mock implementation of <code>HttpSession</code>.</p>
+ * <p>Stub implementation of <code>HttpSession</code>.</p>
  *
  * $Id$
  */
@@ -70,7 +70,7 @@ public class HttpSessionStub implements HttpSession {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

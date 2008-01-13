@@ -29,10 +29,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 
-import org.jboss.jsfunit.stub.el.MockELContext;
+import org.jboss.jsfunit.stub.el.ELContextStub;
 
 /**
- * <p>Mock implementation of <code>FacesContext</code> that includes the semantics
+ * <p>Stub implementation of <code>FacesContext</code> that includes the semantics
  * added by JavaServer Faces 1.2.</p>
  *
  * $Id: FacesContextStub12.java 464373 2006-10-16 04:21:54Z rahul $
@@ -62,7 +62,7 @@ public class FacesContextStub12 extends FacesContextStub {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**
@@ -92,7 +92,7 @@ public class FacesContextStub12 extends FacesContextStub {
         if (this.elContext == null) {
 
             // Initialize a new ELContext
-            this.elContext = new MockELContext();
+            this.elContext = new ELContextStub();
             this.elContext.putContext(FacesContext.class, this);
 
             // Notify interested listeners that this ELContext was created

@@ -44,7 +44,7 @@ import javax.servlet.ServletException;
 
 
 /**
- * <p>Mock implementation of <code>ServletContext</code>.</p>
+ * <p>Stub implementation of <code>ServletContext</code>.</p>
  *
  * <p><strong>WARNING</strong> - Before you can get meaningful results from
  * calls to the <code>getResource()</code>, <code>getResourceAsStream()</code>,
@@ -60,7 +60,7 @@ public class ServletContextStub implements ServletContext {
 
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

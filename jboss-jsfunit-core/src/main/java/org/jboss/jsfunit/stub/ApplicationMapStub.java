@@ -34,7 +34,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 /**
- * <p>Mock impementation of <code>Map</code> for the application scope
+ * <p>Stub impementation of <code>Map</code> for the application scope
  * attributes managed by {@link ExternalContextStub}.</p>
  *
  * $Id$
@@ -58,7 +58,7 @@ class ApplicationMapStub implements Map {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

@@ -27,7 +27,7 @@ import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 
 /**
- * <p>Mock implementation of <code>ApplicationFactory</code>.</p>
+ * <p>Stub implementation of <code>ApplicationFactory</code>.</p>
  *
  * $Id$
  */
@@ -46,7 +46,7 @@ public class ApplicationFactoryStub extends ApplicationFactory {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

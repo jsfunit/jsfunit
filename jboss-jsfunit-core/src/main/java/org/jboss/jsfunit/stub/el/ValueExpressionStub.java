@@ -30,7 +30,7 @@ import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 
 /**
- * <p>Mock implementation of <code>ValueExpression</code>.</p>
+ * <p>Stub implementation of <code>ValueExpression</code>.</p>
  *
  * <p>This implementation supports a limited subset of overall expression functionality:</p>
  * <ul>
@@ -38,7 +38,7 @@ import javax.faces.context.FacesContext;
  * <li>An expression that starts with "#{" or "${", and ends with "}".</li>
  * </ul>
  */
-public class MockValueExpression extends ValueExpression {
+public class ValueExpressionStub extends ValueExpression {
     
 
     // ------------------------------------------------------------ Constructors
@@ -56,7 +56,7 @@ public class MockValueExpression extends ValueExpression {
      * @param expression Expression string to be evaluated
      * @param expectedType Expected type of the result
      */
-    public MockValueExpression(String expression, Class expectedType) {
+    public ValueExpressionStub(String expression, Class expectedType) {
 
         if (expression == null) {
             throw new NullPointerException("Expression string cannot be null");

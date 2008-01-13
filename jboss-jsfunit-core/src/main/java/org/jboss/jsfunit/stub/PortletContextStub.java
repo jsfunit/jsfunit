@@ -36,13 +36,13 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
 
 /**
- * <p>Mock implementation of <code>PortletContext</code>.</p>
+ * <p>Stub implementation of <code>PortletContext</code>.</p>
  *
  * $Id: PortletContextStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
 public class PortletContextStub implements PortletContext {
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
     /**
      * <p>Add a context initialization parameter to the set of parameters

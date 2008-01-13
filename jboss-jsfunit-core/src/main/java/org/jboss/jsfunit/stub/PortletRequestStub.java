@@ -36,7 +36,7 @@ import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
 
 /**
- * <p> Mock implementation of <code>PortletRequest</code>. </p>
+ * <p> Stub implementation of <code>PortletRequest</code>. </p>
  *
  * $Id: PortletRequestStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
@@ -60,7 +60,7 @@ public class PortletRequestStub implements PortletRequest {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
     /**
      * <p> Add a request parameter for this request. </p>

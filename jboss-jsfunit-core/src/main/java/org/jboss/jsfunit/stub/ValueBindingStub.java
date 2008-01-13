@@ -39,7 +39,7 @@ import javax.faces.el.VariableResolver;
 
 
 /**
- * <p>Mock implementation of <code>ValueBinding</code>.</p>
+ * <p>Stub implementation of <code>ValueBinding</code>.</p>
  */
 
 public class ValueBindingStub extends ValueBinding implements StateHolder {
@@ -77,7 +77,7 @@ public class ValueBindingStub extends ValueBinding implements StateHolder {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

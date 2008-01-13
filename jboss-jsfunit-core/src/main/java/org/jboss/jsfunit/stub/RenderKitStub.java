@@ -35,7 +35,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.ResponseStateManager;
 
 /**
- * <p>Mock implementation of <code>RenderKit</code>.</p>
+ * <p>Stub implementation of <code>RenderKit</code>.</p>
  *
  * $Id$
  */
@@ -53,7 +53,7 @@ public class RenderKitStub extends RenderKit {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

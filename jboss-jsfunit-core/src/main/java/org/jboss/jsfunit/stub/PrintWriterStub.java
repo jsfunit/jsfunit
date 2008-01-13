@@ -27,7 +27,7 @@ import java.io.PrintWriter;
 
 
 /**
- * <p>Mock implementation of <code>PrintWriter</code>.</p>
+ * <p>Stub implementation of <code>PrintWriter</code>.</p>
  *
  * $Id: PrintWriterStub.java 464373 2006-10-16 04:21:54Z rahul $
  */
@@ -49,7 +49,7 @@ public class PrintWriterStub extends PrintWriter {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**

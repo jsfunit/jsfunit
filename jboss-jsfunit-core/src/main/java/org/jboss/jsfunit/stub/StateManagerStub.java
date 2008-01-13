@@ -29,7 +29,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
- * <p>Mock implementation of <code>StateManager</code>.</p>
+ * <p>Stub implementation of <code>StateManager</code>.</p>
  *
  * $Id$
  */
@@ -46,7 +46,7 @@ public class StateManagerStub extends StateManager {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

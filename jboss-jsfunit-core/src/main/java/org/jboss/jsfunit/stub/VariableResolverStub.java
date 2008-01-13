@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.VariableResolver;
 
 /**
- * <p>Mock implementation of <code>VariableResolver</code>.</p>
+ * <p>Stub implementation of <code>VariableResolver</code>.</p>
  *
  * <p>This implementation recognizes the standard scope names
  * <code>applicationScope</code>, <code>facesContext</code>,
@@ -53,7 +53,7 @@ public class VariableResolverStub extends VariableResolver {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

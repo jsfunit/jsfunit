@@ -31,7 +31,7 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
 /**
- * <p>Mock implementation of <code>RenderKitFactory</code>.</p>
+ * <p>Stub implementation of <code>RenderKitFactory</code>.</p>
  *
  * $Id$
  */
@@ -52,7 +52,7 @@ public class RenderKitFactoryStub extends RenderKitFactory {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

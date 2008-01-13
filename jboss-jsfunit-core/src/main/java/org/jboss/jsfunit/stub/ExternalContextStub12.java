@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p>Mock implementation of <code>ExternalContext</code> that includes the semantics
+ * <p>Stub implementation of <code>ExternalContext</code> that includes the semantics
  * added by JavaServer Faces 1.2.</p>
  *
  * $Id: ExternalContextStub12.java 464373 2006-10-16 04:21:54Z rahul $
@@ -52,7 +52,7 @@ public class ExternalContextStub12 extends ExternalContextStub {
     // ------------------------------------------------------ Instance Variables
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------- ExternalContext Methods

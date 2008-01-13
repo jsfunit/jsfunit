@@ -34,7 +34,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <p>Mock impementation of <code>Map</code> for the request scope
+ * <p>Stub impementation of <code>Map</code> for the request scope
  * attributes managed by {@link ExternalContextStub}.</p>
  *
  * $Id$
@@ -59,7 +59,7 @@ class RequestMapStub implements Map {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables

@@ -26,7 +26,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 /**
- * <p>Mock implementation of an <code>Enumeration</code> wrapper around
+ * <p>Stub implementation of an <code>Enumeration</code> wrapper around
  * an <code>Iterator</code>.</p>
  *
  * $Id$
@@ -50,7 +50,7 @@ class EnumerationStub implements Enumeration {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     // ------------------------------------------------------ Instance Variables
