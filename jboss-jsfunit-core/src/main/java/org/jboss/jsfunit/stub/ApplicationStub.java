@@ -62,7 +62,7 @@ public class ApplicationStub extends Application {
         converters1 = new HashMap();
         setDefaultLocale(Locale.getDefault());
         setDefaultRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-        setNavigationHandler(new MockNavigationHandler());
+        setNavigationHandler(new NavigationHandlerStub());
         setPropertyResolver(new MockPropertyResolver());
         setStateManager(new MockStateManager());
         setSupportedLocales(new ArrayList());
@@ -414,7 +414,7 @@ public class ApplicationStub extends Application {
         if (ref == null) {
             throw new NullPointerException();
         } else {
-            return (new MockMethodBinding(this, ref, params));
+            return (new MethodBindingStub(this, ref, params));
         }
 
     }

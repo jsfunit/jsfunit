@@ -26,18 +26,18 @@ import javax.servlet.http.HttpServletResponse;
  * <p>Mock implementation of <code>ExternalContext</code> that includes the semantics
  * added by JavaServer Faces 1.2.</p>
  *
- * $Id: MockExternalContext12.java 464373 2006-10-16 04:21:54Z rahul $
+ * $Id: ExternalContextStub12.java 464373 2006-10-16 04:21:54Z rahul $
  *
  * @since 1.0.4
  */
 
-public class MockExternalContext12 extends ExternalContextStub {
+public class ExternalContextStub12 extends ExternalContextStub {
 
 
     // ------------------------------------------------------------ Constructors
 
 
-    public MockExternalContext12(ServletContext context,
+    public ExternalContextStub12(ServletContext context,
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         super(context, request, response);

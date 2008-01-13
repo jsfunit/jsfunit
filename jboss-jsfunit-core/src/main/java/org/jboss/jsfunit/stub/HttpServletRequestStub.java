@@ -48,20 +48,20 @@ import javax.servlet.http.HttpSession;
  * $Id$
  */
 
-public class MockHttpServletRequest implements HttpServletRequest {
+public class HttpServletRequestStub implements HttpServletRequest {
 
 
     // ------------------------------------------------------------ Constructors
 
 
-    public MockHttpServletRequest() {
+    public HttpServletRequestStub() {
 
         super();
 
     }
 
 
-    public MockHttpServletRequest(HttpSession session) {
+    public HttpServletRequestStub(HttpSession session) {
 
         super();
         setHttpSession(session);
@@ -69,7 +69,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
 
-    public MockHttpServletRequest(String contextPath, String servletPath,
+    public HttpServletRequestStub(String contextPath, String servletPath,
                                   String pathInfo, String queryString) {
 
         super();
@@ -79,7 +79,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
 
 
-    public MockHttpServletRequest(String contextPath, String servletPath,
+    public HttpServletRequestStub(String contextPath, String servletPath,
                                   String pathInfo, String queryString,
                                   HttpSession session) {
 

@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
  * $Id$
  */
 
-public class MockHttpServletResponse implements HttpServletResponse {
+public class HttpServletResponseStub implements HttpServletResponse {
 
 
     // ------------------------------------------------------------ Constructors
@@ -48,7 +48,7 @@ public class MockHttpServletResponse implements HttpServletResponse {
     /**
      * <p>Return a default instance.</p>
      */
-    public MockHttpServletResponse() { }
+    public HttpServletResponseStub() { }
 
 
     // ----------------------------------------------------- Mock Object Methods

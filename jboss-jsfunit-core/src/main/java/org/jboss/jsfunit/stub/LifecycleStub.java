@@ -30,7 +30,7 @@ import javax.faces.lifecycle.Lifecycle;
  * $Id$
  */
 
-public class MockLifecycle extends Lifecycle {
+public class LifecycleStub extends Lifecycle {
 
 
     // ----------------------------------------------------- Mock Object Methods

@@ -30,29 +30,29 @@ import org.jboss.jsfunit.stub.el.MockELContext;
  * <p>Mock implementation of <code>FacesContext</code> that includes the semantics
  * added by JavaServer Faces 1.2.</p>
  *
- * $Id: MockFacesContext12.java 464373 2006-10-16 04:21:54Z rahul $
+ * $Id: FacesContextStub12.java 464373 2006-10-16 04:21:54Z rahul $
  *
  * @since 1.0.4
  */
 
-public class MockFacesContext12 extends MockFacesContext {
+public class FacesContextStub12 extends FacesContextStub {
 
 
     // ------------------------------------------------------------ Constructors
 
 
-    public MockFacesContext12() {
+    public FacesContextStub12() {
         super();
         setCurrentInstance(this);
     }
 
 
-    public MockFacesContext12(ExternalContext externalContext) {
+    public FacesContextStub12(ExternalContext externalContext) {
         super(externalContext);
     }
 
 
-    public MockFacesContext12(ExternalContext externalContext, Lifecycle lifecycle) {
+    public FacesContextStub12(ExternalContext externalContext, Lifecycle lifecycle) {
         super(externalContext, lifecycle);
     }
 

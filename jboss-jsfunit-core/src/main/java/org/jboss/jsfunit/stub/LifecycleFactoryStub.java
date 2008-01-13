@@ -30,7 +30,7 @@ import javax.faces.lifecycle.LifecycleFactory;
  * $Id$
  */
 
-public class MockLifecycleFactory extends LifecycleFactory {
+public class LifecycleFactoryStub extends LifecycleFactory {
 
 
     // ------------------------------------------------------------ Constructors
@@ -39,10 +39,10 @@ public class MockLifecycleFactory extends LifecycleFactory {
     /**
      * <p>Return a default instance.</p>
      */
-    public MockLifecycleFactory() {
+    public LifecycleFactoryStub() {
 
         lifecycles = new HashMap();
-        lifecycles.put(LifecycleFactory.DEFAULT_LIFECYCLE, new MockLifecycle());
+        lifecycles.put(LifecycleFactory.DEFAULT_LIFECYCLE, new LifecycleStub());
 
     }
 

@@ -31,7 +31,7 @@ import javax.faces.context.FacesContext;
  * $Id$
  */
 
-public class MockNavigationHandler extends NavigationHandler {
+public class NavigationHandlerStub extends NavigationHandler {
 
 
     // ------------------------------------------------------------ Constructors
@@ -39,7 +39,7 @@ public class MockNavigationHandler extends NavigationHandler {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockNavigationHandler() {
+    public NavigationHandlerStub() {
     }
 
 

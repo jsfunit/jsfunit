@@ -33,23 +33,23 @@ import javax.servlet.http.HttpServletResponse;
  * $Id$
  */
 
-public class MockFacesContextFactory extends FacesContextFactory {
+public class FacesContextFactoryStub extends FacesContextFactory {
 
 
     // ------------------------------------------------------------ Constructors
 
 
     /**
-     * <p>Look up the constructor we will use for creating <code>MockFacesContext</code>
+     * <p>Look up the constructor we will use for creating <code>FacesContextStub</code>
      * instances.</p>
      */
-    public MockFacesContextFactory() {
+    public FacesContextFactoryStub() {
 
         Class clazz = null;
 
         // Try to load the 1.2 version of our mock FacesContext class
         try {
-            clazz = this.getClass().getClassLoader().loadClass("org.jboss.jsfunit.stub.MockFacesContext12");
+            clazz = this.getClass().getClassLoader().loadClass("org.jboss.jsfunit.stub.FacesContextStub12");
             constructor = clazz.getConstructor(facesContextSignature);
             jsf12 = true;
         } catch (NoClassDefFoundError e) {
@@ -69,7 +69,7 @@ public class MockFacesContextFactory extends FacesContextFactory {
         // Fall back to the 1.1 version if we could not load the 1.2 version
         try {
             if (clazz == null) {
-                clazz = this.getClass().getClassLoader().loadClass("org.jboss.jsfunit.stub.MockFacesContext");
+                clazz = this.getClass().getClassLoader().loadClass("org.jboss.jsfunit.stub.FacesContextStub");
                 constructor = clazz.getConstructor(facesContextSignature);
                 jsf12 = false;
             }
@@ -130,7 +130,7 @@ public class MockFacesContextFactory extends FacesContextFactory {
         if (jsf12) {
             try {
                 clazz = this.getClass().getClassLoader().loadClass
-                  ("org.jboss.jsfunit.stub.MockExternalContext12");
+                  ("org.jboss.jsfunit.stub.ExternalContextStub12");
             } catch (RuntimeException e) {
                 throw e;
             } catch (Exception e) {
@@ -159,9 +159,9 @@ public class MockFacesContextFactory extends FacesContextFactory {
             throw new FacesException(e);
         }
 
-        // Construct an appropriate MockFacesContext instance and return it
+        // Construct an appropriate FacesContextStub instance and return it
         try {
-            return (MockFacesContext)
+            return (FacesContextStub)
               constructor.newInstance(new Object[] { externalContext, lifecycle });
         } catch (RuntimeException e) {
             throw e;

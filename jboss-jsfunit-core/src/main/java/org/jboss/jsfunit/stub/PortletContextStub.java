@@ -33,9 +33,9 @@ import javax.portlet.PortletRequestDispatcher;
 /**
  * <p>Mock implementation of <code>PortletContext</code>.</p>
  *
- * $Id: MockPortletContext.java 516091 2007-03-08 16:25:17Z greddin $
+ * $Id: PortletContextStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
-public class MockPortletContext implements PortletContext {
+public class PortletContextStub implements PortletContext {
 
     // ----------------------------------------------------- Mock Object Methods
 
@@ -160,7 +160,7 @@ public class MockPortletContext implements PortletContext {
     /** {@inheritDoc} */
     public String getPortletContextName() {
 
-        return "MockPortletContext";
+        return "PortletContextStub";
 
     }
 
@@ -278,7 +278,7 @@ public class MockPortletContext implements PortletContext {
     /** {@inheritDoc} */
     public String getServerInfo() {
 
-        return "MockPortletContext";
+        return "PortletContextStub";
     }
 
 

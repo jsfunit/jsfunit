@@ -41,7 +41,7 @@ import javax.faces.el.ValueBinding;
  * </ul>
  */
 
-public class MockMethodBinding extends MethodBinding implements StateHolder {
+public class MethodBindingStub extends MethodBinding implements StateHolder {
 
 
     // ------------------------------------------------------------ Constructors
@@ -49,7 +49,7 @@ public class MockMethodBinding extends MethodBinding implements StateHolder {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockMethodBinding() {
+    public MethodBindingStub() {
     }
 
 
@@ -60,7 +60,7 @@ public class MockMethodBinding extends MethodBinding implements StateHolder {
      * @param ref Method binding expression to be parsed
      * @param args Signature of this method
      */
-    public MockMethodBinding(Application application, String ref,
+    public MethodBindingStub(Application application, String ref,
                              Class[] args) {
 
         this.application = application;
@@ -191,12 +191,12 @@ public class MockMethodBinding extends MethodBinding implements StateHolder {
 
     /** {@inheritDoc} */
     public boolean equals(Object otherObj) {
-        MockMethodBinding other = null;
+        MethodBindingStub other = null;
 
-        if (!(otherObj instanceof MockMethodBinding)) {
+        if (!(otherObj instanceof MethodBindingStub)) {
             return false;
         }
-        other = (MockMethodBinding) otherObj;
+        other = (MethodBindingStub) otherObj;
         // test object reference equality
         if (this.ref != other.ref) {
             // test object equality

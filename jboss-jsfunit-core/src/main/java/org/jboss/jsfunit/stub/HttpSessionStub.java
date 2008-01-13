@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSessionContext;
  * $Id$
  */
 
-public class MockHttpSession implements HttpSession {
+public class HttpSessionStub implements HttpSession {
 
 
     // ------------------------------------------------------------ Constructors
@@ -44,7 +44,7 @@ public class MockHttpSession implements HttpSession {
     /**
      * <p>Configure a default instance.</p>
      */
-    public MockHttpSession() {
+    public HttpSessionStub() {
 
         super();
 
@@ -57,7 +57,7 @@ public class MockHttpSession implements HttpSession {
      *
      * @param servletContext The associated servlet context
      */
-    public MockHttpSession(ServletContext servletContext) {
+    public HttpSessionStub(ServletContext servletContext) {
 
         super();
         setServletContext(servletContext);

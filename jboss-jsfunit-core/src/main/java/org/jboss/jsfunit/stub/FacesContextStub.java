@@ -43,25 +43,25 @@ import javax.faces.render.RenderKitFactory;
  * $Id$
  */
 
-public class MockFacesContext extends FacesContext {
+public class FacesContextStub extends FacesContext {
 
 
     // ------------------------------------------------------------ Constructors
 
 
-    public MockFacesContext() {
+    public FacesContextStub() {
         super();
         setCurrentInstance(this);
     }
 
 
-    public MockFacesContext(ExternalContext externalContext) {
+    public FacesContextStub(ExternalContext externalContext) {
         setExternalContext(externalContext);
         setCurrentInstance(this);
     }
 
 
-    public MockFacesContext(ExternalContext externalContext, Lifecycle lifecycle) {
+    public FacesContextStub(ExternalContext externalContext, Lifecycle lifecycle) {
         this(externalContext);
         this.lifecycle = lifecycle;
     }
