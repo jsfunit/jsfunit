@@ -36,7 +36,7 @@ import javax.faces.el.ReferenceSyntaxException;
 import javax.faces.el.ValueBinding;
 
 /**
- * <p>Mock implementation of <code>MethodBinding</code>.</p>
+ * <p>Stub implementation of <code>MethodBinding</code>.</p>
  *
  * <p>This implementation is subject to the following restrictions:</p>
  * <ul>

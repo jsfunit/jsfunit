@@ -26,7 +26,7 @@ import java.io.ByteArrayOutputStream;
 import javax.servlet.ServletOutputStream;
 
 /**
- * <p>Mock implementation of <code>ServletOutputStream</code>.</p>
+ * <p>Stub implementation of <code>ServletOutputStream</code>.</p>
  *
  * $Id: ServletOutputStreamStub.java 464373 2006-10-16 04:21:54Z rahul $
  */
@@ -47,7 +47,7 @@ public class ServletOutputStreamStub extends ServletOutputStream {
     }
 
 
-    // ----------------------------------------------------- Mock Object Methods
+    // ----------------------------------------------------- Stub Object Methods
 
 
     /**
