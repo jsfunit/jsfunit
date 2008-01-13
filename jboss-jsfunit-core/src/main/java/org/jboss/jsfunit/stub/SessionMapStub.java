@@ -36,7 +36,7 @@ import javax.servlet.http.HttpSession;
  * $Id$
  */
 
-class MockSessionMap implements Map {
+class SessionMapStub implements Map {
 
 
     // ------------------------------------------------------------ Constructors
@@ -49,7 +49,7 @@ class MockSessionMap implements Map {
      * @param session Session whose attributes are to be exposed
      *  as a Map
      */
-    public MockSessionMap(HttpSession session) {
+    public SessionMapStub(HttpSession session) {
 
         this.session = session;
 

@@ -23,10 +23,10 @@ import javax.servlet.ServletOutputStream;
 /**
  * <p>Mock implementation of <code>ServletOutputStream</code>.</p>
  *
- * $Id: MockServletOutputStream.java 464373 2006-10-16 04:21:54Z rahul $
+ * $Id: ServletOutputStreamStub.java 464373 2006-10-16 04:21:54Z rahul $
  */
 
-public class MockServletOutputStream extends ServletOutputStream {
+public class ServletOutputStreamStub extends ServletOutputStream {
 
 
     // ------------------------------------------------------------ Constructors
@@ -37,7 +37,7 @@ public class MockServletOutputStream extends ServletOutputStream {
      *
      * @param stream The stream we will use to buffer output
      */
-    public MockServletOutputStream(ByteArrayOutputStream stream) {
+    public ServletOutputStreamStub(ByteArrayOutputStream stream) {
         this.baos = stream;
     }
 

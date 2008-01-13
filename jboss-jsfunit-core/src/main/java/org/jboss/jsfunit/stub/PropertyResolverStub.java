@@ -33,7 +33,7 @@ import javax.faces.el.PropertyResolver;
  * $Id$
  */
 
-public class MockPropertyResolver extends PropertyResolver {
+public class PropertyResolverStub extends PropertyResolver {
 
 
     // ------------------------------------------------------------ Constructors
@@ -42,7 +42,7 @@ public class MockPropertyResolver extends PropertyResolver {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockPropertyResolver() {
+    public PropertyResolverStub() {
     }
 
 

@@ -33,21 +33,21 @@ import javax.portlet.WindowState;
 /**
  * <p> Mock implementation of <code>PortletRequest</code>. </p>
  *
- * $Id: MockPortletRequest.java 516091 2007-03-08 16:25:17Z greddin $
+ * $Id: PortletRequestStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
 
-public class MockPortletRequest implements PortletRequest {
+public class PortletRequestStub implements PortletRequest {
 
     // ------------------------------------------------------------ Constructors
 
-    public MockPortletRequest() {
+    public PortletRequestStub() {
 
         super();
 
     }
 
 
-    public MockPortletRequest(PortletSession session) {
+    public PortletRequestStub(PortletSession session) {
 
         super();
         this.session = session;

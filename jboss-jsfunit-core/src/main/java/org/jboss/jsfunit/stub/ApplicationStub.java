@@ -63,12 +63,12 @@ public class ApplicationStub extends Application {
         setDefaultLocale(Locale.getDefault());
         setDefaultRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         setNavigationHandler(new NavigationHandlerStub());
-        setPropertyResolver(new MockPropertyResolver());
-        setStateManager(new MockStateManager());
+        setPropertyResolver(new PropertyResolverStub());
+        setStateManager(new StateManagerStub());
         setSupportedLocales(new ArrayList());
         validators = new HashMap();
-        setVariableResolver(new MockVariableResolver());
-        setViewHandler(new MockViewHandler());
+        setVariableResolver(new VariableResolverStub());
+        setViewHandler(new ViewHandlerStub());
 
         // Register the standard by-id converters
         addConverter("javax.faces.BigDecimal", "javax.faces.convert.BigDecimalConverter");
@@ -426,7 +426,7 @@ public class ApplicationStub extends Application {
         if (ref == null) {
             throw new NullPointerException();
         } else {
-            return (new MockValueBinding(this, ref));
+            return (new ValueBindingStub(this, ref));
         }
 
     }

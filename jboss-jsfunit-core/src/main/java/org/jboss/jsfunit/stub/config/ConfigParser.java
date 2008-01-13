@@ -27,7 +27,7 @@ import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.Rule;
-import org.jboss.jsfunit.stub.MockRenderKit;
+import org.jboss.jsfunit.stub.RenderKitStub;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -364,7 +364,7 @@ public final class ConfigParser {
               FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
             RenderKit renderKit = factory.getRenderKit(null, renderKitId);
             if (renderKit == null) {
-                renderKit = new MockRenderKit();
+                renderKit = new RenderKitStub();
                 factory.addRenderKit(renderKitId, renderKit);
             }
             digester.pop();

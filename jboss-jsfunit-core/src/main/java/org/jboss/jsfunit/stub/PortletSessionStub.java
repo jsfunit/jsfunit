@@ -27,16 +27,16 @@ import javax.portlet.PortletSession;
 /**
  * <p> Mock implementation of <code>PortletSession</code>. </p>
  * 
- * $Id: MockPortletSession.java 516091 2007-03-08 16:25:17Z greddin $
+ * $Id: PortletSessionStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
-public class MockPortletSession implements PortletSession {
+public class PortletSessionStub implements PortletSession {
 
     // ------------------------------------------------------------ Constructors
 
     /**
      * <p> Configure a default instance. </p>
      */
-    public MockPortletSession() {
+    public PortletSessionStub() {
 
         super();
 
@@ -49,7 +49,7 @@ public class MockPortletSession implements PortletSession {
      *
      * @param servletContext The associated servlet context
      */
-    public MockPortletSession(PortletContext portletContext) {
+    public PortletSessionStub(PortletContext portletContext) {
 
         super();
         this.portletContext = portletContext;

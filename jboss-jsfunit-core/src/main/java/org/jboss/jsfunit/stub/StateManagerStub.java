@@ -28,7 +28,7 @@ import javax.faces.context.FacesContext;
  *
  * $Id$
  */
-public class MockStateManager extends StateManager {
+public class StateManagerStub extends StateManager {
 
 
     // ------------------------------------------------------------ Constructors
@@ -37,7 +37,7 @@ public class MockStateManager extends StateManager {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockStateManager() {
+    public StateManagerStub() {
     }
 
 

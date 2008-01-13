@@ -35,7 +35,7 @@ import javax.faces.el.VariableResolver;
  * $Id$
  */
 
-public class MockVariableResolver extends VariableResolver {
+public class VariableResolverStub extends VariableResolver {
 
 
     // ------------------------------------------------------------ Constructors
@@ -44,7 +44,7 @@ public class MockVariableResolver extends VariableResolver {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockVariableResolver() {
+    public VariableResolverStub() {
     }
 
 

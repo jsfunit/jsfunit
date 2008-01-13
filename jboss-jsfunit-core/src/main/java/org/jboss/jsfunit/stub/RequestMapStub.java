@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * $Id$
  */
 
-class MockRequestMap implements Map {
+class RequestMapStub implements Map {
 
 
     // ------------------------------------------------------------ Constructors
@@ -47,7 +47,7 @@ class MockRequestMap implements Map {
      *
      * @param request The HttpServletRequest to wrap
      */
-    public MockRequestMap(HttpServletRequest request) {
+    public RequestMapStub(HttpServletRequest request) {
 
         this.request = request;
 

@@ -36,7 +36,7 @@ import javax.faces.el.ValueBinding;
  * <p>This implementation is subject to the following restrictions:</p>
  * <ul>
  * <li>The portion of the method reference expression before the final
- *     "." must conform to the limitations of {@link MockValueBinding}.</li>
+ *     "." must conform to the limitations of {@link ValueBindingStub}.</li>
  * <li>The name of the method to be executed cannot be delimited by "[]".</li>
  * </ul>
  */

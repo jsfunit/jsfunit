@@ -64,7 +64,7 @@ public class ExternalContextStub extends ExternalContext {
         this.request = request;
         this.response = response;
         applicationMap = new ApplicationMapStub(context);
-        requestMap = new MockRequestMap(request);
+        requestMap = new RequestMapStub(request);
 
     }
 
@@ -392,7 +392,7 @@ public class ExternalContextStub extends ExternalContext {
 
         if (sessionMap == null) {
             HttpSession session = request.getSession(true);
-            sessionMap = new MockSessionMap(session);
+            sessionMap = new SessionMapStub(session);
         }
         return sessionMap;
 

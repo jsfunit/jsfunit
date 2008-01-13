@@ -31,7 +31,7 @@ import javax.faces.render.RenderKitFactory;
  * $Id$
  */
 
-public class MockRenderKitFactory extends RenderKitFactory {
+public class RenderKitFactoryStub extends RenderKitFactory {
 
 
     // ------------------------------------------------------------ Constructors
@@ -40,7 +40,7 @@ public class MockRenderKitFactory extends RenderKitFactory {
     /**
      * <p>Return a default instance.</p>
      */
-    public MockRenderKitFactory() {
+    public RenderKitFactoryStub() {
 
         renderKits = new HashMap();
 
@@ -91,7 +91,7 @@ public class MockRenderKitFactory extends RenderKitFactory {
             // if the user asks for the default HTML renderkit and it has
             // not been manually added yet
             if (RenderKitFactory.HTML_BASIC_RENDER_KIT.equals(renderKitId)) {
-                renderKit = new MockRenderKit();
+                renderKit = new RenderKitStub();
                 renderKits.put(RenderKitFactory.HTML_BASIC_RENDER_KIT,
                                renderKit);
                 return renderKit;

@@ -96,7 +96,7 @@ public class HttpServletResponseStub implements HttpServletResponse {
      * @param stream The <code>ServletOutputStream</code> instance to use
      *
      * @deprecated Let the <code>getOutputStream()</code> method create and
-     *  return an instance of <code>MockServletOutputStream</code> for you
+     *  return an instance of <code>ServletOutputStreamStub</code> for you
      */
     public void setOutputStream(ServletOutputStream stream) {
         this.stream = stream;
@@ -110,7 +110,7 @@ public class HttpServletResponseStub implements HttpServletResponse {
      * @param writer The <code>PrintWriter</code> instance to use
      *
      * @deprecated Let the <code>getWriter()</code> method create and return
-     *  an instance of <code>MockPrintWriter</code> for you
+     *  an instance of <code>PrintWriterStub</code> for you
      */
     public void setWriter(PrintWriter writer) {
         this.writer = writer;
@@ -323,7 +323,7 @@ public class HttpServletResponseStub implements HttpServletResponse {
             if (writer != null) {
                 throw new IllegalStateException("Cannot call getOutputStream() after getWriter() has been called");
             }
-            stream = new MockServletOutputStream(new ByteArrayOutputStream());
+            stream = new ServletOutputStreamStub(new ByteArrayOutputStream());
         }
         return stream;
 
@@ -337,7 +337,7 @@ public class HttpServletResponseStub implements HttpServletResponse {
             if (stream != null) {
                 throw new IllegalStateException("Cannot call getWriter() after getOutputStream() was called");
             }
-            writer = new MockPrintWriter(new CharArrayWriter());
+            writer = new PrintWriterStub(new CharArrayWriter());
         }
         return writer;
 

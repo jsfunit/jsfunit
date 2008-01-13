@@ -22,15 +22,15 @@ import javax.portlet.PortletResponse;
 /**
  * <p>Mock implementation of <code>PortletResponse</code>.</p>
  *
- * $Id: MockPortletResponse.java 516091 2007-03-08 16:25:17Z greddin $
+ * $Id: PortletResponseStub.java 516091 2007-03-08 16:25:17Z greddin $
  */
 
-public class MockPortletResponse implements PortletResponse {
+public class PortletResponseStub implements PortletResponse {
 
     /**
      * <p>Return a default instance.</p>
      */
-    public MockPortletResponse() {
+    public PortletResponseStub() {
 
     }
 

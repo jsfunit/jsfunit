@@ -31,7 +31,7 @@ import javax.servlet.ServletResponse;
  * $Id$
  */
 
-public class MockServlet implements Servlet {
+public class ServletStub implements Servlet {
 
 
     // ------------------------------------------------------------ Constructors
@@ -40,7 +40,7 @@ public class MockServlet implements Servlet {
     /**
      * <p>Create a default Servlet instance.</p>
      */
-    public MockServlet() {
+    public ServletStub() {
     }
 
 
@@ -49,7 +49,7 @@ public class MockServlet implements Servlet {
      *
      * @param config The new ServletConfig instance
      */
-    public MockServlet(ServletConfig config) throws ServletException {
+    public ServletStub(ServletConfig config) throws ServletException {
         init(config);
     }
 
@@ -97,7 +97,7 @@ public class MockServlet implements Servlet {
     /** {@inheritDoc} */
     public String getServletInfo() {
 
-        return "MockServlet";
+        return "ServletStub";
 
     }
 

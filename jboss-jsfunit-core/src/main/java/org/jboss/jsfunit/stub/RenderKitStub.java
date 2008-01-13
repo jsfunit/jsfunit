@@ -35,7 +35,7 @@ import javax.faces.render.ResponseStateManager;
  * $Id$
  */
 
-public class MockRenderKit extends RenderKit {
+public class RenderKitStub extends RenderKit {
 
 
     // ------------------------------------------------------------ Constructors
@@ -44,7 +44,7 @@ public class MockRenderKit extends RenderKit {
     /**
      * <p>Return a default instance.</p>
      */
-    public MockRenderKit() {
+    public RenderKitStub() {
     }
 
 
@@ -91,7 +91,7 @@ public class MockRenderKit extends RenderKit {
                                                String contentTypeList,
                                                String characterEncoding) {
 
-       return new MockResponseWriter(writer, contentTypeList, characterEncoding);
+       return new ResponseWriterStub(writer, contentTypeList, characterEncoding);
 
     }
 

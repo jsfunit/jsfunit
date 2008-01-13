@@ -22,7 +22,7 @@ import java.security.Principal;
 /**
  * <p>Mock implementation of <code>Principal</code>.</p>
  */
-public class MockPrincipal implements Principal {
+public class PrincipalStub implements Principal {
 
 
     // ------------------------------------------------------------ Constructors
@@ -31,7 +31,7 @@ public class MockPrincipal implements Principal {
     /**
      * <p>Construct a default Principal instance.</p>
      */
-    public MockPrincipal() {
+    public PrincipalStub() {
         this(null);
     }
 
@@ -41,7 +41,7 @@ public class MockPrincipal implements Principal {
      *
      * @param name Name for this Principal
      */
-    public MockPrincipal(String name) {
+    public PrincipalStub(String name) {
         this.name = name;
     }
 

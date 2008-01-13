@@ -37,9 +37,9 @@ import org.jboss.jsfunit.stub.HttpServletResponseStub;
 import org.jboss.jsfunit.stub.HttpSessionStub;
 import org.jboss.jsfunit.stub.LifecycleStub;
 import org.jboss.jsfunit.stub.LifecycleFactoryStub;
-import org.jboss.jsfunit.stub.MockRenderKit;
-import org.jboss.jsfunit.stub.MockServletConfig;
-import org.jboss.jsfunit.stub.MockServletContext;
+import org.jboss.jsfunit.stub.RenderKitStub;
+import org.jboss.jsfunit.stub.ServletConfigStub;
+import org.jboss.jsfunit.stub.ServletContextStub;
 
 /**
  * <p>Abstract JUnit test case base class, which sets up the JavaServer Faces
@@ -48,13 +48,13 @@ import org.jboss.jsfunit.stub.MockServletContext;
  * cleaned up in the <code>tearDown()</code> method:</p>
  * <ul>
  * <li><code>application</code> (<code>ApplicationStub</code>)</li>
- * <li><code>config</code> (<code>MockServletConfig</code>)</li>
+ * <li><code>config</code> (<code>ServletConfigStub</code>)</li>
  * <li><code>externalContext</code> (<code>ExternalContextStub</code>)</li>
  * <li><code>facesContext</code> (<code>FacesContextStub</code>)</li>
  * <li><code>lifecycle</code> (<code>LifecycleStub</code>)</li>
  * <li><code>request</code> (<code>HttpServletRequestStub</code></li>
  * <li><code>response</code> (<code>HttpServletResponseStub</code>)</li>
- * <li><code>servletContext</code> (<code>MockServletContext</code>)</li>
+ * <li><code>servletContext</code> (<code>ServletContextStub</code>)</li>
  * <li><code>session</code> (<code>HttpSessionStub</code>)</li>
  * </ul>
  *
@@ -101,8 +101,8 @@ public abstract class AbstractJsfTestCase extends TestCase {
                 this.getClass().getClassLoader()));
 
         // Set up Servlet API Objects
-        servletContext = new MockServletContext();
-        config = new MockServletConfig(servletContext);
+        servletContext = new ServletContextStub();
+        config = new ServletConfigStub(servletContext);
         session = new HttpSessionStub();
         session.setServletContext(servletContext);
         request = new HttpServletRequestStub(session);
@@ -118,7 +118,7 @@ public abstract class AbstractJsfTestCase extends TestCase {
         FactoryFinder.setFactory(FactoryFinder.LIFECYCLE_FACTORY,
         "org.jboss.jsfunit.stub.LifecycleFactoryStub");
         FactoryFinder.setFactory(FactoryFinder.RENDER_KIT_FACTORY,
-        "org.jboss.jsfunit.stub.MockRenderKitFactory");
+        "org.jboss.jsfunit.stub.RenderKitFactoryStub");
 
         externalContext =
             new ExternalContextStub(servletContext, request, response);
@@ -144,7 +144,7 @@ public abstract class AbstractJsfTestCase extends TestCase {
         facesContext.setApplication(application);
         RenderKitFactory renderKitFactory = (RenderKitFactory)
         FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
-        renderKit = new MockRenderKit();
+        renderKit = new RenderKitStub();
         renderKitFactory.addRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT, renderKit);
 
     }
@@ -180,16 +180,16 @@ public abstract class AbstractJsfTestCase extends TestCase {
 
     // Mock object instances for our tests
     protected ApplicationStub         application = null;
-    protected MockServletConfig       config = null;
+    protected ServletConfigStub       config = null;
     protected ExternalContextStub     externalContext = null;
     protected FacesContextStub        facesContext = null;
     protected FacesContextFactoryStub facesContextFactory = null;
     protected LifecycleStub           lifecycle = null;
     protected LifecycleFactoryStub    lifecycleFactory = null;
-    protected MockRenderKit           renderKit = null;
+    protected RenderKitStub           renderKit = null;
     protected HttpServletRequestStub  request = null;
     protected HttpServletResponseStub response = null;
-    protected MockServletContext      servletContext = null;
+    protected ServletContextStub      servletContext = null;
     protected HttpSessionStub         session = null;
 
     // Thread context class loader saved and restored after each test

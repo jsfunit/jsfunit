@@ -25,7 +25,7 @@ import javax.faces.context.ResponseWriter;
 /**
  * <p>Mock implementation of <code>javax.faces.context.ResponseWriter</code>.</p>
  */
-public class MockResponseWriter extends ResponseWriter {
+public class ResponseWriterStub extends ResponseWriter {
 
 
     // ------------------------------------------------------------ Constructors
@@ -38,7 +38,7 @@ public class MockResponseWriter extends ResponseWriter {
      * @param contentType Content type to be created
      * @param characterEncoding Character encoding of this response
      */
-    public MockResponseWriter(Writer writer, String contentType, String characterEncoding) {
+    public ResponseWriterStub(Writer writer, String contentType, String characterEncoding) {
         this.writer = writer;
         this.contentType = contentType;
         this.characterEncoding = characterEncoding;
@@ -71,7 +71,7 @@ public class MockResponseWriter extends ResponseWriter {
 
     /** {@inheritDoc} */
     public ResponseWriter cloneWithWriter(Writer writer) {
-        return new MockResponseWriter(writer, contentType, characterEncoding);
+        return new ResponseWriterStub(writer, contentType, characterEncoding);
     }
 
 

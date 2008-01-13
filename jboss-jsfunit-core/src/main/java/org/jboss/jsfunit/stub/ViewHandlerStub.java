@@ -30,7 +30,7 @@ import javax.faces.render.RenderKitFactory;
  * $Id$
  */
 
-public class MockViewHandler extends ViewHandler {
+public class ViewHandlerStub extends ViewHandler {
 
 
     // ------------------------------------------------------------ Constructors
@@ -39,7 +39,7 @@ public class MockViewHandler extends ViewHandler {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockViewHandler() {
+    public ViewHandlerStub() {
     }
 
 

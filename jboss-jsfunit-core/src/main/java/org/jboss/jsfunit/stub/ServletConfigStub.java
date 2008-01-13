@@ -29,7 +29,7 @@ import javax.servlet.ServletContext;
  * $Id$
  */
 
-public class MockServletConfig implements ServletConfig {
+public class ServletConfigStub implements ServletConfig {
 
 
     // ------------------------------------------------------------ Constructors
@@ -38,7 +38,7 @@ public class MockServletConfig implements ServletConfig {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockServletConfig() {
+    public ServletConfigStub() {
     }
 
 
@@ -48,7 +48,7 @@ public class MockServletConfig implements ServletConfig {
      *
      * @param context The associated ServletContext
      */
-    public MockServletConfig(ServletContext context) {
+    public ServletConfigStub(ServletContext context) {
         setServletContext(context);
     }
 
@@ -118,7 +118,7 @@ public class MockServletConfig implements ServletConfig {
     /** {@inheritDoc} */
     public String getServletName() {
 
-        return "MockServlet";
+        return "ServletStub";
 
     }
 

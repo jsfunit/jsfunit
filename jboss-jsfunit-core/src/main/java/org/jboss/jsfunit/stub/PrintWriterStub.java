@@ -24,10 +24,10 @@ import java.io.PrintWriter;
 /**
  * <p>Mock implementation of <code>PrintWriter</code>.</p>
  *
- * $Id: MockPrintWriter.java 464373 2006-10-16 04:21:54Z rahul $
+ * $Id: PrintWriterStub.java 464373 2006-10-16 04:21:54Z rahul $
  */
 
-public class MockPrintWriter extends PrintWriter {
+public class PrintWriterStub extends PrintWriter {
 
 
     // ------------------------------------------------------------ Constructors
@@ -38,7 +38,7 @@ public class MockPrintWriter extends PrintWriter {
      *
      * @param writer Temporary buffer storage for us to use
      */
-    public MockPrintWriter(CharArrayWriter writer) {
+    public PrintWriterStub(CharArrayWriter writer) {
         super(writer);
         this.caw = writer;
     }

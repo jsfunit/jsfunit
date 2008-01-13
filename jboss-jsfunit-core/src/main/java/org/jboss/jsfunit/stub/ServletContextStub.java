@@ -51,7 +51,7 @@ import javax.servlet.ServletException;
  * $Id$
  */
 
-public class MockServletContext implements ServletContext {
+public class ServletContextStub implements ServletContext {
 
 
 
@@ -322,7 +322,7 @@ public class MockServletContext implements ServletContext {
     /** {@inheritDoc} */
     public String getServletContextName() {
 
-        return "MockServletContext";
+        return "ServletContextStub";
 
     }
 
@@ -330,7 +330,7 @@ public class MockServletContext implements ServletContext {
     /** {@inheritDoc} */
     public String getServerInfo() {
 
-        return "MockServletContext";
+        return "ServletContextStub";
 
     }
 

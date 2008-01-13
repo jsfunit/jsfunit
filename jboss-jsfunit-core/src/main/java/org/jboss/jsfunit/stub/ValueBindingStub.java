@@ -37,7 +37,7 @@ import javax.faces.el.VariableResolver;
  * <p>Mock implementation of <code>ValueBinding</code>.</p>
  */
 
-public class MockValueBinding extends ValueBinding implements StateHolder {
+public class ValueBindingStub extends ValueBinding implements StateHolder {
 
 
     // ------------------------------------------------------------ Constructors
@@ -46,7 +46,7 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
     /**
      * <p>Construct a default instance.</p>
      */
-    public MockValueBinding() {
+    public ValueBindingStub() {
 
         this(null, null);
 
@@ -59,7 +59,7 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
      * @param application Application instance to be wrapped
      * @param ref Expression to be wrapped
      */
-    public MockValueBinding(Application application, String ref) {
+    public ValueBindingStub(Application application, String ref) {
 
         this.application = application;
         if (ref != null) {
