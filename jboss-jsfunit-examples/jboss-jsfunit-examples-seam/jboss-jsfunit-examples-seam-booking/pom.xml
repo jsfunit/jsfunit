@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.jboss.jsfunit</groupId>
+    <artifactId>jboss-jsfunit-examples-seam</artifactId>
+    <version>1.0-beta-2-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-examples-seam-booking</artifactId>
+  <packaging>pom</packaging>  
+  <name>Seam Booking Example</name>
+  
+  <modules>
+    <module>ear</module>
+    <module>ejb</module>
+    <module>war</module>
+  </modules>
+
+  <properties>
+    <earName>jboss-seam-booking</earName>
+    <version.richfaces>3.1.2.SP1</version.richfaces>
+  </properties>
+</project>

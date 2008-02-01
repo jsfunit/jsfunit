@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.jboss.jsfunit</groupId>
+    <artifactId>jboss-jsfunit</artifactId>
+    <version>1.0-beta-2-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-seam</artifactId>
+  <name>JSFUnit Seam Support</name>
+  <packaging>jar</packaging>      
+  
+  <reporting>
+    <plugins>      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <links>
+            <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+            <link>http://java.sun.com/javaee/javaserverfaces/1.2/docs/api/</link>
+            <link>http://jakarta.apache.org/cactus/api/framework-13</link>
+            <link>http://httpunit.sourceforge.net/doc/api</link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+  
+  <dependencies>
+    <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>httpunit</groupId>
+      <artifactId>httpunit</artifactId>
+      <scope>provided</scope>
+    </dependency>    
+    
+    <dependency>
+      <groupId>org.jboss.seam</groupId>
+      <artifactId>jboss-seam</artifactId>
+      <version>2.0.1.CR1</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jboss</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+
+</project>

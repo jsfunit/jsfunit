@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.jboss.jsfunit</groupId>
+    <artifactId>jboss-jsfunit-examples-seam-booking</artifactId>
+    <version>1.0-beta-2-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-examples-seam-booking-ear</artifactId>
+  <packaging>ear</packaging>  
+  <name>Seam Booking EAR Module</name>  
+  
+  <dependencies>
+    
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-examples-seam-booking-war</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-examples-seam-booking-ejb</artifactId>
+      <version>${project.version}</version>
+      <type>ejb</type>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.seam</groupId>
+      <artifactId>jboss-seam</artifactId>
+      <version>2.0.1.CR1</version>
+      <type>ejb</type>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jboss</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.richfaces.framework</groupId>
+      <artifactId>richfaces-api</artifactId>
+      <version>${version.richfaces}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-collections</groupId>
+          <artifactId>commons-collections</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-digester</groupId>
+      <artifactId>commons-digester</artifactId>
+      <version>1.8</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-collections</groupId>
+          <artifactId>commons-collections</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <configuration>
+          <finalName>${earName}</finalName>
+          <modules>
+            <javaModule>
+              <groupId>commons-beanutils</groupId>
+              <artifactId>commons-beanutils</artifactId>
+              <bundleDir>lib</bundleDir>
+            </javaModule>
+            <javaModule>
+              <groupId>commons-digester</groupId>
+              <artifactId>commons-digester</artifactId>
+              <bundleDir>lib</bundleDir>
+            </javaModule>
+            <javaModule>
+              <groupId>org.richfaces.framework</groupId>
+              <artifactId>richfaces-api</artifactId>
+              <bundleDir>lib</bundleDir>
+            </javaModule>
+            <javaModule>
+              <groupId>org.jboss.el</groupId>
+              <artifactId>jboss-el</artifactId>
+              <bundleDir>lib</bundleDir>
+            </javaModule>
+            <ejbModule>
+              <groupId>org.jboss.jsfunit</groupId>
+              <artifactId>jboss-jsfunit-examples-seam-booking-ejb</artifactId>
+              <bundleFileName>jboss-seam-booking.jar</bundleFileName>
+            </ejbModule>
+            <webModule>
+              <groupId>org.jboss.jsfunit</groupId>
+              <artifactId>jboss-jsfunit-examples-seam-booking-war</artifactId>
+              <bundleFileName>jboss-seam-booking.war</bundleFileName>
+              <contextRoot>/seam-booking</contextRoot>
+            </webModule>
+          </modules>
+          <jboss>
+             <version>4</version>
+             <loader-repository>seam.jboss.org:loader=seam-booking</loader-repository>
+          </jboss>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>

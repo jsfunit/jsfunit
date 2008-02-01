@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.jboss.jsfunit</groupId>
+    <artifactId>jboss-jsfunit-examples-seam-booking</artifactId>
+    <version>1.0-beta-2-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-examples-seam-booking-war</artifactId>
+  <packaging>war</packaging>  
+  <name>Seam Booking WAR Module</name>  
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.seam</groupId>
+      <artifactId>jboss-seam</artifactId>
+      <version>2.0.1.CR1</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jboss</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.seam</groupId>
+      <artifactId>jboss-seam-ui</artifactId>
+      <version>2.0.1.CR1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jboss.seam</groupId>
+          <artifactId>jboss-seam</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-beanutils</groupId>
+          <artifactId>commons-beanutils</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.sun.facelets</groupId>
+      <artifactId>jsf-facelets</artifactId>
+      <version>1.1.14</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.richfaces.framework</groupId>
+      <artifactId>richfaces-impl</artifactId>
+      <version>${version.richfaces}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.richfaces.framework</groupId>
+          <artifactId>richfaces-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-beanutils</groupId>
+          <artifactId>commons-beanutils</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-digester</groupId>
+          <artifactId>commons-digester</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-collections</groupId>
+          <artifactId>commons-collections</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.richfaces.ui</groupId>
+      <artifactId>richfaces-ui</artifactId>
+      <version>${version.richfaces}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.richfaces.framework</groupId>
+          <artifactId>richfaces-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.richfaces.framework</groupId>
+          <artifactId>richfaces-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-beanutils</groupId>
+          <artifactId>commons-beanutils</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-digester</groupId>
+          <artifactId>commons-digester</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-collections</groupId>
+          <artifactId>commons-collections</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+      
+    
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-seam</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-richfaces</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>src/test/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <filtering>true</filtering>
+              <directory>${basedir}/src/main/webapp</directory>
+              <includes>
+                <include>**/*.xml</include>
+              </includes>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins> 
+  </build>
+
+</project>

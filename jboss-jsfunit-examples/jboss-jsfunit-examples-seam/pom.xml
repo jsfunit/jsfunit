@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.jboss.jsfunit</groupId>
+    <artifactId>jboss-jsfunit-examples</artifactId>
+    <version>1.0-beta-2-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jboss-jsfunit-examples-seam</artifactId>
+  <packaging>pom</packaging>  
+  <name>Seam Example Apps</name>
+
+  <modules>    
+    <module>jboss-jsfunit-examples-seam-registration</module>
+    <module>jboss-jsfunit-examples-seam-booking</module>
+  </modules>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-impl</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+    
+  <!-- jndiPattern for JBoss AS, gets filtered into componets.xml -->
+  <!-- For now, the Seam JSFUnit examples only run on JBoss AS.   -->
+  <!-- Using another, should only require changing this property. -->
+  <properties>
+    <jndiPattern>${earName}/#{ejbName}/local</jndiPattern>
+  </properties>
+</project>
