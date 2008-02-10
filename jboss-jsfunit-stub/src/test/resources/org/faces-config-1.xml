@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ JBoss, Home of Professional Open Source.
+ Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ as indicated by the @author tags. See the copyright.txt file in the
+ distribution for a full listing of individual contributors.
+ 
+ This is free software; you can redistribute it and/or modify it
+ under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 2.1 of
+ the License, or (at your option) any later version.
+ 
+ This software is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public
+ License along with this software; if not, write to the Free
+ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<faces-config>
+
+  <component>
+      <component-type>component-type-1</component-type>
+      <component-class>com.mycompany.MyComponent1</component-class>
+  </component>
+
+  <component>
+      <component-type>component-type-2</component-type>
+      <component-class>com.mycompany.MyComponent2</component-class>
+  </component>
+
+  <converter>
+      <converter-id>converter-id-1</converter-id>
+      <converter-class>com.mycompany.MyConverter1</converter-class>
+  </converter>
+
+  <converter>
+      <converter-id>converter-id-2</converter-id>
+      <converter-class>com.mycompany.MyConverter2</converter-class>
+  </converter>
+
+  <converter>
+      <converter-for-class>java.lang.Integer</converter-for-class>
+      <converter-class>org.jboss.jsfunit.stub.config.MyConverter</converter-class>
+  </converter>
+
+  <validator>
+      <validator-id>validator-id-1</validator-id>
+      <validator-class>com.mycompany.MyValidator1</validator-class>
+  </validator>
+
+  <validator>
+      <validator-id>validator-id-2</validator-id>
+      <validator-class>com.mycompany.MyValidator2</validator-class>
+  </validator>
+
+  <render-kit>
+
+      <renderer>
+          <component-family>component-family-1</component-family>
+          <renderer-type>renderer-type-1</renderer-type>
+          <renderer-class>org.jboss.jsfunit.stub.config.MyRenderer</renderer-class>
+      </renderer>
+
+      <renderer>
+          <component-family>component-family-2</component-family>
+          <renderer-type>renderer-type-2</renderer-type>
+          <renderer-class>org.jboss.jsfunit.stub.config.MyRenderer</renderer-class>
+      </renderer>
+
+  </render-kit>
+
+</faces-config>
