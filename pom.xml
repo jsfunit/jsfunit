@@ -129,6 +129,8 @@
     <module>jboss-jsfunit-seam</module>
     <module>jboss-jsfunit-ant</module>
     <module>jboss-jsfunit-examples</module>
+    <module>jboss-jsfunit-analysis</module>
+    <module>jboss-jsfunit-stub</module>
   </modules>
 
   <build>
