@@ -53,21 +53,19 @@ public class RegistrationTest extends ServletTestCase
     */
    public void testGoToRegisterPage() throws IOException, SAXException
    {
-      JSFClientSession client = new JSFClientSession("/home.seam");
+      SeamClient client = new SeamClient("/home.seam");
       JSFServerSession server = new JSFServerSession(client);
-      SeamClient seamClient = new SeamClient(client);
       
-      seamClient.clickSLink("register");
+      client.clickSLink("register");
       assertEquals("/register.xhtml", server.getCurrentViewID());
    }
    
    public void testRegisterNewUser() throws IOException, SAXException
    {
-      JSFClientSession client = new JSFClientSession("/home.seam");
+      SeamClient client = new SeamClient("/home.seam");
       JSFServerSession server = new JSFServerSession(client);
-      SeamClient seamClient = new SeamClient(client);
       
-      seamClient.clickSLink("register");
+      client.clickSLink("register");
       String username = new Long(System.currentTimeMillis()).toString();
       client.setParameter("username", username); // unique name
       client.setParameter(":name", "Stan Silvert");
@@ -80,9 +78,8 @@ public class RegistrationTest extends ServletTestCase
    
    public void testLogin() throws IOException, SAXException
    {
-      JSFClientSession client = new JSFClientSession("/home.seam");
+      SeamClient client = new SeamClient("/home.seam");
       JSFServerSession server = new JSFServerSession(client);
-      SeamClient seamClient = new SeamClient(client);
       
       RegisterBot.registerUser("LoginTestUser", "password");
       RegisterBot.login(client, "LoginTestUser", "password");
@@ -93,7 +90,7 @@ public class RegistrationTest extends ServletTestCase
    
    public void testRegisterAndLogin() throws IOException, SAXException
    {
-      JSFClientSession client = RegisterBot.registerAndLogin("RegstrLoginUser", "password");
+      SeamClient client = RegisterBot.registerAndLogin("RegstrLoginUser", "password");
       JSFServerSession server = new JSFServerSession(client);
       FacesMessage message = (FacesMessage)server.getFacesMessages().next();
       assertTrue(message.getDetail().contains("Welcome, RegstrLoginUser"));

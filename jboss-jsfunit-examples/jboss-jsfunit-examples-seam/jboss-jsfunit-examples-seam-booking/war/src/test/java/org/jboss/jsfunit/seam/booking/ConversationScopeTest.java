@@ -23,6 +23,8 @@
 package org.jboss.jsfunit.seam.booking;
 
 import java.io.IOException;
+import java.util.Iterator;
+import javax.faces.application.FacesMessage;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
@@ -37,33 +39,33 @@ import org.xml.sax.SAXException;
 public class ConversationScopeTest extends ServletTestCase
 {
    
-   private JSFClientSession client;
-   private JSFServerSession server;
-   private SeamClient seamClient;
-   private RichFacesClient richClient;
-   
-   /**
-    * Start a JSFUnit session by getting the /index.faces page.  Note that
-    * because setUp() is called before each test, a new HttpSession will be
-    * created each time a test is run.
-    */
-   public void setUp() throws IOException, SAXException
-   {
-      this.client = RegisterBot.registerAndLogin("ConvScopeUser", "password");
-      this.server = new JSFServerSession(this.client);
-      this.seamClient = new SeamClient(this.client);
-      this.richClient = new RichFacesClient(this.client);
-   }
-   
    public void testGetHotelBooking() throws IOException, SAXException
    {
+      SeamClient client = RegisterBot.registerAndLogin("ConvScopeUser", "password");
+      JSFServerSession server = new JSFServerSession(client);
+      RichFacesClient richClient = new RichFacesClient(client);
+      
       client.setParameter("searchString", "Hilton");
       richClient.ajaxSubmit("findHotels");
       assertTrue(richClient.getAjaxResponse().contains("Hilton"));
-      seamClient.clickSLink(":0:viewHotel");
+      client.clickSLink(":0:viewHotel");
       assertEquals("/hotel.xhtml", server.getCurrentViewID());
       assertNotNull(server.getManagedBeanValue("#{hotel}"));
-      
    }
-   
+
+   public void testTemporaryConversation() throws IOException, SAXException
+   {
+      SeamClient client = new SeamClient("/home.seam");
+      JSFServerSession server = new JSFServerSession(client);
+      
+      client.clickSLink("register");
+      client.setParameter("username", "ssilvert");
+      client.setParameter(":name", "Stan Silvert");
+      client.setParameter("password", "foobar");
+      client.setParameter("verify", "barfoo");
+      client.submit("register");
+      
+      FacesMessage message = (FacesMessage)server.getFacesMessages().next();
+      assertEquals("Re-enter your password", message.getDetail());
+   }
 }

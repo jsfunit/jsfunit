@@ -51,6 +51,7 @@ import javax.servlet.ServletContext;
 public class JSFUnitExternalContext extends ExternalContext
 {
    private ExternalContext delegate;
+   private JSFUnitHttpServletRequest httpServletRequest;
    
    private Map cookieMap;
    private String requestContextPath;
@@ -75,6 +76,7 @@ public class JSFUnitExternalContext extends ExternalContext
    public JSFUnitExternalContext(ExternalContext delegate)
    {
       this.delegate = delegate;
+      this.httpServletRequest = new JSFUnitHttpServletRequest(this);
       
       // cache most of the data from the "real" ExternalContext
       this.cookieMap = new HashMap(delegate.getRequestCookieMap());
@@ -320,7 +322,7 @@ public class JSFUnitExternalContext extends ExternalContext
     */
    public Object getRequest()
    {
-      return delegate.getRequest();
+      return this.httpServletRequest;
    }
    
    

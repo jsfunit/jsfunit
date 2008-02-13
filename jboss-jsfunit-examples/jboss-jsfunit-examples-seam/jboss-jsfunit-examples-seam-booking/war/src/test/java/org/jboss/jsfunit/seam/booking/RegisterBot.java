@@ -48,11 +48,11 @@ public class RegisterBot
     */
    public static void registerUser(String username, String password) throws IOException, SAXException
    {
-      JSFClientSession client = null;
+      SeamClient client = null;
      
       try
       {
-         client = new JSFClientSession("/home.seam");
+         client = new SeamClient("/home.seam");
       }
       catch (MalformedURLException e)
       {
@@ -60,9 +60,8 @@ public class RegisterBot
       }
       
       JSFServerSession server = new JSFServerSession(client);
-      SeamClient seamClient = new SeamClient(client);
      
-      seamClient.clickSLink("register");
+      client.clickSLink("register");
       client.setParameter("username", username);
       client.setParameter(":name", username + " created by RegisterBot");
       client.setParameter("password", password);
@@ -88,11 +87,11 @@ public class RegisterBot
       client.submit("login:login");
    }
    
-    public static JSFClientSession registerAndLogin(String username, String password) 
+    public static SeamClient registerAndLogin(String username, String password) 
          throws IOException, SAXException
     {
        registerUser(username, password);
-       JSFClientSession client = new JSFClientSession("/home.seam");
+       SeamClient client = new SeamClient("/home.seam");
        login(client, username, password);
        return client;
     }

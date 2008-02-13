@@ -47,6 +47,13 @@
       <artifactId>httpunit</artifactId>
       <scope>provided</scope>
     </dependency>    
+
+    <dependency>
+      <groupId>cactus</groupId>
+      <artifactId>cactus</artifactId>
+      <version>13-1.7.1</version>
+      <scope>provided</scope>
+    </dependency>
     
     <dependency>
       <groupId>org.jboss.seam</groupId>

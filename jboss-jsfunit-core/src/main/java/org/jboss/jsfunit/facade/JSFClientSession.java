@@ -342,9 +342,7 @@ public class JSFClientSession
          throw new IllegalStateException("For this method, page must contain" +
                                          " only one form.  Use another " +
                                          "version of the submit() method.");
-      
-      this.webResponse = forms[0].submit();
-      updateInternalState();
+      doWebRequest(forms[0].getRequest());
    }
    
    /**
@@ -367,8 +365,7 @@ public class JSFClientSession
       String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(clientID);
       SubmitButton button = form.getSubmitButtonWithID(clientID);
-      this.webResponse = form.submit(button);
-      updateInternalState();
+      doWebRequest(form.getRequest(button));
    }
    
    /**
@@ -393,8 +390,7 @@ public class JSFClientSession
    {
       String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(clientID);
-      this.webResponse = form.submitNoButton();
-      updateInternalState();
+      doWebRequest(form.getRequest());
    }
    
    /**
