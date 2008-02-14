@@ -86,6 +86,7 @@ public class ViewConfigReconciler {
 		String query = "//managed-bean-name[text()='" + beanName + "']";
 		final String subQuery = "./managed-bean-class";
 		
+		// bug for JSFUNIT-74 is right here
 		for( String configPath : configByPath.keySet() ) {
 			NodeList list = new ParserUtils().query(configByPath.get(configPath), query, path);
 			
