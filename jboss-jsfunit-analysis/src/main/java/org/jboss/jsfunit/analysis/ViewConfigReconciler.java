@@ -86,26 +86,30 @@ public class ViewConfigReconciler {
 		String query = "//managed-bean-name[text()='" + beanName + "']";
 		final String subQuery = "./managed-bean-class";
 		
-		// bug for JSFUNIT-74 is right here
 		for( String configPath : configByPath.keySet() ) {
 			NodeList list = new ParserUtils().query(configByPath.get(configPath), query, path);
 			
-			if( list.getLength() == 0)
-				fail(path + " has an EL expression '" + el + "' which references a"
-						+ " managed bean '" + beanName + "', but no managed bean by this name can be found.");
-			else if (list.getLength() > 1)
+			if (list.getLength() > 1) {
 				fail(path + " has two managed beans named '" + beanName + "'");
+			} else if ( list.getLength() == 1 ) {
 			
-			Node managedBeanName = list.item(0);
-			NodeList managedBeanClasses = new ParserUtils().query(managedBeanName.getParentNode(), subQuery, path);
+				Node managedBeanName = list.item(0);
+				NodeList managedBeanClasses = new ParserUtils().query(managedBeanName.getParentNode(), subQuery, path);
+				
+				if( managedBeanClasses.getLength() == 0 )
+					fail(path + " has a managed-bean element w/out a managed-bean-class element");
+				else if(managedBeanClasses.getLength() > 1)
+					fail(path + " has a managed-bean element w/out > 1 managed-bean-class elements");
+				
+				verifyMethodExists(managedBeanClasses.item(0), methodName, path, beanName, el);
+				
+				return;
+			}
 			
-			if( managedBeanClasses.getLength() == 0 )
-				fail(path + " has a managed-bean element w/out a managed-bean-class element");
-			else if(managedBeanClasses.getLength() > 1)
-				fail(path + " has a managed-bean element w/out > 1 managed-bean-class elements");
-			
-			verifyMethodExists(managedBeanClasses.item(0), methodName, path, beanName, el);
 		}
+		
+		fail(path + " has an EL expression '" + el + "' which references a"
+				+ " managed bean '" + beanName + "', but no managed bean by this name can be found.");
 		
 	}
 
