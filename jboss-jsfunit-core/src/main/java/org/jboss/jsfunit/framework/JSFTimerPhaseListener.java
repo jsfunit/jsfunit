@@ -42,9 +42,6 @@ public class JSFTimerPhaseListener implements PhaseListener
    {
       PhaseId phaseId = phaseEvent.getPhaseId();
       JSFTimer timer = JSFTimer.getTimer();
-      
-      if (phaseId == PhaseId.RESTORE_VIEW) timer.clear();
-      
       timer.beforePhase(phaseId);
    }
 

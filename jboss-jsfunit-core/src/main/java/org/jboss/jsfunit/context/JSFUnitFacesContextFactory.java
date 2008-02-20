@@ -58,11 +58,9 @@ public class JSFUnitFacesContextFactory extends FacesContextFactory
       {
          req.getSession().removeAttribute(JSFUnitFacesContext.SESSION_KEY); // must remove before creating any new FacesContext
          FacesContext realFacesContext = parent.getFacesContext(context, request, response, lifecycle);
-         clearJSFTimer(req);
          return new JSFUnitFacesContext(realFacesContext, request);
       }
       
-      clearJSFTimer(req);
       return parent.getFacesContext(context, request, response, lifecycle);
    }
    
@@ -79,11 +77,4 @@ public class JSFUnitFacesContextFactory extends FacesContextFactory
       return false;
    }
    
-   private void clearJSFTimer(HttpServletRequest req)
-   {
-      if (req.getSession().getAttribute(JSFTimer.SESSION_KEY) != null)
-      {
-         JSFTimer.clear();
-      }
-   }
 }

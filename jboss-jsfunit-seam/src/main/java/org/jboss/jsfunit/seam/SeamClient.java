@@ -79,7 +79,7 @@ public class SeamClient extends JSFClientSession
     * WebConversation webConv = WebConversationFactory.makeWebConversation();<br/>
     * webConv.setAuthorization("myuser", "mypassword");<br/>
     * webConv.setHeaderField("Accept-Language", "es-mx,es");<br/> 
-    * JSFClientSession client = new JSFClientSession(webConv, "/index.jsf");<br/>
+    * SeamClient client = new SeamClient(webConv, "/index.jsf");<br/>
     * </code>
     * <br/>
     * Note that the initialPage param should be something that maps into the FacesServlet.
@@ -102,6 +102,16 @@ public class SeamClient extends JSFClientSession
       super(webConversation, initialPage);
    }
    
+   /**
+    * Click on a Seam s:link component.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
    public void clickSLink(String componentID) throws SAXException, IOException
    {
       String clientID = getClientIDs().findClientID(componentID);

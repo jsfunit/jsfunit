@@ -44,10 +44,10 @@ import javax.faces.event.PhaseId;
 public class JSFTimer
 {
    
-   public static final String SESSION_KEY = JSFTimer.class.getName() + ".SESSION_KEY";
+   public static final String REQUEST_KEY = JSFTimer.class.getName() + ".REQUEST_KEY";
    
-   private Map<PhaseId, Long> beforeMap = new HashMap<PhaseId, Long>();
-   private Map<PhaseId, Long> afterMap = new HashMap<PhaseId, Long>();
+   private Map<PhaseId, Long> beforeMap = new HashMap<PhaseId, Long>(5);
+   private Map<PhaseId, Long> afterMap = new HashMap<PhaseId, Long>(5);
    
    // only allow this class to create an instance
    private JSFTimer()
@@ -65,24 +65,6 @@ public class JSFTimer
       afterMap.put(phaseId, new Long(System.currentTimeMillis()));
    }
    // -------------------------------------------------------------
-   
-   /**
-    * Clear the timer.  This should only be called by JSFUnit.
-    */
-   public static void clear()
-   {
-      try
-      {
-         JSFTimer timer = getTimer();
-         timer.beforeMap.clear();
-         timer.afterMap.clear();
-      }
-      catch (IllegalStateException e)
-      {
-         // ignore
-      }
-   }
-   
    
    /**
     * Get a reference to the JSFTimer.
@@ -107,13 +89,13 @@ public class JSFTimer
          throw new IllegalStateException("No JSF request has been made for this session.");
       }
       
-      Map sessionMap = facesContext.getExternalContext().getSessionMap();   
-      JSFTimer timer = (JSFTimer)sessionMap.get(SESSION_KEY);
+      Map requestMap = facesContext.getExternalContext().getRequestMap();   
+      JSFTimer timer = (JSFTimer)requestMap.get(REQUEST_KEY);
       
       if (timer == null)
       {
          timer = new JSFTimer();
-         sessionMap.put(SESSION_KEY, timer);
+         requestMap.put(REQUEST_KEY, timer);
       }
       
       return timer;

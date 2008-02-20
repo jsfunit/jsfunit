@@ -148,7 +148,7 @@ public class JSFClientSession
     * @throws FormNotFoundException if no form parameter can be found matching 
     *                               the componentID
     */
-   WebForm getForm(String componentID) throws SAXException
+   public WebForm getForm(String componentID) throws SAXException
    {
       String clientID = this.clientIDs.findClientID(componentID);
       WebForm[] forms = getWebResponse().getForms();

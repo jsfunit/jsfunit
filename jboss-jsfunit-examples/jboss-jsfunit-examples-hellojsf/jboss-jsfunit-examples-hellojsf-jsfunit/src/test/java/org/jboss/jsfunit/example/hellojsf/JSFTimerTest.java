@@ -62,10 +62,9 @@ public class JSFTimerTest extends ServletTestCase
    public void testTotalTime() throws SAXException, IOException
    {
       JSFClientSession client = new JSFClientSession("/index_longValidator.faces");
-      JSFTimer timer = JSFTimer.getTimer();
       client.setParameter("input_foo_text", "Stan"); 
       client.submit("submit_button");
-      
+      JSFTimer timer = JSFTimer.getTimer();
       assertTrue(timer.getTotalTime() >= 1500);
    }
    
@@ -79,11 +78,13 @@ public class JSFTimerTest extends ServletTestCase
       
       client.setParameter("input_foo_text", "Stan"); 
       client.submit("submit_button");
+      timer = JSFTimer.getTimer();
       assertTrue(timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS) >= 1500);
       
       // Timer must still be cleared when submitting non-faces request
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + "/indexNoButtons.faces");
       client.doWebRequest(req);
+      timer = JSFTimer.getTimer();
       assertTrue(timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS) < 1500);
    }
    
@@ -100,14 +101,6 @@ public class JSFTimerTest extends ServletTestCase
       {
          // OK
       }
-   }
-   
-   public void testNoTotalTime() throws SAXException, IOException
-   {
-      JSFClientSession client = new JSFClientSession("/index.faces");
-      JSFTimer timer = JSFTimer.getTimer();
-      timer.clear();  // normally this should only be called by the framework
-      assertEquals(-1L, timer.getTotalTime());
    }
    
    /* debugging code

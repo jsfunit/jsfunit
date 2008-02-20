@@ -314,8 +314,7 @@ public class RichFacesClient extends Ajax4jsfClient
       UIComponent uiComp = clientIDs.findComponent(tabComponentID);
       Map options = buildEventOptions(uiComp);
       
-      String tabPanelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
-      WebForm form = client.getWebResponse().getFormWithID(tabPanelClientID + ":_form");
+      WebForm form = findFormForTabPanel(tabPanelComponentID);
       PostMethodWebRequest req = requestFactory.buildRequest(form);
 
       setA4JParam(req, uiComp);
@@ -329,14 +328,23 @@ public class RichFacesClient extends Ajax4jsfClient
    {
       String panelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
       String tabClientID = client.getClientIDs().findClientID(tabComponentID);
-      String formID = panelClientID + ":_form";
-      WebForm form = client.getWebResponse().getFormWithID(formID);
+      WebForm form = findFormForTabPanel(tabPanelComponentID);
+      String formID = form.getID();
       WebRequestFactory reqFactory = new WebRequestFactory(client);
       PostMethodWebRequest postRequest = reqFactory.buildRequest(form);
       postRequest.setParameter(formID + ":_idcl", tabClientID);
       postRequest.setParameter(tabClientID + "_server_submit", 
                                tabClientID + "_server_submit");
       client.doWebRequest(postRequest);
+   }
+   
+   private WebForm findFormForTabPanel(String tabPanelComponentID) throws SAXException
+   {
+      String tabPanelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
+      WebForm form = client.getWebResponse().getFormWithID(tabPanelClientID + ":_form");
+      if (form != null) return form;
+      
+      return client.getForm(tabPanelClientID);
    }
    
 }
