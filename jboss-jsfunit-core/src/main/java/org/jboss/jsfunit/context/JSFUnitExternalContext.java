@@ -37,6 +37,7 @@ import java.util.Set;
 
 import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * The JSFUnitExternalContext is created at the end of the JSF lifecycle.  It
@@ -76,7 +77,6 @@ public class JSFUnitExternalContext extends ExternalContext
    public JSFUnitExternalContext(ExternalContext delegate)
    {
       this.delegate = delegate;
-      this.httpServletRequest = new JSFUnitHttpServletRequest(this);
       
       // cache most of the data from the "real" ExternalContext
       this.cookieMap = new HashMap(delegate.getRequestCookieMap());
@@ -104,6 +104,8 @@ public class JSFUnitExternalContext extends ExternalContext
       this.session = delegate.getSession(true);
       this.sessionMap = new HashMap(delegate.getSessionMap());
       this.userPrincipal = delegate.getUserPrincipal();
+      
+      this.httpServletRequest = new JSFUnitHttpServletRequest(this, (HttpServletRequest)delegate.getRequest());
    }
    
    public Map getRequestCookieMap()

@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,12 +38,21 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This class takes the same approach as the JSFUnitExternalContext in that it
+ * caches everything possible from the HttpServletRequest so that it will be
+ * available to the JSFUnit test.  For a few methods, it is impossible or 
+ * impractical to provide an implementation because the request is finished
+ * and the servlet container is free to recycle the original HttpServletRequest.
+ * So a few methods throw UnsupportedOperationException.  A few methods also
+ * warn that using them can lead to unexpected results.  Those methods that
+ * are unreliable have a warning in the javadoc.
  *
  * @author Stan Silvert
  */
@@ -49,24 +60,87 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 {
    private JSFUnitExternalContext extCtx;
    
-   public JSFUnitHttpServletRequest(JSFUnitExternalContext extCtx)
+   private boolean isServlet14OrGreater = false;
+   
+   private String localName = "";
+   private String localAddr = "";
+   private int localPort = 0;
+   private int remotePort = 0;
+   private String queryString;
+   private String protocol;
+   private String pathTranslated;
+   private String method;
+   private Map parameterMap;
+   private int contentLength;
+   private Cookie[] cookies;
+   private String remoteAddr;
+   private String remoteHost;
+   private String requestURI;
+   private StringBuffer requestURL;
+   private String requestedSessionId;
+   private String scheme;
+   private String serverName;
+   private int serverPort;
+   private boolean isRequestedSessionIdFromCookie;
+   private boolean isRequestedSessionIdFromURL;
+   private boolean isRequestedSessionIdValid;
+   private boolean isSecure;
+   
+   public JSFUnitHttpServletRequest(JSFUnitExternalContext extCtx, HttpServletRequest request)
    {
       this.extCtx = extCtx;
+      this.isServlet14OrGreater = isServlet14OrGreater();
+      cacheServlet14RequestValues(request);
+      this.queryString = request.getQueryString();
+      this.protocol = request.getProtocol();
+      this.pathTranslated = request.getPathTranslated();
+      this.method = request.getMethod();
+      this.parameterMap = request.getParameterMap();
+      this.contentLength = request.getContentLength();
+      this.cookies = request.getCookies();
+      this.remoteAddr = request.getRemoteAddr();
+      this.remoteHost = request.getRemoteHost();
+      this.requestURI = request.getRequestURI();
+      this.requestURL = new StringBuffer(request.getRequestURL());
+      this.requestedSessionId = request.getRequestedSessionId();
+      this.scheme = request.getScheme();
+      this.serverName = request.getServerName();
+      this.serverPort = request.getServerPort();
+      this.isRequestedSessionIdFromCookie = request.isRequestedSessionIdFromCookie();
+      this.isRequestedSessionIdFromURL = request.isRequestedSessionIdFromURL();
+      this.isRequestedSessionIdValid = request.isRequestedSessionIdValid();
+      this.isSecure = request.isSecure();
+   }
+   
+   private boolean isServlet14OrGreater()
+   {
+      ServletContext servletContext = (ServletContext)this.extCtx.getContext();
+      return servletContext.getMinorVersion() > 3;
+   }
+   
+   private void cacheServlet14RequestValues(HttpServletRequest request)
+   {
+      if (!this.isServlet14OrGreater) return;
+      
+      this.localName = request.getLocalName();
+      this.localAddr = request.getLocalAddr();
+      this.localPort = request.getLocalPort();
+      this.remotePort = request.getRemotePort();
    }
    
    public String getQueryString()
    {
-      return null;
+      return this.queryString;
    }
 
    public String getProtocol()
    {
-      return null;
+      return this.protocol;
    }
 
    public String getPathTranslated()
    {
-      return null;
+      return this.pathTranslated;
    }
 
    public String getPathInfo()
@@ -81,12 +155,12 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 
    public Map getParameterMap()
    {
-      return this.extCtx.getRequestParameterMap();
+      return this.parameterMap;
    }
 
    public String getMethod()
    {
-      return null;
+      return this.method;
    }
 
    public Enumeration getLocales()
@@ -127,8 +201,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 
    public int getContentLength()
    {
-      // TODO:
-      return 0;
+      return this.contentLength;
    }
 
    public String getContentType()
@@ -143,7 +216,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 
    public Cookie[] getCookies()
    {
-      return null;
+      return this.cookies;
    }
 
    public Enumeration getHeaderNames()
@@ -152,7 +225,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    }
 
    /**
-    * Unsupported
+    * @throws UnsupportedOperationException
     */
    public ServletInputStream getInputStream() throws IOException
    {
@@ -160,7 +233,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    }
 
    /**
-    * Unsupported
+    * @throws UnsupportedOperationException
     */
    public BufferedReader getReader() throws IOException
    {
@@ -169,48 +242,47 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 
    public String getRemoteAddr()
    {
-      return null;
+      return this.remoteAddr;
    }
 
    public String getRemoteHost()
    {
-      return null;
+      return this.remoteHost;
    }
 
    public String getRemoteUser()
    {
-      return null;
+      return this.extCtx.getRemoteUser();
    }
 
    public String getRequestURI()
    {
-      return null;
+      return this.requestURI;
    }
 
    public StringBuffer getRequestURL()
    {
-      return null;
+      return this.requestURL;
    }
 
    public String getRequestedSessionId()
    {
-      return null;
+      return this.requestedSessionId;
    }
 
    public String getScheme()
    {
-      return null;
+      return this.scheme;
    }
 
    public String getServerName()
    {
-      return null;
+      return this.serverName;
    }
 
    public int getServerPort()
    {
-      //TODO
-      return 0;
+      return this.serverPort;
    }
 
    public String getServletPath()
@@ -230,37 +302,32 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 
    public boolean isRequestedSessionIdFromCookie()
    {
-      // always true in JSFUnit
-      return true;
+      return this.isRequestedSessionIdFromCookie();
    }
 
    public boolean isRequestedSessionIdFromURL()
    {
-      // always false in JSFUnit
-      return false;
+      return this.isRequestedSessionIdFromURL;
    }
 
    public boolean isRequestedSessionIdFromUrl()
    {
-      // always false in JSFUnit
-      return false;
+      return isRequestedSessionIdFromURL();
    }
 
    public boolean isRequestedSessionIdValid()
    {
-      // always true in JSFUnit
-      return true;
+      return this.isRequestedSessionIdValid;
    }
 
    public boolean isSecure()
    {
-      // TODO
-      return false;
+      return this.isSecure;
    }
 
-   public HttpSession getSession(boolean b)
+   public HttpSession getSession(boolean create)
    {
-      return (HttpSession)this.extCtx.getSession(b);
+      return (HttpSession)this.extCtx.getSession(create);
    }
 
    public void setAttribute(String attribute, Object value)
@@ -268,15 +335,19 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       this.extCtx.getRequestMap().put(attribute, value);
    }
 
+   /**
+    * This method is a no-op.  Since the response is over by the time this
+    * object is active, it is too late to override the name of the character
+    * encoding.
+    */
    public void setCharacterEncoding(String string) throws UnsupportedEncodingException
    {
-      //TODO???
+      //No-op
    }
 
-   public String[] getParameterValues(String string)
+   public String[] getParameterValues(String name)
    {
-      ArrayList myList = new ArrayList(this.extCtx.getRequestParameterValuesMap().values());
-      return (String[])myList.toArray(new String[0]);
+      return (String[])this.extCtx.getRequestParameterValuesMap().get(name);
    }
 
    public String getParameter(String name)
@@ -284,10 +355,11 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       return (String)this.extCtx.getRequestParameterMap().get(name);
    }
 
-   public int getIntHeader(String string)
+   public int getIntHeader(String name)
    {
-      //TODO
-      return 0;
+      String header = getHeader(name);
+      if (header == null) return -1;
+      return Integer.parseInt(header);
    }
 
    public Object getAttribute(String name)
@@ -295,10 +367,11 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       return this.extCtx.getRequestMap().get(name);
    }
 
-   public long getDateHeader(String string)
+   public long getDateHeader(String name)
    {
-      //TODO
-      return 0L;
+      String header = getHeader(name);
+      if (header == null) return -1;
+      return Date.parse(header);
    }
 
    public String getHeader(String name)
@@ -306,20 +379,23 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       return (String)this.extCtx.getRequestHeaderMap().get(name);
    }
 
-   public Enumeration getHeaders(String string)
+   public Enumeration getHeaders(String name)
    {
-      //TODO
-      return null;
-   }
-
-   public String getRealPath(String string)
-   {
-      //TODO
-      return null;
+      String[] headers = (String[])this.extCtx.getRequestHeaderValuesMap().get(name);
+      if (headers == null) headers = new String[0];
+      return Collections.enumeration(Arrays.asList(headers));
    }
 
    /**
-    * Unsupported
+    * @throws UnsupportedOperationException
+    */
+   public String getRealPath(String string)
+   {
+      throw new UnsupportedOperationException();
+   }
+
+   /**
+    * @throws UnsupportedOperationException
     */
    public RequestDispatcher getRequestDispatcher(String string)
    {
@@ -339,31 +415,47 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       this.extCtx.getRequestMap().remove(name);
    }
 
-   // Servlet 2.4
+   /**
+    * @throws UnsupportedOperationException if running in a container that
+    *         does not support servlet 2.4 or greater.
+    *                                   
+    */
    public int getLocalPort()
    {
-      //TODO
-      return 0;
+      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
+      return this.localPort;
    }
    
-   // Servlet 2.4
+   /**
+    * @throws UnsupportedOperationException if running in a container that
+    *         does not support servlet 2.4 or greater.
+    *                                   
+    */
    public int getRemotePort()
    {
-      //TODO
-      return 0;
+      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
+      return this.remotePort;
    }
    
-   // Servlet 2.4
+   /**
+    * @throws UnsupportedOperationException if running in a container that
+    *         does not support servlet 2.4 or greater.
+    *                                   
+    */
    public String getLocalName()
    {
-      //TODO
-      return "";
+      if (!isServlet14OrGreater) throw new UnsupportedOperationException(); 
+      return this.localName;
    }
    
-   // Servlet 2.4
+   /**
+    * @throws UnsupportedOperationException if running in a container that
+    *         does not support servlet 2.4 or greater.
+    *                                   
+    */
    public String getLocalAddr()
    {
-      //TODO
-      return "";
+      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
+      return this.localAddr;
    }
 }
