@@ -183,6 +183,10 @@ public class JSFClientSession
    {
       this.webResponse = this.webConversation.getResponse(request);
       updateInternalState();
+      if (FaceletsErrorPageException.isFaceletsErrorPage(this))
+      {
+         throw new FaceletsErrorPageException(this);
+      }
    }
     
    // update clientIDs and updatedDOM
