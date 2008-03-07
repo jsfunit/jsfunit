@@ -88,6 +88,9 @@ color: rgb(0,0,196); background-color: rgb(228,230,160);
 		<h:form id="form">
                         <h:inputHidden id="myhidden" value="foo"/>
 			<h:dataTable id="repeat" value="#{bean.collection}" var="item" >
+                           <f:facet name="header">
+                              <h:inputText id="facettext" value="facet used only for testing"/>                  
+                           </f:facet>
 				<h:column>
 					<h:outputText id="item" value="#{item}" styleClass="output" />
 				</h:column>

@@ -158,6 +158,19 @@ public class A4JTest extends ServletTestCase
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[8]}"));
    }
    
+   public void testReferenceToAFacet() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/pages/a4j-repeat-rerender.jsf");
+      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+      
+      client.setParameter("facettext", "foo");
+      
+      ajaxClient.ajaxSubmit("0:command_link_up");
+      assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));
+      assertEquals(1, server.getManagedBeanValue("#{bean.collection[0]}"));
+   }
+   
    /**
     * Test for http://jira.jboss.com/jira/browse/JSFUNIT-56
     */

@@ -135,6 +135,9 @@ public class ClientIDs
       String clientId = component.getClientId(facesContext);
       if (clientId == null) return;
 
+      // this can happen for facets
+      if (allClientIDs.contains(clientId)) return;
+      
       //System.out.println("adding clientID=" + clientId + "/ className=" + component.getClass().getName() + " / identity=" + component.hashCode());
       
       allClientIDs.add(clientId);
