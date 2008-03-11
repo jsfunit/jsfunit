@@ -184,7 +184,7 @@ public class RichFacesClient extends Ajax4jsfClient
       try 
       {
          JSFAJAX.addResponseStringToSession(DOMUtil.docToHTMLString(doc));
-         client.doWebRequest(JSFAJAX.createJSFUnitFilterRequest());
+         client.doWebRequest(JSFAJAX.createJSFUnitFilterRequest(getContentType()));
       } 
       catch (TransformerException e) 
       {

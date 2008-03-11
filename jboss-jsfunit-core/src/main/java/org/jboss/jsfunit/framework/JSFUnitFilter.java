@@ -104,13 +104,12 @@ public class JSFUnitFilter implements Filter
       String altResponseString = removeAltResponse(request);
       if (altResponseString != null)
       {
-         sendAltResponse(response, altResponseString);
+         sendAltResponse(response, altResponseString, request.getHeader("Content-Type"));
          return;
       }
       
       try 
       {
-        
         WebConversationFactory.setThreadLocals(request);
         System.setProperty("cactus.contextURL", WebConversationFactory.getWARURL());
         
@@ -143,11 +142,14 @@ public class JSFUnitFilter implements Filter
    }
    
    private void sendAltResponse(HttpServletResponse response, 
-                                String altResponseString)
+                                String altResponseString,
+                                String contentType)
                                 throws IOException
    {
-      response.setContentType("text/html");
+      if (contentType == null) contentType = "text/html";
+      response.setContentType(contentType);
       PrintWriter writer = response.getWriter();
+      
       writer.print(altResponseString);
       writer.flush();
    }

@@ -63,7 +63,8 @@ public class JSFAJAX
     */
    static WebRequest processResponse(Document oldDoc, 
                                      WebResponse newResponse,
-                                     Map options)
+                                     Map options,
+                                     String contentType)
          throws SAXException, ParserConfigurationException, IOException, TransformerException
    {
       String ajaxResponse = newResponse.getHeaderField("Ajax-Response");
@@ -95,16 +96,18 @@ public class JSFAJAX
       {
          idsToReplace = metaTag.getAttribute("content").split(",");
       }
-      
+   
       return updatePage(oldDoc, 
                         DOMUtil.convertToDomLevel2(newResponse.getDOM()), 
-                        idsToReplace);
+                        idsToReplace,
+                        contentType);
    }
    
    
    private static WebRequest updatePage(Document oldDoc, 
                                         Document newDoc,
-                                        String[] idsToReplace)
+                                        String[] idsToReplace,
+                                        String contentType)
          throws SAXException, ParserConfigurationException, IOException, TransformerException
    {
       for (int i=0; i < idsToReplace.length; i++)
@@ -121,7 +124,7 @@ public class JSFAJAX
       
       addResponseStringToSession(DOMUtil.docToHTMLString(oldDoc));
       
-      return createJSFUnitFilterRequest();
+      return createJSFUnitFilterRequest(contentType);
    }
    
    // TODO heed this from JSFAJAX.js
@@ -165,11 +168,15 @@ public class JSFAJAX
       getSession().setAttribute(JSFUnitFilter.ALT_RESPONSE, responseString);
    }
    
-   static WebRequest createJSFUnitFilterRequest() throws MalformedURLException
+   static WebRequest createJSFUnitFilterRequest(String contentType) throws MalformedURLException
    {
       String urlString = "/ServletRedirector";
       GetMethodWebRequest request = new GetMethodWebRequest(getWarURL() + urlString);
       request.setParameter("JSESSIONID", getSession().getId());
+      
+      if (contentType == null) contentType = "text/html";
+      request.setHeaderField("Content-Type", contentType);
+      
       return request;
    }
    

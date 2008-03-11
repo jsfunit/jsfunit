@@ -169,7 +169,6 @@ public class Ajax4jsfClient
       
       UIComponent uiComp = clientIDs.findComponent(componentID);
       Map options = buildEventOptions(uiComp);
-      
       PostMethodWebRequest req = requestFactory.buildRequest((String)options.get("actionUrl"),
                                                              componentID);
 
@@ -190,7 +189,10 @@ public class Ajax4jsfClient
       this.ajaxResponse = client.getWebResponse().getText();
 
       try {
-         WebRequest refreshRequest = JSFAJAX.processResponse(oldDoc, newResponse, options);
+         WebRequest refreshRequest = JSFAJAX.processResponse(oldDoc, 
+                                                             newResponse, 
+                                                             options, 
+                                                             getContentType());
          if (refreshRequest != null) client.doWebRequest(refreshRequest);
       } catch (ParserConfigurationException e) {
          throw new RuntimeException(e);
@@ -247,6 +249,11 @@ public class Ajax4jsfClient
       FacesContext ctx = FacesContext.getCurrentInstance();
       UIComponent container = (UIComponent)AjaxRendererUtils.findAjaxContainer(ctx, uiComp);
       req.setParameter(AjaxContainerRenderer.AJAX_PARAMETER_NAME, container.getClientId(ctx));
+   }
+   
+   protected String getContentType()
+   {
+      return client.getWebConversation().getHeaderField("Content-Type");
    }
 
 }
