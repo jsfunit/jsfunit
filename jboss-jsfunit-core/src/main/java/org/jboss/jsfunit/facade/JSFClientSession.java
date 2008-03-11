@@ -31,6 +31,9 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Iterator;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIParameter;
 import javax.xml.transform.TransformerException;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.w3c.dom.Attr;
@@ -447,7 +450,28 @@ public class JSFClientSession
       
       WebRequest req = this.requestFactory.buildRequest(componentID);
       setCmdLinkParam(req, componentID);
+      setFParams(req, componentID);
       doWebRequest(req);
+   }
+   
+   private void setFParams(WebRequest req, String componentID) 
+         throws SAXException, IOException
+   {
+      JSFServerSession server = new JSFServerSession(this);
+      UIComponent cmdLink = server.findComponent(componentID);
+      if (cmdLink.getChildCount() == 0) return;
+      
+      for (Iterator i = cmdLink.getChildren().iterator(); i.hasNext();)
+      {
+         UIComponent child = (UIComponent)i.next();
+         if (!child.isRendered()) continue;
+         
+         if (child instanceof UIParameter)
+         {
+            UIParameter uiParam = (UIParameter)child;
+            req.setParameter(uiParam.getName(), (String)uiParam.getValue());
+         }
+      }
    }
    
    private void setCmdLinkParam(WebRequest req, String componentID) 

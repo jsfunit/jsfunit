@@ -22,18 +22,16 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
-import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.ComponentIDNotFoundException;
-import org.jboss.jsfunit.facade.FormNotFoundException;
 import org.jboss.jsfunit.facade.JSFServerSession;
 import org.xml.sax.SAXException;
 
@@ -145,6 +143,21 @@ public class FacadeAPITest extends ServletTestCase
       
       // test that we are still on the same page
       assertEquals("/finalgreeting.jsp", server.getCurrentViewID());
+   }
+   
+   public void testCommandLinkWithFParam() throws IOException, SAXException
+   {
+      client.setParameter("input_foo_text", "Stan");
+      client.submit("goodbye_button");
+      client.clickCommandLink("stay_here_link");
+      
+      // link includes <f:param id="name" name="name" value="#{foo.text}"/>
+      String name = (String)FacesContext.getCurrentInstance()
+                                        .getExternalContext()
+                                        .getRequestParameterMap()
+                                        .get("name");
+      
+      assertEquals("Stan", name);
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException
