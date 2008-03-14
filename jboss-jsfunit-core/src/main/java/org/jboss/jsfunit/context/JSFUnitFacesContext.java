@@ -22,7 +22,11 @@
 
 package org.jboss.jsfunit.context;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.el.ELContext;
 import javax.faces.application.Application;
@@ -52,6 +56,10 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    // initialized after the JSF lifecycle is over
    private ExternalContext extContext = null;
    
+   // Must save FacesMessages for use when request is over: JSFUNIT-82
+   private List<FacesMessage> allMessages = new ArrayList<FacesMessage>();
+   private Map<String, List<FacesMessage>> messagesByClientId = new HashMap<String, List<FacesMessage>>();
+   
    public JSFUnitFacesContext(FacesContext delegate, Object request)
    {
       this.delegate = delegate;
@@ -62,14 +70,26 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
       setCurrentInstance(this);
    }
    
-   public Iterator getMessages(String string)
+   public Iterator getMessages(String clientId)
    {
-      return delegate.getMessages(string);
+      if (this.extContext == null) return delegate.getMessages(clientId);
+      
+      List<FacesMessage> messages = this.messagesByClientId.get(clientId);
+      if (messages == null) return new ArrayList().iterator();
+      
+      return messages.iterator();
    }
    
-   public void addMessage(String string, FacesMessage facesMessage)
+   public void addMessage(String clientId, FacesMessage facesMessage)
    {
-      delegate.addMessage(string, facesMessage);
+      delegate.addMessage(clientId, facesMessage);
+      
+      // save FacesMessages for when the request is done
+      this.allMessages.add(facesMessage);
+      List<FacesMessage> messageList = messagesByClientId.get(clientId);
+      if (messageList == null) messageList = new ArrayList<FacesMessage>();
+      messageList.add(facesMessage);
+      messagesByClientId.put(clientId, messageList);
    }
    
    public void setResponseWriter(ResponseWriter responseWriter)
@@ -124,7 +144,9 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    
    public Iterator getMessages()
    {
-      return delegate.getMessages();
+      if (this.extContext == null) return delegate.getMessages();
+      
+      return this.allMessages.iterator();
    }
    
    public RenderKit getRenderKit()
@@ -194,11 +216,18 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    }
    
    /**
-    * Clean up the previous FacesContext.
+    * Attempt to clean up the previous FacesContext.
     */
    public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)
    {
-      delegate.release();
+      try
+      {
+         delegate.release();
+      }
+      catch (Exception e)
+      {
+         // ignore - I'm just being nice here
+      }
    }
    
    public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)
