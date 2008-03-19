@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+		
+	
+	<style>
+		.cols{
+			vertical-align:top;
+			width:50%;
+		}
+	</style>			
+	<h:form id="form">
+	<h:panelGrid columns="2" columnClasses="cols" width="100%">
+	<rich:panelMenu id="ajaxPanelMenu" style="width:200px"  mode="ajax"
+		iconExpandedGroup="disc" iconCollapsedGroup="disc" 
+		iconExpandedTopGroup="chevronUp" iconGroupTopPosition="right" 
+		iconCollapsedTopGroup="chevronDown" iconCollapsedTopPosition="right" >
+		<rich:panelMenuGroup id="Group1" label="Group 1">
+			<rich:panelMenuItem id="Item_1_1" label="Item 1.1" action="#{panelMenu.updateCurrent}">
+				<f:param name="current" value="Item 1.1"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuItem id="Item_1_2" label="Item 1.2" action="#{panelMenu.updateCurrent}">
+				<f:param name="current" value="Item 1.2"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuItem id="Item_1_3" label="Item 1.3" action="#{panelMenu.updateCurrent}">
+				<f:param name="current" value="Item 1.3"/>
+			</rich:panelMenuItem>
+		</rich:panelMenuGroup>
+		<rich:panelMenuGroup id="Group2" label="Group 2">
+			<rich:panelMenuItem id="Item_2_1" label="Item 2.1" action="#{panelMenu.updateCurrent}">
+				<f:param name="current" value="Item 2.1"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuItem id="Item_2_2" label="Item 2.2" action="#{panelMenu.updateCurrent}">
+				<f:param name="current" value="Item 2.2"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuItem id="Item_2_3" label="Item 2.3" action="#{panelMenu.updateCurrent}">
+				<f:param name="current" value="Item 2.3"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuGroup label="Group 2.4">
+				<rich:panelMenuItem id="Item_2_4_1" label="Item 2.4.1" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 2.4.1"/>
+				</rich:panelMenuItem>
+				<rich:panelMenuItem id="Item_2_4_2" label="Item 2.4.2" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 2.4.2"/>
+				</rich:panelMenuItem>
+				<rich:panelMenuItem id="Item_2_4_3" label="Item 2.4.3" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 2.4.3"/>
+				</rich:panelMenuItem>
+			</rich:panelMenuGroup>
+			<rich:panelMenuItem id="Item_2_5" label="Item 2.5" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 2.5"/>
+			</rich:panelMenuItem>
+		</rich:panelMenuGroup>
+		<rich:panelMenuGroup id="Group3" label="Group 3">
+			<rich:panelMenuItem id="Item_3_1" label="Item 3.1" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 3.1"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuItem id="Item_3_2" label="Item 3.2" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 3.2"/>
+			</rich:panelMenuItem>
+			<rich:panelMenuItem id="Item_3_3" label="Item 3.3" action="#{panelMenu.updateCurrent}">
+					<f:param name="current" value="Item 3.3"/>
+			</rich:panelMenuItem>
+		</rich:panelMenuGroup>
+	</rich:panelMenu>
+	<rich:panel>	
+		<a4j:outputPanel ajaxRendered="true">
+			<h:outputText value="#{panelMenu.current} selected" id="current"/>
+		</a4j:outputPanel>
+	</rich:panel>
+	</h:panelGrid>
+	</h:form>
+</ui:composition>

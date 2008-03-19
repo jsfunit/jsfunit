@@ -56,6 +56,7 @@ public class RichFacesTestAll extends ServletTestCase
       suite.addTestSuite(RichInputNumberSliderTest.class);
       suite.addTestSuite(RichInputNumberSpinnerTest.class);
       suite.addTestSuite(RichTabPanelTest.class);
+      suite.addTestSuite(RichPanelMenuTest.class);
       return suite;
    }
 

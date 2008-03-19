@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+
+				<p>
+					The rich:panelMenu component is used to define a collapsible side-menu panel. The component has a pre-defined
+					skinable look-n-feel. You can customize it with styles and a set of component attributes. The folowing demo 
+					shows the example of rich:panelMenu
+				</p>
+
+				
+				<div  class="sample-container" >
+			
+					<ui:include src="/richfaces/panelMenu/examples/example.xhtml"/>
+					<ui:include src="/templates/include/sourceview.xhtml">
+						<ui:param name="sourcepath" value="/richfaces/panelMenu/examples/example.xhtml"/>
+					</ui:include>
+                                        <ui:include src="/templates/include/sourceview.xhtml">
+                                          <ui:param name="sourcepath" value="/testsrc/RichPanelMenuTest.java"/>
+                                          <ui:param name="openlabel" value="View JSFUnit Source"/>
+                                          <ui:param name="sourcetype" value="java"/>
+                                        </ui:include>
+				</div>
+				
+				<p>
+				Switching mode could be chosen with the <b>mode</b> attribute for all panelMenu items except ones where
+					this attribute was redefined. By default all items send custom request.
+				</p>
+				<p>
+					The <b>expandMode</b> attribute defines the submission modes for all collapsing/expanding panelMenu
+					groups except ones where this attribute was redefined.
+				</p>
+				<p>
+					The <b>mode</b> and <b>expandMode</b> attributes could be used with three possible parameters:
+					<ul>
+					<li>server (default) - 
+					The common submission of the form is performed and a page is completely refreshed.</li>
+					<li>ajax -
+					An Ajax form submission is performed, and additionally specified elements in the "reRender" attribute
+					are reRendered </li>
+					<li>none - 
+					"Action" and "ActionListener" attributes are ignored. Items don't fire any submits itself. Behavior is completely
+					defined by the components nested to items. Groups expand on the client side.</li>
+					</ul>
+				</p>
+
+		</ui:define>
+		
+
+	</ui:composition>
+</html>

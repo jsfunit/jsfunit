@@ -249,6 +249,24 @@ public class RichFacesClient extends Ajax4jsfClient
       ajaxSubmit(clientID, params);
    }
    
+   public void clickPanelMenuItem(String componentID)
+         throws SAXException, IOException
+   {
+      String clientID = client.getClientIDs().findClientID(componentID);
+      
+      String selectedItem = clientID;
+      if (selectedItem.contains(":"))
+      {
+         selectedItem = clientID.substring(clientID.lastIndexOf(':') + 1, clientID.length());
+      }
+      
+      Map<String, String> params = new HashMap<String, String>(2);
+      String formID = this.client.getForm(componentID).getID();
+      params.put("panelMenuActionform:" + selectedItem, formID + ":" + selectedItem);
+      params.put(formID + ":ajaxPanelMenuselectedItemName", selectedItem);
+      ajaxSubmit(clientID, params);
+   }
+   
    /**
     * Drag a component with rich:dragSupport to a component with rich:dropSupport.
     *
