@@ -249,6 +249,18 @@ public class RichFacesClient extends Ajax4jsfClient
       ajaxSubmit(clientID, params);
    }
    
+   /**
+    * Click a rich:panelMenuItem inside a rich:panelMenu.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID of
+    *                    the rich:panelMenuItem to be clicked.
+    *
+    * @throws SAXException if the current response page can not be parsed
+    * @throws IOException if there is a problem submitting the form
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
    public void clickPanelMenuItem(String componentID)
          throws SAXException, IOException
    {
