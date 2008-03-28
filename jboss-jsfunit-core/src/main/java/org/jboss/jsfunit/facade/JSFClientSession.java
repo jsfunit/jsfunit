@@ -447,13 +447,12 @@ public class JSFClientSession
    public void clickCommandLink(String componentID) 
          throws SAXException, IOException
    {
-      
       WebRequest req = this.requestFactory.buildRequest(componentID);
-      setCmdLinkParam(req, componentID);
-      setFParams(req, componentID);
+      setCmdLinkParams(req, componentID);
       doWebRequest(req);
    }
    
+   // sets only for MyFaces 1.1.4 and 1.1.5
    private void setFParams(WebRequest req, String componentID) 
          throws SAXException, IOException
    {
@@ -474,7 +473,7 @@ public class JSFClientSession
       }
    }
    
-   private void setCmdLinkParam(WebRequest req, String componentID) 
+   private void setCmdLinkParams(WebRequest req, String componentID) 
          throws SAXException, IOException
    {
       String clientID = this.clientIDs.findClientID(componentID);
@@ -484,6 +483,7 @@ public class JSFClientSession
       if (form.hasParameterNamed(myFaces115CmdLink))
       {
          req.setParameter(myFaces115CmdLink, clientID);
+         setFParams(req, componentID);
          return;
       }
       
@@ -491,9 +491,38 @@ public class JSFClientSession
       if (form.hasParameterNamed(myFaces114CmdLink))
       {
          req.setParameter(myFaces114CmdLink, clientID);
+         setFParams(req, componentID);
          return;
       }
       
-      req.setParameter(clientID, clientID); // for the RI
+      setMojarraCmdLinkParams(req, clientID);
+   }
+   
+   // for Mojarra (JSF RI 1.2)
+   private void setMojarraCmdLinkParams(WebRequest req, String clientID)
+         throws SAXException, IOException
+   {
+      String script = this.webResponse.getElementWithID(clientID).getAttribute("onclick");
+      script = script.substring(script.indexOf("{jsfcljs("));
+      String[] jsfcljsParams = script.split(",'");
+      String paramString = jsfcljsParams[1];
+      
+      // remove trailing single-quote (most cases)
+      if (paramString.endsWith("'")) 
+      {
+         paramString = paramString.substring(0, paramString.length() - 1); 
+      }
+      else // last param empty so it looked like 'foo,bar,foo,bar,',''
+      {
+         paramString += ", "; // add a space to make next split work
+      }  
+      
+      String[] requestParams = paramString.split(",");
+      for (int i=0; i < requestParams.length; i += 2)
+      {
+         String paramName = requestParams[i];
+         String paramValue = requestParams[i + 1];
+         req.setParameter(paramName, paramValue);
+      }
    }
 }

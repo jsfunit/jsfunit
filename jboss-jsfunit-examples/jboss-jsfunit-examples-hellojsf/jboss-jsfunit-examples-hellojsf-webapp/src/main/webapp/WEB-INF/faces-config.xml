@@ -52,5 +52,12 @@
     <managed-bean-class>org.jboss.jsfunit.example.hellojsf.CheckboxBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+  
+  <managed-bean>
+    <description>Backing bean for marathons</description>
+    <managed-bean-name>marathons</managed-bean-name>
+    <managed-bean-class>org.jboss.jsfunit.example.hellojsf.Marathons</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
 
 </faces-config>

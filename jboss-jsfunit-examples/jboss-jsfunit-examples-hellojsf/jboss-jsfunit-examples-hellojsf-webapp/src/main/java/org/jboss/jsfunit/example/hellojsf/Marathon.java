@@ -1,7 +1,6 @@
-<%--
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -20,23 +19,33 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
-<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+package org.jboss.jsfunit.example.hellojsf;
 
-<HTML>
-
-<f:view>  
+/**
+ * Simple bean.
+ *
+ * @author Stan Silvert
+ */
+public class Marathon
+{
+   private String name;
+   private String location;
    
-      <h:outputText value="Bye #{foo.text}. I enjoyed our chat." id="finalgreeting"/><br/>
-      <h:form id="form2">
-         <h:commandButton value="Go Back to Start" action="/index.jsp" id="go_back_button"/><br/>
-         <h:commandLink value="Go Back to Start Using h:commandLink" action="/index.jsp" id="go_back_link"/></br>
-         <h:commandLink value="Stay here Using h:commandLink" action="/finalgreeting.jsp" id="stay_here_link">
-            <f:param id="name" name="name" value="#{foo.text}"/>
-         </h:commandLink>
-      </h:form>
-</f:view>
-
-</HTML>
+   public Marathon(String name, String location)
+   {
+      this.name = name;
+      this.location = location;
+   }
+   
+   public String getName()
+   {
+      return this.name;
+   }
+   
+   public String getLocation()
+   {
+      return this.location;
+   }
+   
+}

@@ -10,6 +10,14 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
   <packaging>war</packaging>  
-  <name>HelloJSF Example Web App</name>      
+  <name>HelloJSF Example Web App</name>    
+  
+  <dependencies>
+     <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
 </project>

@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
+import org.jboss.jsfunit.framework.Environment;
 import org.xml.sax.SAXException;
 
 /**
@@ -158,6 +159,24 @@ public class FacadeAPITest extends ServletTestCase
                                         .get("name");
       
       assertEquals("Stan", name);
+   }
+
+   public void testCommandLinkWithParamFromLoopVariable() throws IOException, SAXException
+   {
+      // test should not run for JSF 1.1
+      if ((Environment.getJSFMajorVersion() == 1) &&
+          (Environment.getJSFMinorVersion() < 2)) return;
+      
+      JSFClientSession client = new JSFClientSession("/marathons.faces");
+      
+      client.clickCommandLink("marathonSelect");
+      assertTrue(client.getWebResponse().getText().contains("Selected Marathon: BAA Boston Marathon"));
+      
+      client.clickCommandLink("marathonSelectj_id_3");
+      assertTrue(client.getWebResponse().getText().contains("Selected Marathon: Flora London Marathon"));
+      
+      client.clickCommandLink("marathonSelectj_id_5");
+      assertTrue(client.getWebResponse().getText().contains("Selected Marathon: Olympic Marathon"));
    }
    
    public void testServerSideComponentValue() throws IOException, SAXException
