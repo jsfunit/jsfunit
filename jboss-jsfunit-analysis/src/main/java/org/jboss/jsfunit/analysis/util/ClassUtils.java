@@ -41,7 +41,7 @@ public class ClassUtils {
 	public Class loadClass(String clazzName, String elementName) {
 
 		if(clazzName == null)
-			throw new RuntimeException("No class for element " + elementName);
+			throw new RuntimeException("No class for element '" + elementName + "'");
 		
 		try {
 
@@ -55,7 +55,7 @@ public class ClassUtils {
 
 			}catch(ClassNotFoundException e2) {
 
-				fail("Could not load class " + clazzName + " for element " + elementName);
+				fail("Could not load class '" + clazzName + "' for element '" + elementName + "'");
 				return null; // this line is unreachable but the compiler does not know this
 			}
 			
