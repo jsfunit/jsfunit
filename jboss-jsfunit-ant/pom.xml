@@ -36,7 +36,6 @@
       <scope>provided</scope>
     </dependency>
 
-
     <dependency>
       <groupId>httpunit</groupId>
       <artifactId>httpunit</artifactId>
@@ -46,14 +45,6 @@
     <dependency>
       <groupId>cactus</groupId>
       <artifactId>cactus</artifactId>
-      <version>13-1.7.1</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>cactus</groupId>
-      <artifactId>cactus-ant</artifactId>
-      <version>13-1.7.1</version>
       <scope>compile</scope>
     </dependency>
 
@@ -70,11 +61,9 @@
       <scope>provided</scope>
     </dependency>
 
-
     <dependency>
       <groupId>javax.el</groupId>
       <artifactId>el-api</artifactId>
-      <version>1.0</version>
       <scope>provided</scope>
     </dependency>       
 

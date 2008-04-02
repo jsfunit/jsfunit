@@ -17,10 +17,6 @@
      <servlet-name>ServletRedirector</servlet-name>
    </filter-mapping>
 
-   <listener>
-     <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-   </listener>
-   
    <servlet>
      <servlet-name>Faces Servlet</servlet-name>
      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

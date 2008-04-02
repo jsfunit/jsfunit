@@ -19,6 +19,16 @@
     <module>jboss-jsfunit-examples-seam</module>
   </modules>
     
+  <pluginRepositories>
+     <pluginRepository>
+       <id>codehaus snapshot repository</id>
+       <url>http://snapshots.repository.codehaus.org/</url>
+       <releases>
+         <enabled>true</enabled>
+       </releases>
+     </pluginRepository>
+   </pluginRepositories>
+
   <profiles>
     <profile>
       <id>tomcat5x</id>
@@ -39,21 +49,29 @@
         </plugins>
       </build>
     </profile>
+    
+    <profile>
+      <id>tomcat6x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>tomcat6x</containerId>
+                <home>${CATALINA_HOME}</home>
+                <log>${basedir}/target/tomcat6x/cargo.log</log>
+                <output>${basedir}/target/tomcat6x/container.log</output>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
     <profile>
       <id>jboss4.0</id>    
-      <dependencies>        
-        <dependency>
-          <groupId>org.apache.myfaces.core</groupId>
-          <artifactId>myfaces-impl</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.myfaces.core</groupId>
-          <artifactId>myfaces-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -72,53 +90,113 @@
         </plugins>
       </build>
     </profile>
-
+    
     <profile>
-      <id>jee5</id>
-      <dependencies>          
-        <dependency>
-          <groupId>org.apache.myfaces.core</groupId>
-          <artifactId>myfaces-impl</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.myfaces.core</groupId>
-          <artifactId>myfaces-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-      </dependencies>
-      <build>    
+      <id>jboss4.2</id>    
+      <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>2.0.2</version>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
-              <webXml>${basedir}/src/jee5/web.xml.jee5</webXml>
+              <wait>false</wait>
+              <container>
+                <containerId>jboss42x</containerId>
+                <home>${JBOSS_HOME}</home>
+                <log>${basedir}/target/jboss4.2/cargo.log</log>
+                <output>${basedir}/target/jboss4.2/container.log</output>
+              </container>
             </configuration>
           </plugin>
         </plugins>
       </build>
-    </profile>    
+    </profile>
+    
+    <profile>
+      <id>jetty6x</id>    
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <wait>false</wait>
+              <container>
+                <containerId>jetty6x</containerId>
+                <log>${basedir}/target/jetty6x/cargo.log</log>
+                <output>${basedir}/target/jetty6x/container.log</output>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
+    <profile>
+      <id>jee5</id>
+      <dependencies>
+        <dependency>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-api</artifactId>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+    </profile>    
+    
+    <profile>
+       <id>myfaces1.1</id>
+       <dependencies>
+         <dependency>
+           <groupId>org.apache.myfaces.core</groupId>
+           <artifactId>myfaces-impl</artifactId>
+           <scope>compile</scope>
+         </dependency>
+
+         <dependency>
+           <groupId>org.apache.myfaces.core</groupId>
+           <artifactId>myfaces-api</artifactId>
+           <scope>compile</scope>
+         </dependency>
+       </dependencies>
+       <activation>
+         <property>
+           <name>jsfunit-test-profile</name>
+         </property>
+       </activation>
+    </profile>
+    
+    <profile>
+       <id>mojarra1.2</id>
+       <dependencies>
+         <dependency>
+           <groupId>javax.faces</groupId>
+           <artifactId>jsf-api</artifactId>
+           <scope>compile</scope>
+         </dependency>
+
+         <dependency>
+           <groupId>javax.faces</groupId>
+           <artifactId>jsf-impl</artifactId>
+           <scope>compile</scope>
+         </dependency>
+         
+         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+         </dependency>
+       </dependencies>
+    </profile>
+    
   </profiles>
   
-  <dependencies>    
-    <dependency>
-      <groupId>org.apache.myfaces.core</groupId>
-      <artifactId>myfaces-impl</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.myfaces.core</groupId>
-      <artifactId>myfaces-api</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>

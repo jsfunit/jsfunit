@@ -12,12 +12,4 @@
   <packaging>war</packaging>  
   <name>HelloJSF Example Web App</name>    
   
-  <dependencies>
-     <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-
 </project>

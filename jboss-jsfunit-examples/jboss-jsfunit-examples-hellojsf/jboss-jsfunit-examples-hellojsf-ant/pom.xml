@@ -104,17 +104,6 @@
   
   <dependencies>
     <dependency>
-      <groupId>org.apache.myfaces.core</groupId>
-      <artifactId>myfaces-impl</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.myfaces.core</groupId>
-      <artifactId>myfaces-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    
-    <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jboss-jsfunit-core</artifactId>
       <version>${project.version}</version>

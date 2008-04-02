@@ -29,16 +29,10 @@
   </reporting>
   
   <dependencies>
-    <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jboss-jsfunit-core</artifactId>
-      <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     
@@ -62,12 +56,6 @@
       <version>3.1.1-GA</version>
       <scope>provided</scope>
     </dependency>
-
-    <dependency>
-      <groupId>httpunit</groupId>
-      <artifactId>httpunit</artifactId>
-      <scope>provided</scope>
-    </dependency>    
   </dependencies>
 
 </project>
