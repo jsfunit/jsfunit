@@ -12,8 +12,10 @@
   <name>HelloJSF Ant Task Test</name>
 
   <profiles>
+    <!-- Because the sourcewar bundles myfaces, it only works -->
+    <!-- with the myfaces1.1 profile.                         -->
     <profile>
-      <id>test</id>        
+      <id>myfaces1.1</id>        
       <build>
         <plugins>
           <plugin>
