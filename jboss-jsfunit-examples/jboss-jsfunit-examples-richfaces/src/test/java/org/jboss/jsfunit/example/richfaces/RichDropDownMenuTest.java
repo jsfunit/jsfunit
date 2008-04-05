@@ -69,7 +69,7 @@ public class RichDropDownMenuTest extends ServletTestCase
       JSFClientSession client = new JSFClientSession("/richfaces/dropDownMenu.jsf");
       client.clickLink("jsfunitHomePageLink");
       String newUrl = client.getWebResponse().getURL().toString();
-      assertEquals("http://labs.jboss.com/jsfunit/", newUrl);
+      assertEquals("http://www.jboss.org/jsfunit/", newUrl);
    }
    
    public static Test suite()

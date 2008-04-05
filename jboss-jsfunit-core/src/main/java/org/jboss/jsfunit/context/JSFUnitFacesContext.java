@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.context;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,7 +47,7 @@ import javax.servlet.http.HttpSessionBindingListener;
  *
  * @author Stan Silvert
  */
-public class JSFUnitFacesContext extends FacesContext implements HttpSessionBindingListener
+public class JSFUnitFacesContext extends FacesContext implements HttpSessionBindingListener, Serializable
 {
    public static final String SESSION_KEY = JSFUnitFacesContext.class.getName() + ".sessionkey";
    

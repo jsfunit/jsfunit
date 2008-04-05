@@ -94,6 +94,6 @@ public class ManualInvokeTest extends TestCase
       WebRequest req = new GetMethodWebRequest(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest");
       WebResponse webResponse = webConversation.getResponse(req);
       assertTrue(webResponse.getText().contains(
-                "<testsuite name=\"org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest\" tests=\"4\" failures=\"0\" errors=\"0\""));
+                "<testsuite name=\"org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest\" tests=\"5\" failures=\"0\" errors=\"0\""));
    } 
 }

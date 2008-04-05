@@ -28,7 +28,10 @@ import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -170,6 +173,12 @@ public class HelloJSFIntegrationTest extends ServletTestCase
       // Test the greeting
       UIComponent finalGreeting = root.findComponent("finalgreeting");
       assertEquals("Bye Stan. I enjoyed our chat.", ((ValueHolder)finalGreeting).getValue());
+   }
+   
+   // The JSFUnitFacesContext should implement serializable.  See JSFUNIT-87.
+   public void testFacesContextSerializable() throws IOException, SAXException
+   {
+      assertTrue(FacesContextBridge.getCurrentInstance() instanceof Serializable);
    }
    
 }
