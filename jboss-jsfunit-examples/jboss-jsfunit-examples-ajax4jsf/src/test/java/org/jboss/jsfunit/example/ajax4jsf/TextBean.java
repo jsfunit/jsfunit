@@ -15,6 +15,11 @@ public class TextBean
    public TextBean()
    {
    }
+   
+   public String redirectAction()
+   {
+      return "redirectAction";
+   }
 
    public String getText()
    {

@@ -49,5 +49,13 @@
    <value>#{userList}</value>
   </managed-property>
  </managed-bean>
+ 
+ <navigation-rule>
+    <navigation-case>
+       <from-outcome>redirectAction</from-outcome>
+       <to-view-id>/pages/echo.xhtml</to-view-id>
+       <redirect/>
+    </navigation-case>
+ </navigation-rule>
 
 </faces-config>

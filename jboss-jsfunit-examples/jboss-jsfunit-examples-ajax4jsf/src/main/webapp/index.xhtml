@@ -58,6 +58,9 @@
          <h:outputText value="Run The Test Source Shown Below on these Demos"/>
       </h:outputLink>
    </h:form>
+   <h:form id="form2">
+      <a4j:commandButton id="redirect" value="Goto echo.xhtml via a4j redirect" action="redirectAction"/>
+   </h:form>
    <h:inputTextarea rows="40" cols="80" readonly="true" value="#{textbean.testSource}"/>
    </f:view>
    </center>

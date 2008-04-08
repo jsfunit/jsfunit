@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.Set;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -57,6 +58,15 @@ public class JSFAJAX
    {
    }
    
+   private static WebRequest handleRedirect(String location)
+   {
+      HttpServletRequest req = (HttpServletRequest)extContext().getRequest();
+      String urlPrefix = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort();
+      GetMethodWebRequest request = new GetMethodWebRequest(urlPrefix + location);
+      request.setParameter("JSESSIONID", getSession().getId());
+      return request;
+   }
+   
    /**
     * Create the web request needed to deal with the AJAX response.  If this
     * returns null then just keep the newResponse as the response.
@@ -68,11 +78,17 @@ public class JSFAJAX
          throws SAXException, ParserConfigurationException, IOException, TransformerException
    {
       String ajaxResponse = newResponse.getHeaderField("Ajax-Response");
+      String location = newResponse.getHeaderField("Location");
+      if (!ajaxResponse.equals("true") && (location != null))
+      {
+         return handleRedirect(location);
+      }
+      
       if (!ajaxResponse.equals("true")) 
       {
          //TODO: handle expired message
-         //TODO: handle redirect
-         //TODO: hanlde reload
+         //TODO: hanlde reload? Couldn't find RichFaces source for Ajax-Response=reload
+         //                     Perhaps this Ajax-Response value is no longer used?
          return null;
       }
       
@@ -180,18 +196,19 @@ public class JSFAJAX
       return request;
    }
    
+   private static ExternalContext extContext()
+   {
+      return FacesContext.getCurrentInstance().getExternalContext();
+   }
+   
    private static HttpSession getSession()
    {
-      return (HttpSession)FacesContext.getCurrentInstance()
-                                      .getExternalContext()
-                                      .getSession(true);  
+      return (HttpSession)extContext().getSession(true);  
    }
    
    private static String getWarURL()
    {
-      Map appMap = FacesContext.getCurrentInstance()
-                               .getExternalContext()
-                               .getApplicationMap();
+      Map appMap = extContext().getApplicationMap();
       return (String)appMap.get(WebConversationFactory.WAR_URL);
    }
    

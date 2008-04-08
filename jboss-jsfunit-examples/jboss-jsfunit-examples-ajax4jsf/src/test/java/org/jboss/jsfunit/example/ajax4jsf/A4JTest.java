@@ -183,4 +183,14 @@ public class A4JTest extends ServletTestCase
       ajaxClient.ajaxSubmit("0:fparam_command_link_up");
    }
    
+   public void testA4JRedirect() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/index.jsf");
+      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
+      JSFServerSession server = new JSFServerSession(client);
+      
+      ajaxClient.ajaxSubmit("redirect");
+      assertEquals("/pages/echo.xhtml", server.getCurrentViewID());
+      testEcho(); // make sure I can continue
+   }
 }
