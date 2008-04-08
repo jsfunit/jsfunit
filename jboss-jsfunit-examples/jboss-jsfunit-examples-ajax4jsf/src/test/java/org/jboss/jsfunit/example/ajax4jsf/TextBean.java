@@ -16,11 +16,6 @@ public class TextBean
    {
    }
    
-   public String redirectAction()
-   {
-      return "redirectAction";
-   }
-
    public String getText()
    {
       return this.text;
