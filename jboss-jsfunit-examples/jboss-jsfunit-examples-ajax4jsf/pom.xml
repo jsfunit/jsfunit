@@ -83,18 +83,35 @@
     </profile>
 
     <profile>
-      <id>jee5</id>
+      <id>myfaces1.1</id>
       <dependencies>  
         <dependency>
           <groupId>javax.el</groupId>
           <artifactId>el-api</artifactId>
-          <scope>provided</scope>
+          <scope>compile</scope>
         </dependency> 
         <dependency>
           <groupId>com.sun.el</groupId>
           <artifactId>el-ri</artifactId>
           <version>1.0</version>
-          <scope>provided</scope>
+          <scope>compile</scope>
+        </dependency>  
+      </dependencies>
+    </profile>
+    
+    <profile>
+      <id>jboss4.0</id>
+      <dependencies>  
+        <dependency>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+          <scope>compile</scope>
+        </dependency> 
+        <dependency>
+          <groupId>com.sun.el</groupId>
+          <artifactId>el-ri</artifactId>
+          <version>1.0</version>
+          <scope>compile</scope>
         </dependency>  
       </dependencies>
     </profile>
@@ -121,7 +138,11 @@
       <artifactId>ajax4jsf</artifactId>
       <version>1.1.1</version>
       <scope>compile</scope>
-      <exclusions>        
+      <exclusions>    
+        <exclusion>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-api</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>javax.faces</groupId>
           <artifactId>jsf-impl</artifactId>
@@ -129,12 +150,6 @@
       </exclusions>
     </dependency>
 
-    <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
@@ -144,22 +159,8 @@
     <dependency>
       <groupId>com.sun.facelets</groupId>
       <artifactId>jsf-facelets</artifactId>
-	<version>1.1.11</version>	
+      <version>1.1.11</version>	
     </dependency>
-
-    <dependency>
-      <groupId>javax.el</groupId>
-      <artifactId>el-api</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-    </dependency>  
-
-    <dependency>
-      <groupId>com.sun.el</groupId>
-      <artifactId>el-ri</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-    </dependency>                
 
   </dependencies>
 
