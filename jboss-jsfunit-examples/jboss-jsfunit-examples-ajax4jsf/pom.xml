@@ -97,6 +97,11 @@
           <scope>compile</scope>
         </dependency>  
       </dependencies>
+      <activation>
+        <property>
+           <name>jsfunit-test-profile</name>
+        </property>
+      </activation>
     </profile>
     
     <profile>
