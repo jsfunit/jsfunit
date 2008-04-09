@@ -34,6 +34,9 @@ import java.net.MalformedURLException;
 import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
+import javax.faces.component.html.HtmlCommandButton;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlOutputLink;
 import javax.xml.transform.TransformerException;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.w3c.dom.Attr;
@@ -366,9 +369,12 @@ public class JSFClientSession
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
+    * @throws ComponentTypeException if the componentID does reference an
+    *                                HtmlCommandButton JSF component.
     */
    public void submit(String componentID) throws SAXException, IOException
    {
+      ComponentTypeException.check("submit(componentID)", componentID, HtmlCommandButton.class, clientIDs);
       String clientID = this.clientIDs.findClientID(componentID);
       WebForm form = getForm(clientID);
       SubmitButton button = form.getSubmitButtonWithID(clientID);
@@ -419,9 +425,12 @@ public class JSFClientSession
     * @throws ComponentIDNotFoundException if the component can not be found
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
+    * @throws ComponentTypeException if the componentID does reference an
+    *                                HtmlOutputLink JSF component.
     */
    public void clickLink(String componentID) throws SAXException, IOException
    {
+      ComponentTypeException.check("clickLink()", componentID, HtmlOutputLink.class, clientIDs);
       String clientID = this.clientIDs.findClientID(componentID);
       WebLink link = this.webResponse.getLinkWithID(clientID);
       if (link == null) throw new ComponentIDNotFoundException(componentID);
@@ -443,10 +452,13 @@ public class JSFClientSession
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
+    * @throws ComponentTypeException if the componentID does reference an
+    *                                HtmlCommandLink JSF component.
     */
    public void clickCommandLink(String componentID) 
          throws SAXException, IOException
    {
+      ComponentTypeException.check("clickCommandLink()", componentID, HtmlCommandLink.class, clientIDs);
       WebRequest req = this.requestFactory.buildRequest(componentID);
       setCmdLinkParams(req, componentID);
       doWebRequest(req);
