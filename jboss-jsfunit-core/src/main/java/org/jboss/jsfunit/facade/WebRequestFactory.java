@@ -50,7 +50,15 @@ public class WebRequestFactory
       this.client = client;
    }
    
-   private PostMethodWebRequest makePostRequest(String actionURL)
+   /**
+    * Create a post request with the action URL.  The actionURL should
+    * contain a leading '/'.  The PostMethodWebRequest returned will contain
+    * the proper host and port for a post-back to the JSF servlet, but will
+    * not contain any request parameters.
+    *
+    * @param actionURL The action URL to be appended to the protocol://host:port
+    */
+   public PostMethodWebRequest makePostRequest(String actionURL)
    {
       WebResponse latestResponse = client.getWebResponse();
       String protocol = latestResponse.getURL().getProtocol();
