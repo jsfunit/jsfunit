@@ -464,7 +464,7 @@ public class JSFClientSession
       doWebRequest(req);
    }
    
-   // sets only for MyFaces 1.1.4 and 1.1.5
+   // sets only for MyFaces 1.1.4
    private void setFParams(WebRequest req, String componentID) 
          throws SAXException, IOException
    {
@@ -495,7 +495,7 @@ public class JSFClientSession
       if (form.hasParameterNamed(myFaces115CmdLink))
       {
          req.setParameter(myFaces115CmdLink, clientID);
-         setFParams(req, componentID);
+         setMyFacesCmdLinkParams(req, clientID);
          return;
       }
       
@@ -508,6 +508,24 @@ public class JSFClientSession
       }
       
       setMojarraCmdLinkParams(req, clientID);
+   }
+   
+   // MyFaces 1.1.5 only
+   private void setMyFacesCmdLinkParams(WebRequest req, String clientID)
+         throws SAXException, IOException
+   {
+      String script = this.webResponse.getElementWithID(clientID).getAttribute("onclick");
+      if ( (!script.contains(",[['")) && (!script.contains("']]);")) ) return;
+      script = script.substring(script.indexOf(",[[") + 2);
+      script = script.substring(0, script.indexOf("']]);") + 2);
+      
+      String[] requestParams = script.split("'");
+      for (int i=1; i < requestParams.length; i += 4)
+      {
+         String paramName = requestParams[i];
+         String paramValue = requestParams[i + 2];
+         req.setParameter(paramName, paramValue);
+      }
    }
    
    // for Mojarra (JSF RI 1.2)

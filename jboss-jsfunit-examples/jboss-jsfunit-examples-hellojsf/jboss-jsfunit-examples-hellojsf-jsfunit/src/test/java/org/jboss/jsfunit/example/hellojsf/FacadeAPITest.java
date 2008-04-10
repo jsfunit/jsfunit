@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
+import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.util.Iterator;
@@ -163,7 +164,7 @@ public class FacadeAPITest extends ServletTestCase
 
    public void testCommandLinkWithParamFromLoopVariable() throws IOException, SAXException
    {
-      // test should not run for JSF 1.1
+      // test should not run for JSF 1.1 - it uses a loop variable from <c:forEach>
       if ((Environment.getJSFMajorVersion() == 1) &&
           (Environment.getJSFMinorVersion() < 2)) return;
       
@@ -176,6 +177,34 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(client.getWebResponse().getText().contains("Selected Marathon: Flora London Marathon"));
       
       client.clickCommandLink("marathonSelectj_id_5");
+      assertTrue(client.getWebResponse().getText().contains("Selected Marathon: Olympic Marathon"));
+   }
+   
+   // componentID must be a command link
+   private boolean isMyFaces114(JSFClientSession client, String componentID) throws IOException, SAXException
+   {
+      WebForm form = client.getForm(componentID);
+      
+      String myFaces115CmdLink = form.getID() + ":" + "_idcl";
+      if (form.hasParameterNamed(myFaces115CmdLink)) return false;
+      
+      String myFaces114CmdLink = form.getID() + ":" + "_link_hidden_";
+      return form.hasParameterNamed(myFaces114CmdLink);
+   }
+   
+   public void testCommandLinkWithParamFromDatatableVariable() throws IOException, SAXException
+   {
+      JSFClientSession client = new JSFClientSession("/marathons_datatable.faces");
+      
+      if (isMyFaces114(client, "0:marathonSelect")) return; // don't run this test under MyFaces 1.1.4
+      
+      client.clickCommandLink("0:marathonSelect");
+      assertTrue(client.getWebResponse().getText().contains("Selected Marathon: BAA Boston Marathon"));
+      
+      client.clickCommandLink("3:marathonSelect");
+      assertTrue(client.getWebResponse().getText().contains("Selected Marathon: Flora London Marathon"));
+      
+      client.clickCommandLink("5:marathonSelect");
       assertTrue(client.getWebResponse().getText().contains("Selected Marathon: Olympic Marathon"));
    }
    
