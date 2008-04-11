@@ -58,6 +58,29 @@ public class FacadeAPIUsageTest extends ServletTestCase
       return new TestSuite( FacadeAPIUsageTest.class );
    }
    
+   public void testBadURLInCtor() throws IOException, SAXException
+   {
+      try
+      {
+         this.client = new JSFClientSession("/index.jsp");
+         fail("Expected IllegalArgumentException");
+      }
+      catch (IllegalArgumentException e)
+      {
+         assertTrue(e.getMessage().contains("FacesServlet"));
+      }
+      
+      try
+      {
+         this.client = new JSFClientSession("/foo.bar");
+         fail("Expected IllegalArgumentException");
+      }
+      catch (IllegalArgumentException e)
+      {
+         assertTrue(e.getMessage().contains("FacesServlet"));
+      }
+   }
+   
    // bad clickCommandLink call
    public void testClickCommandLinkUsage() throws IOException, SAXException
    {

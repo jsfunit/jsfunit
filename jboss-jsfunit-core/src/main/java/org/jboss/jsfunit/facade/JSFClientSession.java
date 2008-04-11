@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.facade;
 
 import com.meterware.httpunit.GetMethodWebRequest;
+import com.meterware.httpunit.HttpException;
 import com.meterware.httpunit.SubmitButton;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
@@ -125,7 +126,16 @@ public class JSFClientSession
            throws MalformedURLException, IOException, SAXException
    {
       WebRequest req = new GetMethodWebRequest(WebConversationFactory.getWARURL() + initialPage);
-      doWebRequest(req);
+      try
+      {
+         doWebRequest(req);
+      }
+      catch (HttpException e)
+      {
+         throw new IllegalArgumentException("Error in JSFClientSession constructor. " + initialPage 
+                        + " probably does not map to FacesServlet in web.xml.  See full URL in HttpException.", e);
+      }
+      
       this.requestFactory = new WebRequestFactory(this);
    }
    
