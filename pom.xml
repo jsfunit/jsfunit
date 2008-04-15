@@ -122,6 +122,24 @@
         <scope>provided</scope>
       </dependency> 
        
+      <dependency>
+        <groupId>org.ajax4jsf</groupId>
+        <artifactId>ajax4jsf</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.richfaces.framework</groupId>
+        <artifactId>richfaces-impl</artifactId>
+        <version>${richfaces-version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.richfaces.ui</groupId>
+        <artifactId>richfaces-ui</artifactId>
+        <version>${richfaces-version}</version>
+      </dependency>
+      
     </dependencies>
   </dependencyManagement>
 
@@ -168,4 +186,8 @@
     </plugins>
   </build>
     
+  <properties>
+    <richfaces-version>3.2.0.GA</richfaces-version>
+  </properties>
+  
 </project>

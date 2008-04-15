@@ -46,9 +46,14 @@ public class RichCalendarTest extends ServletTestCase
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
       
+      client.setParameter("form1:pattern", "MMM d, yyyy");
+      ajaxClient.ajaxSubmit("form1:setPattern");
+
       ajaxClient.setCalendarValue("myCalendar", "Oct 31, 2007");
+      
       client.setParameter("form1:Locale", "de/DE");
-      ajaxClient.ajaxSubmit("form1:selectLocale");
+      client.setParameter("form1:pattern", "MMM d, yyyy");
+      ajaxClient.ajaxSubmit("form1:setPattern");
       
       Date date = (Date)server.getManagedBeanValue("#{calendarBean.selectedDate}");
       String pattern = (String)server.getManagedBeanValue("#{calendarBean.pattern}");

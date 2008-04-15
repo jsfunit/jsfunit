@@ -169,7 +169,7 @@ public class RichFacesClient extends Ajax4jsfClient
       clientID += "InputDate";
       Document doc = client.getUpdatedDOM();
       Element input = DOMUtil.findElementWithID(clientID, doc);
-      if (input.getAttribute("readonly").equals("true")) 
+      if (!input.getAttribute("readonly").equals("")) 
       {
          input.removeAttribute("readonly");
          refreshPageFromDOM();

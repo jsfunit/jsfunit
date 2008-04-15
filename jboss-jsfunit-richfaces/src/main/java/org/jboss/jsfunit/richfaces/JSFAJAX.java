@@ -27,6 +27,8 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.faces.context.ExternalContext;
@@ -112,13 +114,28 @@ public class JSFAJAX
       {
          idsToReplace = metaTag.getAttribute("content").split(",");
       }
-   
+      
+      idsToReplace = removeEmptyElements(idsToReplace);
+      
       return updatePage(oldDoc, 
                         DOMUtil.convertToDomLevel2(newResponse.getDOM()), 
                         idsToReplace,
                         contentType);
    }
    
+   private static String[] removeEmptyElements(String[] elements)
+   {
+      List nonEmpty = new ArrayList();
+      for (int i=0; i < elements.length; i++)
+      {
+         if ( (elements[i] != null) && (elements[i] != ""))
+         {
+            nonEmpty.add(elements[i]);
+         }
+      }
+      
+      return (String[])nonEmpty.toArray(new String[0]);
+   }
    
    private static WebRequest updatePage(Document oldDoc, 
                                         Document newDoc,
