@@ -113,6 +113,7 @@
         <groupId>cactus</groupId>
         <artifactId>cactus</artifactId>
         <version>13-1.7.1</version>
+         <!--<version>1.8.0</version>-->
       </dependency>
       
       <dependency>
@@ -168,7 +169,6 @@
     <module>jboss-jsfunit-ant</module>
     <module>jboss-jsfunit-examples</module>
     <module>jboss-jsfunit-analysis</module>
-    <module>jboss-jsfunit-stub</module>
   </modules>
 
   <build>
