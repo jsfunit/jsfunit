@@ -41,9 +41,9 @@
   </developers>
 
   <scm>
-    <connection>scm:svn:http://anonsvn.jboss.org/repos/jsfunit/branches/jboss-jsfunit-1.0-beta-3</connection>
-    <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/branches/jboss-jsfunit-1.0-beta-3</developerConnection>
-    <url>http://fisheye.jboss.org/browse/JSFUnit/branches/jboss-jsfunit-1.0-beta-3</url>
+    <connection>scm:svn:http://anonsvn.jboss.org/repos/jsfunit/trunk</connection>
+    <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/trunk</developerConnection>
+    <url>http://fisheye.jboss.org/browse/JSFUnit/</url>
   </scm>
     
   <reporting>
