@@ -122,7 +122,7 @@
           <dependentWarExcludes>WEB-INF/web.xml,index.*</dependentWarExcludes>   
           <webResources>
             <resource>
-              <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/authentication/basic</directory>
+              <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/auth/basic</directory>
               <includes>
                 <include>**/*.java</include>
               </includes>
