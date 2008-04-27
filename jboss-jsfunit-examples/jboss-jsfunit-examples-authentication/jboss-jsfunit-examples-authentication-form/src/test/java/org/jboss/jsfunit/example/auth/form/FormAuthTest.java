@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.authentication.form;
+package org.jboss.jsfunit.example.auth.form;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
