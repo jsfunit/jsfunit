@@ -3,12 +3,12 @@
 
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
-    <artifactId>jboss-jsfunit-examples-authentication</artifactId>
+    <artifactId>jboss-jsfunit-examples-auth</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>jboss-jsfunit-examples-authentication-form</artifactId>
+  <artifactId>jboss-jsfunit-examples-auth-form</artifactId>
   <packaging>war</packaging>
   <name>JSFUnit Form Authentication Test</name>
 

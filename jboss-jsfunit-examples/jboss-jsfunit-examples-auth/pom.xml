@@ -8,13 +8,13 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>jboss-jsfunit-examples-authentication</artifactId>
+  <artifactId>jboss-jsfunit-examples-auth</artifactId>
   <packaging>pom</packaging>  
   <name>Authentication Example App</name>
 
   <modules>    
-    <module>jboss-jsfunit-examples-authentication-basic</module>
-    <module>jboss-jsfunit-examples-authentication-form</module>
+    <module>jboss-jsfunit-examples-auth-basic</module>
+    <module>jboss-jsfunit-examples-auth-form</module>
   </modules>
     
 </project>
