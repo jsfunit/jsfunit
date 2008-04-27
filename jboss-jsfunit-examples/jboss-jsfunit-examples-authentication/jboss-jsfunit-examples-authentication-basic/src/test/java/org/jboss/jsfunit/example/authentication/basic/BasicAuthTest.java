@@ -19,8 +19,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.authentication.form;
+package org.jboss.jsfunit.example.authentication.basic;
 
+import com.meterware.httpunit.WebConversation;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -36,37 +37,33 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.JSFServerSession;
 import org.jboss.jsfunit.framework.FacesContextBridge;
+import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.xml.sax.SAXException;
 
 import com.meterware.httpunit.WebForm;
 
-public class FormAuthenticationTest extends ServletTestCase
+public class BasicAuthTest extends ServletTestCase
 {
         private JSFClientSession client;
         
         public void setUp() throws MalformedURLException, IOException, SAXException
         {
-        	this.client = new JSFClientSession ("/secured-page.faces");
+           WebConversation webConv = WebConversationFactory.makeWebConversation();
+           webConv.setAuthorization("admin", "adminpw");
+           this.client = new JSFClientSession (webConv, "/secured-page.faces");
         }
 	    
         /**
-         * Test that a secured page can be accessed using form authentication
+         * Test that a secured page can be accessed using basic authentication
          * @throws SAXException 
          * @throws IOException 
          *
          */
         public void testLogin () throws SAXException, IOException
         {
-        	JSFServerSession server = new JSFServerSession (client);
-        	// check that the page can be accessed
-        	assertEquals ("/login.jsp", server.getCurrentViewID());
-        	// check that we can see something on the secured page
-        	WebForm loginform = client.getWebResponse().getFormWithID("loginform");
-        	loginform.setParameter("j_username", "admin");
-        	loginform.setParameter("j_password", "adminpw");
-        	loginform.getSubmitButton("login").click();
-        	
-        	FacesContext facesContext = FacesContextBridge.getCurrentInstance();
+            JSFServerSession server = new JSFServerSession (client);
+        
+            FacesContext facesContext = FacesContextBridge.getCurrentInstance();
             UIViewRoot root = facesContext.getViewRoot();
             assertEquals ("/secured-page.jsp", root.getViewId());
             
