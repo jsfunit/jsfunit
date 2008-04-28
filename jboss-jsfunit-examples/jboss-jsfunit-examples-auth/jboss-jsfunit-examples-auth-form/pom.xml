@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
     <artifactId>jboss-jsfunit-examples-auth</artifactId>
-    <version>1.0.0.Beta1-SNAPSHOT</version>
+    <version>1.0.0.Beta2-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
