@@ -80,6 +80,51 @@
       </dependency>    
     
       <dependency>
+         <groupId>htmlunit</groupId>
+         <artifactId>htmlunit</artifactId>
+         <version>2.1</version>
+      </dependency>
+      
+      <!-- needed by htmlunit                                -->
+      <!-- htmlunit's dependencies are not in any Maven repo -->
+      <dependency>
+        <groupId>commons-httpclient</groupId>
+        <artifactId>commons-httpclient</artifactId>
+         <version>3.1</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+         <version>1.4</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>rhino</groupId>
+        <artifactId>js</artifactId>
+         <version>1.7R1</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>net.sourceforge.cssparser</groupId>
+         <artifactId>cssparser</artifactId>
+         <version>0.9.5</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>net.sourceforge.nekohtml</groupId>
+         <artifactId>nekohtml</artifactId>
+         <version>1.9.7</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>xalan</groupId>
+         <artifactId>xalan</artifactId>
+         <version>2.7.0</version>
+      </dependency>
+      <!--**************************************************-->
+    
+      <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-api</artifactId>
         <version>1.2_08</version>

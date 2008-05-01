@@ -22,9 +22,12 @@
 
 package org.jboss.jsfunit.framework;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.meterware.httpunit.HttpUnitOptions;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.parsing.HTMLParserFactory;
+import java.io.IOException;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -108,6 +111,21 @@ public class WebConversationFactory
       clearSession(session);
       wc.putCookie("JSESSIONID", session.getId());
       wc.putCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);
+      return wc;
+   }
+   
+   public static WebClient makeWebClient()
+   {
+      WebClient wc = new WebClient();
+      HttpSession session = getSessionFromThreadLocal();
+      
+      if (session == null)
+      {
+         throw new IllegalStateException("Can not find HttpSession.  Perhaps JSFUnitFilter has not run?");
+      }
+      
+      clearSession(session);
+      wc.addRequestHeader("Cookie", "JSESSIONID=" + session.getId() + "; " + JSF_UNIT_CONVERSATION_FLAG + "=" + JSF_UNIT_CONVERSATION_FLAG);
       return wc;
    }
    
