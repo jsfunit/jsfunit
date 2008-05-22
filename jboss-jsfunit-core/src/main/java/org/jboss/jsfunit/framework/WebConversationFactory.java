@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.framework;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.meterware.httpunit.HttpUnitOptions;
@@ -116,7 +117,7 @@ public class WebConversationFactory
    
    public static WebClient makeWebClient()
    {
-      WebClient wc = new WebClient();
+      WebClient wc = new WebClient(BrowserVersion.FIREFOX_2);
       HttpSession session = getSessionFromThreadLocal();
       
       if (session == null)

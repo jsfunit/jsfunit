@@ -141,13 +141,13 @@ public class FacadeAPITest extends ServletTestCase
       JSFClientSession client = jsfSession.getJSFClientSession();
       
       client.click("marathonSelect");
-      assertTrue(client.getPageText().contains("Selected Marathon: BAA Boston Marathon"));
+      assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
       
       client.click("marathonSelectj_id_3");
-      assertTrue(client.getPageText().contains("Selected Marathon: Flora London Marathon"));
+      assertTrue(client.getPageAsText().contains("Selected Marathon: Flora London Marathon"));
       
       client.click("marathonSelectj_id_5");
-      assertTrue(client.getPageText().contains("Selected Marathon: Olympic Marathon"));
+      assertTrue(client.getPageAsText().contains("Selected Marathon: Olympic Marathon"));
    }
    
    public void testCommandLinkWithParamFromDatatableVariable() throws IOException
@@ -157,13 +157,13 @@ public class FacadeAPITest extends ServletTestCase
       JSFClientSession client = jsfSession.getJSFClientSession();
       
       client.click("0:marathonSelect");
-      assertTrue(client.getPageText().contains("Selected Marathon: BAA Boston Marathon"));
+      assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
       
       client.click("3:marathonSelect");
-      assertTrue(client.getPageText().contains("Selected Marathon: Flora London Marathon"));
+      assertTrue(client.getPageAsText().contains("Selected Marathon: Flora London Marathon"));
       
       client.click("5:marathonSelect");
-      assertTrue(client.getPageText().contains("Selected Marathon: Olympic Marathon"));
+      assertTrue(client.getPageAsText().contains("Selected Marathon: Olympic Marathon"));
    }
    
    public void testServerSideComponentValue() throws IOException
@@ -187,7 +187,7 @@ public class FacadeAPITest extends ServletTestCase
    public void testClickALink() throws IOException
    {
       client.click("SourceSimplifiedHelloJSFIntegrationTest");
-      assertTrue(client.getPageText().contains("public class SimplifiedHelloJSFIntegrationTest"));
+      assertTrue(client.getPageAsText().contains("public class SimplifiedHelloJSFIntegrationTest"));
    }
    
    public void testFacesMessages() throws IOException

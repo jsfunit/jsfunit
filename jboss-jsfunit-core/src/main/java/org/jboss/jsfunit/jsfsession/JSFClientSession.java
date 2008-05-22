@@ -25,7 +25,11 @@ package org.jboss.jsfunit.jsfsession;
 import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.TextPage;
+import com.gargoylesoftware.htmlunit.ThreadManager;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.xml.XmlPage;
 import java.io.IOException;
@@ -39,58 +43,165 @@ public class JSFClientSession implements PageCreationListener
 {
    
    private JSFServerSession jsfServerSession;
-   private Page currentPage;
+   private Page contentPage;
+   private long javascriptTimeout = 10000;
    
    JSFClientSession(JSFServerSession jsfServerSession)
    {
       this.jsfServerSession = jsfServerSession;
    }
    
-   public Page getCurrentPage()
+   /**
+    * Get the javascript timeout.  This determines how long the JSFClientSession
+    * will wait for javascript to complete after an AJAX call.
+    *
+    * @return The javascript timeout in milliseconds.
+    */
+   public long getJavascriptTimeout()
    {
-      return this.currentPage;
+      return this.javascriptTimeout;
    }
    
-   public String getPageText()
+   /**
+    * Set the javascript timeout.  This determines how long the JSFClientSession
+    * will wait for javascript to complete after an AJAX call.
+    *
+    * @param javascriptTimeout The timeout in milliseconds.
+    */
+   public void setJavascriptTimeout(long javascriptTimeout)
    {
-      if (currentPage instanceof HtmlPage) return ((HtmlPage)currentPage).asXml();
-      if (currentPage instanceof TextPage) return ((TextPage)currentPage).getContent();
-      if (currentPage instanceof XmlPage) return ((XmlPage)currentPage).asXml();
-      if (currentPage instanceof JavaScriptPage) return ((JavaScriptPage)currentPage).getContent();
+      this.javascriptTimeout = javascriptTimeout;
+   }
+   
+   /**
+    * Get the latest content page returned from the server.  This page may
+    * have been changed by javascript or direct manipulation of the DOM.
+    *
+    * @return The Page.
+    */
+   public Page getContentPage()
+   {
+      return this.contentPage;
+   }
+   
+   /**
+    * Get the content page as a text String.
+    *
+    * @return the text
+    */
+   public String getPageAsText()
+   {
+      if (contentPage instanceof HtmlPage) return ((HtmlPage)contentPage).asXml();
+      if (contentPage instanceof TextPage) return ((TextPage)contentPage).getContent();
+      if (contentPage instanceof XmlPage) return ((XmlPage)contentPage).asXml();
+      if (contentPage instanceof JavaScriptPage) return ((JavaScriptPage)contentPage).getContent();
       
-      throw new IllegalStateException("This page can not be converted to text.  Page type is " + currentPage.getClass().getName());
+      throw new IllegalStateException("This page can not be converted to text.  Page type is " + contentPage.getClass().getName());
    }
    
    /**
     * Set the value attribute of a JSF component.
     * 
     * @param componentID The JSF component id (or a suffix of the client ID) of 
-    *                    a component on the form to be submitted.  This can also
-    *                    be the ID of the form itself.
+    *                    a component rendered as an HtmlInput component. 
     *
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
-    * @throws ClassCastException if the current page is not an HtmlPage
+    * @throws ClassCastException if the current page is not an HtmlPage or the 
+    *                            specified component is not an HtmlInput.
+    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
     */
    public void setValue(String componentID, String value)
    {
-      String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
-      HtmlPage htmlPage = (HtmlPage)this.currentPage;
-      Element element = htmlPage.getElementById(clientID);
-      element.setAttribute("value", value);
+      HtmlInput input = (HtmlInput)getElement(componentID);
+      input.setValueAttribute(value);
+      waitForJavascript();
    }
    
+   /**
+    * Simulates typing a character while this JSF component has focus.
+    *
+    * @param componentID The JSF component id (or a suffix of the client ID) of 
+    *                    a component rendered as an HtmlElement. 
+    *
+    * @throws ComponentIDNotFoundException if no client ID matches the suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage or the 
+    *                            specified component is not an HtmlElement.
+    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
+    */
+   public void type(String componentID, char c) throws IOException
+   {
+      HtmlElement element = (HtmlElement)getElement(componentID);
+      element.type(c);
+      waitForJavascript();
+   }
+   
+   /**
+    * Click a JSF component.
+    * 
+    * @param componentID The JSF component id (or a suffix of the client ID) to be clicked.
+    *
+    * @throws ComponentIDNotFoundException if no client ID matches the suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage or the 
+    *                            specified component is not a ClickableElement.
+    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
+    */
    public void click(String componentID) throws IOException
    {
-      String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
-      HtmlPage htmlPage = (HtmlPage)this.currentPage;
-      ClickableElement element = (ClickableElement)htmlPage.getElementById(clientID);
+      ClickableElement element = (ClickableElement)getElement(componentID);
       element.click();
+      waitForJavascript();
+   }
+   
+   /**
+    * Set the "checked" attribute for a JSF checkbox component.
+    * 
+    * @param componentID The JSF component id (or a suffix of the client ID) to be clicked.
+    *
+    * @throws ComponentIDNotFoundException if no client ID matches the suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage or the 
+    *                            specified component is not an HtmlCheckBoxInput.
+    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
+    */
+   public void setChecked(String componentID, boolean isChecked) throws IOException
+   {
+      HtmlCheckBoxInput element = (HtmlCheckBoxInput)getElement(componentID);
+      element.setChecked(isChecked);
+      waitForJavascript();
+   }
+   
+   public void waitForJavascript()
+   {
+      ThreadManager threadManager = this.contentPage.getEnclosingWindow().getThreadManager();
+      if (!threadManager.joinAll(this.javascriptTimeout))
+      {
+         throw new JavascriptTimeoutException(threadManager.toString());
+      }
+   }
+   
+   /**
+    * Get a DOM Element on the current page that has the given JSF componentID.
+    *
+    * @param componentID The JSF component id (or a suffix of the client ID)
+    *
+    * @throws ComponentIDNotFoundException if no client ID matches the suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage. 
+    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
+    */
+   public Element getElement(String componentID)
+   {
+      String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
+      HtmlPage htmlPage = (HtmlPage)this.contentPage;
+      return htmlPage.getElementById(clientID);
    }
    
    // ------ Implementation of PageCreationListener
    public void pageCreated(Page page)
    {
-      this.currentPage = page;
+      this.contentPage = page;
    }
 }

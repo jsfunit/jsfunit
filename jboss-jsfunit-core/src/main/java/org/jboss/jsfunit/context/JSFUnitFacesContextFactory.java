@@ -56,9 +56,8 @@ public class JSFUnitFacesContextFactory extends FacesContextFactory
       
       if (isJSFUnitRequest(req))
       {
-         req.getSession().removeAttribute(JSFUnitFacesContext.SESSION_KEY); // must remove before creating any new FacesContext
          FacesContext realFacesContext = parent.getFacesContext(context, request, response, lifecycle);
-         return new JSFUnitFacesContext(realFacesContext, request);
+         return new JSFUnitFacesContext(realFacesContext);
       }
       
       return parent.getFacesContext(context, request, response, lifecycle);

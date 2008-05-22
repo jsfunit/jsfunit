@@ -105,7 +105,7 @@ public class SimplifiedHelloJSFIntegrationTest extends ServletTestCase
     */
    public void testInitialPage() throws IOException
    {
-      assertNotNull(client.getCurrentPage());
+      assertNotNull(client.getContentPage());
       
       // Test navigation to initial viewID
       assertEquals("/index.jsp", server.getCurrentViewID());

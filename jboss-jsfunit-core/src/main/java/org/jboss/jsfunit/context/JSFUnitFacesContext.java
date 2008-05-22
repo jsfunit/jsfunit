@@ -61,13 +61,9 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    private List<FacesMessage> allMessages = new ArrayList<FacesMessage>();
    private Map<String, List<FacesMessage>> messagesByClientId = new HashMap<String, List<FacesMessage>>();
    
-   public JSFUnitFacesContext(FacesContext delegate, Object request)
+   public JSFUnitFacesContext(FacesContext delegate)
    {
       this.delegate = delegate;
-      
-      HttpServletRequest req = (HttpServletRequest)request;
-      req.getSession().setAttribute(SESSION_KEY, this);
-      
       setCurrentInstance(this);
    }
    
@@ -190,7 +186,21 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
     */
    public void release()
    {
-      this.extContext = new JSFUnitExternalContext(delegate.getExternalContext());
+      ExternalContext extCtx = delegate.getExternalContext();
+      this.extContext = new JSFUnitExternalContext(extCtx);
+      
+      // Make the FacesContext available to JSFUnit, if and only if a new
+      // page was rendered.
+      if (viewHasChildren())
+      {
+         extCtx.getSessionMap().put(SESSION_KEY, this);
+      }
+   }
+   
+   private boolean viewHasChildren()
+   {
+      UIViewRoot viewRoot = getViewRoot();
+      return (viewRoot != null) && (viewRoot.getChildCount() != 0);
    }
    
    /**

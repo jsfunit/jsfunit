@@ -31,6 +31,7 @@ import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.w3c.dom.Element;
 
 /**
+ * This class starts and manages the JSF Session on both the client and server side.
  *
  * @author Stan Silvert
  */
@@ -40,9 +41,43 @@ public class JSFSession
    private JSFClientSession jsfClientSession;
    private WebClient webClient;
    
+   /**
+    * Creates a new session for testing the JSF application.   
+    * This constructor will also clear the HttpSession.
+    * 
+    * Note that the initialPage param should be something that maps into the FacesServlet.
+    * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
+    * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
+    * initialPage param will be something like "/faces/index.jsp".
+    * 
+    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
+    *
+    * @throws IOException If there is an error calling the JSF app
+    */
    public JSFSession(String initialPage) throws IOException
    {
-      this.webClient = WebConversationFactory.makeWebClient();
+      this(WebConversationFactory.makeWebClient(), initialPage);
+   }
+   
+   /**
+    * Creates a new session for testing the JSF application.   
+    * This constructor will also clear the HttpSession.
+    * 
+    * Note that the initialPage param should be something that maps into the FacesServlet.
+    * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
+    * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
+    * initialPage param will be something like "/faces/index.jsp".
+    * 
+    * @param webClient An HtmlUnit WebClient containing custom attributes.  Note that this WebClient
+    *                  instance should be created with the JSFUnit WebConversationFactory instead of
+    *                  the WebClient constructor.
+    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
+    *
+    * @throws IOException If there is an error calling the JSF app
+    */
+   public JSFSession(WebClient webClient, String initialPage) throws IOException
+   {
+      this.webClient = webClient;
       JSFUnitPageCreator pageCreator = new JSFUnitPageCreator(this.webClient);
       this.jsfServerSession = new JSFServerSession();
       pageCreator.addPageCreationListener(this.jsfServerSession);
@@ -53,17 +88,32 @@ public class JSFSession
       webClient.getPage(url);
    }
    
+   /**
+    * Get the WebClient instance used to control client side requests.
+    *
+    * @return The WebClient instance used to control client side requests.
+    */
    public WebClient getWebClient()
    {
       return this.webClient;
    }
    
-   
+   /**
+    * Get the JSFServerSession instance used to access server-side JSF artifacts.
+    *
+    * @return The JSFServerSession
+    */
    public JSFServerSession getJSFServerSession()
    {
       return this.jsfServerSession;
    }
    
+   /**
+    * Get the JSFClientSession instance used to access client-side JSF artifacts
+    * send requests to the server.
+    *
+    * @param The JSFClientSession
+    */
    public JSFClientSession getJSFClientSession()
    {
       return this.jsfClientSession;

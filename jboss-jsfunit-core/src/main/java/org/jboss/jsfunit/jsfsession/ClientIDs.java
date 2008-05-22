@@ -197,4 +197,12 @@ public class ClientIDs
       if (ancestorSet == null) return false;
       return ancestorSet.contains(ancestorClientID);
    }
+   
+   public void dumpAllIDs()
+   {
+      for (Iterator<String> i = this.allClientIDs.iterator(); i.hasNext();)
+      {
+         System.out.println(i.next());
+      }
+   }
 }
