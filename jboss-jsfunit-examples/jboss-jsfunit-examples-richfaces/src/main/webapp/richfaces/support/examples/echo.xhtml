@@ -10,6 +10,7 @@
 		<h:panelGrid columns="2">
 			<h:inputText id="name" value="#{userBean.name}">
 				<a4j:support id="rerenderOuttext" event="onkeyup" reRender="outtext" />
+                                <a4j:support id="rerenderOuttextOnchange" event="onchange" reRender="outtext" />
 			</h:inputText>
 			<h:outputText id="outtext" value="#{userBean.name}" />
 		</h:panelGrid>
