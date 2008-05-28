@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.jsfsession;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
@@ -56,7 +57,26 @@ public class JSFSession
     */
    public JSFSession(String initialPage) throws IOException
    {
-      this(WebConversationFactory.makeWebClient(), initialPage);
+      this(initialPage, BrowserVersion.getDefault());
+   }
+   
+   /**
+    * Creates a new session for testing the JSF application.   
+    * This constructor will also clear the HttpSession.
+    * 
+    * Note that the initialPage param should be something that maps into the FacesServlet.
+    * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
+    * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
+    * initialPage param will be something like "/faces/index.jsp".
+    * 
+    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
+    * @param browserVersion The version of the browser to be emulated.
+    *
+    * @throws IOException If there is an error calling the JSF app
+    */
+   public JSFSession(String initialPage, BrowserVersion browserVersion) throws IOException
+   {
+      this(WebConversationFactory.makeWebClient(browserVersion, null, 0), initialPage);
    }
    
    /**

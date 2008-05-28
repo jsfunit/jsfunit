@@ -115,9 +115,21 @@ public class WebConversationFactory
       return wc;
    }
    
-   public static WebClient makeWebClient()
+   /**
+    * Return a clean WebClient to start sending JSF requests.
+    *
+    * @param browserVersion The browser version to emulate. (a typical default is BrowserVersion.getDefault() )
+    * @param proxyHost The server that will act as proxy (a typical default is null)
+    * @param proxyPort The port to use for the proxy server (a typical default is 0 )
+    *
+    * @return A clean WebClient for JSFUnit.
+    */
+   public static WebClient makeWebClient(BrowserVersion browserVersion, String proxyHost, int proxyPort)
    {
-      WebClient wc = new WebClient(BrowserVersion.FIREFOX_2);
+      WebClient wc = null;
+      if (proxyHost != null) wc = new WebClient(browserVersion, proxyHost, proxyPort);
+      if (proxyHost == null) wc = new WebClient(browserVersion);
+      
       HttpSession session = getSessionFromThreadLocal();
       
       if (session == null)

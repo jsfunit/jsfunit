@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.jsfsession.hellojsf;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -55,7 +56,7 @@ public class HelloJSFIntegrationTest extends ServletTestCase
     */
    public void setUp() throws IOException
    {
-      WebClient webClient = WebConversationFactory.makeWebClient();
+      WebClient webClient = WebConversationFactory.makeWebClient(BrowserVersion.getDefault(), null, 0);
       String url = WebConversationFactory.getWARURL() + "/index.faces";
       this.htmlPage = (HtmlPage)webClient.getPage(url);
    }

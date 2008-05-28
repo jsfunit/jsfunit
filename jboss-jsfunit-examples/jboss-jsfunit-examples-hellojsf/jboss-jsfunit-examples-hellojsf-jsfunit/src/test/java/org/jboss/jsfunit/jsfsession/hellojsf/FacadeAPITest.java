@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.jsfsession.hellojsf;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import java.util.Iterator;
@@ -67,6 +68,12 @@ public class FacadeAPITest extends ServletTestCase
    public static Test suite()
    {
       return new TestSuite( FacadeAPITest.class );
+   }
+   
+   public void testCustomBrowserVersion() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/index.faces", BrowserVersion.INTERNET_EXPLORER_6_0);
+      assertEquals(BrowserVersion.INTERNET_EXPLORER_6_0, jsfSession.getWebClient().getBrowserVersion());
    }
    
    /**

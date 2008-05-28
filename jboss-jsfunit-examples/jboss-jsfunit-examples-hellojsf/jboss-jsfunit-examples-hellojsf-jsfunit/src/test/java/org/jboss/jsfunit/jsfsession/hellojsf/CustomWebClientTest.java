@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.jsfsession.hellojsf;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import java.io.IOException;
 import junit.framework.Test;
@@ -50,7 +51,9 @@ public class CustomWebClientTest extends ServletTestCase
    
    public void testCustomizedWebConversation() throws IOException
    {
-      WebClient webClient = WebConversationFactory.makeWebClient();
+      WebClient webClient = WebConversationFactory.makeWebClient(BrowserVersion.INTERNET_EXPLORER_6_0, null, 0);
+      assertEquals(BrowserVersion.INTERNET_EXPLORER_6_0, webClient.getBrowserVersion());
+      
       webClient.addRequestHeader("mycoolheader", "mycoolvalue");
       JSFSession jsfSession = new JSFSession(webClient, "/index.faces");
       JSFServerSession server = jsfSession.getJSFServerSession();
@@ -98,7 +101,7 @@ public class CustomWebClientTest extends ServletTestCase
    // of Facade?
    public void testGetWebClient() throws IOException
    {
-      WebClient webClient = WebConversationFactory.makeWebClient();
+      WebClient webClient = WebConversationFactory.makeWebClient(BrowserVersion.getDefault(), null, 0);
       
       JSFSession jsfSession = new JSFSession(webClient, "/index.faces");
       JSFClientSession client = jsfSession.getJSFClientSession();
