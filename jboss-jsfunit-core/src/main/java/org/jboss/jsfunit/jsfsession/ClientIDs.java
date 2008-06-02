@@ -113,7 +113,9 @@ public class ClientIDs
    {
       String parentClientID = component.getClientId(facesContext);
       // TODO: find out if headers and footers are found
-      for (int i=0; i < component.getRowCount(); i++)
+      int rowsToDisplay = component.getRows();
+      if (rowsToDisplay == 0) rowsToDisplay = component.getRowCount();
+      for (int i=0; i < rowsToDisplay; i++)
       {
          component.setRowIndex(i);
          addAncestors(parentClientID, component.getClientId(facesContext));
