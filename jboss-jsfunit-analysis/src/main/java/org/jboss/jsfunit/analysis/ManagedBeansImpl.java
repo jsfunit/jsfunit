@@ -141,7 +141,7 @@ class ManagedBeansImpl {
 							+ clazz.getName() + " has no method " + setter + "(?)");
 				
 				if(propertyNames.contains(name))
-					throw new RuntimeException("managed bean '" + managedBeanName 
+					fail("managed bean '" + managedBeanName 
 							+ "' in " + facesConfig + " has a duplicate property named " + name);
 				propertyNames.add(name);
 			}

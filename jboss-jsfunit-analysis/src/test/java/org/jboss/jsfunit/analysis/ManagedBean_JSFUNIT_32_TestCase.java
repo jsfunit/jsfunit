@@ -22,10 +22,6 @@
 
 package org.jboss.jsfunit.analysis;
 
-import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
-import org.jboss.jsfunit.analysis.StreamProvider;
-import org.jboss.jsfunit.analysis.model.Pojo;
-
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
@@ -38,7 +34,7 @@ public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
 	public void testDuplicateProperty() {
 		
 		String managedProperty = TestUtils.getManagedProperty("setter", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
+		String manageBean = TestUtils.getManagedBean("bad", ManagedBeanOneProperty.class, "none", managedProperty + managedProperty);
 		String facesConfig = TestUtils.getFacesConfig(manageBean);
 		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 		
@@ -50,9 +46,7 @@ public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
 			
 		}catch(AssertionFailedError e) { 
 			
-			String msg = "The managed bean 'bad' has a managed property called 'setter', " +
-					"but org.jboss.jsfunit.analysis.model.Pojo has no method setSetter(?)";
-			
+			String msg = "managed bean 'bad' in stubbed resource path has a duplicate property named setter";
 			assertEquals(msg, e.getMessage());
 			
 		}
