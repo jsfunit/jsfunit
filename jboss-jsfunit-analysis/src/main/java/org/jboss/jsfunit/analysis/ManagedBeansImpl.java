@@ -29,9 +29,11 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jboss.jsfunit.analysis.util.ClassUtils;
 import org.jboss.jsfunit.analysis.util.ParserUtils;
@@ -86,8 +88,10 @@ class ManagedBeansImpl {
 		
 		String scope = new ParserUtils().querySingle(parent, "./managed-bean-scope/text()", facesConfigPath);
 		if(scope == null || "".equals(scope))
-			throw new RuntimeException("could not determine scope of " + parent.getNodeName() + " '" 
+			throw new RuntimeException("could not determine scope '" + scope + "' of " + parent.getNodeName() + " '" 
 					+ name + "' in " + facesConfigPath);
+		
+		failIfMapHasDuplicateKeys(parent, facesConfigPath, name);
 		
 		doManagedBean(facesConfigPath, parent.getChildNodes(), managedBeanNames, name, clazz, scope);
 	}
@@ -120,6 +124,27 @@ class ManagedBeansImpl {
 						+ scope + " scope, so it needs to implement " + Serializable.class);
 		}
 		
+	}
+
+	private void failIfMapHasDuplicateKeys(Node managedBean, String facesConfigPath, String name) {
+		String query = "./managed-property/map-entries";
+		String subQuery = "./map-entry/key";
+		NodeList nodeList = new ParserUtils().query(managedBean, query, facesConfigPath);
+		
+		for(int i = 0; i < nodeList.getLength(); i++) {
+			NodeList keys = new ParserUtils().query(nodeList.item(i), subQuery, facesConfigPath);
+			Set<String> keyNames = new HashSet<String>();
+			for(int j = 0; j < keys.getLength(); j++) {
+				Node firstChild = keys.item(j).getFirstChild();
+				if(firstChild != null){
+					String textContent = firstChild.getTextContent();
+					if(keyNames.contains(textContent)) 
+						fail("Managed Bean '" + name + "' has a managed Map property w/ a duplicate key '" 
+								+ textContent + "'");
+					keyNames.add(textContent);
+				}
+			}
+		}
 	}
 
 	private void doManagedBeanProperty(Node parent, final List<String> propertyNames, 
