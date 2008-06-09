@@ -38,7 +38,7 @@ public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
 	public void testDuplicateProperty() {
 		
 		String managedProperty = TestUtils.getManagedProperty("setter", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty + managedProperty);
+		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
 		String facesConfig = TestUtils.getFacesConfig(manageBean);
 		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 		
@@ -48,7 +48,14 @@ public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
 			
 			throw new RuntimeException("should have failed");
 			
-		}catch(AssertionFailedError e) { }
+		}catch(AssertionFailedError e) { 
+			
+			String msg = "The managed bean 'bad' has a managed property called 'setter', " +
+					"but org.jboss.jsfunit.analysis.model.Pojo has no method setSetter(?)";
+			
+			assertEquals(msg, e.getMessage());
+			
+		}
 		
 	}
 
