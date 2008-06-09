@@ -38,8 +38,8 @@ public class ManagedBean_JSFUNIT_33_TestCase extends TestCase {
 	public void testMissingProperty() {
 		
 		String managedProperty = TestUtils.getManagedProperty("notThere", "value");
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
+		String managedBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
+		String facesConfig = TestUtils.getFacesConfig(managedBean);
 		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 		
 		try {
