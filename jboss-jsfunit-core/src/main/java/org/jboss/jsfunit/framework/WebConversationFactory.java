@@ -22,13 +22,10 @@
 
 package org.jboss.jsfunit.framework;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.meterware.httpunit.HttpUnitOptions;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.parsing.HTMLParserFactory;
-import java.io.IOException;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -116,19 +113,20 @@ public class WebConversationFactory
    }
    
    /**
-    * Return a clean WebClient to start sending JSF requests.
+    * Package private method to initialize the wcSpec with a WebClient,
+    * clear the sessioin, and add JSFUnit cookies to every request.
     *
-    * @param browserVersion The browser version to emulate. (a typical default is BrowserVersion.getDefault() )
-    * @param proxyHost The server that will act as proxy (a typical default is null)
-    * @param proxyPort The port to use for the proxy server (a typical default is 0 )
-    *
-    * @return A clean WebClient for JSFUnit.
+    * @param wcSpec The Web Client specification.
     */
-   public static WebClient makeWebClient(BrowserVersion browserVersion, String proxyHost, int proxyPort)
+   static void makeWebClient(WebClientSpec wcSpec)
    {
       WebClient wc = null;
-      if (proxyHost != null) wc = new WebClient(browserVersion, proxyHost, proxyPort);
-      if (proxyHost == null) wc = new WebClient(browserVersion);
+      String proxyHost = wcSpec.getProxyHost();
+      if (proxyHost != null) wc = new WebClient(wcSpec.getBrowserVersion(), 
+                                                proxyHost, 
+                                                wcSpec.getProxyPort());
+      if (proxyHost == null) wc = new WebClient(wcSpec.getBrowserVersion());
+      wcSpec.setWebClient(wc);
       
       HttpSession session = getSessionFromThreadLocal();
       
@@ -138,8 +136,8 @@ public class WebConversationFactory
       }
       
       clearSession(session);
-      wc.addRequestHeader("Cookie", "JSESSIONID=" + session.getId() + "; " + JSF_UNIT_CONVERSATION_FLAG + "=" + JSF_UNIT_CONVERSATION_FLAG);
-      return wc;
+      wcSpec.addCookie("JSESSIONID", session.getId());
+      wcSpec.addCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);
    }
    
    /**

@@ -45,8 +45,9 @@ public class JSFServerSession implements PageCreationListener
     * 
     * @param client The JSFClientSession for the current web conversation.
     */
-   JSFServerSession()
+   JSFServerSession(Page initialPage)
    {
+      pageCreated(initialPage);
    }
    
    public ClientIDs getClientIDs()
@@ -159,6 +160,8 @@ public class JSFServerSession implements PageCreationListener
    // ------ Implementation of PageCreationListener
    public void pageCreated(Page page)
    {
+      // if no FacesContext exists, we can't get the Client IDs
+      if (FacesContextBridge.getCurrentInstance() == null) return;
       this.clientIDs = new ClientIDs();
    }
 }

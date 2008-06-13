@@ -46,9 +46,10 @@ public class JSFClientSession implements PageCreationListener
    private Page contentPage;
    private long javascriptTimeout = 10000;
    
-   JSFClientSession(JSFServerSession jsfServerSession)
+   JSFClientSession(JSFServerSession jsfServerSession, Page initialPage)
    {
       this.jsfServerSession = jsfServerSession;
+      pageCreated(initialPage); 
    }
    
    /**

@@ -23,7 +23,6 @@
 package org.jboss.jsfunit.jsfsession.hellojsf;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
@@ -33,6 +32,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.framework.Environment;
+import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -72,8 +72,9 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testCustomBrowserVersion() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/index.faces", BrowserVersion.INTERNET_EXPLORER_6_0);
-      assertEquals(BrowserVersion.INTERNET_EXPLORER_6_0, jsfSession.getWebClient().getBrowserVersion());
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces", BrowserVersion.INTERNET_EXPLORER_7_0);
+      JSFSession jsfSession = new JSFSession(wcSpec);
+      assertEquals(BrowserVersion.INTERNET_EXPLORER_7_0, jsfSession.getWebClient().getBrowserVersion());
    }
    
    /**

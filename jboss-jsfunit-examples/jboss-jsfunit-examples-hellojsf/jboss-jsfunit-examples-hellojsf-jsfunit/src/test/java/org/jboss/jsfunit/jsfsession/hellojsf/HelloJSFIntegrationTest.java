@@ -22,8 +22,6 @@
 
 package org.jboss.jsfunit.jsfsession.hellojsf;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
@@ -38,7 +36,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.framework.FacesContextBridge;
-import org.jboss.jsfunit.framework.WebConversationFactory;
+import org.jboss.jsfunit.framework.WebClientSpec;
 import org.xml.sax.SAXException;
 
 /**
@@ -56,9 +54,8 @@ public class HelloJSFIntegrationTest extends ServletTestCase
     */
    public void setUp() throws IOException
    {
-      WebClient webClient = WebConversationFactory.makeWebClient(BrowserVersion.getDefault(), null, 0);
-      String url = WebConversationFactory.getWARURL() + "/index.faces";
-      this.htmlPage = (HtmlPage)webClient.getPage(url);
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces");
+      this.htmlPage = (HtmlPage)wcSpec.doInitialRequest();
    }
    
    /**

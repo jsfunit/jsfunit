@@ -48,7 +48,7 @@ public class HtmlUnitAjaxSupportTest extends ServletTestCase
 
    public void testAjaxSupportWithOnkeyup() throws IOException
    {
-/*      JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
+  /*    JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
@@ -65,15 +65,14 @@ public class HtmlUnitAjaxSupportTest extends ServletTestCase
       client.type("name", 'd');
   
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
-      assertTrue(userBeanValue.equals("Hello World"));
-      
+      assertEquals("Hello World", userBeanValue);
       String valueOfSpan = ((DomNode)client.getElement("outtext")).asText();
-      assertEquals("Hello World", valueOfSpan); */
+      assertEquals("Hello World", valueOfSpan);  */
    }
    
    public void testAjaxSupportWithOnchange() throws IOException
    {
-/*      JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
+      /*JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
@@ -83,5 +82,5 @@ public class HtmlUnitAjaxSupportTest extends ServletTestCase
       
       String valueOfSpan = ((DomNode)client.getElement("outtext")).asText();
       assertEquals("Hello World", valueOfSpan); */
-   }
+   } 
 }

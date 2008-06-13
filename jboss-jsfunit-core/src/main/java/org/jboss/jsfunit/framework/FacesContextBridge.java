@@ -45,12 +45,14 @@ public class FacesContextBridge
     * per-request object.  So, this must be called after each faces request to get
     * the latest copy.
     * 
-    * @return The FacesContext from the previous request.
+    * @return The FacesContext from the previous request, or <code>null</code> if
+    *         no FacesContext has been created.
     */
    public static FacesContext getCurrentInstance()
    {
       HttpSession session = WebConversationFactory.getSessionFromThreadLocal();
       JSFUnitFacesContext facesContext = (JSFUnitFacesContext)session.getAttribute(JSFUnitFacesContext.SESSION_KEY);
+      if (facesContext == null) return null;
       facesContext.setInstanceToJSFUnitThread();
       return facesContext;
    }

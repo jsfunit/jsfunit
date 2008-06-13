@@ -51,4 +51,27 @@
       <welcome-file>index.html</welcome-file>
    </welcome-file-list>
    
+   <security-role>
+      <role-name>user</role-name>
+   </security-role>
+   
+   <security-constraint>
+     <display-name>From Authentication for User</display-name>
+     <web-resource-collection>
+        <web-resource-name>FromAuthenticated</web-resource-name>
+        <url-pattern>/jsf/form-secured-page.jsp</url-pattern>
+     </web-resource-collection>
+     <auth-constraint>
+        <role-name>user</role-name>
+     </auth-constraint>
+   </security-constraint>
+   
+   <login-config>
+     <auth-method>FORM</auth-method>
+     <form-login-config>
+       <form-login-page>/login.jsp</form-login-page>
+       <form-error-page>/error.jsp</form-error-page>
+     </form-login-config>
+   </login-config>
+   
 </web-app>

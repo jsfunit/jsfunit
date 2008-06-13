@@ -1,0 +1,15 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure class="org.mortbay.jetty.webapp.WebAppContext">
+  <Set name="contextPath">/${project.artifactId}</Set>
+  <Set name="war"><SystemProperty name="jetty.home" default="."/>/webapps/${project.artifactId}.war</Set>
+   
+  <Get name="securityHandler">
+    <Set name="userRealm">
+      <New class="org.mortbay.jetty.security.HashUserRealm">
+            <Set name="name">Test Realm</Set>
+            <Set name="config">${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/jettyrealm.properties</Set>
+      </New>
+    </Set>
+  </Get>
+</Configure>

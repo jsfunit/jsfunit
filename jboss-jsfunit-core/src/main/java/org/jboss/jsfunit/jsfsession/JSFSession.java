@@ -22,14 +22,11 @@
 
 package org.jboss.jsfunit.jsfsession;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
+import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.framework.WebConversationFactory;
-import org.w3c.dom.Element;
 
 /**
  * This class starts and manages the JSF Session on both the client and server side.
@@ -57,26 +54,7 @@ public class JSFSession
     */
    public JSFSession(String initialPage) throws IOException
    {
-      this(initialPage, BrowserVersion.getDefault());
-   }
-   
-   /**
-    * Creates a new session for testing the JSF application.   
-    * This constructor will also clear the HttpSession.
-    * 
-    * Note that the initialPage param should be something that maps into the FacesServlet.
-    * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
-    * like "/index.jsf" or "/index.faces".  If the FacesServlet is path-mapped then the
-    * initialPage param will be something like "/faces/index.jsp".
-    * 
-    * @param initialPage The page used to start a client session with JSF.  Example: "/index.jsf"
-    * @param browserVersion The version of the browser to be emulated.
-    *
-    * @throws IOException If there is an error calling the JSF app
-    */
-   public JSFSession(String initialPage, BrowserVersion browserVersion) throws IOException
-   {
-      this(WebConversationFactory.makeWebClient(browserVersion, null, 0), initialPage);
+      this(new WebClientSpec(initialPage));
    }
    
    /**
@@ -95,17 +73,17 @@ public class JSFSession
     *
     * @throws IOException If there is an error calling the JSF app
     */
-   public JSFSession(WebClient webClient, String initialPage) throws IOException
+   public JSFSession(WebClientSpec wcSpec) throws IOException
    {
-      this.webClient = webClient;
-      JSFUnitPageCreator pageCreator = new JSFUnitPageCreator(this.webClient);
-      this.jsfServerSession = new JSFServerSession();
-      pageCreator.addPageCreationListener(this.jsfServerSession);
-      this.jsfClientSession = new JSFClientSession(this.jsfServerSession);
-      pageCreator.addPageCreationListener(this.jsfClientSession);
+      Page initialPage = wcSpec.doInitialRequest();
       
-      String url = WebConversationFactory.getWARURL() + initialPage;
-      webClient.getPage(url);
+      this.webClient = wcSpec.getWebClient();
+      JSFUnitPageCreator pageCreator = new JSFUnitPageCreator(this.webClient);
+      
+      this.jsfServerSession = new JSFServerSession(initialPage);
+      pageCreator.addPageCreationListener(this.jsfServerSession);
+      this.jsfClientSession = new JSFClientSession(this.jsfServerSession, initialPage);
+      pageCreator.addPageCreationListener(this.jsfClientSession);
    }
    
    /**

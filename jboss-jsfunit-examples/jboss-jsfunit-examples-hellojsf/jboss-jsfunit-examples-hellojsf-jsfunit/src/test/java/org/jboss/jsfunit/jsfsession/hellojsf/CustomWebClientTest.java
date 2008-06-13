@@ -25,10 +25,11 @@ package org.jboss.jsfunit.jsfsession.hellojsf;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import java.io.IOException;
+import javax.servlet.http.Cookie;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.framework.WebConversationFactory;
+import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -51,11 +52,13 @@ public class CustomWebClientTest extends ServletTestCase
    
    public void testCustomizedWebConversation() throws IOException
    {
-      WebClient webClient = WebConversationFactory.makeWebClient(BrowserVersion.INTERNET_EXPLORER_6_0, null, 0);
-      assertEquals(BrowserVersion.INTERNET_EXPLORER_6_0, webClient.getBrowserVersion());
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces");
+      WebClient webClient = wcSpec.getWebClient();
+      assertNotNull(webClient);
+      assertEquals(BrowserVersion.FIREFOX_2, webClient.getBrowserVersion());
       
       webClient.addRequestHeader("mycoolheader", "mycoolvalue");
-      JSFSession jsfSession = new JSFSession(webClient, "/index.faces");
+      JSFSession jsfSession = new JSFSession(wcSpec);
       JSFServerSession server = jsfSession.getJSFServerSession();
       Object headerValue = server.getFacesContext()
                                  .getExternalContext()
@@ -64,50 +67,16 @@ public class CustomWebClientTest extends ServletTestCase
       assertEquals("mycoolvalue", ((String[])headerValue)[0]);
    }
    
-   /*
-   These two tests can't be fixed until HtmlUnit fixes 
-    https://sourceforge.net/tracker/?func=detail&atid=448266&aid=1965338&group_id=47038
-    
-   public void testNullWebConversation() throws IOException
-   {
-      try
-      {
-         JSFSession client = new JSFSession(null, "/index.faces");
-         fail("Expected IllegalArgumentException");
-      }
-      catch (IllegalArgumentException e)
-      {
-         // OK
-      }
-   }
-   
-   // WebConversation must come from the WebConversationFactory
-   public void testInvalidWebConversation() throws IOException
-   {
-      try
-      {
-         WebConversation webConv = new WebConversation();
-         JSFClientSession client = new JSFClientSession(webConv, "/index.faces");
-         fail("Expected IllegalArgumentException");
-      }
-      catch (IllegalArgumentException e)
-      {
-         // OK
-      }
-   }
-   */
-   
-   // getWebConversation breaks encapsulation.  Is that bad for this kind
-   // of Facade?
    public void testGetWebClient() throws IOException
    {
-      WebClient webClient = WebConversationFactory.makeWebClient(BrowserVersion.getDefault(), null, 0);
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces");
+      assertEquals("/index.faces", wcSpec.getInitialPage());
       
-      JSFSession jsfSession = new JSFSession(webClient, "/index.faces");
+      JSFSession jsfSession = new JSFSession(wcSpec);
       JSFClientSession client = jsfSession.getJSFClientSession();
       
       WebClient webClientFromJSFSession = jsfSession.getWebClient();
-      assertEquals(webClient, webClientFromJSFSession);
+      assertEquals(wcSpec.getWebClient(), webClientFromJSFSession);
       
       webClientFromJSFSession.addRequestHeader("mycoolheader", "mycoolvalue");
       client.click("submit_button");
@@ -119,5 +88,40 @@ public class CustomWebClientTest extends ServletTestCase
                                  .get("mycoolheader");
       assertEquals("mycoolvalue", ((String[])headerValue)[0]);
    }
+
+   public void testGetProxyHostAndPort()
+   {
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces", BrowserVersion.FIREFOX_2, "myhost", 333);
+      assertEquals("myhost", wcSpec.getProxyHost());
+      assertEquals(333, wcSpec.getProxyPort());
+   }
    
+   public void testCustomCookies() throws IOException
+   {
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces");
+      wcSpec.addCookie("mycookie", "mycookievalue");
+      
+      JSFSession jsfSession = new JSFSession(wcSpec);
+
+      assertEquals("mycookievalue", getCookieValue(jsfSession, "mycookie"));
+      
+      wcSpec.removeCookie("mycookie");
+      wcSpec.addCookie("secondcookie", "anothervalue");
+      
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      client.click("submit_button");
+      assertNull(getCookieValue(jsfSession, "mycookie"));
+      assertEquals("anothervalue", getCookieValue(jsfSession, "secondcookie"));
+   }
+   
+   private String getCookieValue(JSFSession jsfSession, String cookieName)
+   {
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      Object cookie = server.getFacesContext()
+                            .getExternalContext()
+                            .getRequestCookieMap()
+                            .get(cookieName);
+      if (cookie != null) return ((Cookie)cookie).getValue();
+      return null;
+   }
 }
