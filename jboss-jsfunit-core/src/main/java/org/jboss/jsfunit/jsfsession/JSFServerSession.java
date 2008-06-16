@@ -23,6 +23,8 @@
 package org.jboss.jsfunit.jsfsession;
 
 import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.WebWindowEvent;
+import com.gargoylesoftware.htmlunit.WebWindowListener;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -36,7 +38,7 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
  * 
  * @author Stan Silvert
  */
-public class JSFServerSession implements PageCreationListener
+public class JSFServerSession implements WebWindowListener
 {
    private ClientIDs clientIDs;
    
@@ -45,9 +47,9 @@ public class JSFServerSession implements PageCreationListener
     * 
     * @param client The JSFClientSession for the current web conversation.
     */
-   JSFServerSession(Page initialPage)
+   JSFServerSession()
    {
-      pageCreated(initialPage);
+      pageCreated();
    }
    
    public ClientIDs getClientIDs()
@@ -157,11 +159,24 @@ public class JSFServerSession implements PageCreationListener
       return getFacesContext().getMessages(clientID);
    }
 
-   // ------ Implementation of PageCreationListener
-   public void pageCreated(Page page)
+   //----------- Implementation of WebWindowListener
+   public void webWindowOpened(WebWindowEvent webWindowEvent)
+   {
+   }
+
+   public void webWindowContentChanged(WebWindowEvent webWindowEvent)
+   {
+      pageCreated();
+   }
+   
+   private void pageCreated()
    {
       // if no FacesContext exists, we can't get the Client IDs
       if (FacesContextBridge.getCurrentInstance() == null) return;
-      this.clientIDs = new ClientIDs();
+      this.clientIDs = new ClientIDs();  
+   }
+
+   public void webWindowClosed(WebWindowEvent webWindowEvent)
+   {
    }
 }

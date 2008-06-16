@@ -78,12 +78,11 @@ public class JSFSession
       Page initialPage = wcSpec.doInitialRequest();
       
       this.webClient = wcSpec.getWebClient();
-      JSFUnitPageCreator pageCreator = new JSFUnitPageCreator(this.webClient);
-      
-      this.jsfServerSession = new JSFServerSession(initialPage);
-      pageCreator.addPageCreationListener(this.jsfServerSession);
+  
+      this.jsfServerSession = new JSFServerSession();
+      this.webClient.addWebWindowListener(this.jsfServerSession);
       this.jsfClientSession = new JSFClientSession(this.jsfServerSession, initialPage);
-      pageCreator.addPageCreationListener(this.jsfClientSession);
+      this.webClient.addWebWindowListener(this.jsfClientSession);
    }
    
    /**

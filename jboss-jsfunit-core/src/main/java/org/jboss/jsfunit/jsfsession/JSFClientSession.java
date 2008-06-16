@@ -26,6 +26,8 @@ import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.ThreadManager;
+import com.gargoylesoftware.htmlunit.WebWindowEvent;
+import com.gargoylesoftware.htmlunit.WebWindowListener;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -39,7 +41,7 @@ import org.w3c.dom.Element;
  *
  * @author Stan Silvert
  */
-public class JSFClientSession implements PageCreationListener
+public class JSFClientSession implements WebWindowListener
 {
    
    private JSFServerSession jsfServerSession;
@@ -49,7 +51,7 @@ public class JSFClientSession implements PageCreationListener
    JSFClientSession(JSFServerSession jsfServerSession, Page initialPage)
    {
       this.jsfServerSession = jsfServerSession;
-      pageCreated(initialPage); 
+      this.contentPage = initialPage;
    }
    
    /**
@@ -207,9 +209,17 @@ public class JSFClientSession implements PageCreationListener
       return htmlPage.getElementById(clientID);
    }
    
-   // ------ Implementation of PageCreationListener
-   public void pageCreated(Page page)
+   // ------ Implementation of WebWindowListener
+   public void webWindowOpened(WebWindowEvent webWindowEvent)
    {
-      this.contentPage = page;
+   }
+
+   public void webWindowContentChanged(WebWindowEvent webWindowEvent)
+   {
+      this.contentPage = webWindowEvent.getNewPage();
+   }
+
+   public void webWindowClosed(WebWindowEvent webWindowEvent)
+   {
    }
 }
