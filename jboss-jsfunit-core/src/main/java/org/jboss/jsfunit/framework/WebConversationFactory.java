@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.framework;
 
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.meterware.httpunit.HttpUnitOptions;
 import com.meterware.httpunit.WebConversation;
@@ -126,6 +127,7 @@ public class WebConversationFactory
                                                 proxyHost, 
                                                 wcSpec.getProxyPort());
       if (proxyHost == null) wc = new WebClient(wcSpec.getBrowserVersion());
+      wc.setAjaxController(new NicelyResynchronizingAjaxController());
       wcSpec.setWebClient(wc);
       
       HttpSession session = getSessionFromThreadLocal();

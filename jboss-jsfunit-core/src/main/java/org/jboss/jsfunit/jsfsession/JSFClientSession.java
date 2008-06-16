@@ -116,7 +116,7 @@ public class JSFClientSession implements PageCreationListener
    {
       HtmlInput input = (HtmlInput)getElement(componentID);
       input.setValueAttribute(value);
-      waitForJavascript();
+      //waitForJavascript();
    }
    
    /**
@@ -135,7 +135,7 @@ public class JSFClientSession implements PageCreationListener
    {
       HtmlElement element = (HtmlElement)getElement(componentID);
       element.type(c);
-      waitForJavascript();
+      //waitForJavascript();
    }
    
    /**
@@ -153,7 +153,14 @@ public class JSFClientSession implements PageCreationListener
    {
       ClickableElement element = (ClickableElement)getElement(componentID);
       element.click();
-      waitForJavascript();
+      //waitForJavascript();
+   }
+   
+   public void dblClick(String componentID) throws IOException
+   {
+      ClickableElement element = (ClickableElement)getElement(componentID);
+      element.dblClick();
+      //waitForJavascript();
    }
    
    /**
@@ -171,9 +178,9 @@ public class JSFClientSession implements PageCreationListener
    {
       HtmlCheckBoxInput element = (HtmlCheckBoxInput)getElement(componentID);
       element.setChecked(isChecked);
-      waitForJavascript();
+      //waitForJavascript();
    }
-   
+   /*
    public void waitForJavascript()
    {
       ThreadManager threadManager = this.contentPage.getEnclosingWindow().getThreadManager();
@@ -181,7 +188,7 @@ public class JSFClientSession implements PageCreationListener
       {
          throw new JavascriptTimeoutException(threadManager.toString());
       }
-   }
+   } */
    
    /**
     * Get a DOM Element on the current page that has the given JSF componentID.
