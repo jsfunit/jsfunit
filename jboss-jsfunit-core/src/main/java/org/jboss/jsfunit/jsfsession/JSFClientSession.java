@@ -45,7 +45,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
 import org.w3c.dom.Element;
 
 /**

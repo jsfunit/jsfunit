@@ -55,7 +55,7 @@ public class CustomWebClientTest extends ServletTestCase
       WebClientSpec wcSpec = new WebClientSpec("/index.faces");
       WebClient webClient = wcSpec.getWebClient();
       assertNotNull(webClient);
-      assertEquals(BrowserVersion.FIREFOX_2, webClient.getBrowserVersion());
+      assertEquals(BrowserVersion.getDefault(), webClient.getBrowserVersion());
       
       webClient.addRequestHeader("mycoolheader", "mycoolvalue");
       JSFSession jsfSession = new JSFSession(wcSpec);

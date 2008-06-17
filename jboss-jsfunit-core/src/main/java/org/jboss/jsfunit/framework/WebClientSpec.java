@@ -39,7 +39,9 @@ import java.util.Map;
  */
 public class WebClientSpec
 {
-   private static BrowserVersion DEFAULT_BROWSER_VERSION = BrowserVersion.FIREFOX_2;
+   // IE6 is the HtmlUnit default
+   private static BrowserVersion DEFAULT_BROWSER_VERSION = BrowserVersion.getDefault();
+   
    private String initialPage;
    private WebClient webClient;
    private BrowserVersion browserVersion;
