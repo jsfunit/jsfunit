@@ -24,9 +24,13 @@ package org.jboss.jsfunit.jsfsession.hellojsf;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -217,6 +221,87 @@ public class FacadeAPITest extends ServletTestCase
       Iterator<FacesMessage> fooTextMessages = server.getFacesMessages("input_foo_text");
       FacesMessage message = fooTextMessages.next();
       assertTrue(message.getDetail().contains("input_foo_text"));
+   }
+   
+   public void testTextArea() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      assertEquals("Initial Value", server.getManagedBeanValue("#{foo2.text}"));
+      client.setValue("MyTextArea", "New Value");
+      client.click("submit_button");
+      assertEquals("New Value", server.getManagedBeanValue("#{foo2.text}"));
+   }
+   
+   public void testSelectOneRadio() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      assertEquals("Blue", server.getManagedBeanValue("#{foo3.text}"));
+      client.setSelected("ColorSelect", "Green", true);
+      client.click("submit_button");
+      assertEquals("Green", server.getManagedBeanValue("#{foo3.text}"));
+   }
+   
+   public void testSelectOneRadioWithClick() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      assertEquals("Blue", server.getManagedBeanValue("#{foo3.text}"));
+      client.setSelected("ColorSelect", "Green", true);
+      client.click("submit_button");
+      assertEquals("Green", server.getManagedBeanValue("#{foo3.text}"));
+   }
+   
+   public void testSelectManyListbox() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      server.getClientIDs().dumpAllIDs();
+      
+      client.setSelected("Weekdays", "Monday", true);
+      client.setSelected("Weekdays", "Wednesday", true);
+      client.setSelected("Weekdays", "Friday", true);
+      client.click("submit_button");
+      
+      HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("Weekdays");
+      Object[] selectedValues = listBox.getSelectedValues();
+      assertEquals(3, selectedValues.length);
+      List listOfValues = Arrays.asList(selectedValues);
+      assertTrue(listOfValues.contains("Monday"));
+      assertFalse(listOfValues.contains("Tuesday"));
+      assertTrue(listOfValues.contains("Wednesday"));
+      assertFalse(listOfValues.contains("Thursday"));
+      assertTrue(listOfValues.contains("Friday"));
+   }
+   
+   public void testSelectManyListboxWithClicks() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      server.getClientIDs().dumpAllIDs();
+      
+      client.click("selectMonday");
+      client.click("selectWednesday");
+      client.click("selectFriday");
+      client.click("submit_button");
+      
+      HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("Weekdays");
+      Object[] selectedValues = listBox.getSelectedValues();
+      assertEquals(3, selectedValues.length);
+      List listOfValues = Arrays.asList(selectedValues);
+      assertTrue(listOfValues.contains("Monday"));
+      assertFalse(listOfValues.contains("Tuesday"));
+      assertTrue(listOfValues.contains("Wednesday"));
+      assertFalse(listOfValues.contains("Thursday"));
+      assertTrue(listOfValues.contains("Friday"));
    }
    
 }

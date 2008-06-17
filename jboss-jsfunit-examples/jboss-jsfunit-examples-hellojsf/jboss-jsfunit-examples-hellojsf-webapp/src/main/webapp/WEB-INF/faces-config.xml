@@ -47,6 +47,28 @@
   </managed-bean>
   
   <managed-bean>
+    <description>Use another swing JButton as a simple javabean</description>
+    <managed-bean-name>foo2</managed-bean-name>
+    <managed-bean-class>javax.swing.JButton</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+       <property-name>text</property-name>
+       <value>Initial Value</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>Use third swing JButton as a simple javabean</description>
+    <managed-bean-name>foo3</managed-bean-name>
+    <managed-bean-class>javax.swing.JButton</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+       <property-name>text</property-name>
+       <value>Blue</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
     <description>Backing bean for checkbox</description>
     <managed-bean-name>checkbox</managed-bean-name>
     <managed-bean-class>org.jboss.jsfunit.example.hellojsf.CheckboxBean</managed-bean-class>

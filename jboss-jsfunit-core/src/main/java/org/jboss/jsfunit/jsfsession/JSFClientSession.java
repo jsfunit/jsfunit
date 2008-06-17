@@ -25,16 +25,25 @@ package org.jboss.jsfunit.jsfsession;
 import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.TextPage;
-import com.gargoylesoftware.htmlunit.ThreadManager;
 import com.gargoylesoftware.htmlunit.WebWindowEvent;
 import com.gargoylesoftware.htmlunit.WebWindowListener;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlIsIndex;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
+import com.gargoylesoftware.htmlunit.html.HtmlSelect;
+import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 import com.gargoylesoftware.htmlunit.xml.XmlPage;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectItem;
+import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 import org.w3c.dom.Element;
 
 /**
@@ -46,34 +55,11 @@ public class JSFClientSession implements WebWindowListener
    
    private JSFServerSession jsfServerSession;
    private Page contentPage;
-   private long javascriptTimeout = 10000;
    
    JSFClientSession(JSFServerSession jsfServerSession, Page initialPage)
    {
       this.jsfServerSession = jsfServerSession;
       this.contentPage = initialPage;
-   }
-   
-   /**
-    * Get the javascript timeout.  This determines how long the JSFClientSession
-    * will wait for javascript to complete after an AJAX call.
-    *
-    * @return The javascript timeout in milliseconds.
-    */
-   public long getJavascriptTimeout()
-   {
-      return this.javascriptTimeout;
-   }
-   
-   /**
-    * Set the javascript timeout.  This determines how long the JSFClientSession
-    * will wait for javascript to complete after an AJAX call.
-    *
-    * @param javascriptTimeout The timeout in milliseconds.
-    */
-   public void setJavascriptTimeout(long javascriptTimeout)
-   {
-      this.javascriptTimeout = javascriptTimeout;
    }
    
    /**
@@ -112,13 +98,30 @@ public class JSFClientSession implements WebWindowListener
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
     *                            specified component is not an HtmlInput.
-    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
     */
    public void setValue(String componentID, String value)
    {
-      HtmlInput input = (HtmlInput)getElement(componentID);
-      input.setValueAttribute(value);
-      //waitForJavascript();
+      Element input = getElement(componentID);
+      
+      if (input instanceof HtmlInput) 
+      {
+         ((HtmlInput)input).setValueAttribute(value);
+         return;
+      }
+      
+      if (input instanceof HtmlTextArea)
+      {
+         ((HtmlTextArea)input).setText(value);
+         return;
+      }
+      
+      if (input instanceof HtmlIsIndex)
+      {
+         ((HtmlIsIndex)input).setValue(value);
+         return;
+      }
+      
+      throw new IllegalArgumentException("This method can not be used on components of type " + input.getClass().getName());
    }
    
    /**
@@ -131,13 +134,11 @@ public class JSFClientSession implements WebWindowListener
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
     *                            specified component is not an HtmlElement.
-    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
     */
    public void type(String componentID, char c) throws IOException
    {
       HtmlElement element = (HtmlElement)getElement(componentID);
       element.type(c);
-      //waitForJavascript();
    }
    
    /**
@@ -149,48 +150,129 @@ public class JSFClientSession implements WebWindowListener
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
     *                            specified component is not a ClickableElement.
-    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
     */
    public void click(String componentID) throws IOException
    {
-      ClickableElement element = (ClickableElement)getElement(componentID);
-      element.click();
-      //waitForJavascript();
+      Element element = getElement(componentID);
+      
+      if ((element == null) && (parentIsHtmlSelect(componentID)))
+      {
+         clickSelect(componentID);
+         return;
+      }
+      
+      if (element instanceof ClickableElement)
+      {
+         ((ClickableElement)element).click();
+         return;
+      }
+      
+      throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
    }
    
-   public void dblClick(String componentID) throws IOException
+   private boolean parentIsHtmlSelect(String componentID)
    {
-      ClickableElement element = (ClickableElement)getElement(componentID);
-      element.dblClick();
-      //waitForJavascript();
+      Element parentElement = getElement(parentElementClientID(componentID));
+      return (parentElement instanceof HtmlSelect);
+   }
+   
+   private String parentElementClientID(String componentID)
+   {
+      FacesContext facesContext = jsfServerSession.getFacesContext();
+      UIComponent component = jsfServerSession.findComponent(componentID);
+      return component.getParent().getClientId(facesContext);
+   }
+   
+   private void clickSelect(String componentID) throws IOException
+   {
+      FacesContext facesContext = jsfServerSession.getFacesContext();
+      String parentID = parentElementClientID(componentID);
+      
+      Element element = getElement(parentID);
+      if (!(element instanceof HtmlSelect)) return;
+      HtmlSelect htmlSelect = (HtmlSelect)element;
+      
+      UIComponent uiComponent = jsfServerSession.findComponent(componentID);
+      if (!(uiComponent instanceof UISelectItem)) return;
+      
+      Object value = ((UISelectItem)uiComponent).getItemValue();
+      String option = value.toString();
+      
+      boolean isSelected = htmlSelect.getSelectedOptions().contains(option);
+      
+      setSelected(parentID, option, !isSelected);
    }
    
    /**
-    * Set the "checked" attribute for a JSF checkbox component.
+    * Double-click a JSF component.
     * 
     * @param componentID The JSF component id (or a suffix of the client ID) to be clicked.
     *
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
+    *                            specified component is not a ClickableElement.
+    */
+   public void dblClick(String componentID) throws IOException
+   {
+      ClickableElement element = (ClickableElement)getElement(componentID);
+      element.dblClick();
+   }
+   
+   /**
+    * Set the "checked" attribute for a JSF checkbox component.
+    * 
+    * @param componentID The JSF component id (or a suffix of the client ID) to be clicked.
+    * @param isSelected Pass <code>true</code> to select, <code>false</code> to unselect.
+    *
+    * @throws ComponentIDNotFoundException if no client ID matches the suffix
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage or the 
     *                            specified component is not an HtmlCheckBoxInput.
-    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
     */
    public void setChecked(String componentID, boolean isChecked) throws IOException
    {
-      HtmlCheckBoxInput element = (HtmlCheckBoxInput)getElement(componentID);
-      element.setChecked(isChecked);
-      //waitForJavascript();
+      Element element = getElement(componentID);
+      if (element instanceof HtmlCheckBoxInput) ((HtmlCheckBoxInput)element).setChecked(isChecked);
+      throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
    }
-   /*
-   public void waitForJavascript()
+   
+   public void setSelected(String componentID, String optionToSelect, boolean isSelected) throws IOException
    {
-      ThreadManager threadManager = this.contentPage.getEnclosingWindow().getThreadManager();
-      if (!threadManager.joinAll(this.javascriptTimeout))
+      Element element = getElement(componentID);
+      if (element instanceof HtmlSelect) 
       {
-         throw new JavascriptTimeoutException(threadManager.toString());
+         ((HtmlSelect)element).setSelectedAttribute(optionToSelect, isSelected);
+         return;
       }
-   } */
+      
+      HtmlRadioButtonInput radioElement = findRadioInput(componentID, optionToSelect);
+      if (radioElement instanceof HtmlRadioButtonInput)
+      {
+         radioElement.setChecked(isSelected);
+         return;
+      }
+      
+      throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
+   }
+   
+   private HtmlRadioButtonInput findRadioInput(String componentID, String optionToSelect)
+   {
+      String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
+      HtmlPage htmlPage = (HtmlPage)this.contentPage;
+      List<HtmlElement> elements = htmlPage.getHtmlElementsByName(clientID);
+      for (Iterator<HtmlElement> i = elements.iterator(); i.hasNext();)
+      {
+         HtmlElement htmlElement = i.next();
+         if ((htmlElement instanceof HtmlRadioButtonInput) && 
+             (htmlElement.getAttribute("value").equals(optionToSelect)))
+         {
+            return (HtmlRadioButtonInput)htmlElement;
+         }
+      }
+      
+      return null;
+   }
    
    /**
     * Get a DOM Element on the current page that has the given JSF componentID.
@@ -200,7 +282,6 @@ public class JSFClientSession implements WebWindowListener
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage. 
-    * @throws JavascriptTimeoutException if this action triggered javascript that did not complete
     */
    public Element getElement(String componentID)
    {
