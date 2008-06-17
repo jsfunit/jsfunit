@@ -32,6 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlIsIndex;
+import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSelect;
@@ -42,6 +43,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
+import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import org.w3c.dom.Element;
@@ -161,6 +163,12 @@ public class JSFClientSession implements WebWindowListener
          return;
       }
       
+      if ((element == null) && (parentIsSelectOneRadio(componentID)))
+      {
+         clickRadio(componentID);
+         return;
+      }
+      
       if (element instanceof ClickableElement)
       {
          ((ClickableElement)element).click();
@@ -170,6 +178,15 @@ public class JSFClientSession implements WebWindowListener
       throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
    }
    
+   // return true if parent JSF component is HtmlSelectOneRadio
+   private boolean parentIsSelectOneRadio(String componentID)
+   {
+      String parentClientID = parentElementClientID(componentID);
+      UIComponent parentComponent = jsfServerSession.findComponent(parentClientID);
+      return (parentComponent instanceof HtmlSelectOneRadio);
+   }
+   
+   // return true if parent html component is an HtmlSelect
    private boolean parentIsHtmlSelect(String componentID)
    {
       Element parentElement = getElement(parentElementClientID(componentID));
@@ -183,40 +200,36 @@ public class JSFClientSession implements WebWindowListener
       return component.getParent().getClientId(facesContext);
    }
    
+   private void clickRadio(String componentID) throws IOException
+   {
+      String itemValue = getSelectItemValue(componentID);
+      String parentID = parentElementClientID(componentID);
+      HtmlRadioButtonInput radioInput = findRadioInput(parentID, itemValue);
+      radioInput.click();
+   }
+   
+   private String getSelectItemValue(String componentID)
+   {
+      UIComponent uiComponent = jsfServerSession.findComponent(componentID);
+      if (!(uiComponent instanceof UISelectItem)) 
+      {
+         throw new IllegalArgumentException(componentID + " is not a UISelectItem.");
+      }
+      
+      return ((UISelectItem)uiComponent).getItemValue().toString();
+   }
+   
    private void clickSelect(String componentID) throws IOException
    {
-      FacesContext facesContext = jsfServerSession.getFacesContext();
       String parentID = parentElementClientID(componentID);
       
       Element element = getElement(parentID);
-      if (!(element instanceof HtmlSelect)) return;
       HtmlSelect htmlSelect = (HtmlSelect)element;
       
-      UIComponent uiComponent = jsfServerSession.findComponent(componentID);
-      if (!(uiComponent instanceof UISelectItem)) return;
+      String optionValue = getSelectItemValue(componentID);
       
-      Object value = ((UISelectItem)uiComponent).getItemValue();
-      String option = value.toString();
-      
-      boolean isSelected = htmlSelect.getSelectedOptions().contains(option);
-      
-      setSelected(parentID, option, !isSelected);
-   }
-   
-   /**
-    * Double-click a JSF component.
-    * 
-    * @param componentID The JSF component id (or a suffix of the client ID) to be clicked.
-    *
-    * @throws ComponentIDNotFoundException if no client ID matches the suffix
-    * @throws DuplicateClientIDException if more than one client ID matches the suffix
-    * @throws ClassCastException if the current page is not an HtmlPage or the 
-    *                            specified component is not a ClickableElement.
-    */
-   public void dblClick(String componentID) throws IOException
-   {
-      ClickableElement element = (ClickableElement)getElement(componentID);
-      element.dblClick();
+      HtmlOption htmlOption = htmlSelect.getOptionByValue(optionValue);
+      htmlOption.click();
    }
    
    /**
@@ -234,25 +247,6 @@ public class JSFClientSession implements WebWindowListener
    {
       Element element = getElement(componentID);
       if (element instanceof HtmlCheckBoxInput) ((HtmlCheckBoxInput)element).setChecked(isChecked);
-      throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
-   }
-   
-   public void setSelected(String componentID, String optionToSelect, boolean isSelected) throws IOException
-   {
-      Element element = getElement(componentID);
-      if (element instanceof HtmlSelect) 
-      {
-         ((HtmlSelect)element).setSelectedAttribute(optionToSelect, isSelected);
-         return;
-      }
-      
-      HtmlRadioButtonInput radioElement = findRadioInput(componentID, optionToSelect);
-      if (radioElement instanceof HtmlRadioButtonInput)
-      {
-         radioElement.setChecked(isSelected);
-         return;
-      }
-      
       throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
    }
    

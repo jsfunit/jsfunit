@@ -240,18 +240,7 @@ public class FacadeAPITest extends ServletTestCase
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       assertEquals("Blue", server.getManagedBeanValue("#{foo3.text}"));
-      client.setSelected("ColorSelect", "Green", true);
-      client.click("submit_button");
-      assertEquals("Green", server.getManagedBeanValue("#{foo3.text}"));
-   }
-   
-   public void testSelectOneRadioWithClick() throws IOException
-   {
-      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
-      JSFClientSession client = jsfSession.getJSFClientSession();
-      JSFServerSession server = jsfSession.getJSFServerSession();
-      assertEquals("Blue", server.getManagedBeanValue("#{foo3.text}"));
-      client.setSelected("ColorSelect", "Green", true);
+      client.click("selectGreen");
       client.click("submit_button");
       assertEquals("Green", server.getManagedBeanValue("#{foo3.text}"));
    }
@@ -261,32 +250,6 @@ public class FacadeAPITest extends ServletTestCase
       JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
-      
-      server.getClientIDs().dumpAllIDs();
-      
-      client.setSelected("Weekdays", "Monday", true);
-      client.setSelected("Weekdays", "Wednesday", true);
-      client.setSelected("Weekdays", "Friday", true);
-      client.click("submit_button");
-      
-      HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("Weekdays");
-      Object[] selectedValues = listBox.getSelectedValues();
-      assertEquals(3, selectedValues.length);
-      List listOfValues = Arrays.asList(selectedValues);
-      assertTrue(listOfValues.contains("Monday"));
-      assertFalse(listOfValues.contains("Tuesday"));
-      assertTrue(listOfValues.contains("Wednesday"));
-      assertFalse(listOfValues.contains("Thursday"));
-      assertTrue(listOfValues.contains("Friday"));
-   }
-   
-   public void testSelectManyListboxWithClicks() throws IOException
-   {
-      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
-      JSFClientSession client = jsfSession.getJSFClientSession();
-      JSFServerSession server = jsfSession.getJSFServerSession();
-      
-      server.getClientIDs().dumpAllIDs();
       
       client.click("selectMonday");
       client.click("selectWednesday");
