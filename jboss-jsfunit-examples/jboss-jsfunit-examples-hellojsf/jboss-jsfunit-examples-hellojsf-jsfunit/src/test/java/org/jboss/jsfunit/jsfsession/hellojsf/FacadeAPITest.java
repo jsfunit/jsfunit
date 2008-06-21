@@ -24,7 +24,6 @@ package org.jboss.jsfunit.jsfsession.hellojsf;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +36,7 @@ import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.framework.Environment;
 import org.jboss.jsfunit.framework.WebClientSpec;
+import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -266,5 +266,49 @@ public class FacadeAPITest extends ServletTestCase
       assertFalse(listOfValues.contains("Thursday"));
       assertTrue(listOfValues.contains("Friday"));
    }
+   /*
+   public void testSelectManyListboxWithItemList() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      server.getClientIDs().dumpAllIDs();
+      UISelectItems selectItems = (UISelectItems)server.findComponent("WeekdayItems");
+      System.out.println("******************");
+      System.out.println("has children? " + selectItems.getFacetsAndChildren().hasNext());
+      System.out.println("selectItems.getValue classname=" + selectItems.getValue().getClass().getName());
+      System.out.println("******************");
+      
+      client.click("WeekdayItems:0");
+      client.click("WeekdayItems:2");
+      client.click("WeekdayItems:3");
+      client.click("submit_button");
+      
+      HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("WeekdaysUsingItemList");
+      Object[] selectedValues = listBox.getSelectedValues();
+      assertEquals(3, selectedValues.length);
+      List listOfValues = Arrays.asList(selectedValues);
+      assertTrue(listOfValues.contains("Monday"));
+      assertFalse(listOfValues.contains("Tuesday"));
+      assertTrue(listOfValues.contains("Wednesday"));
+      assertTrue(listOfValues.contains("Thursday"));
+      assertFalse(listOfValues.contains("Friday"));
+   } */
    
+   public void testGetElementThrowsDuplicateIDException() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/index.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+
+      try
+      {
+         client.getElement("Test");
+         fail("Expected DuplicateClientIDException");
+      } 
+      catch (DuplicateClientIDException e)
+      {
+         // OK
+      }
+   }
 }

@@ -81,5 +81,35 @@
     <managed-bean-class>org.jboss.jsfunit.example.hellojsf.Marathons</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
+  
+  <managed-bean>
+    <description>Backing bean for weekdays</description>
+    <managed-bean-name>weekdaylist</managed-bean-name>
+    <managed-bean-class>java.util.HashMap</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <map-entries>
+       <key-class>java.lang.String</key-class>
+       <map-entry>
+          <key>Monday</key>
+          <value>Monday</value>
+       </map-entry>
+       <map-entry>
+          <key>Tuesday</key>
+          <value>Tuesday</value>
+       </map-entry>
+       <map-entry>
+          <key>Wednesday</key>
+          <value>Wednesday</value>
+       </map-entry>
+       <map-entry>
+          <key>Thursday</key>
+          <value>Thursday</value>
+       </map-entry>
+       <map-entry>
+          <key>Friday</key>
+          <value>Friday</value>
+       </map-entry>
+    </map-entries>    
+  </managed-bean>
 
 </faces-config>

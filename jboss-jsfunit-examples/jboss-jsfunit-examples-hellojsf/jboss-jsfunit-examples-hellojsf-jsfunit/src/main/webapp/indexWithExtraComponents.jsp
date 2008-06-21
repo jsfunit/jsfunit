@@ -58,6 +58,10 @@
          <f:selectItem id="selectFriday" itemValue="Friday"/>
          <f:selectItem id="selectSaturday" itemValue="Saturday"/>
       </h:selectManyListbox>
+      <br/>
+      <h:selectManyListbox id="WeekdaysUsingItemList">
+         <f:selectItems id="WeekdayItems" value="#{weekdaylist}"/>
+      </h:selectManyListbox>
       <br/><br/>
       <h:commandButton value="Hello" action="/index.jsp" id="submit_button"/>
       <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>

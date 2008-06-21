@@ -28,7 +28,7 @@ import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.WebWindowEvent;
 import com.gargoylesoftware.htmlunit.WebWindowListener;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
-import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
+import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlIsIndex;
@@ -87,6 +87,37 @@ public class JSFClientSession implements WebWindowListener
       if (contentPage instanceof JavaScriptPage) return ((JavaScriptPage)contentPage).getContent();
       
       throw new IllegalStateException("This page can not be converted to text.  Page type is " + contentPage.getClass().getName());
+   }
+   
+   /**
+    * Get a DOM Element on the current page that has the given JSF componentID.
+    *
+    * @param componentID The JSF component id (or a suffix of the client ID)
+    *
+    * @return The Element, or <code>null</code> if not found.
+    *
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage. 
+    */
+   public Element getElement(String componentID)
+   {
+      DomNode domPage = (DomNode)this.contentPage;
+      String xpathQuery = buildXPathQuery(componentID);
+      List elements = domPage.getByXPath(xpathQuery);
+      if (elements.size() == 0) return null;
+      if (elements.size() == 1) return (Element)elements.get(0);
+      throw new DuplicateClientIDException(elements, componentID);
+   }
+   
+   private String buildXPathQuery(String componentID)
+   {
+      return "//*[" + endsWith("ID", componentID) + " or " + endsWith("id", componentID) + "]";
+   }
+
+   // XPath 1.0 doesn't have the ends-with function, so I have to make it myself
+   private String endsWith(String attribute, String string)
+   {
+      return "('" + string + "' = substring(@" + attribute + ",string-length(@" + attribute + ") - string-length('" + string + "') + 1))";
    }
    
    /**
@@ -231,24 +262,6 @@ public class JSFClientSession implements WebWindowListener
       htmlOption.click();
    }
    
-   /**
-    * Set the "checked" attribute for a JSF checkbox component.
-    * 
-    * @param componentID The JSF component id (or a suffix of the client ID) to be clicked.
-    * @param isSelected Pass <code>true</code> to select, <code>false</code> to unselect.
-    *
-    * @throws ComponentIDNotFoundException if no client ID matches the suffix
-    * @throws DuplicateClientIDException if more than one client ID matches the suffix
-    * @throws ClassCastException if the current page is not an HtmlPage or the 
-    *                            specified component is not an HtmlCheckBoxInput.
-    */
-   public void setChecked(String componentID, boolean isChecked) throws IOException
-   {
-      Element element = getElement(componentID);
-      if (element instanceof HtmlCheckBoxInput) ((HtmlCheckBoxInput)element).setChecked(isChecked);
-      throw new IllegalArgumentException("This method can not be used on components of type " + element.getClass().getName());
-   }
-   
    private HtmlRadioButtonInput findRadioInput(String componentID, String optionToSelect)
    {
       String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
@@ -265,22 +278,6 @@ public class JSFClientSession implements WebWindowListener
       }
       
       return null;
-   }
-   
-   /**
-    * Get a DOM Element on the current page that has the given JSF componentID.
-    *
-    * @param componentID The JSF component id (or a suffix of the client ID)
-    *
-    * @throws ComponentIDNotFoundException if no client ID matches the suffix
-    * @throws DuplicateClientIDException if more than one client ID matches the suffix
-    * @throws ClassCastException if the current page is not an HtmlPage. 
-    */
-   public Element getElement(String componentID)
-   {
-      String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
-      HtmlPage htmlPage = (HtmlPage)this.contentPage;
-      return htmlPage.getElementById(clientID);
    }
    
    // ------ Implementation of WebWindowListener

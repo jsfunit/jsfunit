@@ -91,11 +91,11 @@ public class JSF1_2Test extends ServletTestCase
    
    public void testSetCheckbox() throws IOException, SAXException
    {
-      client.setChecked("funcheck", false);
+      client.click("funcheck");
       client.click("submit_button");
       assertFalse((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
       
-      client.setChecked("funcheck", true);
+      client.click("funcheck");
       client.click("submit_button");
       assertTrue((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
    }
