@@ -38,6 +38,15 @@
       <organizationUrl>http://www.thoughtworks.com/</organizationUrl>
       <timezone>-6</timezone>
     </developer>    
+    <developer>
+      <name>Brian Gregory</name>
+      <id>bgregory</id>
+      <email>bgregory@g-webdesign.com</email>
+      <url>http://jsf.jboss.org</url>
+      <organization>gWebDesign LLC</organization>
+      <organizationUrl>http://www.g-webdesign.com/</organizationUrl>
+      <timezone>-5</timezone>
+    </developer>
   </developers>
 
   <scm>
