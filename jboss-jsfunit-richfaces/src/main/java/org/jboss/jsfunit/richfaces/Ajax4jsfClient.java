@@ -58,7 +58,7 @@ public class Ajax4jsfClient
    
    public Ajax4jsfClient(JSFClientSession client)
    {
-      if (client == null) throw new NullPointerException("client can not be null");
+      //if (client == null) throw new NullPointerException("client can not be null");
       this.client = client;
       this.requestFactory = new WebRequestFactory(client);
    }

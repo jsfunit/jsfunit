@@ -32,19 +32,19 @@
 				<h:outputText value="Select Locale" />
 				<h:selectOneRadio id="Locale" value="en/US" valueChangeListener="#{calendarBean.selectLocale}">
 					<a4j:support id="selectLocale" event="onclick" reRender="calendar"/>
-					<f:selectItem itemLabel="US" itemValue="en/US"/>
-					<f:selectItem itemLabel="DE" itemValue="de/DE"/>
-					<f:selectItem itemLabel="FR" itemValue="fr/FR"/>
-					<f:selectItem itemLabel="RU" itemValue="ru/RU"/>
+					<f:selectItem id="english" itemLabel="US" itemValue="en/US"/>
+					<f:selectItem id="german" itemLabel="DE" itemValue="de/DE"/>
+					<f:selectItem id="french" itemLabel="FR" itemValue="fr/FR"/>
+					<f:selectItem id="russian" itemLabel="RU" itemValue="ru/RU"/>
 				</h:selectOneRadio>	
 
 				<h:outputText value="Select Date Pattern:"/>
 				<h:selectOneMenu id="pattern" value="#{calendarBean.pattern}">
 					<a4j:support id="setPattern" event="onchange" reRender="calendar"/>
-					<f:selectItem itemLabel="d/M/yy" itemValue="d/M/yy"/>
-					<f:selectItem itemLabel="dd/M/yy" itemValue="dd/M/yy"/>
-					<f:selectItem itemLabel="d/MMM/y" itemValue="d/MMM/y"/>
-					<f:selectItem itemLabel="MMM d, yyyy" itemValue="MMM d, yyyy"/>												
+					<f:selectItem id="pattern1" itemLabel="d/M/yy" itemValue="d/M/yy"/>
+					<f:selectItem id="pattern2" itemLabel="dd/M/yy" itemValue="dd/M/yy"/>
+					<f:selectItem id="pattern3" itemLabel="d/MMM/y" itemValue="d/MMM/y"/>
+					<f:selectItem id="pattern4" itemLabel="MMM d, yyyy" itemValue="MMM d, yyyy"/>												
 				</h:selectOneMenu>
 				
 			</h:panelGrid>	

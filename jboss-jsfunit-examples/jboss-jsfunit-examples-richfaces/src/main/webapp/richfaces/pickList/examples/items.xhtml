@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+	<style>
+		.top{
+			vertical-align:top;
+		}
+		.pbody{
+			padding:0px;
+			height:120px; 
+			width:150px;
+			overflow:auto;
+		}
+	</style>
+	<h:form id="form1">
+	<h:panelGrid id="panelGrid" columns="2" columnClasses="top, top">
+		
+		<rich:pickList id="pickList" value="#{pickListBean.result}"> 
+			<f:selectItems id="capitalsOptions" value="#{capitalsBean.capitalsOptions}"/>
+			<a4j:support id="onlistchanged" event="onlistchanged" reRender="result"/>
+		</rich:pickList>
+		
+		<rich:panel id="result" bodyClass="pbody">
+			<f:facet id="OptionsChosenFacet" name="header">
+				<h:outputText id="OptionsChosenText" value="#{pickListBean.items} Options Choosen"></h:outputText>
+			</f:facet>
+			<rich:dataList id="ResultList" value="#{pickListBean.result}" var="pickList" rendered="#{pickListBean.items>0}"> 
+					<h:outputText id="Result" value="#{pickList}"/>
+			</rich:dataList> 
+		</rich:panel>
+	</h:panelGrid>
+	</h:form>
+</ui:composition>

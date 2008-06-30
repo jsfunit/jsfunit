@@ -39,16 +39,16 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
  *
  * @author Stan Silvert
  */
-public class HtmlUnitAjaxSupportTest extends ServletTestCase
+public class AjaxSupportTest extends ServletTestCase
 {
    public static Test suite()
    {
-      return new TestSuite( HtmlUnitAjaxSupportTest.class );
+      return new TestSuite( AjaxSupportTest.class );
    }
 
    public void testAjaxSupportWithOnkeyup() throws IOException
    {
-  /*    JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
+      JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
@@ -67,12 +67,12 @@ public class HtmlUnitAjaxSupportTest extends ServletTestCase
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertEquals("Hello World", userBeanValue);
       String valueOfSpan = ((DomNode)client.getElement("outtext")).asText();
-      assertEquals("Hello World", valueOfSpan);  */
+      assertEquals("Hello World", valueOfSpan);  
    }
    
    public void testAjaxSupportWithOnchange() throws IOException
    {
-      /*JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
+      JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
@@ -81,6 +81,6 @@ public class HtmlUnitAjaxSupportTest extends ServletTestCase
       assertEquals("Hello World", userBeanValue);
       
       String valueOfSpan = ((DomNode)client.getElement("outtext")).asText();
-      assertEquals("Hello World", valueOfSpan); */
+      assertEquals("Hello World", valueOfSpan); 
    } 
 }

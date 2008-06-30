@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+
+				<p>
+					Pick List component is a simple selection component where a set of items can be 
+					selected from a list that contains all the available items and moved to a list that 
+					contains the selected items.
+				</p>
+				
+				<p>
+					The next example shows the simplest declarative definition on the page.
+				</p>
+
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">Example</legend>
+					<div  class="sample-container" >
+						<ui:include src="/richfaces/pickList/examples/simple.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/pickList/examples/simple.xhtml"/>
+						</ui:include>
+					</div>
+				</fieldset>	
+				<p>
+					Pick List is a simplified variant of ListShuttle component. It does not uses custom model. 
+					Instead it uses f:selectItem(s) tags for elements definition, so converters creation
+					isn't required for the component.   
+				</p>
+				
+				<p>
+					Value of the component is stored as a list, which contains select items values.
+				</p>
+				
+				<p>
+					The following example shows a simple case where the values are applied and listed via Ajax.
+					The select items in this example contain USA state names as a label for an item and the
+					corresponding state capitals as a value for an item.     
+				</p>
+				<p> 
+					Just move some elements with state names to the result list and corresponding
+					state capitals will appear in the result panel.
+				</p>  
+				<fieldset class="demo_fieldset">
+				<legend class="demo_legend">Example</legend>
+					<div  class="sample-container" >
+						<ui:include src="/richfaces/pickList/examples/items.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/pickList/examples/items.xhtml"/>
+						</ui:include>
+					</div>
+				</fieldset>
+		</ui:define>
+
+	</ui:composition>
+</html>

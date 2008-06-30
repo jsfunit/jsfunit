@@ -190,13 +190,22 @@
         <configuration>
           <webResources>
             <resource>
-              <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/richfaces</directory>
+              <directory>${basedir}/src/test/java/org/jboss/jsfunit/test/richfaces</directory>
               <targetPath>testsrc</targetPath>
               <includes>
                 <include>*.java</include>
               </includes>
             </resource>
           </webResources>
+          <overlays>
+             <overlay>
+               <groupId>org.richfaces.samples</groupId>
+               <artifactId>richfaces-demo</artifactId>
+               <excludes>
+                 <exclude>WEB-INF/lib/nekohtml-0.9.5.jar</exclude>
+               </excludes>
+             </overlay>
+           </overlays>
         </configuration>
       </plugin>
       

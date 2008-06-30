@@ -287,7 +287,18 @@ public class JSFClientSession implements WebWindowListener
 
    public void webWindowContentChanged(WebWindowEvent webWindowEvent)
    {
-      this.contentPage = webWindowEvent.getNewPage();
+      Page page = webWindowEvent.getNewPage();
+      if(!(page instanceof HtmlPage)) 
+      {
+         this.contentPage = page;
+         return;
+      }
+      
+      HtmlPage ht = (HtmlPage)page;
+      if( ht.getDocumentElement().hasChildNodes() )
+      {
+         this.contentPage = page;
+      }
    }
 
    public void webWindowClosed(WebWindowEvent webWindowEvent)

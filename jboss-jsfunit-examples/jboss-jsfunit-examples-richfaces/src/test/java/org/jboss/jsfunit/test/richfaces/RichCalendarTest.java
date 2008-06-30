@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
+package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,9 +28,10 @@ import java.util.Locale;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
 import org.xml.sax.SAXException;
 
 /**
@@ -42,18 +43,16 @@ public class RichCalendarTest extends ServletTestCase
 {
    public void testCalendar() throws IOException, SAXException
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/calendar.jsf");
+      JSFSession jsfSession = new JSFSession("/richfaces/calendar.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      client.setParameter("form1:pattern", "MMM d, yyyy");
-      ajaxClient.ajaxSubmit("form1:setPattern");
-
+      client.click("pattern4"); // "MMM d, yyyy"
       ajaxClient.setCalendarValue("myCalendar", "Oct 31, 2007");
       
-      client.setParameter("form1:Locale", "de/DE");
-      client.setParameter("form1:pattern", "MMM d, yyyy");
-      ajaxClient.ajaxSubmit("form1:setPattern");
+      client.click("german");
+      client.click("pattern4"); // "MMM d, yyyy"
       
       Date date = (Date)server.getManagedBeanValue("#{calendarBean.selectedDate}");
       String pattern = (String)server.getManagedBeanValue("#{calendarBean.pattern}");

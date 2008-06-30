@@ -53,10 +53,17 @@ import org.xml.sax.SAXException;
  */
 public class RichFacesClient extends Ajax4jsfClient
 {
+   private org.jboss.jsfunit.jsfsession.JSFClientSession jsfClient;
 
-   public RichFacesClient(JSFClientSession client)
+   public RichFacesClient(org.jboss.jsfunit.facade.JSFClientSession client)
    {
       super(client);
+   }
+   
+   public RichFacesClient(org.jboss.jsfunit.jsfsession.JSFClientSession jsfClient)
+   {
+      super(null);
+      this.jsfClient = jsfClient;
    }
    
    /**
@@ -165,17 +172,7 @@ public class RichFacesClient extends Ajax4jsfClient
    public void setCalendarValue(String componentID, String value)
          throws SAXException, IOException
    {
-      String clientID = client.getClientIDs().findClientID(componentID);
-      clientID += "InputDate";
-      Document doc = client.getUpdatedDOM();
-      Element input = DOMUtil.findElementWithID(clientID, doc);
-      if (!input.getAttribute("readonly").equals("")) 
-      {
-         input.removeAttribute("readonly");
-         refreshPageFromDOM();
-      }
-      
-      setSuffixxedValue(componentID, value, "InputDate");
+      jsfClient.setValue(componentID + "InputDate", value);
    }
    
    private void refreshPageFromDOM() throws SAXException, IOException
