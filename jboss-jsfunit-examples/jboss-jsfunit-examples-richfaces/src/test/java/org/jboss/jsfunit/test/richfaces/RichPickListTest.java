@@ -25,10 +25,13 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HTMLParserListener;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -50,15 +53,28 @@ public class RichPickListTest extends ServletTestCase
    }
 
    public void testCopyAll() throws IOException
-   { /*
-      JSFSession jsfSession = new JSFSession("/richfaces/pickList.jsf");
+   { 
+     /* JSFSession jsfSession = new JSFSession("/richfaces/pickList.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
+      client.getPageAsText();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
       //List list = (List)server.getManagedBeanValue("#{pickListBean.result}");
       //assertEquals(0, list.size());
       
       HtmlPage htmlPage = (HtmlPage)client.getContentPage();
+      HtmlForm form = (HtmlForm)htmlPage.getElementById("form1");
+      for (Iterator i = form.getAllHtmlChildElements().iterator(); i.hasNext();)
+      {
+         Object element = i.next();
+         if (element instanceof ClickableElement)
+         {
+            System.out.println("id=" + ((HtmlElement)element).getAttribute("id") + " | className=" + element.getClass().getName());
+         }
+      }
+      ClickableElement firstState = (ClickableElement)htmlPage.getElementById("form1:pickList:source::1");
+      firstState.dblClick();
+      assertTrue(client.getPageAsText().contains("1 Options Choosen"));
       ClickableElement copyAllButton = (ClickableElement)htmlPage.getElementById("form1:pickListcopyAlllink");
       htmlPage.setFocusedElement(copyAllButton);
       copyAllButton.click();

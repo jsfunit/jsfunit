@@ -222,7 +222,7 @@
 	<url>https://maven-repository.dev.java.net/nonav/repository</url>
 	<layout>legacy</layout>
     </repository>    
-    <!--
+    
     <repository>
        <snapshots>
           <enabled>true</enabled>
@@ -233,7 +233,7 @@
        <url>http://nekohtml.sourceforge.net/m2-repo-snapshots</url>
        <layout>default</layout>
      </repository>
-     -->
+     
    </repositories>
 
   <modules>

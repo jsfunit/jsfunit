@@ -9,9 +9,9 @@
 	<table  width="400">
 		<tbody>
 		<tr>
-			<td onmouseover="updateName('Alex')"  onmouseout="updateName('')" > Alex</td>
-			<td onmouseover="updateName('Jonh')"  onmouseout="updateName('')" > Jonh</td>
-			<td onmouseover="updateName('Roger')"  onmouseout="updateName('')" > Roger</td>
+			<td id="Alex" onmouseover="updateName('Alex')"  onmouseout="updateName('')" > Alex</td>
+			<td id="Jonh" onmouseover="updateName('Jonh')"  onmouseout="updateName('')" > Jonh</td>
+			<td id="Roger" onmouseover="updateName('Roger')"  onmouseout="updateName('')" > Roger</td>
 		</tr>
 		<tr>
 			<td colspan="3"><h:outputText id="showname" value="Name: #{userBean.name}" /></td>
