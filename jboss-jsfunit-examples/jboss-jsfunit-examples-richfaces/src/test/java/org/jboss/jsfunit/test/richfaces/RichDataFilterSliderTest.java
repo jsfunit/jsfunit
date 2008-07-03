@@ -22,14 +22,12 @@
 package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
-import javax.xml.transform.TransformerException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
