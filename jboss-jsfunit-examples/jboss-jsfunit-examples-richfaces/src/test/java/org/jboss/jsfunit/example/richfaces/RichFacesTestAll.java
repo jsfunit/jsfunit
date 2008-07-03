@@ -48,7 +48,6 @@ public class RichFacesTestAll extends ServletTestCase
       suite.addTestSuite(AjaxIncludeTest.class);
       suite.addTestSuite(AjaxOutputPanelTest.class);
       suite.addTestSuite(AjaxRepeaterTest.class);
-      suite.addTestSuite(RichDataFilterSliderTest.class);
       suite.addTestSuite(RichDataTableScrollerTest.class);
       suite.addTestSuite(RichDragAndDropTest.class);
       suite.addTestSuite(RichDropDownMenuTest.class);

@@ -96,14 +96,13 @@ public class RichFacesClient extends Ajax4jsfClient
     * @param componentID The JSF component ID or a suffix of the client ID.
     * @param value The value to set before the form is submitted.
     *
-    * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void setDataFilterSlider(String componentID, String value) throws SAXException
+   public void setDataFilterSlider(String componentID, String value)
    {
-      setSuffixxedValue(componentID, value, "slider_val");
+      jsfClient.setValue(componentID + "slider_val", value);
    }
    
    /**

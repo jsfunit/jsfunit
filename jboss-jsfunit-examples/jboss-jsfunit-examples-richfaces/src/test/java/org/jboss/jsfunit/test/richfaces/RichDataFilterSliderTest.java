@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,19 +19,18 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
+package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
 import javax.xml.transform.TransformerException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.DOMUtil;
-import org.jboss.jsfunit.facade.JSFClientSession;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -40,25 +39,23 @@ import org.xml.sax.SAXException;
  */
 public class RichDataFilterSliderTest extends ServletTestCase
 {
-   public void testDataFilterSlider() throws IOException, SAXException, TransformerException
+   public void testDataFilterSlider() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/dataFilterSlider.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
+      JSFSession jsfSession = new JSFSession("/richfaces/dataFilterSlider.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      RichFacesClient richClient = new RichFacesClient(client);
       
-      ajaxClient.setDataFilterSlider("slider_1", "60000");  
-      ajaxClient.ajaxSubmit("form1");
+      richClient.setDataFilterSlider("slider_1", "60000");  
+
       // The data table is built with random data, so there's nothing to 
       // reliably assert about it except the make of the car.
-      
-      Document doc = DOMUtil.convertToDomLevel2(client.getUpdatedDOM());
-      Element element = DOMUtil.findElementWithID("form1:carList:0:make", doc);
+      Element element = client.getElement("form1:carList:0:make");
       assertEquals("Ford", element.getTextContent());
       
       // Click the link to change make to Chevy.  I happen to know it is the
       // first in the list.
-      ajaxClient.ajaxSubmit("form1:carIndex:0:switchMake");
-      doc = DOMUtil.convertToDomLevel2(client.getUpdatedDOM());
-      element = DOMUtil.findElementWithID("form1:carList:0:make", doc);
+      client.click("form1:carIndex:0:switchMake");
+      element = client.getElement("form1:carList:0:make");
       assertEquals("Chevrolet", element.getTextContent());
    }
    
