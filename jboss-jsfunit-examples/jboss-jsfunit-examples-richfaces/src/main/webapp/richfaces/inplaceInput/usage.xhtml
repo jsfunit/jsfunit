@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			<style>
+				.top{
+					vertical-align:top;
+				}
+				.equals {
+					width: 45%; 
+				}
+			</style>  
+			<p>
+				<b>InplaceInput </b>is a simple input component which displays the current value as 
+				<i>outputText </i>and switches to <i>inputText </i>based representation after a defined event
+				to allow editing this value.  
+			</p>
+ 
+			<p>
+				You could use two simplest examples below. For the first demo, just click on a label 
+				to edit the value and 
+				click somewhere outside the component to store this value(Or just press ENTER button).       
+			</p>
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">The simplest InplaceInput</legend>
+					<div class="sample-container" jsfc="h:panelGroup" layout="block">
+						<br/>
+						<ui:include src="/richfaces/inplaceInput/examples/simpleDefault.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/inplaceInput/examples/simpleDefault.xhtml"/>
+						</ui:include>
+					</div>
+				</fieldset>
+			<p> 
+				The second example has controls for components enabled with <b>showControls </b>attribute. 
+				These controls should be used in order to apply a value or cancel editing.
+			</p>
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">InplaceInput with controls</legend>
+					<div class="sample-container" jsfc="h:panelGroup" layout="block">
+						<br/>
+						<ui:include src="/richfaces/inplaceInput/examples/simpleWithControls.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/inplaceInput/examples/simpleWithControls.xhtml"/>
+						</ui:include>			
+					</div>
+				</fieldset>
+			<p>
+			 	Controls used by inplace could be redefined using <b>controls</b> named facet: 
+			</p>
+				<fieldset class="demo_fieldset">
+				<legend class="demo_legend">InplaceInput with customized controls</legend>
+					<div class="sample-container">
+						<br/>
+						<ui:include src="/richfaces/inplaceInput/examples/controlsCustomization.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/inplaceInput/examples/controlsCustomization.xhtml"/>
+						</ui:include>
+					</div>
+				</fieldset>
+			<p>
+				Inplace Input could be rendered with <i>span </i>or <i>div </i>elements to display its value.
+				To change default span output, use <b>layout </b>attribute with <i>block </i>value. 
+			</p>			
+			<p>
+				The next example shows you Inplace Input component usage in dataTable. Custom event is
+				fired on saving a value used in this example to perform Ajax validation for the value entered.
+			</p> 
+			<p>
+				<b>Note:</b> Inplaces in this example also customized with <b>editEvent </b>
+				attribute. 
+			</p> 
+			<p>
+			<b>Perform double click at any price in order to change it.</b>
+			</p>
+
+			<fieldset class="demo_fieldset">
+			<legend class="demo_legend">InplaceInput as table cell editor</legend>
+				<div class="sample-container">
+					<br/>
+					<ui:include src="/richfaces/inplaceInput/examples/blockInplace.xhtml"/>
+					<ui:include src="/templates/include/sourceview.xhtml">
+						<ui:param name="sourcepath" value="/richfaces/inplaceInput/examples/blockInplace.xhtml"/>
+					</ui:include>			
+				</div>
+			</fieldset>
+		</ui:define>
+
+	</ui:composition>
+</html>

@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+			<rich:inplaceInput defaultLabel="Click here to edit" showControls="true"
+				controlsHorizontalPosition="left" controlsVerticalPosition="bottom"
+				id="inplaceInput">
+		
+				<f:facet name="controls">
+					<button id="customControlsSaveButton" onclick="#{rich:component('inplaceInput')}.save();"
+						type="button">Save</button>
+					<button id="customControlsCancelButton" onclick="#{rich:component('inplaceInput')}.cancel();"
+						type="button">Cancel</button>
+				</f:facet>
+				
+			</rich:inplaceInput>
+			<rich:spacer height="25px" width="100%"/>
+</ui:composition>

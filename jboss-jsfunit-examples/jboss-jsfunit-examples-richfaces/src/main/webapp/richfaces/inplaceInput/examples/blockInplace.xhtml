@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<style>
+		.inplace{
+			border: none;
+		}
+		.hover {
+			color: #{a4jSkin.generalTextColor};
+			background-color :#{a4jSkin.tipBorderColor};
+		}
+		.columns {
+			width: 33%; 
+		}		
+	</style>
+	<h:form> 
+		<h:panelGrid columns="2" columnClasses=",top">
+			<rich:dataTable value="#{dataTableScrollerBean.allCars}" var="car"
+				width="350px" columnClasses=",columns,columns,columns" rows="15"
+				id="table" rowKeyVar="row">
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="Row"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{row+1}"></h:outputText>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="Make" />
+					</f:facet>
+					<h:outputText value="#{car.make}" />
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="Model"/> 
+					</f:facet>
+					<h:outputText value="#{car.model}" />
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="Price" />
+					</f:facet>
+					<rich:inplaceInput layout="block" value="#{car.price}"
+						converterMessage="Price value should be integer. Price at row #{row+1} can't be changed."
+						id="inplace" required="true"
+						requiredMessage="Price at row #{row+1} wasn't filled. Value can't be changed."
+						changedHoverClass="hover" viewHoverClass="hover"
+						viewClass="inplace" changedClass="inplace"
+						selectOnEdit="true" editEvent="ondblclick">
+						
+						<a4j:support event="onviewactivated" reRender="table, messages"
+							bypassUpdates="true" ajaxSingle="true" />
+							
+					</rich:inplaceInput>
+				</rich:column>
+				<f:facet name="footer">
+					<rich:datascroller ajaxSingle="false"/>
+				</f:facet>
+			</rich:dataTable>
+			<rich:panel id="messages">
+				<f:facet name="header">
+					<h:outputText value="Data Validation Results:"></h:outputText>
+				</f:facet>
+				<rich:messages style="color:red"/>
+				<h:outputText value="All Prices Currently Valid"/>
+			</rich:panel>
+		</h:panelGrid>
+	</h:form>
+</ui:composition>

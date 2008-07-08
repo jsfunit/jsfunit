@@ -22,6 +22,12 @@
 
 package org.jboss.jsfunit.richfaces;
 
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlDivision;
+import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
+import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;
 import java.io.IOException;
@@ -173,6 +179,68 @@ public class RichFacesClient extends Ajax4jsfClient
    {
       jsfClient.setValue(componentID + "InputDate", value);
    }
+   
+   
+   /**
+    * Set the value of a RichInplaceInput component.
+    * 
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set
+    * @param customSaveID The JSF component ID or a suffix of a custom save button (null if not used)
+    * 
+    * @throws IOException
+    */
+   public void setInplaceInput( String componentID, String value, String customSaveID ) throws IOException
+   {
+	   // Find outside span control
+	   HtmlSpan span = (HtmlSpan)jsfClient.getElement(componentID);
+	   // Find text control
+	   HtmlTextInput input = (HtmlTextInput)jsfClient.getElement(componentID+"tempValue");
+
+	   // Activate control - click on outside table control
+	   span.click();
+
+	   // Type value into input control
+	   input.type(value);
+
+	   // Type #3 - CUSTOM save button
+	   if( customSaveID != null ) {
+		   // Find and Click save button
+		   HtmlButton saveButton = (HtmlButton)jsfClient.getElement(customSaveID);
+		   saveButton.click();			
+	   } else {
+		   // Check to see if buttons are visible
+		   HtmlDivision bar = (HtmlDivision)jsfClient.getElement(componentID+"bar");
+		   String buttonStyle = bar.getStyleAttribute();
+		   // Type #1 - NO BUTTONS
+		   if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") ) 
+		   {
+			   // Remove focus from name input control
+			   input.blur();
+
+		   // Type #2 - built-in buttons
+		   } else {
+			   // Find and "mousedown" the standard "ok" button
+			   HtmlImageInput okButton = (HtmlImageInput)jsfClient.getElement(componentID+"ok");
+			   okButton.fireEvent("mousedown");						
+		   }
+	   }
+   }
+   /**
+    * Set the value of a RichInplaceInput component.
+    * This method is used when a custom save button is not needed.
+    * 
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set
+    * 
+    * @throws IOException
+    */
+   public void setInplaceInput( String componentID, String value ) throws IOException
+   {
+	   this.setInplaceInput(componentID, value, null);
+   }
+   
+   
    
    private void refreshPageFromDOM() throws SAXException, IOException
    {
