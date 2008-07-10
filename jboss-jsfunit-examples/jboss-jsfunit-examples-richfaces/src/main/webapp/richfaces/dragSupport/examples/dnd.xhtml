@@ -32,20 +32,20 @@
 					var="fm" >
 
 					<h:column>
-						<a4j:outputPanel style="border:1px solid gray;padding:2px;"
+						<a4j:outputPanel id="dragpanel" style="border:1px solid gray;padding:2px;"
 							layout="block">
 							<rich:dragSupport id="dragSource" dragIndicator=":indicator"
 								dragType="#{fm.family}" dragValue="#{fm}">
-								<rich:dndParam name="label" value="#{fm.name}" />
+								<rich:dndParam id="dragParam" name="label" value="#{fm.name}" />
 							</rich:dragSupport>
-							<h:outputText id="dragitem" value="#{fm.name}"></h:outputText>
+							<h:outputText id="dragItem" value="#{fm.name}"></h:outputText>
 						</a4j:outputPanel>
 					</h:column>
 
 				</h:dataTable>
 			</rich:panel>
 
-			<rich:panel styleClass="dropTargetPanel">
+			<rich:panel id="phppanel" styleClass="dropTargetPanel">
 				<f:facet name="header">
 					<h:outputText value="PHP Frameworks" />
 				</f:facet>
@@ -62,7 +62,7 @@
 
 			</rich:panel>
 
-			<rich:panel styleClass="dropTargetPanel">
+			<rich:panel id="dnetpanel" styleClass="dropTargetPanel">
 				<f:facet name="header">
 					<h:outputText value=".NET Frameworks" />
 				</f:facet>
@@ -79,7 +79,7 @@
 
 			</rich:panel>
 
-			<rich:panel styleClass="dropTargetPanel">
+			<rich:panel id="cfpanel" styleClass="dropTargetPanel">
 				<f:facet name="header">
 					<h:outputText value="ColdFusion Frameworks" />
 				</f:facet>

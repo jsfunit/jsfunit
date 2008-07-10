@@ -36,7 +36,6 @@ public class RichFacesTestAll extends ServletTestCase
    public static Test suite()
    {
       TestSuite suite = new TestSuite();
-      suite.addTestSuite(ActionParamTest.class);
       suite.addTestSuite(AjaxFormTest.class);
       suite.addTestSuite(AjaxRegionValidationErrorTest.class);
       suite.addTestSuite(AjaxRegionSelfRenderTest.class);
@@ -48,8 +47,6 @@ public class RichFacesTestAll extends ServletTestCase
       suite.addTestSuite(AjaxIncludeTest.class);
       suite.addTestSuite(AjaxOutputPanelTest.class);
       suite.addTestSuite(AjaxRepeaterTest.class);
-      suite.addTestSuite(RichDataTableScrollerTest.class);
-      suite.addTestSuite(RichDragAndDropTest.class);
       suite.addTestSuite(RichDropDownMenuTest.class);
       suite.addTestSuite(RichInputNumberSliderTest.class);
       suite.addTestSuite(RichInputNumberSpinnerTest.class);

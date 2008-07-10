@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -22,9 +22,11 @@
 
 package org.jboss.jsfunit.richfaces;
 
+import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.DomNode;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
 import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
@@ -33,6 +35,8 @@ import com.meterware.httpunit.WebForm;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
@@ -42,8 +46,8 @@ import org.ajax4jsf.renderkit.AjaxContainerRenderer;
 import org.ajax4jsf.renderkit.AjaxRendererUtils;
 import org.jboss.jsfunit.facade.ClientIDs;
 import org.jboss.jsfunit.facade.DOMUtil;
-import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.WebRequestFactory;
+import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.richfaces.component.UITab;
 import org.richfaces.component.UITabPanel;
 import org.w3c.dom.Document;
@@ -192,40 +196,41 @@ public class RichFacesClient extends Ajax4jsfClient
     */
    public void setInplaceInput( String componentID, String value, String customSaveID ) throws IOException
    {
-	   // Find outside span control
-	   HtmlSpan span = (HtmlSpan)jsfClient.getElement(componentID);
-	   // Find text control
-	   HtmlTextInput input = (HtmlTextInput)jsfClient.getElement(componentID+"tempValue");
+      // Find outside span control
+      HtmlSpan span = (HtmlSpan)jsfClient.getElement(componentID);
+      // Find text control
+      HtmlTextInput input = (HtmlTextInput)jsfClient.getElement(componentID+"tempValue");
 
-	   // Activate control - click on outside table control
-	   span.click();
+      // Activate control - click on outside table control
+      span.click();
 
-	   // Type value into input control
-	   input.type(value);
+      // Type value into input control
+      input.type(value);
 
-	   // Type #3 - CUSTOM save button
-	   if( customSaveID != null ) {
-		   // Find and Click save button
-		   HtmlButton saveButton = (HtmlButton)jsfClient.getElement(customSaveID);
-		   saveButton.click();			
-	   } else {
-		   // Check to see if buttons are visible
-		   HtmlDivision bar = (HtmlDivision)jsfClient.getElement(componentID+"bar");
-		   String buttonStyle = bar.getStyleAttribute();
-		   // Type #1 - NO BUTTONS
-		   if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") ) 
-		   {
-			   // Remove focus from name input control
-			   input.blur();
+      // Type #3 - CUSTOM save button
+      if( customSaveID != null ) {
+         // Find and Click save button
+         HtmlButton saveButton = (HtmlButton)jsfClient.getElement(customSaveID);
+         saveButton.click();			
+      } else {
+         // Check to see if buttons are visible
+         HtmlDivision bar = (HtmlDivision)jsfClient.getElement(componentID+"bar");
+         String buttonStyle = bar.getStyleAttribute();
+         // Type #1 - NO BUTTONS
+         if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") ) 
+	{
+            // Remove focus from name input control
+            input.blur();
 
-		   // Type #2 - built-in buttons
-		   } else {
-			   // Find and "mousedown" the standard "ok" button
-			   HtmlImageInput okButton = (HtmlImageInput)jsfClient.getElement(componentID+"ok");
-			   okButton.fireEvent("mousedown");						
-		   }
-	   }
+            // Type #2 - built-in buttons
+         } else {
+            // Find and "mousedown" the standard "ok" button
+            HtmlImageInput okButton = (HtmlImageInput)jsfClient.getElement(componentID+"ok");
+            okButton.fireEvent("mousedown");						
+         }
+      }
    }
+   
    /**
     * Set the value of a RichInplaceInput component.
     * This method is used when a custom save button is not needed.
@@ -237,10 +242,8 @@ public class RichFacesClient extends Ajax4jsfClient
     */
    public void setInplaceInput( String componentID, String value ) throws IOException
    {
-	   this.setInplaceInput(componentID, value, null);
+      this.setInplaceInput(componentID, value, null);
    }
-   
-   
    
    private void refreshPageFromDOM() throws SAXException, IOException
    {
@@ -274,16 +277,40 @@ public class RichFacesClient extends Ajax4jsfClient
     * @param componentID The JSF component ID or a suffix of the client ID.
     * @param value The number to click on the scroller.
     *
-    * @throws SAXException if the current response page can not be parsed
     * @throws IOException if there is a problem submitting the form
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
    public void clickDataTableScroller(String componentID, int value) 
-         throws SAXException, IOException
+         throws IOException
    {
-      clickDataTableScroller(componentID, Integer.toString(value));
+      String strValue = Integer.toString(value);
+      DomNode scroller = (DomNode)jsfClient.getElement(componentID + "_table");
+      List nodes = scroller.getByXPath(".//tbody/tr/td");
+      System.out.println("******************************");
+      System.out.println("Found " + nodes.size() + " nodes.");
+      System.out.println("strValue=" + strValue);
+      for (Iterator i = nodes.iterator(); i.hasNext();)
+      {
+         Object node = i.next();
+         System.out.println("class=" + node.getClass().getName());
+         if (node instanceof ClickableElement) 
+         {
+            ClickableElement clickable = (ClickableElement)node;
+            System.out.println("Node value=" + clickable.getTextContent());
+            if (strValue.equals(clickable.getTextContent()))
+            {
+               clickable.click();
+               System.out.println("*****************************************");
+               return;
+            }
+         }
+      }
+      
+      throw new ComponentIDNotFoundException(componentID);
+      
+      // /html/body/table[3]/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tr/td/div/form/div/table/tbody/tr/td[5]
    }
    
    /**
@@ -351,22 +378,29 @@ public class RichFacesClient extends Ajax4jsfClient
     * @param dropTargetComponentID The JSF component ID or a suffix of the client ID
     *                              for the target rich:dropSupport component.
     *
-    * @throws SAXException if the current response page can not be parsed
     * @throws IOException if there is a problem submitting the form
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
    public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
-         throws SAXException, IOException
+         throws IOException
    {
-      String dragClientID = client.getClientIDs().findClientID(dragComponentID);
+      HtmlElement dragElement = (HtmlElement)jsfClient.getElement(dragComponentID);
+      //HtmlElement dragParent = (HtmlElement)dragElement.getParentNode();
+      
+      HtmlElement dropElement = (HtmlElement)jsfClient.getElement("form:phppanel_body");
+      
+      dragElement.mouseDown();
+      dropElement.mouseMove();
+      dropElement.mouseUp();
+     /* String dragClientID = client.getClientIDs().findClientID(dragComponentID);
       String dropClientID = client.getClientIDs().findClientID(dropTargetComponentID);
       Map<String, String> params = new HashMap<String, String>(3);
       params.put("dragSourceId", dragClientID);
       params.put("dropTargetId", dropClientID);
       params.put(dragClientID, dragClientID);
-      ajaxSubmit(dropClientID, params);
+      ajaxSubmit(dropClientID, params); */
    }
    
    /**

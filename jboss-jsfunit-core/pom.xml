@@ -43,7 +43,7 @@
       <artifactId>servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
-<!--
+
     <dependency>
       <groupId>httpunit</groupId>
       <artifactId>httpunit</artifactId>
@@ -59,7 +59,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    -->
+    
     <dependency>
        <groupId>net.sourceforge.htmlunit</groupId>
        <artifactId>htmlunit</artifactId>

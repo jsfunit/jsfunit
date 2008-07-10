@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,16 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
+package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.xml.sax.SAXException;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -42,16 +42,16 @@ public class ActionParamTest extends ServletTestCase
       return new TestSuite( ActionParamTest.class );
    }
 
-   public void testActionParam() throws IOException, SAXException
+   public void testActionParam() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/actionparam.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/richfaces/actionparam.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      ajaxClient.ajaxSubmit("SetToAlex");
+      client.click("SetToAlex");
       assertEquals("Alex", server.getManagedBeanValue("#{userBean.name}"));
       
-      ajaxClient.ajaxSubmit("SetToJohn");
+      client.click("SetToJohn");
       assertEquals("John", server.getManagedBeanValue("#{userBean.name}"));
    }
 }
