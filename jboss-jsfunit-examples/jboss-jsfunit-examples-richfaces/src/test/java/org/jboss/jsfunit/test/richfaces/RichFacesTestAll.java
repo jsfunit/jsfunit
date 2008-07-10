@@ -44,7 +44,7 @@ public class RichFacesTestAll extends ServletTestCase
       suite.addTestSuite(AjaxCommandButtonTest.class);
       suite.addTestSuite(AjaxCommandLinkTest.class);
       suite.addTestSuite(AjaxJsFunctionTest.class);
-      //suite.addTestSuite(AjaxKeepaliveTest.class);
+      suite.addTestSuite(AjaxKeepaliveTest.class);
       //suite.addTestSuite(AjaxIncludeTest.class);
       suite.addTestSuite(AjaxOutputPanelTest.class);
       suite.addTestSuite(AjaxRepeaterTest.class);
