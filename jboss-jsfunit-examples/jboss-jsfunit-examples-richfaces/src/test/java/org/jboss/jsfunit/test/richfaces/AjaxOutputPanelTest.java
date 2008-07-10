@@ -19,16 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
+package org.jboss.jsfunit.test.richfaces;
 
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.xml.sax.SAXException;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -37,21 +37,24 @@ import org.xml.sax.SAXException;
  */
 public class AjaxOutputPanelTest extends ServletTestCase
 { 
-   public void testLayoutNone() throws IOException, SAXException
+   public void testLayoutNone() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/outputPanel.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/richfaces/outputPanel.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
 
-      client.setParameter("text1", "foo");
-      ajaxClient.ajaxSubmit("rerender1");
-      String page = client.getWebResponse().getText();
-      assertFalse(page.contains("Approved Text: foo"));
+      client.type("text1", 'f');
+      client.type("text1", 'o');
+      client.type("text1", 'o');
       
-      client.setParameter("text2", "foo");
-      ajaxClient.ajaxSubmit("rerender2");
-      page = client.getWebResponse().getText();
-      assertTrue(page.contains("Approved Text: foo"));
+      assertNull(client.getElement("out1"));
+      
+      client.type("text2", 'f');
+      client.type("text2", 'o');
+      client.type("text2", 'o');
+      
+      HtmlElement span = (HtmlElement)client.getElement("out2");
+      assertTrue(span.getTextContent().contains("Approved Text: foo"));
    } 
    
    public static Test suite()
