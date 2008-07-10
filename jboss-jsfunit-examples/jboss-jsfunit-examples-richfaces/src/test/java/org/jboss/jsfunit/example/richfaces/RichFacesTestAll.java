@@ -37,8 +37,6 @@ public class RichFacesTestAll extends ServletTestCase
    {
       TestSuite suite = new TestSuite();
       suite.addTestSuite(AjaxFormTest.class);
-      suite.addTestSuite(AjaxRegionValidationErrorTest.class);
-      suite.addTestSuite(AjaxRegionSelfRenderTest.class);
       suite.addTestSuite(AjaxSupportTest.class);
       suite.addTestSuite(AjaxCommandButtonTest.class);
       suite.addTestSuite(AjaxCommandLinkTest.class);
