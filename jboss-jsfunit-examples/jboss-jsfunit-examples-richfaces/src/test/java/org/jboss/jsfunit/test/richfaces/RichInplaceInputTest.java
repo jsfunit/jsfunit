@@ -42,14 +42,14 @@ import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
-public class InplaceInputTest extends ServletTestCase
+public class RichInplaceInputTest extends ServletTestCase
 {
    // -- Logger
-   protected static Log log = LogFactory.getLog(InplaceInputTest.class);
+   protected static Log log = LogFactory.getLog(RichInplaceInputTest.class);
    
    public static Test suite()
    {
-      return new TestSuite( InplaceInputTest.class );
+      return new TestSuite( RichInplaceInputTest.class );
    }
    
    // Control IDs
