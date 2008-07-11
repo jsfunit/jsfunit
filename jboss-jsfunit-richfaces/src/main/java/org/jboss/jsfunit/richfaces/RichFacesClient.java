@@ -421,58 +421,11 @@ public class RichFacesClient extends Ajax4jsfClient
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void clickTab(String tabPanelComponentID, String tabComponentID)
-         throws SAXException, IOException
+   public void clickTab(String tabComponentID)
+         throws IOException
    {
-      UITab tab = (UITab)client.getClientIDs().findComponent(tabComponentID);
-      if (tab.isDisabled()) return;
-      
-      UITabPanel panel = (UITabPanel)client.getClientIDs().findComponent(tabPanelComponentID);
-      String switchType = panel.getSwitchType();
-      if (switchType.equals("server")) clickServerTab(tabPanelComponentID, tabComponentID);
-      if (switchType.equals("ajax")) clickAjaxTab(tabPanelComponentID, tabComponentID);
-   }
-   
-   private void clickAjaxTab(String tabPanelComponentID, String tabComponentID)
-         throws SAXException, IOException
-   {
-      ClientIDs clientIDs = client.getClientIDs();
-      Map<UIData, Integer> indiciesToRestore = setRowIndicies(tabComponentID);
-      
-      UIComponent uiComp = clientIDs.findComponent(tabComponentID);
-      Map options = buildEventOptions(uiComp);
-      
-      WebForm form = findFormForTabPanel(tabPanelComponentID);
-      PostMethodWebRequest req = requestFactory.buildRequest(form);
-
-      setA4JParam(req, uiComp);
-      addExtraA4JParams(req, options);
-      restoreRowIndices(indiciesToRestore);
-      doAjaxRequest(req, options);
-   }
-   
-   private void clickServerTab(String tabPanelComponentID, String tabComponentID)
-         throws SAXException, IOException
-   {
-      String panelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
-      String tabClientID = client.getClientIDs().findClientID(tabComponentID);
-      WebForm form = findFormForTabPanel(tabPanelComponentID);
-      String formID = form.getID();
-      WebRequestFactory reqFactory = new WebRequestFactory(client);
-      PostMethodWebRequest postRequest = reqFactory.buildRequest(form);
-      postRequest.setParameter(formID + ":_idcl", tabClientID);
-      postRequest.setParameter(tabClientID + "_server_submit", 
-                               tabClientID + "_server_submit");
-      client.doWebRequest(postRequest);
-   }
-   
-   private WebForm findFormForTabPanel(String tabPanelComponentID) throws SAXException
-   {
-      String tabPanelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
-      WebForm form = client.getWebResponse().getFormWithID(tabPanelClientID + ":_form");
-      if (form != null) return form;
-      
-      return client.getForm(tabPanelClientID);
+      ClickableElement tab = (ClickableElement)jsfClient.getElement(tabComponentID + "_shifted");
+      tab.click();
    }
    
 }
