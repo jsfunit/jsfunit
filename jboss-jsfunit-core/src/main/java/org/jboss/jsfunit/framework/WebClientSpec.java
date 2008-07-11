@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 
 /**
  * The WebClientSpec allows configuration of the HtmlUnit WebClient and its
@@ -37,8 +39,10 @@ import java.util.Map;
  *
  * @author Stan Silvert
  */
-public class WebClientSpec
+public class WebClientSpec implements HttpSessionBindingListener
 {
+   public static final String SESSION_KEY = WebClientSpec.class.getName() + "sessionkey";
+   
    // IE6 is the HtmlUnit default
    private static BrowserVersion DEFAULT_BROWSER_VERSION = BrowserVersion.getDefault();
    
@@ -239,5 +243,17 @@ public class WebClientSpec
       }
       
       getWebClient().addRequestHeader("Cookie", builder.toString());
+   }
+
+   // -------- implementation of HttpSessionBindingListener -----------
+   public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)
+   {
+      System.out.println("**********************************");
+      System.out.println("New WebClient created.  Please clean up this.webClient !!!!");
+      System.out.println("**********************************");
+   }
+
+   public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)
+   {
    }
 }

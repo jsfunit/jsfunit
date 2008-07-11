@@ -138,6 +138,8 @@ public class WebConversationFactory
       }
       
       clearSession(session);
+      //session.setAttribute(WebClientSpec.SESSION_KEY, wcSpec);
+      
       wcSpec.addCookie("JSESSIONID", session.getId());
       wcSpec.addCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);
    }
