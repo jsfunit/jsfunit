@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<a4j:region>
+		<h:form>
+			<a4j:poll id="poll" interval="500" enabled="#{pollBean.pollEnabled}"
+				reRender="poll,grid" />
+		</h:form>
+	</a4j:region>
+	<h:form>
+		<h:panelGrid columns="2" width="80%" id="grid">
+			<h:panelGrid columns="1">
+				
+				<h:outputText id="pollingInactive" value="Polling Inactive"
+					rendered="#{not pollBean.pollEnabled}"></h:outputText>
+				
+				<h:outputText id="pollingActive" value="Polling Active" 
+					rendered="#{pollBean.pollEnabled}"></h:outputText>
+				
+				<a4j:commandButton style="width:120px" id="control"
+					value="#{pollBean.pollEnabled?'Stop':'Start'} Polling"
+					reRender="poll, grid">
+					<a4j:actionparam name="polling" value="#{!pollBean.pollEnabled}"
+						assignTo="#{pollBean.pollEnabled}" />
+				</a4j:commandButton>
+				
+			</h:panelGrid>
+			
+			<h:outputText id="serverDate" style="font-size:16px"
+				value="Server Date: #{pollBean.date}" />
+		</h:panelGrid>
+	</h:form>
+</ui:composition>
