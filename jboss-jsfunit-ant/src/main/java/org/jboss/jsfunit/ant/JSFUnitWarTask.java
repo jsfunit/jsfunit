@@ -154,7 +154,7 @@ public class JSFUnitWarTask extends Task{
 	{
 		private final String DEFAULT_NAME = "JSFUnitFilter";
 		private final String DEFAULT_MAPPING = "/ServletRedirector";
-		private final String DEFAULT_SERVLET_CLASS = "org.apache.cactus.server.ServletTestRedirector";
+		private final String DEFAULT_SERVLET_CLASS = "org.jboss.jsfunit.framework.JSFUnitServletRedirector";
 		private final String DEFAULT_FILTER_CLASS = "org.jboss.jsfunit.framework.JSFUnitFilter";
 		
 		public JSFUnitFilter()

@@ -86,7 +86,7 @@
  
  <servlet>
    <servlet-name>ServletRedirector</servlet-name>
-   <servlet-class>org.apache.cactus.server.ServletTestRedirector</servlet-class>
+   <servlet-class>org.jboss.jsfunit.framework.JSFUnitServletRedirector</servlet-class>
  </servlet>
 
  <servlet>

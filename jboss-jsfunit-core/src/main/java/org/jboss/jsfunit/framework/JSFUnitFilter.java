@@ -40,7 +40,7 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
 /**
  * <p>
  * The JSFUnitFilter is used to set up JSFUnit tests during a client
- * invocation of JUnit.  It must run before the Cactus ServletTestRedirector or
+ * invocation of JUnit.  It must run before the JSFUnitServletRedirector or
  * Cactus ServletTestRunner.
  * </p>
  * <p>
