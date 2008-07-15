@@ -127,6 +127,6 @@ public class AjaxPollTest extends ServletTestCase {
 		Date startDate = pb.getLasttime();
 		Thread.sleep(_EXPECTED_POLLING_INTERVAL*4);  
 		Date endDate = pb.getLasttime();
-		assertTrue("Date should not be updating in the PollBean",startDate.equals(endDate));		
+		assertTrue("Date should not be updating in the PollBean",startDate == endDate || startDate.equals(endDate));		
 	}
 }

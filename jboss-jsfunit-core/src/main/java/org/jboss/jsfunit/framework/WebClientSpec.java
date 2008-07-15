@@ -25,10 +25,14 @@ package org.jboss.jsfunit.framework;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.TopLevelWindow;
+import com.gargoylesoftware.htmlunit.WebWindow;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -248,9 +252,27 @@ public class WebClientSpec implements HttpSessionBindingListener
    // -------- implementation of HttpSessionBindingListener -----------
    public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)
    {
-      System.out.println("**********************************");
-      System.out.println("New WebClient created.  Please clean up this.webClient !!!!");
-      System.out.println("**********************************");
+	   // This is the recommended cleanup code ("close the browser windows")
+	   // as per HtmlUnit issue:
+	   // https://sourceforge.net/tracker/?func=detail&atid=448266&aid=2014629&group_id=47038
+	   // -----------------------------------------------------------------------------------
+
+	   // first get the top windows and then close them to avoid ConcurrentModificationException
+	   final List<TopLevelWindow> topWindows = new ArrayList<TopLevelWindow>();
+	   for (final Iterator<WebWindow> iter=webClient.getWebWindows().iterator();iter.hasNext();)
+	   {
+		   final WebWindow window = iter.next();
+		   if (window instanceof TopLevelWindow)
+		   {
+			   topWindows.add((TopLevelWindow)window);
+		   }
+	   }
+	   for (final Iterator<TopLevelWindow> iter=topWindows.iterator(); iter.hasNext();)
+	   {
+		   final TopLevelWindow window = iter.next();
+		   window.close();
+	   }
+
    }
 
    public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)
