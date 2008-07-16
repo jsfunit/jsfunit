@@ -91,6 +91,7 @@ public class AjaxPollTest extends ServletTestCase {
 		button.click();
 		
 		// Make sure we're no longer polling
+                pb = (PollBean)server.getManagedBeanValue(_POLLBEAN);
 		assertFalse("Polling should be disabled in the PollBean",pb.getPollEnabled());
 		assertFalse("Polling should be disabled in the component",poll.isEnabled());
 		// Make sure the date is NOT updating
@@ -103,6 +104,7 @@ public class AjaxPollTest extends ServletTestCase {
 		button.click();
 		
 		// Make sure we're polling again
+                pb = (PollBean)server.getManagedBeanValue(_POLLBEAN);
 		assertTrue("Polling is not enabled in the PollBean",pb.getPollEnabled());
 		assertTrue("Polling is not enabled in the component",poll.isEnabled());
 		// Make sure the date is updating
