@@ -84,6 +84,15 @@
     
     <profile>
       <id>jee5</id>
+      <dependencies>
+         <dependency>
+           <groupId>org.jboss.jsfunit</groupId>
+           <artifactId>richfaces-demo-jee5</artifactId>
+           <version>${richfaces-version}</version>
+           <type>war</type>
+           <scope>runtime</scope>
+         </dependency>
+      </dependencies>
       <build>    
         <plugins>
           <plugin>
@@ -92,12 +101,29 @@
             <version>2.0.2</version>
             <configuration>
               <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
-              <warSourceExcludes>WEB-INF/lib/jsf-api*.jar,WEB-INF/lib/jsf-impl*.jar,WEB-INF/lib/jstl-*.jar,WEB-INF/lib/el-*.jar</warSourceExcludes>
             </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>    
+    
+    <profile>
+       <id>myfaces1.1</id>
+       <dependencies>
+         <dependency>
+           <groupId>org.jboss.jsfunit</groupId>
+           <artifactId>richfaces-demo</artifactId>
+           <version>${richfaces-version}</version>
+           <type>war</type>
+           <scope>runtime</scope>
+         </dependency>
+      </dependencies>
+      <activation>
+         <property>
+           <name>jsfunit-test-profile</name>
+         </property>
+       </activation>
+    </profile>
   </profiles>
 
   <dependencies>    
@@ -117,23 +143,15 @@
     </dependency>
     
     <dependency>
-      <groupId>org.richfaces.samples</groupId>
-      <artifactId>richfaces-demo</artifactId>
-      <version>${richfaces-version}</version>
-      <type>war</type>
-      <scope>runtime</scope>
-    </dependency>
-    
-    <dependency>
       <groupId>org.richfaces.ui</groupId>
       <artifactId>richfaces-ui</artifactId>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     
     <dependency>
       <groupId>org.richfaces.framework</groupId>
       <artifactId>richfaces-impl</artifactId>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
@@ -152,14 +170,14 @@
       <groupId>javax.el</groupId>
       <artifactId>el-api</artifactId>
       <version>1.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>  
 
     <dependency>
       <groupId>com.sun.el</groupId>
       <artifactId>el-ri</artifactId>
       <version>1.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency> 
     
     <dependency>
@@ -197,15 +215,6 @@
               </includes>
             </resource>
           </webResources>
-          <overlays>
-             <overlay>
-               <groupId>org.richfaces.samples</groupId>
-               <artifactId>richfaces-demo</artifactId>
-               <excludes>
-                 <exclude>WEB-INF/lib/nekohtml-0.9.5.jar</exclude>
-               </excludes>
-             </overlay>
-           </overlays>
         </configuration>
       </plugin>
       

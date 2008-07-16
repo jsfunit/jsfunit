@@ -124,8 +124,7 @@
       <dependency>
         <groupId>net.sourceforge.nekohtml</groupId>
         <artifactId>nekohtml</artifactId>
-        <version>1.9.7</version>
-        <!--<version>1.9.8-SNAPSHOT</version>-->
+        <version>1.9.8-SNAPSHOT</version>
       </dependency>
       
       <dependency>
@@ -267,7 +266,7 @@
   </build>
     
   <properties>
-    <richfaces-version>3.2.0.GA</richfaces-version>
+    <richfaces-version>3.2.1.GA</richfaces-version>
   </properties>
   
 </project>
