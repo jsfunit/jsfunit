@@ -51,6 +51,7 @@ public class FacesContextBridge
    public static FacesContext getCurrentInstance()
    {
       HttpSession session = WebConversationFactory.getSessionFromThreadLocal();
+      if (session == null) return null;
       JSFUnitFacesContext facesContext = (JSFUnitFacesContext)session.getAttribute(JSFUnitFacesContext.SESSION_KEY);
       if (facesContext == null) return null;
       facesContext.setInstanceToJSFUnitThread();

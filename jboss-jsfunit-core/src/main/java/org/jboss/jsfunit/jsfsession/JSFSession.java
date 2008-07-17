@@ -25,6 +25,7 @@ package org.jboss.jsfunit.jsfsession;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import java.io.IOException;
+import org.jboss.jsfunit.framework.JSFUnitWebConnection;
 import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 
@@ -80,7 +81,9 @@ public class JSFSession
       this.webClient = wcSpec.getWebClient();
   
       this.jsfServerSession = new JSFServerSession();
-      this.webClient.addWebWindowListener(this.jsfServerSession);
+      JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.webClient.getWebConnection();
+      webConnection.addListener(this.jsfServerSession);
+      
       this.jsfClientSession = new JSFClientSession(this.jsfServerSession, initialPage);
       this.webClient.addWebWindowListener(this.jsfClientSession);
    }

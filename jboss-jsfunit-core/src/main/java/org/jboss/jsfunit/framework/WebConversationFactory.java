@@ -128,6 +128,7 @@ public class WebConversationFactory
                                                 wcSpec.getProxyPort());
       if (proxyHost == null) wc = new WebClient(wcSpec.getBrowserVersion());
       wc.setAjaxController(new NicelyResynchronizingAjaxController());
+      wc.setWebConnection(new JSFUnitWebConnection(wc.getWebConnection()));
       wcSpec.setWebClient(wc);
       
       HttpSession session = getSessionFromThreadLocal();

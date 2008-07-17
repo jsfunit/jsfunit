@@ -21,11 +21,18 @@
  */
 package org.jboss.jsfunit.test.richfaces;
 
+import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import java.io.IOException;
+import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.framework.JSFUnitWebConnection;
+import org.jboss.jsfunit.framework.RequestListener;
 import org.jboss.jsfunit.jsfsession.ClientIDs;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
@@ -38,15 +45,16 @@ import org.richfaces.component.UITabPanel;
  *
  * @author Stan Silvert
  */
-public class RichTabPanelTest extends ServletTestCase
+public class RichTabPanelTest extends ServletTestCase implements RequestListener
 {
+   private JSFSession jsfSession;
    private JSFClientSession client;
    private RichFacesClient ajaxClient;
    private JSFServerSession server;
            
    public void setUp() throws IOException
    {
-     JSFSession jsfSession = new JSFSession("/richfaces/tabPanel.jsf");
+     this.jsfSession = new JSFSession("/richfaces/tabPanel.jsf");
      this.client = jsfSession.getJSFClientSession();
      this.ajaxClient = new RichFacesClient(this.client);
      this.server = jsfSession.getJSFServerSession();
@@ -54,29 +62,44 @@ public class RichTabPanelTest extends ServletTestCase
    
    public void testDefaultTabPanel() throws IOException
    {
-  /*    UITabPanel panel = (UITabPanel)server.findComponent("defaultTabPanel");
-      String selectedTab = (String)panel.getSelectedTab();
-      assertEquals("defaultFirst", selectedTab);
+      //UITabPanel panel = (UITabPanel)server.findComponent("defaultTabPanel");
+      //String selectedTab = (String)panel.getSelectedTab();
+      //assertEquals("defaultFirst", selectedTab);
       
+     /* String xml = client.getElement("defaultFirst").getTextContent();
+      assertTrue(xml.contains("Here is tab #1"));
+      
+      JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.jsfSession.getWebClient().getWebConnection();
+      webConnection.addListener(this);
       ajaxClient.clickTab("defaultSecond");
+      DomNode domPage = (DomNode)client.getContentPage();
+      List elements = domPage.getByXPath("//*[@id=\"form1:defaultSecond_shifted\"]");
+      if (elements.size() == 0) System.out.println(">>>>>>>>>>>>>>> Bad XPath????");
       
-      panel = (UITabPanel)server.findComponent("defaultTabPanel");
-      selectedTab = (String)panel.getSelectedTab();
-      assertEquals("defaultSecond", selectedTab); */
+      ClickableElement clickable = null;
+      if (elements.size() == 1) {
+         clickable = (ClickableElement)elements.get(0);
+         System.out.println(">>>>>>>>>>>>>>>>> onclick=" + clickable.getAttribute("onclick"));
+         clickable.click();
+      }     
+      
+      //xml = client.getElement("defaultFirst").getTextContent();
+      //assertFalse(xml.contains("Here is tab #1"));
+      
+      //panel = (UITabPanel)server.findComponent("defaultTabPanel");
+      //selectedTab = (String)panel.getSelectedTab();
+      //assertEquals("defaultSecond", selectedTab);  */
    }
    
    public void testAjaxTabPanel() throws IOException
-   {/*
+   {
       UITabPanel panel = (UITabPanel)server.findComponent("ajaxTabPanel");
       String selectedTab = (String)panel.getSelectedTab();
       assertEquals("ajaxFirst", selectedTab);
-ClientIDs idsBefore = server.getClientIDs();      
       ajaxClient.clickTab("ajaxThird");
-ClientIDs idsAfter = server.getClientIDs();
-assertTrue(idsBefore != idsAfter);
       panel = (UITabPanel)server.findComponent("ajaxTabPanel");
       selectedTab = (String)panel.getSelectedTab();
-      assertEquals("ajaxThird", selectedTab); */
+      assertEquals("ajaxThird", selectedTab);
    } 
    
    public void testDisabledTabPanel() throws IOException
@@ -104,5 +127,17 @@ assertTrue(idsBefore != idsAfter);
    public static Test suite()
    {
       return new TestSuite( RichTabPanelTest.class );
+   }
+
+   public void beforeRequest(WebRequestSettings webRequestSettings)
+   {
+      System.out.println("*****************************");
+      System.out.println("request = " + webRequestSettings.getUrl());
+   }
+
+   public void afterRequest(WebResponse webResponse)
+   {
+      //System.out.println("webResponse=" + new String(webResponse.getResponseBody()));
+      System.out.println("*****************************");
    }
 }

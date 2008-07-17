@@ -22,15 +22,16 @@
 
 package org.jboss.jsfunit.jsfsession;
 
-import com.gargoylesoftware.htmlunit.Page;
-import com.gargoylesoftware.htmlunit.WebWindowEvent;
-import com.gargoylesoftware.htmlunit.WebWindowListener;
+import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebResponse;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
+import org.jboss.jsfunit.context.JSFUnitFacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;
+import org.jboss.jsfunit.framework.RequestListener;
 
 /**
  * The JSFServerSession provides a simplified API that wraps parts of the JSF API 
@@ -38,9 +39,10 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
  * 
  * @author Stan Silvert
  */
-public class JSFServerSession implements WebWindowListener
+public class JSFServerSession implements RequestListener
 {
    private ClientIDs clientIDs;
+   private FacesContext currentFacesContext;
    
    /**
     * Create a new JSFServerSession.
@@ -159,24 +161,37 @@ public class JSFServerSession implements WebWindowListener
       return getFacesContext().getMessages(clientID);
    }
 
-   //----------- Implementation of WebWindowListener
-   public void webWindowOpened(WebWindowEvent webWindowEvent)
-   {
-   }
-
-   public void webWindowContentChanged(WebWindowEvent webWindowEvent)
-   {
-      pageCreated();
-   }
+   
+   
    
    private void pageCreated()
    {
+      // Note that the FacesContextBridge not only provides us with the FacesContext, 
+      // it also associates the FacesContext with the JSFUnit thread so that 
+      // FacesContext.getCurrentInstance() will work.
+      JSFUnitFacesContext facesContext = (JSFUnitFacesContext)FacesContextBridge.getCurrentInstance();
+      
       // if no FacesContext exists, we can't get the Client IDs
-      if (FacesContextBridge.getCurrentInstance() == null) return;
-      this.clientIDs = new ClientIDs();  
+      if (facesContext == null) return;
+      
+      // Peformance optimization.  If the FacesContext instance didn't change,
+      // there is no need to re-create the ClientIDs.
+      if (this.currentFacesContext != facesContext)
+      {
+         this.clientIDs = new ClientIDs();  
+         this.currentFacesContext = facesContext;
+      }
    }
 
-   public void webWindowClosed(WebWindowEvent webWindowEvent)
+   //----------- Implementation of RequestListener
+   public void beforeRequest(WebRequestSettings webRequestSettings)
    {
    }
+
+   public void afterRequest(WebResponse webResponse)
+   {
+      pageCreated();
+   }
+
+   
 }
