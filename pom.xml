@@ -47,6 +47,13 @@
       <organizationUrl>http://www.g-webdesign.com/</organizationUrl>
       <timezone>-5</timezone>
     </developer>
+    <developer>
+      <name>Jason Fager</name>
+      <id>l.jinok.l</id>
+      <email>l.jinok.l@gmail.com</email>
+      <url>http://jsf.jboss.org</url>
+      <timezone>-8</timezone>
+    </developer>    
   </developers>
 
   <scm>
