@@ -23,9 +23,9 @@ public class PollBean {
 		lastTime = new Date();
 		if (null==pollStartTime){
 			pollStartTime = lastTime;
-			return lastTime;
+//			return lastTime;
 		}
-		if ((lastTime.getTime()-pollStartTime.getTime())>=60000) setPollEnabled(false);
+//		if ((lastTime.getTime()-pollStartTime.getTime())>=60000) setPollEnabled(false);
 		return lastTime;
 	}
 	// Get last poll time (without modification)
