@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,18 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
+package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.xml.sax.SAXException;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -39,31 +36,32 @@ import org.xml.sax.SAXException;
  */
 public class AjaxIncludeTest extends ServletTestCase
 {
-   public void testWizard() throws IOException, SAXException, ParserConfigurationException, TransformerException
+   public void testWizard() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/richfaces/include.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/richfaces/include.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      client.setParameter("fn", "Stan");
-      client.setParameter("ln", "Silvert");
-      client.setParameter("comp", "JBoss");
-      ajaxClient.ajaxSubmit("wizardNext");
+      client.setValue("fn", "Stan");
+      client.setValue("ln", "Silvert");
+      client.setValue("comp", "JBoss");
+      client.click("wizardNext");
       
-      client.setParameter("notes", "Here is my note");
-      ajaxClient.ajaxSubmit("wizardNext");
+      client.setValue("notes", "Here is my note");
+      client.click("wizardNext");
       assertEquals("Here is my note", server.getManagedBeanValue("#{profile.notes}"));
       
-      String page = client.getWebResponse().getText();
+      String page = client.getPageAsText();
       assertTrue(page.contains("Stan"));
       assertTrue(page.contains("Silvert"));
       assertTrue(page.contains("JBoss"));
       assertTrue(page.contains("Here is my note"));
       
-      ajaxClient.ajaxSubmit("wizardPrevious"); // back to Notes input page
-      ajaxClient.ajaxSubmit("wizardPrevious"); // back to first input page
+      client.click("wizardPrevious"); // back to Notes input page
+      client.click("wizardPrevious"); // back to first input page
+      page = client.getPageAsText();
       assertTrue(page.contains("value=\"Stan\""));
-      assertEquals("Stan", server.getManagedBeanValue("#{profile.firstName}"));
+      assertEquals("Stan", server.getManagedBeanValue("#{profile.firstName}")); 
    }
    
    public static Test suite()
