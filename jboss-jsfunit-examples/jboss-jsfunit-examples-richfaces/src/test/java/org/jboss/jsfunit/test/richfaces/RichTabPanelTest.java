@@ -21,19 +21,12 @@
  */
 package org.jboss.jsfunit.test.richfaces;
 
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
-import com.gargoylesoftware.htmlunit.WebResponse;
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
-import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import java.io.IOException;
-import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.framework.JSFUnitWebConnection;
 import org.jboss.jsfunit.framework.RequestListener;
-import org.jboss.jsfunit.jsfsession.ClientIDs;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -45,7 +38,7 @@ import org.richfaces.component.UITabPanel;
  *
  * @author Stan Silvert
  */
-public class RichTabPanelTest extends ServletTestCase implements RequestListener
+public class RichTabPanelTest extends ServletTestCase
 {
    private JSFSession jsfSession;
    private JSFClientSession client;
@@ -62,33 +55,24 @@ public class RichTabPanelTest extends ServletTestCase implements RequestListener
    
    public void testDefaultTabPanel() throws IOException
    {
-      //UITabPanel panel = (UITabPanel)server.findComponent("defaultTabPanel");
-      //String selectedTab = (String)panel.getSelectedTab();
-      //assertEquals("defaultFirst", selectedTab);
+      /*
+       * Note: This test is known to fail with RichFaces 3.2.1
+       */
+      UITabPanel panel = (UITabPanel)server.findComponent("defaultTabPanel");
+      String selectedTab = (String)panel.getSelectedTab();
+      assertEquals("defaultFirst", selectedTab);
       
-     /* String xml = client.getElement("defaultFirst").getTextContent();
+      String xml = client.getElement("defaultFirst").getTextContent();
       assertTrue(xml.contains("Here is tab #1"));
       
-      JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.jsfSession.getWebClient().getWebConnection();
-      webConnection.addListener(this);
       ajaxClient.clickTab("defaultSecond");
-      DomNode domPage = (DomNode)client.getContentPage();
-      List elements = domPage.getByXPath("//*[@id=\"form1:defaultSecond_shifted\"]");
-      if (elements.size() == 0) System.out.println(">>>>>>>>>>>>>>> Bad XPath????");
       
-      ClickableElement clickable = null;
-      if (elements.size() == 1) {
-         clickable = (ClickableElement)elements.get(0);
-         System.out.println(">>>>>>>>>>>>>>>>> onclick=" + clickable.getAttribute("onclick"));
-         clickable.click();
-      }     
+      xml = client.getElement("defaultSecond").getTextContent();
+      assertTrue(xml.contains("Here is tab #2"));
       
-      //xml = client.getElement("defaultFirst").getTextContent();
-      //assertFalse(xml.contains("Here is tab #1"));
-      
-      //panel = (UITabPanel)server.findComponent("defaultTabPanel");
-      //selectedTab = (String)panel.getSelectedTab();
-      //assertEquals("defaultSecond", selectedTab);  */
+      panel = (UITabPanel)server.findComponent("defaultTabPanel");
+      selectedTab = (String)panel.getSelectedTab();
+      assertEquals("defaultSecond", selectedTab);  
    }
    
    public void testAjaxTabPanel() throws IOException
@@ -128,16 +112,5 @@ public class RichTabPanelTest extends ServletTestCase implements RequestListener
    {
       return new TestSuite( RichTabPanelTest.class );
    }
-
-   public void beforeRequest(WebRequestSettings webRequestSettings)
-   {
-      System.out.println("*****************************");
-      System.out.println("request = " + webRequestSettings.getUrl());
-   }
-
-   public void afterRequest(WebResponse webResponse)
-   {
-      //System.out.println("webResponse=" + new String(webResponse.getResponseBody()));
-      System.out.println("*****************************");
-   }
+   
 }

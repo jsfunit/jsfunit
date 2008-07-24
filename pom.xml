@@ -284,7 +284,7 @@
   </build>
     
   <properties>
-    <richfaces-version>3.2.1.GA</richfaces-version>
+    <richfaces-version>3.2.0.GA</richfaces-version>
   </properties>
   
 </project>
