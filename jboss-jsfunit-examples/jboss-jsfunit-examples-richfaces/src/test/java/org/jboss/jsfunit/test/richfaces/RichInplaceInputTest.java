@@ -32,7 +32,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
+import org.jboss.jsfunit.richclient.RichFacesClient;
 import org.w3c.dom.Element;
 
 import com.gargoylesoftware.htmlunit.html.HtmlButton;

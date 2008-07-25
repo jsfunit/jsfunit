@@ -28,7 +28,6 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.

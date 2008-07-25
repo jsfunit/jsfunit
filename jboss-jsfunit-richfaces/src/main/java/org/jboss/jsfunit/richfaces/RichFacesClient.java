@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2008, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2007, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -22,21 +22,11 @@
 
 package org.jboss.jsfunit.richfaces;
 
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
-import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
-import com.gargoylesoftware.htmlunit.html.HtmlSpan;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebForm;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
@@ -46,8 +36,8 @@ import org.ajax4jsf.renderkit.AjaxContainerRenderer;
 import org.ajax4jsf.renderkit.AjaxRendererUtils;
 import org.jboss.jsfunit.facade.ClientIDs;
 import org.jboss.jsfunit.facade.DOMUtil;
+import org.jboss.jsfunit.facade.JSFClientSession;
 import org.jboss.jsfunit.facade.WebRequestFactory;
-import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.richfaces.component.UITab;
 import org.richfaces.component.UITabPanel;
 import org.w3c.dom.Document;
@@ -63,17 +53,10 @@ import org.xml.sax.SAXException;
  */
 public class RichFacesClient extends Ajax4jsfClient
 {
-   private org.jboss.jsfunit.jsfsession.JSFClientSession jsfClient;
 
-   public RichFacesClient(org.jboss.jsfunit.facade.JSFClientSession client)
+   public RichFacesClient(JSFClientSession client)
    {
       super(client);
-   }
-   
-   public RichFacesClient(org.jboss.jsfunit.jsfsession.JSFClientSession jsfClient)
-   {
-      super(null);
-      this.jsfClient = jsfClient;
    }
    
    /**
@@ -106,13 +89,14 @@ public class RichFacesClient extends Ajax4jsfClient
     * @param componentID The JSF component ID or a suffix of the client ID.
     * @param value The value to set before the form is submitted.
     *
+    * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void setDataFilterSlider(String componentID, String value)
+   public void setDataFilterSlider(String componentID, String value) throws SAXException
    {
-      jsfClient.setValue(componentID + "slider_val", value);
+      setSuffixxedValue(componentID, value, "slider_val");
    }
    
    /**
@@ -181,68 +165,17 @@ public class RichFacesClient extends Ajax4jsfClient
    public void setCalendarValue(String componentID, String value)
          throws SAXException, IOException
    {
-      jsfClient.setValue(componentID + "InputDate", value);
-   }
-   
-   
-   /**
-    * Set the value of a RichInplaceInput component.
-    * 
-    * @param componentID The JSF component ID or a suffix of the client ID.
-    * @param value The value to set
-    * @param customSaveID The JSF component ID or a suffix of a custom save button (null if not used)
-    * 
-    * @throws IOException
-    */
-   public void setInplaceInput( String componentID, String value, String customSaveID ) throws IOException
-   {
-      // Find outside span control
-      HtmlSpan span = (HtmlSpan)jsfClient.getElement(componentID);
-      // Find text control
-      HtmlTextInput input = (HtmlTextInput)jsfClient.getElement(componentID+"tempValue");
-
-      // Activate control - click on outside table control
-      span.click();
-
-      // Type value into input control
-      input.type(value);
-
-      // Type #3 - CUSTOM save button
-      if( customSaveID != null ) {
-         // Find and Click save button
-         HtmlButton saveButton = (HtmlButton)jsfClient.getElement(customSaveID);
-         saveButton.click();			
-      } else {
-         // Check to see if buttons are visible
-         HtmlDivision bar = (HtmlDivision)jsfClient.getElement(componentID+"bar");
-         String buttonStyle = bar.getStyleAttribute();
-         // Type #1 - NO BUTTONS
-         if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") ) 
-	{
-            // Remove focus from name input control
-            input.blur();
-
-            // Type #2 - built-in buttons
-         } else {
-            // Find and "mousedown" the standard "ok" button
-            HtmlImageInput okButton = (HtmlImageInput)jsfClient.getElement(componentID+"ok");
-            okButton.fireEvent("mousedown");						
-         }
+      String clientID = client.getClientIDs().findClientID(componentID);
+      clientID += "InputDate";
+      Document doc = client.getUpdatedDOM();
+      Element input = DOMUtil.findElementWithID(clientID, doc);
+      if (!input.getAttribute("readonly").equals("")) 
+      {
+         input.removeAttribute("readonly");
+         refreshPageFromDOM();
       }
-   }
-   
-   /**
-    * Set the value of a RichInplaceInput component.
-    * This method is used when a custom save button is not needed.
-    * 
-    * @param componentID The JSF component ID or a suffix of the client ID.
-    * @param value The value to set
-    * 
-    * @throws IOException
-    */
-   public void setInplaceInput( String componentID, String value ) throws IOException
-   {
-      this.setInplaceInput(componentID, value, null);
+      
+      setSuffixxedValue(componentID, value, "InputDate");
    }
    
    private void refreshPageFromDOM() throws SAXException, IOException
@@ -277,40 +210,16 @@ public class RichFacesClient extends Ajax4jsfClient
     * @param componentID The JSF component ID or a suffix of the client ID.
     * @param value The number to click on the scroller.
     *
+    * @throws SAXException if the current response page can not be parsed
     * @throws IOException if there is a problem submitting the form
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
    public void clickDataTableScroller(String componentID, int value) 
-         throws IOException
+         throws SAXException, IOException
    {
-      String strValue = Integer.toString(value);
-      DomNode scroller = (DomNode)jsfClient.getElement(componentID + "_table");
-      List nodes = scroller.getByXPath(".//tbody/tr/td");
-      System.out.println("******************************");
-      System.out.println("Found " + nodes.size() + " nodes.");
-      System.out.println("strValue=" + strValue);
-      for (Iterator i = nodes.iterator(); i.hasNext();)
-      {
-         Object node = i.next();
-         System.out.println("class=" + node.getClass().getName());
-         if (node instanceof ClickableElement) 
-         {
-            ClickableElement clickable = (ClickableElement)node;
-            System.out.println("Node value=" + clickable.getTextContent());
-            if (strValue.equals(clickable.getTextContent()))
-            {
-               clickable.click();
-               System.out.println("*****************************************");
-               return;
-            }
-         }
-      }
-      
-      throw new ComponentIDNotFoundException(componentID);
-      
-      // /html/body/table[3]/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tr/td/div/form/div/table/tbody/tr/td[5]
+      clickDataTableScroller(componentID, Integer.toString(value));
    }
    
    /**
@@ -378,29 +287,22 @@ public class RichFacesClient extends Ajax4jsfClient
     * @param dropTargetComponentID The JSF component ID or a suffix of the client ID
     *                              for the target rich:dropSupport component.
     *
+    * @throws SAXException if the current response page can not be parsed
     * @throws IOException if there is a problem submitting the form
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
    public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
-         throws IOException
+         throws SAXException, IOException
    {
-      HtmlElement dragElement = (HtmlElement)jsfClient.getElement(dragComponentID);
-      //HtmlElement dragParent = (HtmlElement)dragElement.getParentNode();
-      
-      HtmlElement dropElement = (HtmlElement)jsfClient.getElement("form:phppanel_body");
-      
-      dragElement.mouseDown();
-      dropElement.mouseMove();
-      dropElement.mouseUp();
-     /* String dragClientID = client.getClientIDs().findClientID(dragComponentID);
+      String dragClientID = client.getClientIDs().findClientID(dragComponentID);
       String dropClientID = client.getClientIDs().findClientID(dropTargetComponentID);
       Map<String, String> params = new HashMap<String, String>(3);
       params.put("dragSourceId", dragClientID);
       params.put("dropTargetId", dropClientID);
       params.put(dragClientID, dragClientID);
-      ajaxSubmit(dropClientID, params); */
+      ajaxSubmit(dropClientID, params);
    }
    
    /**
@@ -421,11 +323,58 @@ public class RichFacesClient extends Ajax4jsfClient
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void clickTab(String tabComponentID)
-         throws IOException
+   public void clickTab(String tabPanelComponentID, String tabComponentID)
+         throws SAXException, IOException
    {
-      ClickableElement tab = (ClickableElement)jsfClient.getElement(tabComponentID + "_shifted");
-      tab.click();
+      UITab tab = (UITab)client.getClientIDs().findComponent(tabComponentID);
+      if (tab.isDisabled()) return;
+      
+      UITabPanel panel = (UITabPanel)client.getClientIDs().findComponent(tabPanelComponentID);
+      String switchType = panel.getSwitchType();
+      if (switchType.equals("server")) clickServerTab(tabPanelComponentID, tabComponentID);
+      if (switchType.equals("ajax")) clickAjaxTab(tabPanelComponentID, tabComponentID);
+   }
+   
+   private void clickAjaxTab(String tabPanelComponentID, String tabComponentID)
+         throws SAXException, IOException
+   {
+      ClientIDs clientIDs = client.getClientIDs();
+      Map<UIData, Integer> indiciesToRestore = setRowIndicies(tabComponentID);
+      
+      UIComponent uiComp = clientIDs.findComponent(tabComponentID);
+      Map options = buildEventOptions(uiComp);
+      
+      WebForm form = findFormForTabPanel(tabPanelComponentID);
+      PostMethodWebRequest req = requestFactory.buildRequest(form);
+
+      setA4JParam(req, uiComp);
+      addExtraA4JParams(req, options);
+      restoreRowIndices(indiciesToRestore);
+      doAjaxRequest(req, options);
+   }
+   
+   private void clickServerTab(String tabPanelComponentID, String tabComponentID)
+         throws SAXException, IOException
+   {
+      String panelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
+      String tabClientID = client.getClientIDs().findClientID(tabComponentID);
+      WebForm form = findFormForTabPanel(tabPanelComponentID);
+      String formID = form.getID();
+      WebRequestFactory reqFactory = new WebRequestFactory(client);
+      PostMethodWebRequest postRequest = reqFactory.buildRequest(form);
+      postRequest.setParameter(formID + ":_idcl", tabClientID);
+      postRequest.setParameter(tabClientID + "_server_submit", 
+                               tabClientID + "_server_submit");
+      client.doWebRequest(postRequest);
+   }
+   
+   private WebForm findFormForTabPanel(String tabPanelComponentID) throws SAXException
+   {
+      String tabPanelClientID = client.getClientIDs().findClientID(tabPanelComponentID);
+      WebForm form = client.getWebResponse().getFormWithID(tabPanelClientID + ":_form");
+      if (form != null) return form;
+      
+      return client.getForm(tabPanelClientID);
    }
    
 }

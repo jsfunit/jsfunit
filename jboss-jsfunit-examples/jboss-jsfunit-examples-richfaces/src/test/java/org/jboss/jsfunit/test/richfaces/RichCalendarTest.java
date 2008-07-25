@@ -31,7 +31,7 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
+import org.jboss.jsfunit.richclient.RichFacesClient;
 import org.xml.sax.SAXException;
 
 /**
