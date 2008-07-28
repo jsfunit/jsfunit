@@ -14,6 +14,28 @@
 
   <profiles>
     <profile>
+      <id>jboss5x</id>    
+      <dependencies>
+         <dependency>
+            <groupId>org.jboss.jsfunit</groupId>
+            <artifactId>jboss-jsfunit-core</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+               <exclusion>
+                  <artifactId>xalan</artifactId>
+                  <groupId>xalan</groupId>
+               </exclusion>
+               <exclusion>
+                  <artifactId>xercesImpl</artifactId>
+                  <groupId>xerces</groupId>  
+               </exclusion>
+            </exclusions>
+          </dependency>
+       </dependencies>
+    </profile>
+    
+    <profile>
       <id>test</id>        
       <build>
         <plugins>

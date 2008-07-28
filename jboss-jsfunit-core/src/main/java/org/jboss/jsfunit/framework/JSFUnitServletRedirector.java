@@ -25,6 +25,7 @@ package org.jboss.jsfunit.framework;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.cactus.server.ServletTestRedirector;
 
 /**
@@ -49,7 +50,11 @@ public class JSFUnitServletRedirector extends ServletTestRedirector
    
    private void cleanUp(HttpServletRequest httpServletRequest)
    {
-      httpServletRequest.getSession().invalidate();
+      HttpSession session = httpServletRequest.getSession(false);
+      if (session != null)
+      {
+         session.invalidate();
+      }
    }
    
 }

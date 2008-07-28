@@ -123,7 +123,12 @@ public class JSFUnitFilter implements Filter
       } 
       finally 
       {
-         ((HttpServletRequest)req).getSession().removeAttribute(JSFUnitFacesContext.SESSION_KEY);
+         HttpSession session = ((HttpServletRequest)req).getSession(false);
+         if (session != null)
+         {
+            session.removeAttribute(JSFUnitFacesContext.SESSION_KEY);
+         }
+         
          WebConversationFactory.removeThreadLocals();
       }
    }
