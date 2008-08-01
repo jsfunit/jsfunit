@@ -97,7 +97,11 @@ public class WebConversationFactory
     */
    public static WebConversation makeWebConversation()
    {
-      HTMLParserFactory.useJTidyParser();
+      // JTidy causes exceptions in JBoss 5
+      String htmlParser = System.getProperty("jsfunit.htmlparser", "JTIDY");
+      if (!htmlParser.equalsIgnoreCase("NEKO")) HTMLParserFactory.useJTidyParser();
+      if (htmlParser.equalsIgnoreCase("NEKO")) HTMLParserFactory.useNekoHTMLParser();
+      
       HttpUnitOptions.setScriptingEnabled(false);
       WebConversation wc = new WebConversation();
       HttpSession session = getSessionFromThreadLocal();

@@ -12,7 +12,7 @@
 		<li><h:outputLink value="#{path.dgPath}#{componentNavigator.currentComponent != null ? componentNavigator.currentComponent.devGuideLocation : 'index.html'}">Developers Guide</h:outputLink></li>
 		<li><h:outputLink value="#{path.tldPath}#{componentNavigator.currentComponent !=null ? componentNavigator.currentComponent.tldDocLocation : 'jbossrichfaces/freezone/docs/tlddoc/overview-summary.html'}">Tld Documentation</h:outputLink></li>
 		<li><h:outputLink value="#{path.apiPath}#{componentNavigator.currentComponent !=null ? componentNavigator.currentComponent.javaDocLocation : 'jbossrichfaces/freezone/docs/apidoc/overview-summary.html'}">Component Class Documentation</h:outputLink></li>
-                <li><h:outputLink value="#{request.contextPath}/ServletTestRunner?suite=org.jboss.jsfunit.example.richfaces.RichFacesTestAll&amp;xsl=cactus-report.xsl">Run JSFUnit Tests Against This Demo</h:outputLink></li>
+                <li><h:outputLink value="#{request.contextPath}/ServletTestRunner?suite=org.jboss.jsfunit.test.richfaces.RichFacesTestAll&amp;xsl=cactus-report.xsl">Run JSFUnit Tests Against This Demo</h:outputLink></li>
 	</ul>
 </rich:panel>
 </ui:composition>
