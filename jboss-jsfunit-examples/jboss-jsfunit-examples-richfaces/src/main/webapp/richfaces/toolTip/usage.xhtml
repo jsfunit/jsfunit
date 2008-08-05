@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+
+				<p>
+					ToolTip is a small non-modal pop-up that could be used to display additional information, that is usually hidden.<br/>
+					
+					Major toolTip features:
+				</p>
+				<ul>
+					<li>Tool-tip content may be <b>pre-rendered</b> on a page (client mode) or <b>loaded on separate Ajax request</b> (ajax mode)</li>
+					<li>In "ajax" mode <b>default content</b> could be shown while request is executed</li>
+					<li>Parameters can be passed to the server during an ajax request</li>
+					<li>Tooltip <b>look is fully customizable</b> using both - Richfaces skins and CSS style classes</li>
+				</ul>
+
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">ToolTip example</legend>
+					<div class="sample-container" >
+						<ui:include src="/richfaces/toolTip/examples/tooltipUsage.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/toolTip/examples/tooltipUsage.xhtml"/>
+						</ui:include>
+					</div>
+				</fieldset>
+		</ui:define>
+
+	</ui:composition>
+</html>
