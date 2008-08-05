@@ -36,6 +36,7 @@ import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.richclient.RichFacesClient;
 import org.richfaces.component.html.HtmlToolTip;
+import org.richfaces.demo.tooltip.ToolTipData;
 import org.w3c.dom.Element;
 
 import com.gargoylesoftware.htmlunit.html.DomNode;
@@ -80,6 +81,10 @@ public class RichTooltipTest extends ServletTestCase {
 
 	public void testTooltip_DefaultClientSide()
 	{
+		// Make sure we can lookup server component by name
+		HtmlToolTip tt = (HtmlToolTip)server.findComponent(_DEFAULT_CLIENTSIDE_TOOLTIP);
+		assertNotNull("Unable to find server-side HtmlToolTip component",tt);
+		
 		// 1) Find client-side tooltip span
 		HtmlSpan tooltip1 = (HtmlSpan)((HtmlPage)client.getContentPage()).getElementById(_DEFAULT_CLIENTSIDE_TOOLTIP);	// Required because name collision
 		assertNotNull("Unable to find client-side span named \""+_DEFAULT_CLIENTSIDE_TOOLTIP+"\"",tooltip1);				
@@ -107,6 +112,10 @@ public class RichTooltipTest extends ServletTestCase {
 	
 	public void testTooltip_FollowMouse() throws InterruptedException
 	{
+		// Make sure we can lookup server component by name
+		HtmlToolTip tt = (HtmlToolTip)server.findComponent(_FOLLOWMOUSE_TOOLTIP);
+		assertNotNull("Unable to find server-side HtmlToolTip component",tt);
+		
 		// 1) Find client-side tooltip span
 		HtmlSpan tooltip1 = (HtmlSpan)((HtmlPage)client.getContentPage()).getElementById(_FOLLOWMOUSE_TOOLTIP);	// Required because name collision
 		assertNotNull("Unable to find client-side span named \""+_FOLLOWMOUSE_TOOLTIP+"\"",tooltip1);				
@@ -137,6 +146,10 @@ public class RichTooltipTest extends ServletTestCase {
 	
 	public void testTooltip_ServerRender() throws InterruptedException
 	{
+		// Make sure we can lookup server component by name
+		HtmlToolTip tt = (HtmlToolTip)server.findComponent(_SERVERREDNER_TOOLTIP);
+		assertNotNull("Unable to find server-side HtmlToolTip component",tt);
+
 		// 1) Server-side rendered tooltip seems to be a child div 
 		HtmlDivision tooltip1 = (HtmlDivision)((HtmlPage)client.getContentPage()).getElementById(_SERVERREDNER_TOOLTIP);
 		assertNotNull("Unable to find client-side div named \""+_SERVERREDNER_TOOLTIP+"\"",tooltip1);
@@ -151,7 +164,11 @@ public class RichTooltipTest extends ServletTestCase {
 		String hiddenStyle = tooltip1.getStyleAttribute();
 		assertTrue("Tooltip not hidden as expected: ["+hiddenStyle+"]",
 				hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
-		// 5) Move mouse over div to make tooltip display
+		// 5) Lookup backing bean and current tooltip counter
+		ToolTipData toolTipData = (ToolTipData)server.getManagedBeanValue("#{toolTipData}");
+		assertNotNull("Couldn't find ToolTipData managed bean",toolTipData);
+		int startVal = toolTipData.getTooltipCounterWithoutMod();
+		//6) Move mouse over div to make tooltip display
 		// 	Yes, all three of these are required.
 		parentDiv.mouseOver();
 		parentDiv.mouseMove();
@@ -164,10 +181,18 @@ public class RichTooltipTest extends ServletTestCase {
 		String visibleStyle = tooltip1.getStyleAttribute();
 		assertFalse("Tooltip not visible as expected: ["+visibleStyle+"]",
 				visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));				
+		// 8) Our tooltip counter should have increased by 1
+		toolTipData = (ToolTipData)server.getManagedBeanValue("#{toolTipData}");
+		int endVal = toolTipData.getTooltipCounterWithoutMod();
+		assertEquals("toolTipCounter did not increment as expected",startVal+1,endVal);
 	}
 	
 	public void testTooltip_MouseClick() throws IOException, InterruptedException
 	{
+		// Make sure we can lookup server component by name
+		HtmlToolTip tt = (HtmlToolTip)server.findComponent(_MOUSECLICK_TOOLTIP);
+		assertNotNull("Unable to find server-side HtmlToolTip component",tt);
+
 		// 1) Server-side rendered tooltip seems to be a child div 
 		HtmlDivision tooltip1 = (HtmlDivision)((HtmlPage)client.getContentPage()).getElementById(_MOUSECLICK_TOOLTIP);
 		assertNotNull("Unable to find client-side div named \""+_MOUSECLICK_TOOLTIP+"\"",tooltip1);
@@ -181,7 +206,11 @@ public class RichTooltipTest extends ServletTestCase {
 		String hiddenStyle = tooltip1.getStyleAttribute();
 		assertTrue("Tooltip not hidden as expected: ["+hiddenStyle+"]",
 				hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
-		// 5) Move mouse over div to make tooltip display
+		// 5) Lookup backing bean and current tooltip counter
+		ToolTipData toolTipData = (ToolTipData)server.getManagedBeanValue("#{toolTipData}");
+		assertNotNull("Couldn't find ToolTipData managed bean",toolTipData);
+		int startVal = toolTipData.getTooltipCounterWithoutMod();
+		// 6) Move mouse over div to make tooltip display
 		// 	Yes, all three of these are required.
 		parentDiv.mouseOver();
 		parentDiv.mouseMove();
@@ -191,9 +220,13 @@ public class RichTooltipTest extends ServletTestCase {
 		// 0.5 delay on tooltip - so wait a sec
 		Thread.sleep(1000);
 
-		// 6) Make sure tooltip is currently visible (style does not contain 'display: none')
+		// 7) Make sure tooltip is currently visible (style does not contain 'display: none')
 		String visibleStyle = tooltip1.getStyleAttribute();
 		assertFalse("Tooltip not visible as expected: ["+visibleStyle+"]",
 				visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));				
+		// 8) Our tooltip counter should have increased by 1
+		toolTipData = (ToolTipData)server.getManagedBeanValue("#{toolTipData}");
+		int endVal = toolTipData.getTooltipCounterWithoutMod();
+		assertEquals("toolTipCounter did not increment as expected",startVal+1,endVal);
 	}
 }
