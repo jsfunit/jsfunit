@@ -25,6 +25,7 @@ package org.jboss.jsfunit.example.hellojsf;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  * Aggregator of Marathon objects.
@@ -57,6 +58,14 @@ public class Marathons
       FacesContext ctx = FacesContext.getCurrentInstance();
       this.selectedMarathon = (String)ctx.getExternalContext().getRequestParameterMap().get("selectedName");
         
+      return null;
+   }
+   
+   public String invalidateSession()
+   {
+      FacesContext ctx = FacesContext.getCurrentInstance();
+      HttpSession session = (HttpSession)ctx.getExternalContext().getSession(true);
+      session.invalidate();
       return null;
    }
    

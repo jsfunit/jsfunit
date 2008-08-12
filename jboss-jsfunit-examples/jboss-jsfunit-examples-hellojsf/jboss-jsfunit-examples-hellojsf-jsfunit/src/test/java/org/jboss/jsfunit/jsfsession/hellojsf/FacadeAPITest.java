@@ -178,6 +178,24 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(client.getPageAsText().contains("Selected Marathon: Olympic Marathon"));
    }
    
+   public void testInvalidateSession() throws IOException
+   {
+      
+      JSFSession jsfSession = new JSFSession("/marathons_datatable.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      client.click("0:marathonSelect");
+      assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
+      assertEquals("BAA Boston Marathon", server.getManagedBeanValue("#{marathons.selectedMarathon}"));
+      
+      client.click("invalidateSession");
+      
+      client.click("0:marathonSelect");
+      assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
+      assertEquals("BAA Boston Marathon", server.getManagedBeanValue("#{marathons.selectedMarathon}"));
+   }
+   
    public void testServerSideComponentValue() throws IOException
    {
       testSetParamAndSubmit(); // put "Stan" into the input field

@@ -128,7 +128,7 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    {
       if (this.extContext == null)
       {
-         return delegate.getExternalContext();
+         return new JSFUnitDelegatingExternalContext(delegate.getExternalContext());
       }
       
       return this.extContext;

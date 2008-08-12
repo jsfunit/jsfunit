@@ -52,6 +52,9 @@
       <br/><b>
          <h:outputText value="Selected Marathon: #{marathons.selectedMarathon}"/>
       </b>
+      <br/><br/><b>
+         <h:commandButton id="invalidateSession" value="Invalidate Session" action="#{marathons.invalidateSession}"/>
+      </b>
    </h:form>
    
       
