@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.cactus.server.ServletTestRedirector;
+import org.apache.commons.lang.NullArgumentException;
 
 /**
  * The JSFUnitServletRedirector does JSFUnit cleanup at the end of each
@@ -50,10 +51,43 @@ public class JSFUnitServletRedirector extends ServletTestRedirector
    
    private void cleanUp(HttpServletRequest httpServletRequest)
    {
+      if (Environment.isSeamInitialized())
+      {
+         invalidateSeamSession(httpServletRequest);
+      }
+      
       HttpSession session = httpServletRequest.getSession(false);
       if (session != null)
       {
          session.invalidate();
+      }
+   }
+   
+   private void invalidateSeamSession(HttpServletRequest httpServletRequest)
+   {
+      Class lifecycle = Environment.loadClass("org.jboss.seam.contexts.ServletLifecycle");
+      if (lifecycle == null) return;
+      try
+      {
+         // begin Seam request
+         lifecycle.getMethod("beginRequest", HttpServletRequest.class)
+                  .invoke(null, httpServletRequest);
+         
+         // invalidate the session
+         Class seamSession = Environment.loadClass("org.jboss.seam.web.Session");
+         if (seamSession == null) return;
+         Object instance = seamSession.getMethod("instance", null)
+                                      .invoke(null, null);
+         seamSession.getMethod("invalidate", null)
+                    .invoke(instance, null);
+         
+         // end Seam request
+         lifecycle.getMethod("endRequest", HttpServletRequest.class)
+                  .invoke(null, httpServletRequest);
+      }
+      catch (Exception e)
+      {
+         throw new IllegalStateException("Unable to invalidate Seam session.", e);
       }
    }
    

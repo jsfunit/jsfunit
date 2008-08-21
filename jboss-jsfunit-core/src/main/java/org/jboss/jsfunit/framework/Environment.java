@@ -56,10 +56,10 @@ public class Environment
    {
       try
       {
-         Class appClass = Thread.currentThread()
-                                .getContextClassLoader()
-                                .loadClass("javax.faces.application.Application");
+         Class appClass = loadClass("javax.faces.application.Application");
       
+         if (appClass == null) return 1;
+         
          if ((appClass.getMethod("getELResolver") != null) &&
              (appClass.getMethod("getExpressionFactory") != null))
          {
@@ -80,6 +80,52 @@ public class Environment
       }
       
       return 1;
+   }
+   
+   public static boolean isSeamInitialized()
+   {
+      Class lifecycle = loadClass("org.jboss.seam.contexts.Lifecycle");
+      if (lifecycle == null) return false;
+      
+      try
+      {
+         Boolean returnVal = (Boolean)lifecycle.getMethod("isApplicationInitialized", null)
+                                               .invoke(null, null);
+         return returnVal.booleanValue();
+      }
+      catch (Exception e)
+      {
+         return false;
+      }
+   }
+   
+   /**
+    * Load a class using the context class loader.
+    *
+    * @param clazz The class name to load.
+    *
+    * @return The Class or <code>null</code> if not found.
+    */
+   public static Class loadClass(String clazz)
+   {
+      try
+      {
+         return Thread.currentThread()
+                      .getContextClassLoader()
+                      .loadClass(clazz);
+      }
+      catch (NoClassDefFoundError e)
+      {
+         return null;
+      }
+      catch (ClassNotFoundException e)
+      {
+         return null;
+      }
+      catch (Exception e)
+      {
+         throw new IllegalStateException(e);
+      }
    }
    
 }

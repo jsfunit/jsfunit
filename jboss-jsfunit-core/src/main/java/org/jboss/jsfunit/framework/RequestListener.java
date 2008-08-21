@@ -26,7 +26,7 @@ import com.gargoylesoftware.htmlunit.WebRequestSettings;
 import com.gargoylesoftware.htmlunit.WebResponse;
 
 /**
- * Implementor listens for Http requests.
+ * Implementor listens for Http requests from the client side.
  *
  * @author Stan Silvert
  */

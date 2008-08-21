@@ -214,6 +214,18 @@
         <version>${richfaces-version}</version>
       </dependency>
       
+      <dependency>
+        <groupId>org.jboss.seam</groupId>
+        <artifactId>jboss-seam</artifactId>
+        <version>${seam-version}</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.jboss.seam</groupId>
+        <artifactId>jboss-seam-ui</artifactId>
+        <version>${seam-version}</version>
+      </dependency>
+      
     </dependencies>
   </dependencyManagement>
 
@@ -284,6 +296,9 @@
     
   <properties>
     <richfaces-version>3.2.0.GA</richfaces-version>
+    <!--<seam-version>2.0.1.GA</seam-version>-->
+    <!--<seam-version>2.0.3.CR1</seam-version>-->
+    <seam-version>2.1.0.A1</seam-version>
   </properties>
   
 </project>
