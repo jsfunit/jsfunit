@@ -82,23 +82,6 @@ public class Environment
       return 1;
    }
    
-   public static boolean isSeamInitialized()
-   {
-      Class lifecycle = loadClass("org.jboss.seam.contexts.Lifecycle");
-      if (lifecycle == null) return false;
-      
-      try
-      {
-         Boolean returnVal = (Boolean)lifecycle.getMethod("isApplicationInitialized", null)
-                                               .invoke(null, null);
-         return returnVal.booleanValue();
-      }
-      catch (Exception e)
-      {
-         return false;
-      }
-   }
-   
    /**
     * Load a class using the context class loader.
     *

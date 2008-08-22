@@ -27,9 +27,9 @@ import com.gargoylesoftware.htmlunit.WebConnection;
 import com.gargoylesoftware.htmlunit.WebRequestSettings;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 import org.apache.commons.httpclient.HttpState;
 
 /**
@@ -43,7 +43,7 @@ public class JSFUnitWebConnection implements WebConnection
 {
    private WebConnection wrappedConnection;
    
-   private Set<RequestListener> listeners = new HashSet<RequestListener>();
+   private List<RequestListener> listeners = new ArrayList<RequestListener>();
    
    /**
     * Create a new JSFUnitWebConnection
@@ -116,9 +116,10 @@ public class JSFUnitWebConnection implements WebConnection
    
    private void notifyListenersAfter(WebResponse response)
    {
-      for (Iterator<RequestListener> i = this.listeners.iterator(); i.hasNext();)
+      for (int i=this.listeners.size() - 1; i > -1; i--)
       {
-         i.next().afterRequest(response);
+         RequestListener listener = this.listeners.get(i);
+         listener.afterRequest(response);
       }
    }
    
