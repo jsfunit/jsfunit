@@ -129,8 +129,6 @@
               <tasks>
                 <property name="target" location="./target" />
                 
-                <property name="src.war.dir" location="./sourcewar" />
-                <property name="src.war" location="${src.war.dir}/jboss-jsfunit-examples-hellojsf-webapp.war" />
                 <property name="dest.war.dir" location="${target}" />
                 <property name="dest.war" location="${dest.war.dir}/mywar.war" />
 
@@ -138,6 +136,7 @@
                 
                 <property name="ant.lib.dir" location="./ant-lib" />
                 <property name="jsfunit.lib.dir" location="${target}/jsfunitwar-lib" />
+                <property name="src.war" location="${jsfunit.lib.dir}/jboss-jsfunit-examples-hellojsf-webapp-${project.version}.war" />
 
                 <path id="maven-ant-tasks.classpath" path="${ant.lib.dir}/maven-ant-tasks-2.0.7.jar" />
                       
@@ -145,28 +144,40 @@
                          
                 <dependencies filesetId="dependency.fileset" pathId="jsfunit.classpath">
                    <dependency groupId="cactus" artifactId="cactus" version="13-1.7.1" />
+                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.2" />
+                   <dependency groupId="commons-httpclient" artifactId="commons-httpclient" version="3.1" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-core" version="${project.version}" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-ant" version="${project.version}" />
+                   <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-examples-hellojsf-webapp" version="${project.version}" type="war"/>
                 </dependencies>
-                
+
+                <!-- Copy the above dependencies into the target lib dir -->
                 <copy todir="${jsfunit.lib.dir}">
                   <fileset refid="dependency.fileset" />
                   <mapper type="flatten" />
                 </copy>
                          
-                <taskdef name="jsfunitwar" classname="org.jboss.jsfunit.ant.JSFUnitWarTask">      
-                  <classpath refid="jsfunit.classpath" />
+                <taskdef name="jsfunitwar" classname="org.jboss.jsfunit.ant.JSFUnitWarTask">  
+                  <classpath>
+                     <fileset dir="${jsfunit.lib.dir}">
+                        <include name="**/*.jar" />
+                     </fileset>
+                  </classpath>
                 </taskdef>
 
-                <!-- This library is required for Tomcat, but not Jetty -->
+                <!-- Xerces is required for Tomcat, but not Jetty -->
                 <!-- We will always bundle it anyway -->
                 <property name="xercesImpl.jar" location="${jsfunit.lib.dir}/xercesImpl-2.6.2.jar" />
                 
+                <!-- Xalan needed by htmlunit, but often included in app server -->
+                <property name="xalan.jar" location="${jsfunit.lib.dir}/xalan-2.7.0.jar" />
+                
                 <delete file="${dest.war}" />
-                <jsfunitwar srcfile="${src.war}" destfile="${dest.war}">
+                <jsfunitwar srcfile="${src.war}" destfile="${dest.war}" autoaddjars="true">
                   <TestRunner />
                   <classes dir="${classes.test}" includes="**/*.class" />
                   <lib file="${xercesImpl.jar}" />
+                  <lib file="${xalan.jar}" />
                 </jsfunitwar>	
                 
               </tasks>

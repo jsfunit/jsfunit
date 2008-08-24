@@ -461,40 +461,46 @@ public class JSFUnitWarTask extends Task{
 	 */
 	private void autoAddLibs (File archiveRoot) throws Exception
 	{
-		log("Automatically adding JSFunit required jars to the new war", Project.MSG_INFO);
-		if (autoAddJars)
-		{
-			// TODO: pick out actual classes used, these ones were picked at random from the jars
-			String[][] classNames = new String[][] {
-					{"/org/jboss/jsfunit/framework/JSFUnitFilter.class", "JSFUnit"},
-					{"/org/aspectj/runtime/CFlow.class", "AspectJ"},
-					{"/org/apache/cactus/Request.class", "Cactus"},
-					{"/com/meterware/httpunit/HttpUnitUtils.class", "HttpUnit"},
-					{"/junit/framework/Assert.class", "JUnit"},
-					{"/org/cyberneko/html/HTMLComponent.class", "NekoHTML"},
-					{"/org/w3c/tidy/Tidy.class", "JTidy"}
-			};
+            if (!autoAddJars) return;
+                
+            log("Automatically adding JSFunit required jars to the new war", Project.MSG_INFO);
+            // TODO: pick out actual classes used, these ones were picked at random from the jars
+            String[][] classNames = new String[][] {
+                            {"/org/jboss/jsfunit/framework/JSFUnitFilter.class", "JSFUnit Beta 3 or higher"},
+                            {"/org/aspectj/runtime/CFlow.class", "AspectJ 1.2.1 or higher"},
+                            {"/org/apache/cactus/Request.class", "Cactus 1.7.1 or higher"},
+                            {"/com/meterware/httpunit/HttpUnitUtils.class", "HttpUnit 1.6.2 or higher"},
+                            {"/junit/framework/Assert.class", "JUnit 3.8.1 or higher"},
+                            {"/org/cyberneko/html/ObjectFactory.class", "NekoHTML 1.9.8 or higher"},
+                            {"/org/w3c/tidy/Tidy.class", "JTidy 4aug2000r7"},
+                            {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.2 or higher"},
+                            {"/org/mozilla/javascript/Script.class", "HTMLUnitJavascript 2.2 or higher"},
+                            {"/com/steadystate/css/parser/HandlerBase.class", "CSSParser 0.9.5 or higher"},
+                            {"/org/apache/commons/httpclient/auth/CredentialsProvider.class", "CommonsHttpClient 3.1 or higher"},
+                            {"/org/apache/commons/io/FileUtils.class", "CommonsIO 1.4 or higher"},
+                            {"/org/w3c/css/sac/SACMediaList.class", "W3C SAC 1.3 or higher"},
+            };
 
 
-			for (int i=0; i<classNames.length; i++)
-			{
-				try{
-				File jar = ResourceUtils.getResourceLocation(classNames[i][0]);
-				if (jar == null)
-				{
-					log("Could not find the " + classNames[i][1] + " jar in the classpath. Cannot automatically add this jar to the war");
-				} 
-				else
-				{
-					addLib (archiveRoot, jar);
-				}
-				}
-				catch (NoClassDefFoundError ncdfe)
-				{
-					log("Could not find the " + classNames[i][1] + " jar in the classpath. Cannot automatically add this jar to the war");
-				}
-			}
-		}
+            for (int i=0; i<classNames.length; i++)
+            {
+                    try{
+                    File jar = ResourceUtils.getResourceLocation(classNames[i][0]);
+                    if (jar == null)
+                    {
+                            log("Could not find the " + classNames[i][1] + " jar in the classpath. Cannot automatically add this jar to the war");
+                    } 
+                    else
+                    {
+                            log("Auto-adding " + jar.getName());
+                            addLib (archiveRoot, jar);
+                    }
+                    }
+                    catch (NoClassDefFoundError ncdfe)
+                    {
+                            log("Could not find " + classNames[i][0] + " class in the " + classNames[i][1] + " jar. Cannot automatically add this jar to the war");
+                    }
+            }
 	}
 
 	/**
