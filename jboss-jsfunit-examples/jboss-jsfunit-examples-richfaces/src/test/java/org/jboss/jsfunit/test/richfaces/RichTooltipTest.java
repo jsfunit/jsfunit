@@ -78,6 +78,14 @@ public class RichTooltipTest extends ServletTestCase {
 		this.ajaxClient = new RichFacesClient(client);
 		this.server = jsfSession.getJSFServerSession();
 	}
+        
+        public void tearDown() throws Exception
+        {
+           this.jsfSession = null;
+           this.client = null;
+           this.ajaxClient = null;
+           this.server = null;
+        }
 
 	public void testTooltip_DefaultClientSide()
 	{

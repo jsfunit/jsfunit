@@ -53,6 +53,14 @@ public class RichTabPanelTest extends ServletTestCase
      this.server = jsfSession.getJSFServerSession();
    }
    
+   public void tearDown() throws Exception
+   {
+      this.jsfSession = null;
+      this.client = null;
+      this.ajaxClient = null;
+      this.server = null;
+   }
+   
    public void testDefaultTabPanel() throws IOException
    {
       /*

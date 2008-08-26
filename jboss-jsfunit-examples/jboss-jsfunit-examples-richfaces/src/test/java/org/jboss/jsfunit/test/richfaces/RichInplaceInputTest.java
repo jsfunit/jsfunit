@@ -79,6 +79,14 @@ public class RichInplaceInputTest extends ServletTestCase
       this.server = jsfSession.getJSFServerSession();
    }
    
+   public void tearDown() throws Exception
+   {
+      this.jsfSession = null;
+      this.client = null;
+      this.ajaxClient = null;
+      this.server = null;
+   }
+   
    /**
     * This method mirrors the implementation of RichFacesClient.setInplaceInput()
     * but adds a great many assertions to verify both htmlunit and richfaces
