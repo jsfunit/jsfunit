@@ -117,7 +117,7 @@ public class RichFacesClient
          String buttonStyle = bar.getStyleAttribute();
          // Type #1 - NO BUTTONS
          if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") ) 
-	{
+         {
             // Remove focus from name input control
             input.blur();
 
@@ -129,7 +129,7 @@ public class RichFacesClient
          }
       }
    }
-   
+      
    /**
     * Set the value of a RichInplaceInput component.
     * This method is used when a custom save button is not needed.
@@ -142,6 +142,27 @@ public class RichFacesClient
    public void setInplaceInput( String componentID, String value ) throws IOException
    {
       this.setInplaceInput(componentID, value, null);
+   }
+   
+   /**
+    * Click this handle icon for a node in a RichTree in order
+    * to toggle the open/closed state. In order to use this you
+    * will need the key value of the node (from the tree data) 
+    * and the id="" attribute value from the rich:treeNode 
+    * template declaration.
+    * 
+    * @param treeNodeKey key value for the node to reference
+    * @param treeNodeId id of the treeNode template
+    * 
+    * @throws IOException 
+    * @throws ComponentIDNotFoundException
+    */
+   public void clickTreeNodeHandle( String treeNodeKey, String treeNodeId ) throws IOException
+   {
+	   final String handleId = ":"+treeNodeKey+"::"+treeNodeId+":handle";
+	   ClickableElement icon = (ClickableElement)jsfClient.getElement(handleId);
+	   if( icon == null ) throw new ComponentIDNotFoundException(handleId);
+	   icon.click();	   
    }
    
    /**

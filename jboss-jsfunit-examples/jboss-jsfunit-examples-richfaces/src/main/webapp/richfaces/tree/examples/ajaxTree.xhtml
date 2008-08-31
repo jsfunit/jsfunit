@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+	<p>This tree uses "ajax" switch type, note that for collapse/expand operations it will be Ajax request to the server. You may see short delay in this case.</p><br/>
+	<h:form id="ajaxTreeForm">	
+		<rich:tree id="ajaxTree" style="width:300px" value="#{library.data}" var="item" nodeFace="#{item.type}">
+			<rich:treeNode id="ajaxTreeArtistNode" type="artist" iconLeaf="/images/tree/singer.gif" icon="/images/tree/singer.gif">
+				<h:outputText id="artistName" value="#{item.name}" />
+			</rich:treeNode>
+			<rich:treeNode id="ajaxTreeAlbumNode" type="album" iconLeaf="/images/tree/disc.gif" icon="/images/tree/disc.gif">
+				<h:outputText id="albumTitle" value="#{item.title}" />
+			</rich:treeNode>
+			<rich:treeNode id="ajaxTreeSongNode" type="song" iconLeaf="/images/tree/song.gif" icon="/images/tree/song.gif">
+				<h:outputText id="songTitle" value="#{item.title}" />
+			</rich:treeNode>
+		</rich:tree>
+	</h:form>
+
+</ui:composition>

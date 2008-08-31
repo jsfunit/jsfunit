@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+				<p>
+					Tree is a component that renders a tree control on the page.<br/>
+					The most important tree features are:
+				</p>
+				<ul>
+					<li>Native support for Ajax operations</li>
+					<li>Support for "ajax", "client" and "server" switch types</li>
+					<li>Built-in drag/drop capabilities</li>
+					<li>Flexible look</li>
+				</ul>
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">Ajax switch type</legend>
+					<div class="sample-container">
+						<ui:include src="/richfaces/tree/examples/ajaxTree.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/tree/examples/ajaxTree.xhtml"/>
+						</ui:include>
+					</div>
+				</fieldset>
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">Client switch type</legend>
+
+					<div class="sample-container" >
+						<ui:include src="/richfaces/tree/examples/clientTree.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/tree/examples/clientTree.xhtml"/>
+						</ui:include>		
+					</div>
+				</fieldset>
+				<fieldset class="demo_fieldset">
+					<legend class="demo_legend">Server switch type</legend>
+					<div class="sample-container" >
+						<ui:include src="/richfaces/tree/examples/serverTree.xhtml"/>
+						<ui:include src="/templates/include/sourceview.xhtml">
+							<ui:param name="sourcepath" value="/richfaces/tree/examples/serverTree.xhtml"/>
+						</ui:include>		
+					</div>
+				</fieldset>
+				<p class="note">
+					Note how the tree switched on "client" does not "remember" its state when whole page is reloaded. At the same time "ajax" tree remembers its state without any additional code.
+				</p>
+		</ui:define>
+	</ui:composition>
+</html>
