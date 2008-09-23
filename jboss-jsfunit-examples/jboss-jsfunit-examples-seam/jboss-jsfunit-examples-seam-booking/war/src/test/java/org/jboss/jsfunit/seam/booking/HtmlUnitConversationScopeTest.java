@@ -40,6 +40,8 @@ public class HtmlUnitConversationScopeTest extends ServletTestCase
    
    public void testGetHotelBooking() throws IOException
    {
+      //org.jboss.seam.security.Identity.setSecurityEnabled(false);
+
       registerUser("ConvScopeUser", "password");
       
       JSFSession jsfSession = new JSFSession("/home.seam");
@@ -75,6 +77,8 @@ public class HtmlUnitConversationScopeTest extends ServletTestCase
     */
    public static void registerUser(String username, String password) throws IOException
    {
+      //org.jboss.seam.security.Identity.setSecurityEnabled(false);
+
       JSFSession jsfSession = new JSFSession("/home.seam");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();

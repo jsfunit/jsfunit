@@ -329,4 +329,10 @@ public class FacadeAPITest extends ServletTestCase
          // OK
       }
    }
+   
+   public void testNoCreationOfBeanDuringELExpressionReference() throws IOException
+   {
+      Object bean = server.getManagedBeanValue("#{mysessionbean}");
+      assertNull(bean);
+   }
 }

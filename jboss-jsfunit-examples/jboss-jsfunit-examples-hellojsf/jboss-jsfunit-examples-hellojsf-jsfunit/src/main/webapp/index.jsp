@@ -53,7 +53,7 @@
    <h:panelGrid columns="3" border="1" cellpadding="2" id="panelGrid">
       <h:outputText value="SimplifiedHelloJSFIntegrationTest"/>
       <h:outputLink id="RunSimplifiedHelloJSFIntegrationTest" 
-                  value="ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.SimplifiedHelloJSFIntegrationTest&xsl=cactus-report.xsl">
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.SimplifiedHelloJSFIntegrationTest&xsl=cactus-report.xsl">
           <h:outputText value="Run Test"/>
       </h:outputLink>
       <h:outputLink id="SourceSimplifiedHelloJSFIntegrationTest" 
@@ -63,7 +63,7 @@
 
       <h:outputText value="HelloJSFIntegrationTest"/>
       <h:outputLink id="RunHelloJSFIntegrationTest" 
-                  value="ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest&xsl=cactus-report.xsl">
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest&xsl=cactus-report.xsl">
           <h:outputText value="Run Test"/>
       </h:outputLink>
       <h:outputLink id="SourceHelloJSFIntegrationTest" 
@@ -73,7 +73,7 @@
 
       <h:outputText value="FacadeAPITest"/>
       <h:outputLink id="RunFacadeAPITest" 
-                  value="ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.FacadeAPITest&xsl=cactus-report.xsl">
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.FacadeAPITest&xsl=cactus-report.xsl">
           <h:outputText value="Run Test"/>
       </h:outputLink>
       <h:outputLink id="SourceFacadeAPITest" 

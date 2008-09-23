@@ -55,26 +55,6 @@ public class JSFUnitWebConnection implements WebConnection
    {
       this.wrappedConnection = wrappedConnection;
    }
-   
-   /**
-    * Return the WebClient
-    *
-    * @return The WebClient
-    */
-   public WebClient getWebClient()
-   {
-      return this.wrappedConnection.getWebClient();
-   }
-
-   /**
-    * Return the HttpState.
-    *
-    * @return The HttpState
-    */
-   public HttpState getState()
-   {
-      return this.wrappedConnection.getState();
-   }
 
    /**
     * Called by HtmlUnit whenever a request is made to the server.
