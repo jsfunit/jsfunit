@@ -234,6 +234,13 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <skip>true</skip>
+          <excludes>
+            <exclude>**/RichTreeTest.java</exclude>
+            <exclude>**/RichTabPanelTest.java</exclude>
+            <exclude>**/AjaxPollTest.java</exclude>
+            <exclude>**/RichInplaceInputTest.java</exclude>
+            <exclude>**/RichScrollableDataTableTest.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>  

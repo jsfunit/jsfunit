@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    JBoss JSFUnit + JBossAS integration
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <!-- JSFUnit deployer -->
+  <bean name="JSFUnitDeployer" class="org.jboss.jsfunit.microdeployer.JSFUnitlIntegrationDeployer">
+    
+    <!--
+      * Specify the case-insensitive war suffixes (excluding .war) that this 
+      * deployer will add JSFUnit to. By default, we set <value>_jsfunit</value>
+      * so that mywar_jsfunit.war will use JSFUnit but mywar.war would not.  
+      * Of course, you could also change this to <value>mywar</value>
+      * so that you wouldn't need to modify your war name to add JSFUnit to it.
+    -->
+    <property name="warSuffixes">
+       <collection elementClass="java.lang.String">
+          <value>_jsfunit</value>
+       </collection>
+    </property>
+    
+    <!-- 
+      *  Add any extra jars or directories to the classpath.  Typically, these URLs
+      *  will point to your tests.  If you specify a directory, all jar files
+      *  under that directory will be recursively added.
+    -->
+    <property name="classpathURLs">
+       <collection elementClass="java.lang.String">
+          <value>${jboss.server.home.url}/jsfunitTests</value>
+       </collection>   
+    </property>
+  </bean>
+
+</deployment>
