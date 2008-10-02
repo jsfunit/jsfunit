@@ -54,7 +54,7 @@ import org.jboss.xb.binding.sunday.unmarshalling.SchemaBinding;
 import org.jboss.xb.builder.JBossXBBuilder;
 
 /**
- * The JSFUnitIntegrationDeployer automatically adds the needed servlets and
+ * The JSFUnitDeployer automatically adds the needed servlets and
  * servlet filters to a WAR.  It will also add all the JSFUnit classes and 
  * dependencies.
  * 
@@ -63,7 +63,7 @@ import org.jboss.xb.builder.JBossXBBuilder;
  *
  * @author Stan Silvert
  */
-public class JSFUnitlIntegrationDeployer extends AbstractOptionalVFSRealDeployer<JBossWebMetaData>
+public class JSFUnitDeployer extends AbstractOptionalVFSRealDeployer<JBossWebMetaData>
 {
    private static final VirtualFileFilter JAR_FILTER = new SuffixMatchFilter("jar");
    
@@ -78,7 +78,7 @@ public class JSFUnitlIntegrationDeployer extends AbstractOptionalVFSRealDeployer
    /**
     * Create a new deployer.
     */
-   public JSFUnitlIntegrationDeployer()
+   public JSFUnitDeployer()
    {
       super(JBossWebMetaData.class);
       // We have to run before the classloading is setup

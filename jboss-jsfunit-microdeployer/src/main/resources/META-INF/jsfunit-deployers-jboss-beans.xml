@@ -6,7 +6,7 @@
 <deployment xmlns="urn:jboss:bean-deployer:2.0">
 
   <!-- JSFUnit deployer -->
-  <bean name="JSFUnitDeployer" class="org.jboss.jsfunit.microdeployer.JSFUnitlIntegrationDeployer">
+  <bean name="JSFUnitDeployer" class="org.jboss.jsfunit.microdeployer.JSFUnitDeployer">
     
     <!--
       * Specify the case-insensitive war suffixes (excluding .war) that this 
