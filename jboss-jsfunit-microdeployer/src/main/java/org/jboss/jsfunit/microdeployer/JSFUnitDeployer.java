@@ -32,6 +32,7 @@ import java.util.List;
 import org.jboss.deployers.spi.DeploymentException;
 import org.jboss.deployers.spi.deployer.DeploymentStages;
 import org.jboss.deployers.vfs.spi.deployer.AbstractOptionalVFSRealDeployer;
+import org.jboss.deployers.vfs.spi.deployer.AbstractSimpleVFSRealDeployer;
 import org.jboss.deployers.vfs.spi.structure.VFSDeploymentUnit;
 import org.jboss.metadata.web.jboss.JBossServletMetaData;
 import org.jboss.metadata.web.jboss.JBossServletsMetaData;
@@ -63,7 +64,7 @@ import org.jboss.xb.builder.JBossXBBuilder;
  *
  * @author Stan Silvert
  */
-public class JSFUnitDeployer extends AbstractOptionalVFSRealDeployer<JBossWebMetaData>
+public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaData>
 {
    private static final VirtualFileFilter JAR_FILTER = new SuffixMatchFilter("jar");
    
