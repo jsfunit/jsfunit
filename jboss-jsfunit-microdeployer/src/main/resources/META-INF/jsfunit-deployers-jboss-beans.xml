@@ -25,6 +25,18 @@
       *  Add any extra jars or directories to the classpath.  Typically, these URLs
       *  will point to your tests.  If you specify a directory, all jar files
       *  under that directory will be recursively added.
+      
+      Example URLs:
+            ${jboss.server.home.url}/jsfunitTests
+                 scans ${jboss.server.home.url}/jsfunitTests
+            file:/myproject/lib/mytests.jar
+                 add classes from mytests.jar to the WAR
+            file:/projects/myjsfproject/target/test-classes/
+                 add all classes and jars in the tests-classes directory
+            http://www.test.com/netboot/mytests.jar
+                 deploy tests from a remote location
+            http://www.test.com/jsfunit/tests/
+                 scans the specified WebDAV location
     -->
     <property name="classpathURLs">
        <collection elementClass="java.lang.String">
