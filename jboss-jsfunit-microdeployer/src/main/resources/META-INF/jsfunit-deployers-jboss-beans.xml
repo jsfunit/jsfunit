@@ -10,14 +10,14 @@
     
     <!--
       * Specify the case-insensitive war suffixes (excluding .war) that this 
-      * deployer will add JSFUnit to. By default, we set <value>_jsfunit</value>
-      * so that mywar_jsfunit.war will use JSFUnit but mywar.war would not.  
+      * deployer will add JSFUnit to. By default, we set <value>-jsfunit</value>
+      * so that mywar-jsfunit.war will use JSFUnit but mywar.war would not.  
       * Of course, you could also change this to <value>mywar</value>
       * so that you wouldn't need to modify your war name to add JSFUnit to it.
     -->
     <property name="warSuffixes">
        <collection elementClass="java.lang.String">
-          <value>_jsfunit</value>
+          <value>-jsfunit</value>
        </collection>
     </property>
     
