@@ -26,6 +26,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.cactus.internal.HttpServiceDefinition;
+import org.apache.cactus.internal.ServiceEnumeration;
+import org.apache.cactus.internal.server.ServletUtil;
 import org.apache.cactus.server.ServletTestRedirector;
 import org.jboss.jsfunit.seam.SeamUtil;
 
@@ -51,6 +54,8 @@ public class JSFUnitServletRedirector extends ServletTestRedirector
    
    private void cleanUp(HttpServletRequest httpServletRequest)
    {
+      if (!isCallTestService(httpServletRequest)) return;
+      
       if (SeamUtil.isSeamInitialized())
       {
          SeamUtil.invalidateSeamSession(httpServletRequest);
@@ -61,6 +66,16 @@ public class JSFUnitServletRedirector extends ServletTestRedirector
       {
          session.invalidate();
       }
+   }
+
+   // cleanUp should only be done if Cactus is running a CALL_TEST_SERVICE command
+   private boolean isCallTestService(HttpServletRequest httpServletRequest)
+   {
+      String queryString = httpServletRequest.getQueryString();
+      String serviceName = ServletUtil.getQueryStringParameter(queryString, 
+            HttpServiceDefinition.SERVICE_NAME_PARAM);
+
+      return ServiceEnumeration.valueOf(serviceName) == ServiceEnumeration.CALL_TEST_SERVICE;
    }
    
 }
