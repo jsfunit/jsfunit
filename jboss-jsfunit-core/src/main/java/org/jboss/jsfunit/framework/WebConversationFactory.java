@@ -30,6 +30,8 @@ import com.meterware.httpunit.parsing.HTMLParserFactory;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.jboss.jsfunit.seam.SeamUtil;
+import org.jboss.seam.contexts.ServletLifecycle;
 
 /**
  * The WebConversationFactory dispenses a clean WebConversation for use with
@@ -175,6 +177,12 @@ public class WebConversationFactory
       for (Enumeration e = session.getAttributeNames(); e.hasMoreElements();)
       {
          session.removeAttribute((String)e.nextElement());
+      }
+      
+      // start Seam session so @Startup beans in session scope will be initialized
+      if (SeamUtil.isSeamInitialized())
+      {
+         ServletLifecycle.beginSession(session);
       }
    }
    
