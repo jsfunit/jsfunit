@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.List;
 import org.jboss.deployers.spi.DeploymentException;
 import org.jboss.deployers.spi.deployer.DeploymentStages;
-import org.jboss.deployers.vfs.spi.deployer.AbstractOptionalVFSRealDeployer;
 import org.jboss.deployers.vfs.spi.deployer.AbstractSimpleVFSRealDeployer;
 import org.jboss.deployers.vfs.spi.structure.VFSDeploymentUnit;
 import org.jboss.metadata.web.jboss.JBossServletMetaData;
@@ -66,10 +65,13 @@ import org.jboss.xb.builder.JBossXBBuilder;
  */
 public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaData>
 {
-   private static final VirtualFileFilter JAR_FILTER = new SuffixMatchFilter("jar");
+   private static final VirtualFileFilter JAR_FILTER = new SuffixMatchFilter(".jar");
    
    private Collection<String> classpathUrls;
    private Collection<String> warSuffixes;
+   
+   private Web25MetaData jsfunitWebMD;
+   private boolean disabled = false;
 
    /**
     * Unmarshall factory used for parsing shared web.xml.
@@ -84,8 +86,32 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
       super(JBossWebMetaData.class);
       // We have to run before the classloading is setup
       setStage(DeploymentStages.POST_PARSE);
+      
+      // only need to do this once
+      parseJSFUnitWebMetaData();
    }
 
+   private void parseJSFUnitWebMetaData()
+   {
+      // Parse JSFUnit web.xml
+      Unmarshaller unmarshaller = factory.newUnmarshaller();
+      URL webXml = this.getClass().getClassLoader().getResource("META-INF/web.xml");
+      if (webXml == null)
+         throw new IllegalStateException("Unable to find jsfunit web.xml");
+      
+      SchemaBinding schema = JBossXBBuilder.build(Web25MetaData.class);
+      
+      try
+      {
+         this.jsfunitWebMD = (Web25MetaData) unmarshaller.unmarshal(webXml.toString(), schema);
+      }
+      catch (JBossXBException e)
+      {
+         this.disabled = true;
+         log.error("Unable to parse jsfunit web.xml", e);
+      }
+   }
+   
    /**
     * Set the collection of suffixes that this deployer will use to choose
     * which wars to "JSFUnify".  For example, if the suffixes were "_jsfunit"
@@ -125,16 +151,14 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
    public void deploy(VFSDeploymentUnit unit, JBossWebMetaData metaData) throws DeploymentException
    {
       if (!isJSFUnitDeployment(unit)) return;
-      
-      try
+      if (disabled)
       {
-         mergeWebXml(metaData);
-      }
-      catch (JBossXBException e)
-      {
-         throw DeploymentException.rethrowAsDeploymentException("Error adding jsfunit web.xml elements", e);
+         log.warn(unit.getSimpleName() + " could not be deployed.  JSFUnitDeployer disabled from previous errors.");
+         return;
       }
       
+      mergeWebXml(metaData);
+
       try
       {
          addClasspaths(unit);
@@ -178,17 +202,8 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
    }
    
    // merge JSFUnit's web.xml with the WAR's web.xml
-   private void mergeWebXml(JBossWebMetaData metaData) throws JBossXBException
+   private void mergeWebXml(JBossWebMetaData metaData)
    {
-      // Parse JSFUnit web.xml
-      Unmarshaller unmarshaller = factory.newUnmarshaller();
-      URL webXml = this.getClass().getClassLoader().getResource("META-INF/web.xml");
-      if (webXml == null)
-         throw new IllegalStateException("Unable to find jsfunit web.xml");
-      
-      SchemaBinding schema = JBossXBBuilder.build(Web25MetaData.class);
-      Web25MetaData jsfunitWebMD = (Web25MetaData) unmarshaller.unmarshal(webXml.toString(), schema);
-      
       FiltersMetaData filters = metaData.getFilters();
       if (filters == null) filters = new FiltersMetaData();
       filters.addAll(jsfunitWebMD.getFilters());
