@@ -27,8 +27,6 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import java.io.IOException;
 import org.jboss.jsfunit.framework.JSFUnitWebConnection;
 import org.jboss.jsfunit.framework.WebClientSpec;
-import org.jboss.jsfunit.seam.SeamRequestListener;
-import org.jboss.jsfunit.seam.SeamUtil;
 
 /**
  * This class starts and manages the JSF Session on both the client and server side.
@@ -83,13 +81,6 @@ public class JSFSession
   
       this.jsfServerSession = new JSFServerSession();
       JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.webClient.getWebConnection();
-      
-      if (SeamUtil.isSeamInitialized())
-      {
-         SeamUtil.suppressSeamComponentWarning();
-         webConnection.addListener(new SeamRequestListener());
-      }
-      
       webConnection.addListener(this.jsfServerSession);
       
       this.jsfClientSession = new JSFClientSession(this.jsfServerSession, initialPage);

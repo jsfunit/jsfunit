@@ -117,4 +117,12 @@ public class HtmlUnitConversationScopeTest extends ServletTestCase
       FacesMessage message = (FacesMessage)server.getFacesMessages().next();
       assertEquals("Re-enter your password", message.getDetail());
    }
+   
+   // JSFUNIT-172
+   public void testIdentityExistsAfterInitialRequest() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      assertNotNull(server.getManagedBeanValue("#{identity}"));
+   }
 }

@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
+import org.jboss.jsfunit.seam.SeamRequestListener;
+import org.jboss.jsfunit.seam.SeamUtil;
 
 /**
  * The WebClientSpec allows configuration of the HtmlUnit WebClient and its
@@ -229,9 +231,19 @@ public class WebClientSpec implements HttpSessionBindingListener
    {
       if (this.initialRequestDone) throw new IllegalStateException("Initial request was already made.");
       addCookiesToHeader();
+      doSeamSetup();
+      
       Page page = this.requestStrategy.doInitialRequest(this);
       this.initialRequestDone = true;
       return page;
+   }
+   
+   private void doSeamSetup()
+   {
+      if (!SeamUtil.isSeamPresent()) return;
+      SeamUtil.suppressSeamComponentWarning();
+      JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.webClient.getWebConnection();
+      webConnection.addListener(new SeamRequestListener());
    }
    
    protected void addCookiesToHeader()

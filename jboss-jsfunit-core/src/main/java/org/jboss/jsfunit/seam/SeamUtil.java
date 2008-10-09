@@ -57,6 +57,17 @@ public class SeamUtil
       isLog4JAvailable = available;
    }
    
+   public static boolean isSeamPresent()
+   {
+      Class lifecycle = getSeamLifecycle();
+      return lifecycle != null;
+   }
+   
+   private static Class getSeamLifecycle()
+   {
+      return Environment.loadClass("org.jboss.seam.contexts.Lifecycle");
+   }
+   
    /**
     * Return <code>true</code> if the Seam framework is present and
     * initialized.
@@ -66,7 +77,7 @@ public class SeamUtil
     */
    public static boolean isSeamInitialized()
    {
-      Class lifecycle = Environment.loadClass("org.jboss.seam.contexts.Lifecycle");
+      Class lifecycle = getSeamLifecycle();
       if (lifecycle == null) return false;
       
       try

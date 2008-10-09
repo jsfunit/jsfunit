@@ -117,6 +117,14 @@
       <scope>compile</scope>
     </dependency>
 
+<!--
+    <dependency>
+      <groupId>org.apache.cactus</groupId>
+      <artifactId>cactus.core.framework.uberjar.javaEE.13</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    -->
+    
     <dependency>
       <groupId>javax.faces</groupId>
       <artifactId>jsf-api</artifactId>
