@@ -35,7 +35,6 @@ import java.util.Iterator;
 import java.util.List;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
-import org.xml.sax.SAXException;
 
 /**
  * This class provides helper methods for RichFaces controls.
@@ -72,13 +71,12 @@ public class RichFacesClient
     * @param componentID The JSF component ID or a suffix of the client ID.
     * @param value The value to set before the form is submitted.
     *
-    * @throws SAXException if the current response page can not be parsed
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
    public void setCalendarValue(String componentID, String value)
-         throws SAXException, IOException
+         throws IOException
    {
       jsfClient.setValue(componentID + "InputDate", value);
    }
@@ -252,7 +250,6 @@ public class RichFacesClient
     * @param tabPanelComponentID The JSF component ID or a suffix of the client ID
     *                            for the rich:tab component.
     *
-    * @throws SAXException if the current response page can not be parsed
     * @throws IOException if there is a problem submitting the form
     * @throws ComponentIDNotFoundException if the component can not be found 
     * @throws DuplicateClientIDException if more than one client ID matches the 
@@ -263,6 +260,22 @@ public class RichFacesClient
    {
       ClickableElement tab = (ClickableElement)jsfClient.getElement(tabComponentID + "_shifted");
       tab.click();
+   }
+   
+   /**
+    * Set a parameter value on a RichComboBox component.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws IOException if there is a problem submitting the form
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the 
+    *                                    componentID suffix
+    */
+   public void setComboBox(String componentID, String value) throws IOException
+   {
+      jsfClient.setValue(componentID + "comboboxValue", value);
    }
    
 }

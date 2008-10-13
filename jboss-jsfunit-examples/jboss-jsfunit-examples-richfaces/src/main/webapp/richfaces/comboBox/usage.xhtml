@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			
+			<p>
+				The component provides editable combobox element on the page.
+			</p>
+			<p><b>
+				Combo Box</b> is a simplified select based version of <i>Suggestion Box</i> component, which uses
+			</p>
+				<ul>
+					<li>client side suggestions</li>
+					<li>declarative definition with f:selectItem(s) components</li> 
+					<li>a list of string objects</li>
+				</ul>
+			<p>
+				When using selectItem(s) for suggestion definition you should define only value 
+				of the selectItem. It is used both for displaying and storing.
+			</p>
+
+			<fieldset class="demo_fieldset">
+				<legend class="demo_legend">Simple Combo Box with predefined suggestions</legend>
+				<div class="sample-container" >
+					<p>
+						The first simple example shows a declarative definition with f:selectItem components. 
+						Just enter <b>"s"</b> letter or click icon in order to trigger the suggestion.
+					</p>
+					<br/>
+					<ui:include src="/richfaces/comboBox/examples/simple.xhtml"/>
+					<ui:include src="/templates/include/sourceview.xhtml">
+						<ui:param name="sourcepath" value="/richfaces/comboBox/examples/simple.xhtml"/>
+					</ui:include>	
+                                        <ui:include src="/templates/include/sourceview.xhtml">
+                                            <ui:param name="sourcepath" value="/testsrc/RichComboBoxTest.java"/>
+                                            <ui:param name="openlabel" value="#{'View JSFUnit Source'}"/>
+                                            <ui:param name="sourcetype" value="#{'java'}"/>
+                                        </ui:include>
+				</div>
+			</fieldset>
+
+			<fieldset class="demo_fieldset">
+				<legend class="demo_legend">Combo Box with dynamic suggestions list</legend>
+				<div class="sample-container">
+					<p>
+					The next example uses a simple select Items list to provide suggestions. Also comboBox
+					does not select the first item by default after a list appears (<b>selectFirstOnUpdate </b>attribute
+					usage). Just enter any letter or click an icon in order to trigger the suggestion. 
+					</p>
+					<br/>
+					<ui:include src="/richfaces/comboBox/examples/selectItems.xhtml"/>
+					<ui:include src="/templates/include/sourceview.xhtml">
+						<ui:param name="sourcepath" value="/richfaces/comboBox/examples/selectItems.xhtml"/>
+					</ui:include>
+				</div>
+			</fieldset>
+
+			<fieldset class="demo_fieldset">
+				<legend class="demo_legend">Combo Box with a simple String list as suggestions list</legend>
+				<div class="sample-container">
+					<p>
+					The next definition example shows how to define a suggestions list using a simple String list.
+					And how to turn on an input suggestion feature with <b>directInputSuggestions </b>attribute.
+					Enter any letter or click an icon in order to trigger the suggestion.
+					</p>
+					<br/>
+					<ui:include src="/richfaces/comboBox/examples/collection.xhtml"/>
+					<ui:include src="/templates/include/sourceview.xhtml">
+						<ui:param name="sourcepath" value="/richfaces/comboBox/examples/collection.xhtml"/>
+					</ui:include>
+				</div>
+			</fieldset>
+		</ui:define>
+
+	</ui:composition>
+</html>
