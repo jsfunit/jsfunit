@@ -30,6 +30,7 @@ import com.meterware.httpunit.parsing.HTMLParserFactory;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.jboss.jsfunit.context.JSFUnitFacesContext;
 import org.jboss.jsfunit.seam.SeamUtil;
 import org.jboss.seam.contexts.ServletLifecycle;
 
@@ -178,6 +179,8 @@ public class WebConversationFactory
       {
          session.removeAttribute((String)e.nextElement());
       }
+      
+      JSFUnitFacesContext.cleanUpOldFacesContext();
       
       // start Seam session so @Startup beans in session scope will be initialized
       if (SeamUtil.isSeamInitialized())

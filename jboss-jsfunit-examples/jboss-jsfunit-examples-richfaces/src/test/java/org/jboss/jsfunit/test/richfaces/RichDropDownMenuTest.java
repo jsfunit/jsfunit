@@ -101,7 +101,7 @@ public class RichDropDownMenuTest extends ServletTestCase
       jsfSession.getWebClient().setThrowExceptionOnFailingStatusCode(false);
       client.click("jsfunitHomePageLink");
       String newUrl = client.getContentPage().getWebResponse().getUrl().toString();
-      assertEquals("https://www.jboss.org/jsfunit/", newUrl);
+      assertEquals("http://www.jboss.org/jsfunit/", newUrl);
    }
    
    public static Test suite()

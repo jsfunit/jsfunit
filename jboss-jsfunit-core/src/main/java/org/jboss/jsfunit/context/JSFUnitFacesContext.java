@@ -63,6 +63,8 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    
    public JSFUnitFacesContext(FacesContext delegate)
    {
+      if (delegate == null) throw new NullPointerException("delegate can not be null.");
+      
       this.delegate = delegate;
       setCurrentInstance(this);
    }
@@ -186,15 +188,17 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
     */
    public void release()
    {
-      ExternalContext extCtx = delegate.getExternalContext();
-      this.extContext = new JSFUnitExternalContext(extCtx);
-      
       // Make the FacesContext available to JSFUnit, if and only if a new
       // page was rendered.
-      if (viewHasChildren())
+      if (!viewHasChildren())
       {
-         extCtx.getSessionMap().put(SESSION_KEY, this);
+         cleanUp();
+         return;
       }
+      
+      ExternalContext extCtx = delegate.getExternalContext();
+      this.extContext = new JSFUnitExternalContext(extCtx);
+      extCtx.getSessionMap().put(SESSION_KEY, this);
    }
    
    private boolean viewHasChildren()
@@ -227,9 +231,24 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    }
    
    /**
-    * Attempt to clean up the previous FacesContext.
+    * This static method will attempt to clean up any FacesContext that is
+    * associated with the current thread.
     */
-   public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)
+   public static void cleanUpOldFacesContext()
+   {
+      FacesContext facesContext = FacesContext.getCurrentInstance();
+      if (facesContext == null) return;
+      
+      if (facesContext instanceof JSFUnitFacesContext)
+      {
+         JSFUnitFacesContext ctx = (JSFUnitFacesContext)facesContext;
+         ctx.cleanUp();
+      } else {
+         facesContext.release();
+      }
+   }
+   
+   private synchronized void cleanUp()
    {
       try
       {
@@ -237,8 +256,20 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
       }
       catch (Exception e)
       {
-         // ignore - I'm just being nice here
+         // ignore - best effort to clean up delegate
       }
+      finally
+      {
+         setCurrentInstance(null);
+      }
+   }
+   
+   /**
+    * Attempt to clean up the previous FacesContext.
+    */
+   public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)
+   {
+      cleanUp();
    }
    
    public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)

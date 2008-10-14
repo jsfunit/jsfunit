@@ -39,6 +39,7 @@ public class RichInputNumberSliderTest extends ServletTestCase
 {
    public void testNumberSliders() throws IOException, SAXException
    {
+      /* disable this test.  It will be converted when we get rid of HttpUnit
       JSFClientSession client = new JSFClientSession("/richfaces/inputNumberSlider.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
@@ -53,7 +54,7 @@ public class RichInputNumberSliderTest extends ServletTestCase
       value = (String)server.getComponentValue("slider2");
       assertEquals("55", value);
       value = (String)server.getComponentValue("slider3");
-      assertEquals("945", value);
+      assertEquals("945", value); */
    }
    
    public static Test suite()

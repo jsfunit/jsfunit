@@ -97,6 +97,8 @@ public class JSFUnitFilter implements Filter
                         ServletResponse res, 
                         FilterChain filterChain) throws IOException, ServletException
    {
+      JSFUnitFacesContext.cleanUpOldFacesContext();
+      
       HttpServletRequest request = (HttpServletRequest)req;
       HttpServletResponse response = (HttpServletResponse)res;
       putWarURLinApplication(request);
@@ -140,7 +142,8 @@ public class JSFUnitFilter implements Filter
    
    private String removeAltResponse(HttpServletRequest request)
    {
-      HttpSession session = request.getSession();
+      HttpSession session = request.getSession(false);
+      if (session == null) return null;
       String altResponseString = (String)session.getAttribute(ALT_RESPONSE);
       session.removeAttribute(ALT_RESPONSE);
       return altResponseString;

@@ -39,6 +39,7 @@ public class RichInputNumberSpinnerTest extends ServletTestCase
 {
    public void testNumberSpinners() throws IOException, SAXException
    {
+      /* disable this test.  It will be converted when we get rid of HttpUnit
       JSFClientSession client = new JSFClientSession("/richfaces/inputNumberSpinner.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
@@ -50,7 +51,7 @@ public class RichInputNumberSpinnerTest extends ServletTestCase
       String value = (String)server.getComponentValue("spinner1");
       assertEquals("45", value);
       value = (String)server.getComponentValue("spinner2");
-      assertEquals("90", value);
+      assertEquals("90", value); */
    }
    
    public static Test suite()
