@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import org.jboss.classloader.spi.base.BaseClassLoader;
 import org.jboss.deployers.spi.DeploymentException;
 import org.jboss.deployers.spi.deployer.DeploymentStages;
 import org.jboss.deployers.vfs.spi.deployer.AbstractSimpleVFSRealDeployer;
@@ -67,7 +68,7 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
 {
    private static final VirtualFileFilter JAR_FILTER = new SuffixMatchFilter(".jar");
    
-   private Collection<String> classpathUrls;
+   private Collection<String> classpathUrls = new ArrayList<String>();
    private Collection<String> warSuffixes;
    
    private Web25MetaData jsfunitWebMD;
@@ -89,6 +90,10 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
       
       // only need to do this once
       parseJSFUnitWebMetaData();
+      
+      // the deployer's classes need to be added to each WAR
+      BaseClassLoader classloader = (BaseClassLoader)getClass().getClassLoader();
+      this.classpathUrls.add(classloader.getName());
    }
 
    private void parseJSFUnitWebMetaData()
@@ -133,7 +138,7 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
     */
    public void setClasspathURLs(Collection<String> classpathUrls)
    {
-      this.classpathUrls = classpathUrls;
+      this.classpathUrls.addAll(classpathUrls);
    }
    
    private boolean isJSFUnitDeployment(VFSDeploymentUnit unit) {
