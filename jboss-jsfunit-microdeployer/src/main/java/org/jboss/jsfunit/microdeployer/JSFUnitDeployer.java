@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import org.jboss.classloader.spi.base.BaseClassLoader;
 import org.jboss.deployers.spi.DeploymentException;
 import org.jboss.deployers.spi.deployer.DeploymentStages;
 import org.jboss.deployers.vfs.spi.deployer.AbstractSimpleVFSRealDeployer;
@@ -92,8 +91,14 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
       parseJSFUnitWebMetaData();
       
       // the deployer's classes need to be added to each WAR
-      BaseClassLoader classloader = (BaseClassLoader)getClass().getClassLoader();
-      this.classpathUrls.add(classloader.getName());
+      this.classpathUrls.add(findDeployerBaseURL());
+   }
+   
+   private String findDeployerBaseURL()
+   {
+      URL descriptorURL = getClass().getClassLoader().getResource("/META-INF/jsfunit-deployers-jboss-beans.xml");
+      String urlString = descriptorURL.toString();
+      return urlString.substring(0, urlString.lastIndexOf("/META-INF/jsfunit-deployers-jboss-beans.xml"));
    }
 
    private void parseJSFUnitWebMetaData()
