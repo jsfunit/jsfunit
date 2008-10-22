@@ -25,6 +25,7 @@ package org.jboss.jsfunit.jsfsession;
 import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.TextPage;
+import com.gargoylesoftware.htmlunit.UnexpectedPage;
 import com.gargoylesoftware.htmlunit.WebWindowEvent;
 import com.gargoylesoftware.htmlunit.WebWindowListener;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
@@ -288,6 +289,8 @@ public class JSFClientSession implements WebWindowListener
    public void webWindowContentChanged(WebWindowEvent webWindowEvent)
    {
       Page page = webWindowEvent.getNewPage();
+      if (page instanceof UnexpectedPage) return;
+      
       if(!(page instanceof HtmlPage)) 
       {
          this.contentPage = page;
