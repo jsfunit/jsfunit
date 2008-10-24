@@ -9,7 +9,7 @@
 
   <validator>
     <validator-id>hellojsf.test.delayvalidator</validator-id>
-    <validator-class>org.jboss.jsfunit.example.hellojsf.DelayValidator</validator-class>
+    <validator-class>org.jboss.jsfunit.jsfsession.hellojsf.DelayValidator</validator-class>
   </validator>
 
 </faces-config>

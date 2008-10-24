@@ -20,12 +20,11 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.example.hellojsf;
+package org.jboss.jsfunit.jsfsession.hellojsf;
 
-import com.meterware.httpunit.GetMethodWebRequest;
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebRequest;
-import com.meterware.httpunit.WebResponse;
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.xml.XmlPage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -90,10 +89,10 @@ public class ManualInvokeTest extends TestCase
     */
    public void testInvokeWithServletTestRunner() throws Exception
    {
-      WebConversation webConversation = new WebConversation();
-      WebRequest req = new GetMethodWebRequest(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest");
-      WebResponse webResponse = webConversation.getResponse(req);
-      assertTrue(webResponse.getText().contains(
-                "<testsuite name=\"org.jboss.jsfunit.example.hellojsf.HelloJSFIntegrationTest\" tests=\"4\" failures=\"0\" errors=\"0\""));
+      WebClient webClient = new WebClient();
+      Page page = webClient.getPage(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest");
+      String text = ((XmlPage)page).asXml();
+      assertTrue(text.contains("<testsuite errors=\"0\" tests=\"5\"") 
+                 && text.contains("failures=\"0\" name=\"org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest\""));
    } 
 }

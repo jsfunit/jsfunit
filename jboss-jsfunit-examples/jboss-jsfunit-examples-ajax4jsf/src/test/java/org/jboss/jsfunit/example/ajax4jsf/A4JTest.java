@@ -22,14 +22,15 @@
 
 package org.jboss.jsfunit.example.ajax4jsf;
 
+import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.richfaces.Ajax4jsfClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.xml.sax.SAXException;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * Peform JSFUnit tests on three of the Ajax4jsf demo applications.
@@ -50,51 +51,45 @@ public class A4JTest extends ServletTestCase
    /**
     * Test the Echo demo page.
     */
-   public void testEcho() throws IOException, SAXException
+   public void testEcho() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/pages/echo.jsf");
-      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/pages/echo.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
       // Note: input_text is session scoped
-      client.setParameter("input_text", "foo");
-      ajaxClient.ajaxSubmit("a4jsupport");
+      client.type("input_text", 'f');
+      client.type("input_text", 'o');
+      client.type("input_text", 'o');
       assertEquals("foo", server.getManagedBeanValue("#{textbean.text}"));
       
       // simulate hitting the "b" key on the field
-      client.setParameter("input_text", "foob");
-      ajaxClient.ajaxSubmit("a4jsupport");
+      client.type("input_text", 'b');
       assertEquals("foob", server.getManagedBeanValue("#{textbean.text}"));
       
-      client.setParameter("input_text_request_scope", "foo");
-      ajaxClient.ajaxSubmit("a4jsupport_request_scope");
+      client.setValue("input_text_request_scope", "foo");
       assertEquals("foo", server.getComponentValue("input_text_request_scope"));
-      assertEquals("foo", 
-                  server.getManagedBeanValue("#{request_scope_textbean.text}"));
-      
-      // If you do a regular submit instead of an ajax request, request scoped 
-      // data is applied on the server side. Also, because the data for 
-      // input_text_request_scope was not applied to the server side view 
-      // previously, I have to set the parameter again.
-      client.setParameter("input_text_request_scope", "foo");
-      client.submit();
-      assertEquals("foo", 
-                   server.getComponentValue("input_text_request_scope"));
       assertEquals("foo", 
                   server.getManagedBeanValue("#{request_scope_textbean.text}"));
    }
    
+   private void clickOption(JSFClientSession client, String optionValue) throws IOException
+   {
+      HtmlPage page = (HtmlPage)client.getContentPage();
+      ClickableElement clickable = (ClickableElement)page.getByXPath("//option[@value='" + optionValue + "']").get(0);
+      clickable.click(); // click to select
+      client.click("list"); // click list to fire event
+   }
    /**
     * Test the Selection List demo
     */
-   public void testSelectionList() throws IOException, SAXException
+   public void testSelectionList() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/list.jsf");
-      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/list.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      client.setParameter("list", "Lott, Charlie");
-      ajaxClient.ajaxSubmit("a4jsupport");
+      clickOption(client, "Lott, Charlie");
       assertEquals("Mr.", 
                server.getManagedBeanValue("#{userList.currentUser.prefix}"));
       assertEquals("Charlie", 
@@ -106,8 +101,7 @@ public class A4JTest extends ServletTestCase
       assertEquals("Talk Radio Host", 
                server.getManagedBeanValue("#{userList.currentUser.jobTitle}"));
       
-      client.setParameter("list", "Story, Leslie");
-      ajaxClient.ajaxSubmit("a4jsupport");
+      clickOption(client, "Story, Leslie");
       assertEquals("Mrs.", 
                server.getManagedBeanValue("#{userList.currentUser.prefix}"));
       assertEquals("Leslie", 
@@ -134,39 +128,39 @@ public class A4JTest extends ServletTestCase
     * "command_link_up".  But there is only one that ends with 
     * "0:command_link_up" or "8:command_link_up".
     */
-   public void testRepeatRerender() throws IOException, SAXException
+   public void testRepeatRerender() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/pages/a4j-repeat-rerender.jsf");
-      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/pages/a4j-repeat-rerender.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      ajaxClient.ajaxSubmit("0:command_link_up");
+      client.click("0:command_link_up");
       assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[0]}"));
       
-      ajaxClient.ajaxSubmit("1:command_link_down");
-      ajaxClient.ajaxSubmit("1:command_link_down"); // do this one twice
+      client.click("1:command_link_down");
+      client.click("1:command_link_down"); // do this one twice
       assertEquals(3, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(-2, server.getManagedBeanValue("#{bean.collection[1]}"));
       
-      ajaxClient.ajaxSubmit("2:command_link_up");
+      client.click("2:command_link_up");
       assertEquals(4, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[2]}"));
       
-      ajaxClient.ajaxSubmit("8:command_link_up");
+      client.click("8:command_link_up");
       assertEquals(5, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[8]}"));
    }
    
-   public void testReferenceToAFacet() throws IOException, SAXException
+   public void testReferenceToAFacet() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/pages/a4j-repeat-rerender.jsf");
-      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/pages/a4j-repeat-rerender.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      client.setParameter("facettext", "foo");
+      client.setValue("facettext", "foo");
       
-      ajaxClient.ajaxSubmit("0:command_link_up");
+      client.click("0:command_link_up");
       assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[0]}"));
    }
@@ -174,22 +168,21 @@ public class A4JTest extends ServletTestCase
    /**
     * Test for http://jira.jboss.com/jira/browse/JSFUNIT-56
     */
-   public void testCommandLinkWithLongParam() throws IOException, SAXException
+   public void testCommandLinkWithLongParam() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/pages/a4j-repeat-rerender_JSFUNIT-56.jsf");
-      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/pages/a4j-repeat-rerender_JSFUNIT-56.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
       
-      ajaxClient.ajaxSubmit("0:fparam_command_link_up");
+      client.click("0:fparam_command_link_up");
    }
    
-   public void testA4JRedirect() throws IOException, SAXException
+   public void testA4JRedirect() throws IOException
    {
-      JSFClientSession client = new JSFClientSession("/index.jsf");
-      Ajax4jsfClient ajaxClient = new Ajax4jsfClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/index.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      ajaxClient.ajaxSubmit("redirect");
+      client.click("redirect");
       assertEquals("/pages/echo.xhtml", server.getCurrentViewID());
       testEcho(); // make sure I can continue
    }

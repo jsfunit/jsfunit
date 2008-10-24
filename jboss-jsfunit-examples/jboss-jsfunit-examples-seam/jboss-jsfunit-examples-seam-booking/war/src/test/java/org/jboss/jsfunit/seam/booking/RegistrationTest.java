@@ -27,11 +27,9 @@ import javax.faces.application.FacesMessage;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.jboss.jsfunit.framework.DebugUtil;
-import org.jboss.jsfunit.seam.SeamClient;
-import org.xml.sax.SAXException;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * 
@@ -51,35 +49,38 @@ public class RegistrationTest extends ServletTestCase
    
    /**
     */
-   public void testGoToRegisterPage() throws IOException, SAXException
+   public void testGoToRegisterPage() throws IOException
    {
-      SeamClient client = new SeamClient("/home.seam");
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      client.clickSLink("register");
+      client.click("register");
       assertEquals("/register.xhtml", server.getCurrentViewID());
    }
    
-   public void testRegisterNewUser() throws IOException, SAXException
+   public void testRegisterNewUser() throws IOException
    {
-      SeamClient client = new SeamClient("/home.seam");
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      client.clickSLink("register");
+      client.click("register");
       String username = new Long(System.currentTimeMillis()).toString();
-      client.setParameter("username", username); // unique name
-      client.setParameter(":name", "Stan Silvert");
-      client.setParameter("password", "foobar");
-      client.setParameter("verify", "foobar");
-      client.submit("register");
+      client.setValue("username", username); // unique name
+      client.setValue(":name", "Stan Silvert");
+      client.setValue("password", "foobar");
+      client.setValue("verify", "foobar");
+      client.click("register");
       
       assertEquals("/home.xhtml", server.getCurrentViewID());
    }
    
-   public void testLogin() throws IOException, SAXException
+   public void testLogin() throws IOException
    {
-      SeamClient client = new SeamClient("/home.seam");
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
       RegisterBot.registerUser("LoginTestUser", "password");
       RegisterBot.login(client, "LoginTestUser", "password");
@@ -88,10 +89,10 @@ public class RegistrationTest extends ServletTestCase
       assertEquals("/main.xhtml", server.getCurrentViewID());
    }
    
-   public void testRegisterAndLogin() throws IOException, SAXException
+   public void testRegisterAndLogin() throws IOException
    {
-      SeamClient client = RegisterBot.registerAndLogin("RegstrLoginUser", "password");
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFServerSession server = jsfSession.getJSFServerSession();
       FacesMessage message = (FacesMessage)server.getFacesMessages().next();
       assertTrue(message.getDetail().contains("Welcome, RegstrLoginUser"));
       assertEquals("/main.xhtml", server.getCurrentViewID());

@@ -26,8 +26,9 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.xml.sax.SAXException;
 
 /**
@@ -47,8 +48,9 @@ public class RegistrationTest extends ServletTestCase
     */
    public void setUp() throws IOException, SAXException
    {
-      this.client = new JSFClientSession("/register.seam");
-      this.server = new JSFServerSession(this.client);
+      JSFSession jsfSession = new JSFSession("/register.seam");
+      this.client = jsfSession.getJSFClientSession();
+      this.server = jsfSession.getJSFServerSession();
    }
    
    /**
@@ -69,9 +71,9 @@ public class RegistrationTest extends ServletTestCase
    
    public void testValidation() throws IOException, SAXException
    {
-      client.setParameter("username", "a");
-      client.setParameter("realname", "a");
-      client.setParameter("password", "a");
+      client.setValue("username", "a");
+      client.setValue("realname", "a");
+      client.setValue("password", "a");
       
       // inputs too short - validation error(s)
       assert(server.getFacesMessages().hasNext());
@@ -79,13 +81,13 @@ public class RegistrationTest extends ServletTestCase
    
    public void testGoToRegisteredPage() throws IOException, SAXException
    {
-      client.setParameter("username", "Mickey");
-      client.setParameter("realname", "Mickey Mouse");
-      client.setParameter("password", "cheesebread");
+      client.setValue("username", "Mickey");
+      client.setValue("realname", "Mickey Mouse");
+      client.setValue("password", "cheesebread");
       
-      client.submit("submitbutton");
+      client.click("submitbutton");
       
       assertEquals("/registered.xhtml", server.getCurrentViewID());
-      assertTrue(client.getWebResponse().getText().contains("Mickey"));
+      assertTrue(client.getPageAsText().contains("Mickey"));
    }
 }

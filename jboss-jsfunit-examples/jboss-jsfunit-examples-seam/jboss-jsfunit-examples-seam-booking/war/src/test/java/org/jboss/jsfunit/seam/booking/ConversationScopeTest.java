@@ -23,13 +23,11 @@
 package org.jboss.jsfunit.seam.booking;
 
 import java.io.IOException;
-import java.util.Iterator;
 import javax.faces.application.FacesMessage;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.seam.SeamClient;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.xml.sax.SAXException;
 
 /**
@@ -41,29 +39,30 @@ public class ConversationScopeTest extends ServletTestCase
    
    public void testGetHotelBooking() throws IOException, SAXException
    {
-      SeamClient client = RegisterBot.registerAndLogin("ConvScopeUser", "password");
-      JSFServerSession server = new JSFServerSession(client);
-      RichFacesClient richClient = new RichFacesClient(client);
+      JSFSession jsfSession = RegisterBot.registerAndLogin("ConvScopeUser", "password");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      JSFClientSession client = jsfSession.getJSFClientSession();
       
-      client.setParameter("searchString", "Hilton");
-      richClient.ajaxSubmit("findHotels");
-      assertTrue(richClient.getAjaxResponse().contains("Hilton"));
-      client.clickSLink(":0:viewHotel");
+      client.setValue("searchString", "Hilton");
+      client.click("findHotels");
+      assertTrue(client.getPageAsText().contains("Hilton"));
+      client.click(":0:viewHotel");
       assertEquals("/hotel.xhtml", server.getCurrentViewID());
       assertNotNull(server.getManagedBeanValue("#{hotel}"));
    }
 
    public void testTemporaryConversation() throws IOException, SAXException
    {
-      SeamClient client = new SeamClient("/home.seam");
-      JSFServerSession server = new JSFServerSession(client);
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      JSFClientSession client = jsfSession.getJSFClientSession();
       
-      client.clickSLink("register");
-      client.setParameter("username", "ssilvert");
-      client.setParameter(":name", "Stan Silvert");
-      client.setParameter("password", "foobar");
-      client.setParameter("verify", "barfoo");
-      client.submit("register");
+      client.click("register");
+      client.setValue("username", "ssilvert");
+      client.setValue(":name", "Stan Silvert");
+      client.setValue("password", "foobar");
+      client.setValue("verify", "barfoo");
+      client.click("register");
       
       FacesMessage message = (FacesMessage)server.getFacesMessages().next();
       assertEquals("Re-enter your password", message.getDetail());

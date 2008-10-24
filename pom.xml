@@ -75,7 +75,6 @@
             <link>http://java.sun.com/javaee/javaserverfaces/1.2/docs/api/</link>
             <link>http://jakarta.apache.org/cactus/api/framework-13</link>
             <link>http://htmlunit.sourceforge.net/apidocs</link>
-            <link>http://httpunit.sourceforge.net/doc/api</link>
           </links>
         </configuration>
       </plugin>
@@ -90,12 +89,6 @@
         <version>${project.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>httpunit</groupId>
-        <artifactId>httpunit</artifactId>
-        <version>1.6.2</version>
-      </dependency>    
-    
       <dependency>
         <groupId>net.sourceforge.htmlunit</groupId>
         <artifactId>htmlunit</artifactId>
@@ -290,7 +283,6 @@
   <modules>
     <module>jboss-jsfunit-core</module>
     <module>jboss-jsfunit-richfaces</module>
-    <module>jboss-jsfunit-seam</module>
     <module>jboss-jsfunit-ant</module>
     <module>jboss-jsfunit-examples</module>
     <module>jboss-jsfunit-analysis</module>

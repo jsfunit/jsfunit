@@ -45,22 +45,6 @@
     </dependency>
 
     <dependency>
-      <groupId>httpunit</groupId>
-      <artifactId>httpunit</artifactId>
-      <scope>compile</scope>
-      <exclusions>        
-        <exclusion>
-          <groupId>rhino</groupId>
-          <artifactId>js</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>nekohtml</groupId>
-          <artifactId>nekohtml</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    
-    <dependency>
        <groupId>net.sourceforge.htmlunit</groupId>
        <artifactId>htmlunit</artifactId>
        <scope>compile</scope>
@@ -115,6 +99,16 @@
       <groupId>cactus</groupId>
       <artifactId>cactus</artifactId>
       <scope>compile</scope>
+      <exclusions>
+         <exclusion>
+            <artifactId>nekohtml</artifactId>
+            <groupId>nekohtml</groupId>
+         </exclusion>
+         <exclusion>
+            <artifactId>httpunit</artifactId>
+            <groupId>httpunit</groupId>
+         </exclusion>
+      </exclusions>
     </dependency>
 
 <!--

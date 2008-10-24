@@ -25,7 +25,7 @@
         <p/>
         <h:inputText id="input_text_request_scope" size="50" 
                      value="#{request_scope_textbean.text}" >
-          <a4j:support id="a4jsupport_request_scope" event="onkeyup" 
+          <a4j:support id="a4jsupport_request_scope" event="onchange" 
                        reRender="rep2"/>
         </h:inputText>
         <h:outputText value="#{request_scope_textbean.text}" id="rep2"/>

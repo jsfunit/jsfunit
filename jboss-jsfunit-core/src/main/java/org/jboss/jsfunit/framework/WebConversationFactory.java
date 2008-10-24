@@ -24,9 +24,6 @@ package org.jboss.jsfunit.framework;
 
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.meterware.httpunit.HttpUnitOptions;
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.parsing.HTMLParserFactory;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -94,33 +91,6 @@ public class WebConversationFactory
    }
    
    /**
-    * Return a clean WebConversation to start sending JSF requests.
-    *
-    * @return A clean WebConverstaion for JSFUnit.
-    */
-   public static WebConversation makeWebConversation()
-   {
-      // JTidy causes exceptions in JBoss 5
-      String htmlParser = System.getProperty("jsfunit.htmlparser", "JTIDY");
-      if (!htmlParser.equalsIgnoreCase("NEKO")) HTMLParserFactory.useJTidyParser();
-      if (htmlParser.equalsIgnoreCase("NEKO")) HTMLParserFactory.useNekoHTMLParser();
-      
-      HttpUnitOptions.setScriptingEnabled(false);
-      WebConversation wc = new WebConversation();
-      HttpSession session = getSessionFromThreadLocal();
-      
-      if (session == null)
-      {
-         throw new IllegalStateException("Can not find HttpSession.  Perhaps JSFUnitFilter has not run?");
-      }
-      
-      clearSession(session);
-      wc.putCookie("JSESSIONID", session.getId());
-      wc.putCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);
-      return wc;
-   }
-   
-   /**
     * Package private method to initialize the wcSpec with a WebClient,
     * clear the sessioin, and add JSFUnit cookies to every request.
     *
@@ -150,25 +120,6 @@ public class WebConversationFactory
       
       wcSpec.addCookie("JSESSIONID", session.getId());
       wcSpec.addCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);
-   }
-   
-   /**
-    * Determine if the WebConversation was created with this factory.
-    *
-    * @return <code>true</code> if the WebConversation was created with this
-    *         factory.  <code>false</code> otherwise.
-    */
-   public static boolean isJSFUnitWebConversation(WebConversation webConversation)
-   {
-      if (webConversation == null) return false;
-      String jsessionid = webConversation.getCookieValue("JSESSIONID");
-      String testingFlag = webConversation.getCookieValue(JSF_UNIT_CONVERSATION_FLAG);
-      if ( (jsessionid == null) || (testingFlag == null) )
-      {
-          return false;
-      }
-      
-      return true;
    }
    
    // We need to start with a clean (but not new) session at the beginning of each

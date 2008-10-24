@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,45 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
+package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.xml.sax.SAXException;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
  *
  * @author Stan Silvert
  */
-public class AjaxJsFunctionTest extends ServletTestCase
+public class RichPanelMenuTest extends ServletTestCase
 {
-   private String[] Names = {"Alex", "Jonh", "Roger"};
-
-   public void testJsFunction() throws IOException, SAXException
-   {
-      JSFClientSession client = new JSFClientSession("/richfaces/jsFunction.jsf");
+   public void testAjaxModePanelMenu() throws IOException
+   { /*
+      JSFClientSession client = new JSFClientSession("/richfaces/panelMenu.jsf");
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = new JSFServerSession(client);
-
-      Map<String, String> param = new HashMap<String, String>();
-      for (String name : Names)
-      {
-         param.put("param1", name);
-         ajaxClient.ajaxSubmit("updateName", param);
-         assertEquals(name, server.getManagedBeanValue("#{userBean.name}"));
-      }
+      
+      ajaxClient.clickPanelMenuItem("Item_1_1");
+      String selection = (String)server.getManagedBeanValue("#{panelMenu.current}");
+      assertEquals("Item 1.1", selection);
+      
+      ajaxClient.clickPanelMenuItem("Item_1_3");
+      selection = (String)server.getManagedBeanValue("#{panelMenu.current}");
+      assertEquals("Item 1.3", selection);
+      
+      ajaxClient.clickPanelMenuItem("Item_2_4_2");
+      selection = (String)server.getManagedBeanValue("#{panelMenu.current}");
+      assertEquals("Item 2.4.2", selection); */
    }
    
    public static Test suite()
    {
-      return new TestSuite( AjaxJsFunctionTest.class );
+      return new TestSuite( RichPanelMenuTest.class );
    }
 }

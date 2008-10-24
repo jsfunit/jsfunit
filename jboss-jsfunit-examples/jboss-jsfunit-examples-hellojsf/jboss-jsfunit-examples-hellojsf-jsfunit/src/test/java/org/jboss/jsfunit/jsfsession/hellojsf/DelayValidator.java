@@ -19,38 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.jsfunit.example.richfaces;
 
-import java.io.IOException;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.richfaces.RichFacesClient;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.xml.sax.SAXException;
+package org.jboss.jsfunit.jsfsession.hellojsf;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
 /**
- * Peform JSFUnit tests on RichFaces demo application.
+ * Sleeps 1.5 seconds during validation phase.
  *
  * @author Stan Silvert
  */
-public class AjaxCommandLinkTest extends ServletTestCase
+public class DelayValidator implements Validator
 {
-   public static Test suite()
+   public void validate(FacesContext facesContext, UIComponent uIComponent, Object object) throws ValidatorException
    {
-      return new TestSuite( AjaxCommandLinkTest.class );
+      try
+      {
+         Thread.sleep(1500);
+      }
+      catch (InterruptedException e)
+      {
+         throw new RuntimeException(e);
+      }
    }
-
-   public void testCommandLink() throws IOException, SAXException
-   {
-      JSFClientSession client = new JSFClientSession("/richfaces/commandLink.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
-      
-      client.setParameter("inputName", "World");     
-      ajaxClient.ajaxSubmit("SayHelloLink");
-      Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
-      assertEquals("World", userBeanValue);
-   }
+   
 }

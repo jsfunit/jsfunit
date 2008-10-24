@@ -81,8 +81,6 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  */
 public class JSFUnitFilter implements Filter
 {
-   public static final String ALT_RESPONSE = JSFUnitFilter.class.getName() + "ALT_RESPONSE";
-   
    private ServletContext servletContext;
 
    private void putWarURLinApplication(HttpServletRequest request)
@@ -102,13 +100,6 @@ public class JSFUnitFilter implements Filter
       HttpServletRequest request = (HttpServletRequest)req;
       HttpServletResponse response = (HttpServletResponse)res;
       putWarURLinApplication(request);
-      
-      String altResponseString = removeAltResponse(request);
-      if (altResponseString != null)
-      {
-         sendAltResponse(response, altResponseString, request.getHeader("Content-Type"));
-         return;
-      }
       
       try 
       {
@@ -140,28 +131,6 @@ public class JSFUnitFilter implements Filter
       return request.getParameter("jsfunit.snoop") != null;
    }
    
-   private String removeAltResponse(HttpServletRequest request)
-   {
-      HttpSession session = request.getSession(false);
-      if (session == null) return null;
-      String altResponseString = (String)session.getAttribute(ALT_RESPONSE);
-      session.removeAttribute(ALT_RESPONSE);
-      return altResponseString;
-   }
-   
-   private void sendAltResponse(HttpServletResponse response, 
-                                String altResponseString,
-                                String contentType)
-                                throws IOException
-   {
-      if (contentType == null) contentType = "text/html";
-      response.setContentType(contentType);
-      PrintWriter writer = response.getWriter();
-      
-      writer.print(altResponseString);
-      writer.flush();
-   }
-
    private void snoop(HttpServletRequest request, HttpServletResponse response)
          throws IOException
    {
@@ -184,6 +153,7 @@ public class JSFUnitFilter implements Filter
    
    public void destroy()
    {
+      this.servletContext = null;
    }
    
 }

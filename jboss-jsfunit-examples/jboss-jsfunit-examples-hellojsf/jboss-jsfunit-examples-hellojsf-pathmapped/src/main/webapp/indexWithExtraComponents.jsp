@@ -1,7 +1,7 @@
 <%--
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -41,48 +41,33 @@
       <br/>
       <h:outputText id="funchecktext" value="Uncheck this box just for fun  "/>
       <h:selectBooleanCheckbox id="funcheck" value="#{checkbox.funCheck}"/>
+      <br/>
+      <h:inputTextarea id="MyTextArea" value="#{foo2.text}" />
+      <br/>
+      <h:selectOneRadio id="ColorSelect" value="#{foo3.text}">
+         <f:selectItem id="selectRed" itemValue="Red"/>
+         <f:selectItem id="selectGreen" itemValue="Green"/>
+         <f:selectItem id="selectBlue" itemValue="Blue"/>
+      </h:selectOneRadio>
+      <br/>
+      <h:selectManyListbox id="Weekdays">
+         <f:selectItem id="selectMonday" itemValue="Monday"/>
+         <f:selectItem id="selectTuesday" itemValue="Tuesday"/>
+         <f:selectItem id="selectWednesday" itemValue="Wednesday"/>
+         <f:selectItem id="selectThursday" itemValue="Thursday"/>
+         <f:selectItem id="selectFriday" itemValue="Friday"/>
+         <f:selectItem id="selectSaturday" itemValue="Saturday"/>
+      </h:selectManyListbox>
+      <br/>
+      <h:selectManyListbox id="WeekdaysUsingItemList">
+         <f:selectItems id="WeekdayItems" value="#{weekdaylist}"/>
+      </h:selectManyListbox>
       <br/><br/>
       <h:commandButton value="Hello" action="/index.jsp" id="submit_button"/>
       <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>
 
    </h:form>
    
-   <br/><br/>
-   <h2><h:outputText value="Sample JSFUnit Tests You Can Run Against This Application"/></h2>
-   
-   <h:panelGrid columns="3" border="1" cellpadding="2" id="panelGrid">
-      <h:outputText value="SimplifiedHelloJSFIntegrationTest"/>
-      <h:outputLink id="RunSimplifiedHelloJSFIntegrationTest" 
-                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.SimplifiedHelloJSFIntegrationTest&xsl=cactus-report.xsl">
-          <h:outputText value="Run Test"/>
-      </h:outputLink>
-      <h:outputLink id="SourceSimplifiedHelloJSFIntegrationTest" 
-                  value="SimplifiedHelloJSFIntegrationTest.java">
-          <h:outputText value="View Source"/>
-      </h:outputLink>
-
-      <h:outputText value="HelloJSFIntegrationTest"/>
-      <h:outputLink id="RunHelloJSFIntegrationTest" 
-                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest&xsl=cactus-report.xsl">
-          <h:outputText value="Run Test"/>
-      </h:outputLink>
-      <h:outputLink id="SourceHelloJSFIntegrationTest" 
-                  value="HelloJSFIntegrationTest.java">
-          <h:outputText value="View Source"/>
-      </h:outputLink>
-
-      <h:outputText value="FacadeAPITest"/>
-      <h:outputLink id="RunFacadeAPITest" 
-                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.FacadeAPITest&xsl=cactus-report.xsl">
-          <h:outputText value="Run Test"/>
-      </h:outputLink>
-      <h:outputLink id="SourceFacadeAPITest" 
-                  value="FacadeAPITest.java">
-          <h:outputText value="View Source"/>
-      </h:outputLink>
-
-   </h:panelGrid>
-      
 </f:view>
 
 </HTML>

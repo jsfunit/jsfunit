@@ -23,13 +23,11 @@
 package org.jboss.jsfunit.seam.booking;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
-import org.jboss.jsfunit.facade.JSFClientSession;
-import org.jboss.jsfunit.facade.JSFServerSession;
-import org.jboss.jsfunit.seam.SeamClient;
-import org.xml.sax.SAXException;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * The RegisterBot ensures that a user is registered so that a 
@@ -46,27 +44,20 @@ public class RegisterBot
     *
     * @throws IllegalArgumentException if the username/password is invalid.
     */
-   public static void registerUser(String username, String password) throws IOException, SAXException
+   public static void registerUser(String username, String password) throws IOException
    {
-      SeamClient client = null;
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
      
-      try
-      {
-         client = new SeamClient("/home.seam");
-      }
-      catch (MalformedURLException e)
-      {
-         throw new IllegalStateException("This should never happen", e);
-      }
+      // go to Registration screen
+      client.click("register");
       
-      JSFServerSession server = new JSFServerSession(client);
-     
-      client.clickSLink("register");
-      client.setParameter("username", username);
-      client.setParameter(":name", username + " created by RegisterBot");
-      client.setParameter("password", password);
-      client.setParameter("verify", password);
-      client.submit("register");
+      client.setValue("username", username);
+      client.setValue(":name", username + " created by RegisterBot");
+      client.setValue("password", password);
+      client.setValue("verify", password);
+      client.click("register");
       
       Iterator facesMessages = server.getFacesMessages();
       if (facesMessages.hasNext()) 
@@ -80,20 +71,22 @@ public class RegisterBot
    }
    
    public static void login(JSFClientSession client, String username, String password)
-         throws IOException, SAXException
+         throws IOException
    {
-      client.setParameter("username", username);
-      client.setParameter("password", password);
-      client.submit("login:login");
+      client.setValue("username", username);
+      client.setValue("password", password);
+      client.click("login:login");
    }
    
-    public static SeamClient registerAndLogin(String username, String password) 
-         throws IOException, SAXException
+    public static JSFSession registerAndLogin(String username, String password) 
+         throws IOException
     {
        registerUser(username, password);
-       SeamClient client = new SeamClient("/home.seam");
+       
+       JSFSession jsfSession = new JSFSession("/home.seam");
+       JSFClientSession client = jsfSession.getJSFClientSession();
        login(client, username, password);
-       return client;
+       return jsfSession;
     }
    
 }

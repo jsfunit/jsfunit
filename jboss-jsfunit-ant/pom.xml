@@ -37,12 +37,6 @@
     </dependency>
 
     <dependency>
-      <groupId>httpunit</groupId>
-      <artifactId>httpunit</artifactId>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
       <groupId>cactus</groupId>
       <artifactId>cactus</artifactId>
       <scope>compile</scope>
