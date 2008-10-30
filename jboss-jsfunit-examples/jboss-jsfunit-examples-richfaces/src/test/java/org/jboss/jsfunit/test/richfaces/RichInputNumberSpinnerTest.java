@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -25,6 +25,10 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
+import org.jboss.jsfunit.richclient.RichFacesClient;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -35,19 +39,23 @@ public class RichInputNumberSpinnerTest extends ServletTestCase
 {
    public void testNumberSpinners() throws IOException
    {
-      /* disable this test.  It will be converted when we get rid of HttpUnit
-      JSFClientSession client = new JSFClientSession("/richfaces/inputNumberSpinner.jsf");
+      JSFSession jsfSession = new JSFSession("/richfaces/inputNumberSpinner.jsf");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
       
-      ajaxClient.setInputNumberSpinner("spinner1", "45");
-      ajaxClient.setInputNumberSpinner("spinner2", "90");
-      ajaxClient.ajaxSubmit("form1");
+      ajaxClient.setInputNumberSpinner("spinner1", "44");
+      ajaxClient.clickInputNumberSpinnerUp("spinner1");
+      client.click("submit");
       
       String value = (String)server.getComponentValue("spinner1");
       assertEquals("45", value);
+      
+      ajaxClient.clickInputNumberSpinnerDown("spinner2");
+      client.click("submit");
+      
       value = (String)server.getComponentValue("spinner2");
-      assertEquals("90", value); */
+      assertEquals("40", value);
    }
    
    public static Test suite()

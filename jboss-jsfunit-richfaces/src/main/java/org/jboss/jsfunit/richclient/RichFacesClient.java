@@ -28,13 +28,17 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.w3c.dom.Element;
 
 /**
  * This class provides helper methods for RichFaces controls.
@@ -277,5 +281,64 @@ public class RichFacesClient
    {
       jsfClient.setValue(componentID + "comboboxValue", value);
    }
+   
+   /**
+    * Set the value of an InputNumberSpinner.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws IOException if an internal refresh is needed and there is an 
+    *                     error sending a request to the server.
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage. 
+    */
+   public void setInputNumberSpinner(String componentID, String value)
+         throws IOException
+   {
+     // /html/body/table[3]/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/div/form/table/tbody/tr/td/input
+      DomNode tdTag = (DomNode)jsfClient.getElement(componentID + "Edit");
+      HtmlInput input = (HtmlInput)tdTag.getChildNodes().item(0);
+      input.setValueAttribute(value);
+   }
+   
+   /**
+    * Click the up arrow on an InputNumberSpinner.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws IOException if an internal refresh is needed and there is an 
+    *                     error sending a request to the server.
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage. 
+    */
+   public void clickInputNumberSpinnerUp(String componentID)
+         throws IOException
+   {
+      HtmlTable table = (HtmlTable)jsfClient.getElement(componentID + "Buttons");
+      HtmlInput input = (HtmlInput)table.getByXPath("tbody/tr/td/input").get(0);
+      input.click();
+   }
+   
+   /**
+    * Click the down arrow on an InputNumberSpinner.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws IOException if an internal refresh is needed and there is an 
+    *                     error sending a request to the server.
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage. 
+    */
+   public void clickInputNumberSpinnerDown(String componentID)
+         throws IOException
+   {
+      DomNode table = (DomNode)jsfClient.getElement(componentID + "Buttons");
+      HtmlInput input = (HtmlInput)table.getByXPath("tbody/tr[2]/td/input").get(0);
+      input.click();
+   }
+
    
 }
