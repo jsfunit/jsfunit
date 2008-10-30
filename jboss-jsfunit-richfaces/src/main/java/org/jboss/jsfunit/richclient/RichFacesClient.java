@@ -296,7 +296,6 @@ public class RichFacesClient
    public void setInputNumberSpinner(String componentID, String value)
          throws IOException
    {
-     // /html/body/table[3]/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/div/form/table/tbody/tr/td/input
       DomNode tdTag = (DomNode)jsfClient.getElement(componentID + "Edit");
       HtmlInput input = (HtmlInput)tdTag.getChildNodes().item(0);
       input.setValueAttribute(value);
@@ -306,7 +305,6 @@ public class RichFacesClient
     * Click the up arrow on an InputNumberSpinner.
     *
     * @param componentID The JSF component ID or a suffix of the client ID.
-    * @param value The value to set before the form is submitted.
     *
     * @throws IOException if an internal refresh is needed and there is an 
     *                     error sending a request to the server.
@@ -325,7 +323,6 @@ public class RichFacesClient
     * Click the down arrow on an InputNumberSpinner.
     *
     * @param componentID The JSF component ID or a suffix of the client ID.
-    * @param value The value to set before the form is submitted.
     *
     * @throws IOException if an internal refresh is needed and there is an 
     *                     error sending a request to the server.
@@ -340,5 +337,21 @@ public class RichFacesClient
       input.click();
    }
 
-   
+   /**
+    * Set the value of an InputNumberSlider.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    * @param value The value to set before the form is submitted.
+    *
+    * @throws IOException if an internal refresh is needed and there is an 
+    *                     error sending a request to the server.
+    * @throws DuplicateClientIDException if more than one client ID matches the suffix
+    * @throws ClassCastException if the current page is not an HtmlPage. 
+    */
+   public void setInputNumberSlider(String componentID, String value)
+         throws IOException
+   {
+      HtmlInput input = (HtmlInput)jsfClient.getElement(componentID + "Input");
+      input.setValueAttribute(value);
+   }
 }

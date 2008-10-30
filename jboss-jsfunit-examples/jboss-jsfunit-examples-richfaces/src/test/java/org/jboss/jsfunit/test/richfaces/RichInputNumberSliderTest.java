@@ -25,6 +25,10 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
+import org.jboss.jsfunit.richclient.RichFacesClient;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -35,22 +39,22 @@ public class RichInputNumberSliderTest extends ServletTestCase
 {
    public void testNumberSliders() throws IOException
    {
-      /* disable this test.  It will be converted when we get rid of HttpUnit
-      JSFClientSession client = new JSFClientSession("/richfaces/inputNumberSlider.jsf");
+      JSFSession jsfSession = new JSFSession("/richfaces/inputNumberSlider.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
       ajaxClient.setInputNumberSlider("slider1", "45");
       ajaxClient.setInputNumberSlider("slider2", "55");
       ajaxClient.setInputNumberSlider("slider3", "945");
-      ajaxClient.ajaxSubmit("form1");
+      client.click("submit");
       
       String value = (String)server.getComponentValue("slider1");
       assertEquals("45", value);
       value = (String)server.getComponentValue("slider2");
       assertEquals("55", value);
       value = (String)server.getComponentValue("slider3");
-      assertEquals("945", value); */
+      assertEquals("950", value);  // it rounds to nearest 50
    }
    
    public static Test suite()
