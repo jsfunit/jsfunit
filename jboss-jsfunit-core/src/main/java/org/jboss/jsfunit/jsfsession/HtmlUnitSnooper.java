@@ -79,6 +79,13 @@ public class HtmlUnitSnooper implements RequestListener
    public void afterRequest(WebResponse webResponse) 
    {
       System.out.println("-----------Snooping HtmlUnit Response---------------------------");
+      
+      if (webResponse == null)
+      {
+         System.out.println("REQUEST THREW IOException.  Response is null.");
+         System.out.println("---------------------------------------------------------------");
+      }
+      
       System.out.println("Response time=" + webResponse.getLoadTimeInMilliSeconds() + "ms");
       System.out.println("Status code=" + webResponse.getStatusCode());
       System.out.println("Status message=" + webResponse.getStatusMessage());
