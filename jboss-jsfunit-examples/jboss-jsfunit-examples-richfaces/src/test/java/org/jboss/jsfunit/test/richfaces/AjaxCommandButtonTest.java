@@ -44,7 +44,7 @@ public class AjaxCommandButtonTest extends ServletTestCase
 
    public void testCommandButton() throws IOException, SAXException
    {
-    /*  JSFSession jsfSession = new JSFSession("/richfaces/commandButton.jsf");
+      JSFSession jsfSession = new JSFSession("/richfaces/commandButton.jsf");
       JSFServerSession server = jsfSession.getJSFServerSession();
       JSFClientSession client = jsfSession.getJSFClientSession();
       
@@ -53,6 +53,6 @@ public class AjaxCommandButtonTest extends ServletTestCase
       Object userBeanValue = server.getManagedBeanValue("#{userBean.name}");
       assertEquals("World", userBeanValue);
       //System.out.println(client.getPageAsText());
-      assertTrue(client.getPageAsText().contains("Hello World")); */
+      assertTrue(client.getPageAsText().contains("Hello World"));
    }
 }

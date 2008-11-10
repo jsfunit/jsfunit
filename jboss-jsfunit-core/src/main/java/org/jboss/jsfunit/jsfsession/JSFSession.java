@@ -83,6 +83,8 @@ public class JSFSession
       JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.webClient.getWebConnection();
       webConnection.addListener(this.jsfServerSession);
       
+      if (HtmlUnitSnooper.enabled()) webConnection.addListener(new HtmlUnitSnooper());
+      
       this.jsfClientSession = new JSFClientSession(this.jsfServerSession, initialPage);
       this.webClient.addWebWindowListener(this.jsfClientSession);
    }

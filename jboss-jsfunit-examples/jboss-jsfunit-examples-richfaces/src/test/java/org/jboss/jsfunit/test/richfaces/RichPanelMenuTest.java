@@ -25,6 +25,9 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.
@@ -34,22 +37,26 @@ import org.apache.cactus.ServletTestCase;
 public class RichPanelMenuTest extends ServletTestCase
 {
    public void testAjaxModePanelMenu() throws IOException
-   { /*
-      JSFClientSession client = new JSFClientSession("/richfaces/panelMenu.jsf");
-      RichFacesClient ajaxClient = new RichFacesClient(client);
-      JSFServerSession server = new JSFServerSession(client);
+   { 
+    /*  JSFSession jsfSession = new JSFSession("/richfaces/panelMenu.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
       
-      ajaxClient.clickPanelMenuItem("Item_1_1");
+      client.click("form1:Group1");
+      client.click("form1:Item_1_1");
+      client.click("submit");
       String selection = (String)server.getManagedBeanValue("#{panelMenu.current}");
       assertEquals("Item 1.1", selection);
       
-      ajaxClient.clickPanelMenuItem("Item_1_3");
+      client.click("form1:Item_1_3");
+      client.click("submit");
       selection = (String)server.getManagedBeanValue("#{panelMenu.current}");
       assertEquals("Item 1.3", selection);
       
-      ajaxClient.clickPanelMenuItem("Item_2_4_2");
+      client.click("form1:Item_2_4_2");
+      client.click("submit");
       selection = (String)server.getManagedBeanValue("#{panelMenu.current}");
-      assertEquals("Item 2.4.2", selection); */
+      assertEquals("Item 2.4.2", selection);  */
    }
    
    public static Test suite()

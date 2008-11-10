@@ -107,7 +107,22 @@ public class JSFClientSession implements WebWindowListener
       List elements = domPage.getByXPath(xpathQuery);
       if (elements.size() == 0) return null;
       if (elements.size() == 1) return (Element)elements.get(0);
+      Element exactMatch = findExactMatch(elements, componentID);
+      if (exactMatch != null) return exactMatch;
       throw new DuplicateClientIDException(elements, componentID);
+   }
+   
+   // JSFUNIT-178
+   private Element findExactMatch(List elements, String componentID)
+   {
+      for (Iterator i = elements.iterator(); i.hasNext();)
+      {
+         Element element = (Element)i.next();
+         String id = element.getAttribute("id");
+         if (id.equals(componentID)) return element;
+      }
+      
+      return null;
    }
    
    private String buildXPathQuery(String componentID)
