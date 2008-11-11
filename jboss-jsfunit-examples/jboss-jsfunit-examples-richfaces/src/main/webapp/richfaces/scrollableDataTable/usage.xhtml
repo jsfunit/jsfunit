@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<ui:composition template="/templates/component-sample.xhtml">
+	<ui:define name="sample">
+
+
+		<p>rich:scrollableDataTable represents the tabular data and has the following features
+		<ul>
+			<li>variable content of the table cells;</li>
+			<li>dynamically fetching of rows from the server when a table is scrolled up and down;</li>
+			<li>resizing of columns by the mouse dragging the column bar;</li>		
+			<li>sorting of columns by clicking the header;</li>		
+			<li>fixing of one or more left columns when a table is scrolled horizontally;</li>		
+			<li>customization of table look-n-feel from skin parameters</li>			
+		</ul>
+		</p>
+		<p>
+			Check the next simple demo. Additionally to lazy loading of rows you could check
+			frozenColumn feature using the horizontal scroll. Also in order to sort the table 
+			just click some header. And in order to get selected rows just click corresponding 
+			button below the table. 
+		</p>
+		<fieldset class="demo_fieldset">
+			<legend class="demo_legend">Scrollable DataTable example</legend>
+			<div class="sample-container">
+				<ui:include src="/richfaces/scrollableDataTable/examples/scrollableDataTable.xhtml"/>
+				<ui:include src="/templates/include/sourceview.xhtml">
+					<ui:param name="sourcepath" value="/richfaces/scrollableDataTable/examples/scrollableDataTable.xhtml"/>
+					<ui:param name="openlabel" value="View Source" />
+				</ui:include>			
+			</div>
+		</fieldset>
+		
+	</ui:define>
+</ui:composition>
+</html>

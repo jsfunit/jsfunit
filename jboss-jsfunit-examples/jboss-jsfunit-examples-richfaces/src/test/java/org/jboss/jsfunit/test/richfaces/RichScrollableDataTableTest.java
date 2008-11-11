@@ -21,7 +21,9 @@
  */
 package org.jboss.jsfunit.test.richfaces;
 
+import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import java.io.IOException;
+import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
@@ -60,6 +62,16 @@ public class RichScrollableDataTableTest extends ServletTestCase
    
    public void testScrollableDataTable() throws IOException
    {
+      /* Uncomment when HtmlUnit 2.4 is available
+      // need to add methods to RichFacesClient for this
+      ClickableElement stock = (ClickableElement)client.getElement("carList:c_0_5");
+      stock.click();
+      
+      client.click("setSelection");
+      
+      List selectedCars = (List)server.getManagedBeanValue("#{dataTableScrollerBean.selectedCars}");
+      assertEquals(1, selectedCars.size());
+       */
       assertTrue(true);
    }
    
