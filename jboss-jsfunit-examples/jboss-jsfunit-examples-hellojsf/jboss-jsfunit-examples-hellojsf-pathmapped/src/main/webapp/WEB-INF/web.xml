@@ -51,10 +51,6 @@
       <welcome-file>index.html</welcome-file>
    </welcome-file-list>
    
-   <security-role>
-      <role-name>user</role-name>
-   </security-role>
-   
    <security-constraint>
      <display-name>From Authentication for User</display-name>
      <web-resource-collection>
@@ -73,5 +69,9 @@
        <form-error-page>/error.jsp</form-error-page>
      </form-login-config>
    </login-config>
+   
+   <security-role>
+      <role-name>user</role-name>
+   </security-role>
    
 </web-app>
