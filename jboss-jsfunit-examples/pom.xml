@@ -150,6 +150,7 @@
               <wait>false</wait>
               <container>
                 <containerId>jboss5x</containerId>
+                <timeout>240000</timeout>  <!-- 4 minutes -->
                 <home>${JBOSS_HOME}</home>
                 <log>${basedir}/target/jboss5.x/cargo.log</log>
                 <output>${basedir}/target/jboss5.x/container.log</output>

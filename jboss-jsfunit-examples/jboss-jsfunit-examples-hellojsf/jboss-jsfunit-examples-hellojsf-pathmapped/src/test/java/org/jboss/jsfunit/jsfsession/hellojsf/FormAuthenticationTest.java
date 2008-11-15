@@ -50,8 +50,21 @@ public class FormAuthenticationTest extends ServletTestCase
    public void testFormAuth() throws IOException
    {
       WebClientSpec wcSpec = new WebClientSpec("/jsf/form-secured-page.jsp");
-      FormAuthenticationStrategy formStrategy = new FormAuthenticationStrategy("user", "password");
-      formStrategy.setSubmitComponent("login_button");
+      FormAuthenticationStrategy formStrategy = new FormAuthenticationStrategy("user", "password", "login_button");
+      wcSpec.setInitialRequestStrategy(formStrategy);
+      
+      JSFSession jsfSession = new JSFSession(wcSpec);
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      assertEquals("/form-secured-page.jsp", server.getCurrentViewID());
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
+   }
+   
+   // pretend that the naming for username and password components don't follow JEE/Servlet standard
+   public void testFormAuthNonStandard() throws IOException
+   {
+      WebClientSpec wcSpec = new WebClientSpec("/jsf/form-secured-page.jsp");
+      FormAuthenticationStrategy formStrategy = new FormAuthenticationStrategy("user", "password", "login_button", "j_username", "j_password");
       wcSpec.setInitialRequestStrategy(formStrategy);
       
       JSFSession jsfSession = new JSFSession(wcSpec);
@@ -64,8 +77,7 @@ public class FormAuthenticationTest extends ServletTestCase
    public void testInvalidLogin() throws IOException
    {
       WebClientSpec wcSpec = new WebClientSpec("/jsf/form-secured-page.jsp");
-      FormAuthenticationStrategy formStrategy = new FormAuthenticationStrategy("invaliduser", "invalidpassword");
-      formStrategy.setSubmitComponent("login_button");
+      FormAuthenticationStrategy formStrategy = new FormAuthenticationStrategy("invaliduser", "invalidpassword", "login_button");
       wcSpec.setInitialRequestStrategy(formStrategy);
       
       JSFSession jsfSession = new JSFSession(wcSpec);

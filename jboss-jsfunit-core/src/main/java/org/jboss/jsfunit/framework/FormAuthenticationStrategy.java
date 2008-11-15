@@ -49,31 +49,41 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
 
    private String userName;
    private String password;
+   
+   private String userNameComponent = "j_username";
+   private String passwordComponent = "j_password";
    private String submitComponent = "Submit";
    
    /**
-    * Create a new FormAuthenticationStrategy.
+    * Create a new FormAuthenticationStrategy.  User name and password fields
+    * default to standard JEE/Servlet naming standard.
     *
     * @param userName The user name.
     * @param password The password.
+    * @param submitComponent The value of the name attribute for the submit component.
     */
-   public FormAuthenticationStrategy(String userName, String password)
+   public FormAuthenticationStrategy(String userName, String password, String submitComponent)
    {
       this.userName = userName;
       this.password = password;
+      this.submitComponent = submitComponent;
    }
    
    /**
-    * Set the name of the submit component.  This should be the value of the
-    * name attribute that will cause the username/password to be submitted.  Note
-    * that this is the name attribute and not the id attribute.  The default 
-    * value is "Submit".
+    * Create a new FormAuthenticationStrategy.  Typically, this constructor is subclassed.
     *
-    * @param submitComponent The name of the component that will submit the credentials.
+    * @param userName The user name.
+    * @param password The password.
+    * @param submitComponent The value of the name attribute for the submit component.
+    * @param userNameComponent The value of the name attribute for the user name input.
+    * @param passwordComponent The value of the name attribute for the password input.
     */
-   public void setSubmitComponent(String submitComponent)
+   public FormAuthenticationStrategy(String userName, String password, 
+                                     String submitComponent, String userNameComponent, String passwordComponent)
    {
-      this.submitComponent = submitComponent;
+      this(userName, password, submitComponent);
+      this.userNameComponent = userNameComponent;
+      this.passwordComponent = passwordComponent;
    }
    
    /**
@@ -88,8 +98,8 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
    public Page doInitialRequest(WebClientSpec wcSpec) throws IOException
    {
       HtmlPage page = (HtmlPage)super.doInitialRequest(wcSpec);
-      setValue(page, "j_username", this.userName);
-      setValue(page, "j_password", this.password);
+      setValue(page, this.userNameComponent, this.userName);
+      setValue(page, this.passwordComponent, this.password);
       return clickSubmitComponent(page);
    }
    
