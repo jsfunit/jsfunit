@@ -65,6 +65,7 @@ public class SeamRequestListener implements RequestListener
    private void restoreConversation()
    {
       HttpServletRequest request = httpServletRequest();
+      if (request == null) return;
       ServletLifecycle.beginRequest(request);
       ServletContexts.instance().setRequest(request);
       ConversationPropagation.instance().restoreConversationId( request.getParameterMap() );
@@ -115,6 +116,7 @@ public class SeamRequestListener implements RequestListener
    private HttpServletRequest httpServletRequest()
    {
       FacesContext facesContext = FacesContextBridge.getCurrentInstance();
+      if (facesContext == null) return null;
       return (HttpServletRequest)facesContext.getExternalContext().getRequest();
    }
    
