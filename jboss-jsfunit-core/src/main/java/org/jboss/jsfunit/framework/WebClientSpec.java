@@ -113,6 +113,13 @@ public class WebClientSpec implements HttpSessionBindingListener
       this.proxyHost = proxyHost;
       this.proxyPort = proxyPort;
       WebConversationFactory.makeWebClient(this);
+      setFaceletsErrorDetector();
+   }
+   
+   private void setFaceletsErrorDetector()
+   {
+      JSFUnitWebConnection webConnection = (JSFUnitWebConnection)webClient.getWebConnection();
+      webConnection.addListener(new FaceletsErrorPageDetector());
    }
    
    /**
