@@ -92,7 +92,9 @@ public class ManualInvokeTest extends TestCase
       WebClient webClient = new WebClient();
       Page page = webClient.getPage(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest");
       String text = ((XmlPage)page).asXml();
-      assertTrue(text.contains("<testsuite errors=\"0\" tests=\"5\"") 
-                 && text.contains("failures=\"0\" name=\"org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest\""));
+      assertTrue(text.contains("errors=\"0\"") 
+                 && text.contains("tests=\"5\"") 
+                 && text.contains("failures=\"0\"") 
+                 && text.contains("name=\"org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest\""));
    } 
 }

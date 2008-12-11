@@ -22,6 +22,21 @@
 				<rich:menuItem id="Exit" submitMode="ajax" value="Exit"  action="#{ddmenu.doExit}"/>
 			
 			</rich:dropDownMenu>
+                        
+                        <rich:dropDownMenu id="FileServerMode" value="Server Mode File Menu">
+			
+				<rich:menuItem id="NewServerMode" submitMode="server" value="New" action="#{ddmenu.doNew}">
+				</rich:menuItem>
+				<rich:menuItem id="OpenServerMode" submitMode="server"  value="Open" action="#{ddmenu.doOpen}"/>
+				<rich:menuGroup id="SaveAsServerMode" value="Save As...">
+					<rich:menuItem id="TextFileServerMode" submitMode="server" value="Text File"  action="#{ddmenu.doSaveText}"/>
+					<rich:menuItem id="PDFFileServerMode" submitMode="server" value="PDF File"  action="#{ddmenu.doPDF}"/>
+				</rich:menuGroup>
+				<rich:menuItem id="CloseServerMode" submitMode="server" value="Close" action="#{ddmenu.doClose}"/>
+				<rich:menuSeparator id="menuSeparator11ServerMode"/>
+				<rich:menuItem id="ExitServerMode" submitMode="server" value="Exit"  action="#{ddmenu.doExit}"/>
+			
+			</rich:dropDownMenu>
 			
 			<rich:dropDownMenu>
 	

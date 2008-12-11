@@ -22,6 +22,7 @@
 package org.jboss.jsfunit.test.richfaces;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -48,23 +49,23 @@ public class RichDropDownMenuTest extends ServletTestCase
       
       client.click("New");
       String selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "New");
+      assertEquals("New", selection);
       
       client.click("Open");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Open");
+      assertEquals("Open", selection);
       
       client.click("TextFile");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Save as Text File");
+      assertEquals("Save as Text File", selection);
       
       client.click("Close");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Close");
+      assertEquals("Close", selection);
       
       client.click("Exit");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Exit");
+      assertEquals("Exit", selection);
    }
    
    public void testDropDownMenu() throws IOException, SAXException
@@ -75,23 +76,23 @@ public class RichDropDownMenuTest extends ServletTestCase
       
       client.click("New");
       String selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "New");
+      assertEquals("New", selection);
       
       client.click("Open");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Open");
+      assertEquals("Open", selection);
       
       client.click("TextFile");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Save as Text File");
+      assertEquals("Save as Text File", selection);
       
       client.click("Close");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Close");
+      assertEquals("Close", selection);
       
       client.click("Exit");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      assertEquals(selection, "Exit");
+      assertEquals("Exit", selection);
    }
    
    public void testClickHomePageLink() throws IOException, SAXException
@@ -103,6 +104,65 @@ public class RichDropDownMenuTest extends ServletTestCase
       String newUrl = client.getContentPage().getWebResponse().getUrl().toString();
       assertEquals("http://www.jboss.org/jsfunit/", newUrl);
    }
+   /* JSFUNIT-182
+   public void testServerModeDropDownMenuWithIE6() throws IOException, SAXException
+   {
+      WebClientSpec wcSpec = new WebClientSpec("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
+      JSFSession jsfSession = new JSFSession(wcSpec);
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      client.click("NewServerMode");
+      String selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("New", selection);
+      
+      client.click("OpenServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Open", selection);
+      
+      client.click("TextFileServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Save as Text File", selection);
+      
+      client.click("CloseServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Close", selection);
+      
+      client.click("ExitServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Exit", selection);
+   }
+   
+   public void testServerModeDropDownMenu() throws IOException, SAXException
+   {
+      JSFSession jsfSession = new JSFSession("/richfaces/dropDownMenu.jsf");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      System.out.println("&&&&& # 1 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+      client.click("NewServerMode");
+      HtmlElement html = (HtmlElement)client.getElement("NewServerMode");
+      System.out.println("#2: " + html.asXml());
+      String selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      System.out.println("#3");
+      assertEquals("New", selection);
+      System.out.println("&&&&&&& # 4 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+      
+      client.click("OpenServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Open", selection);
+      
+      client.click("TextFileServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Save as Text File", selection);
+      
+      client.click("CloseServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Close", selection);
+      
+      client.click("ExitServerMode");
+      selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
+      assertEquals("Exit", selection);
+   } */
    
    public static Test suite()
    {

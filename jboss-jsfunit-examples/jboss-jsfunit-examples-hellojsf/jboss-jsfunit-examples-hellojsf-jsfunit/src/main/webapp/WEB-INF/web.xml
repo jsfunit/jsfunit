@@ -4,7 +4,7 @@
    
     <context-param>
       <param-name>javax.faces.CONFIG_FILES</param-name>
-      <param-value>/WEB-INF/validator-config.xml,/WEB-INF/timer-config.xml</param-value>
+      <param-value>/WEB-INF/validator-config.xml,/WEB-INF/timer-config.xml,/WEB-INF/local-module-faces-config.xml</param-value>
     </context-param>
     
     <filter>

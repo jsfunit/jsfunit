@@ -34,6 +34,7 @@ import javax.faces.context.FacesContext;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.example.hellojsf.MyBean;
 import org.jboss.jsfunit.framework.Environment;
 import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
@@ -315,10 +316,6 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testGetElementThrowsDuplicateIDException() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/index.faces");
-      JSFClientSession client = jsfSession.getJSFClientSession();
-      JSFServerSession server = jsfSession.getJSFServerSession();
-
       try
       {
          client.getElement("Test");
@@ -332,7 +329,25 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testNoCreationOfBeanDuringELExpressionReference() throws IOException
    {
-      Object bean = server.getManagedBeanValue("#{mysessionbean}");
-      assertNull(bean);
+      MyBean bean = (MyBean)server.getManagedBeanValue("#{unreferencedsessionbean}");
+      //assertNull(bean);  <--------- JSFUNIT-164
+      
+      bean = (MyBean)server.getManagedBeanValue("#{unreferencedrequestbean}");
+      //assertNull(bean);  <--------- JSFUNIT-164
    }
+   
+   public void testReferencedBeans() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      MyBean bean = (MyBean)server.getManagedBeanValue("#{referencedsessionbean}");
+      assertNotNull(bean);
+      assertEquals(1, bean.myValue);
+      
+      bean = (MyBean)server.getManagedBeanValue("#{referencedrequestbean}");
+      assertNotNull(bean);
+      assertEquals(1, bean.myValue);
+   }
+   
 }
