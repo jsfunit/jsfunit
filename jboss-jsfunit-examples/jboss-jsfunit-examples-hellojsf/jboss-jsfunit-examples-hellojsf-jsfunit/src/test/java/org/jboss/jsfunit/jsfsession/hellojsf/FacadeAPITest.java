@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.jsfsession.hellojsf;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -285,22 +286,19 @@ public class FacadeAPITest extends ServletTestCase
       assertFalse(listOfValues.contains("Thursday"));
       assertTrue(listOfValues.contains("Friday"));
    }
-   /*
+   
    public void testSelectManyListboxWithItemList() throws IOException
    {
       JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
-      server.getClientIDs().dumpAllIDs();
-      UISelectItems selectItems = (UISelectItems)server.findComponent("WeekdayItems");
-      System.out.println("******************");
-      System.out.println("has children? " + selectItems.getFacetsAndChildren().hasNext());
-      System.out.println("selectItems.getValue classname=" + selectItems.getValue().getClass().getName());
-      System.out.println("******************");
-      
-      client.click("WeekdayItems:0");
-      client.click("WeekdayItems:2");
-      client.click("WeekdayItems:3");
+    
+      HtmlSelect select = (HtmlSelect)client.getElement("WeekdaysUsingItemList");
+      select.getOptionByValue("Monday").setSelected(true);
+      select.getOptionByValue("Tuesday").setSelected(false);
+      select.getOptionByValue("Wednesday").setSelected(true);
+      select.getOptionByValue("Thursday").setSelected(true);
+      select.getOptionByValue("Friday").setSelected(false);
       client.click("submit_button");
       
       HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("WeekdaysUsingItemList");
@@ -312,7 +310,7 @@ public class FacadeAPITest extends ServletTestCase
       assertTrue(listOfValues.contains("Wednesday"));
       assertTrue(listOfValues.contains("Thursday"));
       assertFalse(listOfValues.contains("Friday"));
-   } */
+   }
    
    public void testGetElementThrowsDuplicateIDException() throws IOException
    {

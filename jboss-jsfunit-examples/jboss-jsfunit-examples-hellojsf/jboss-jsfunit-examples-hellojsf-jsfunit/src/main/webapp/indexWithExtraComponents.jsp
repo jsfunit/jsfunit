@@ -66,9 +66,9 @@
       <h:commandButton value="Hello" action="/index.jsp" id="submit_button"/>
       <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>
       <br/><br/>
-      <h:outputText id="requestBean" value="request bean value = #{referencedrequestbean}"/>
+      <h:outputText id="requestBean" value="request bean value = #{referencedrequestbean.myValue}"/>
       <br/>
-      <h:outputText id="sessionBean" value="request bean value = #{referencedsessionbean}"/>
+      <h:outputText id="sessionBean" value="request bean value = #{referencedsessionbean.myValue}"/>
    </h:form>
    
 </f:view>

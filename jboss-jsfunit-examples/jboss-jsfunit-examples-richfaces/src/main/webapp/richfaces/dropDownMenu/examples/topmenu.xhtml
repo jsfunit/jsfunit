@@ -85,8 +85,8 @@
 		</rich:toolBar>
 	</h:form>					
 	<a4j:outputPanel ajaxRendered="true">
-		<h:outputText value="Current Selection: "></h:outputText>
-		<h:outputText style="font-weight:bold" value="#{ddmenu.current}"></h:outputText>
+		<h:outputText id="currentSelectionLabel" value="Current Selection: "></h:outputText>
+		<h:outputText id="currentSelectionValue" style="font-weight:bold" value="#{ddmenu.current}"></h:outputText>
 	</a4j:outputPanel>
 
 </ui:composition>
