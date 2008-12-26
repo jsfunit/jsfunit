@@ -51,10 +51,18 @@ public class HotelBookingAction implements HotelBooking
    
    private boolean bookingValid;
    
+   private String hotelName;
+   
    @Begin
    public void selectHotel(Hotel selectedHotel)
    {
       hotel = em.merge(selectedHotel);
+      hotelName = hotel.getName();
+   }
+   
+   public String getSelectedHotelName()
+   {
+      return hotelName;
    }
    
    public void bookHotel()

@@ -16,7 +16,7 @@
     <module>jboss-jsfunit-examples-hellojsf-webapp</module>
     <module>jboss-jsfunit-examples-hellojsf-jsfunit</module>
     <module>jboss-jsfunit-examples-hellojsf-pathmapped</module>
-    <module>jboss-jsfunit-examples-hellojsf-ant</module>
+   <!-- <module>jboss-jsfunit-examples-hellojsf-ant</module> -->
   </modules>
     
 </project>

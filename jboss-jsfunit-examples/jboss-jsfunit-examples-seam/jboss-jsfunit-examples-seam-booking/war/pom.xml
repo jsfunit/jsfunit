@@ -14,6 +14,13 @@
   
   <dependencies>
     <dependency>
+       <groupId>org.jboss.jsfunit</groupId>
+       <artifactId>jboss-jsfunit-examples-seam-booking-ejb</artifactId>
+       <scope>provided</scope>
+       <version>${project.version}</version>
+    </dependency>
+    
+    <dependency>
       <groupId>org.jboss.seam</groupId>
       <artifactId>jboss-seam</artifactId>
       <scope>provided</scope>
@@ -157,6 +164,11 @@
       <scope>compile</scope>
     </dependency>
     
+    <dependency>
+       <groupId>javax.servlet</groupId>
+       <artifactId>servlet-api</artifactId>
+       <scope>provided</scope>
+    </dependency>
   </dependencies>
   
   <build>

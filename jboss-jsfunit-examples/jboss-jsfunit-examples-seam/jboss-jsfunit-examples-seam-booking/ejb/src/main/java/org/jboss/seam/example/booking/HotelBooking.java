@@ -8,6 +8,8 @@ public interface HotelBooking
 {
    public void selectHotel(Hotel selectedHotel);
    
+   public String getSelectedHotelName();
+   
    public void bookHotel();
    
    public void setBookingDetails();

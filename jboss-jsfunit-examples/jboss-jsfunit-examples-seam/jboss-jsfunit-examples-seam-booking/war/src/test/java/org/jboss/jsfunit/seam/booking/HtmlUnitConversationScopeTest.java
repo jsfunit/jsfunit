@@ -29,6 +29,8 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
+import org.jboss.seam.example.booking.Hotel;
+import org.jboss.seam.example.booking.HotelBooking;
 
 /**
  * Tests JSFUnit interaction with Seam conversation scope.
@@ -64,10 +66,30 @@ public class HtmlUnitConversationScopeTest extends ServletTestCase
       assertTrue(client.getPageAsText().contains("Hilton Tel Aviv"));
       
       client.click(":0:viewHotel");
-      
       assertEquals("/hotel.xhtml", server.getCurrentViewID());
+      
+      client.click("hotel:bookHotel");
+      
+      Hotel hotel = (Hotel)server.getManagedBeanValue("#{seamconversation.hotel}");
       assertNotNull(server.getManagedBeanValue("#{hotel}"));
+      assertEquals("Hilton Diagonal Mar", hotel.getName());
+      
+      HotelBooking booking = (HotelBooking)server.getManagedBeanValue("#{seamconversation.hotelBooking}");
+      assertNotNull(booking);
+      String selectedHotelName = booking.getSelectedHotelName();
+      assertEquals("Hilton Diagonal Mar", selectedHotelName);
    } 
+   
+   // Make sure that conversation scope cache gets cleared when a new JSFSession
+   // is created.
+   public void testConversationScopeLeak() throws IOException
+   {
+      testGetHotelBooking();
+      
+      JSFSession jsfSession = new JSFSession("/home.seam");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      assertNull(server.getManagedBeanValue("#{seamconversation.hotel}"));
+   }
    
    /**
     * Register a new user for the booking demo.  If the username already exists

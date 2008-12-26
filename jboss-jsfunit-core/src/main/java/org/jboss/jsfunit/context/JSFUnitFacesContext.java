@@ -38,7 +38,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
@@ -71,7 +70,7 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    
    public Iterator getMessages(String clientId)
    {
-      if (this.extContext == null) return delegate.getMessages(clientId);
+      if (!isJSFRequestDone()) return delegate.getMessages(clientId);
       
       List<FacesMessage> messages = this.messagesByClientId.get(clientId);
       if (messages == null) return new ArrayList().iterator();
@@ -128,7 +127,7 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    
    public ExternalContext getExternalContext()
    {
-      if (this.extContext == null)
+      if (!isJSFRequestDone())
       {
          return new JSFUnitDelegatingExternalContext(delegate.getExternalContext());
       }
@@ -143,7 +142,7 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    
    public Iterator getMessages()
    {
-      if (this.extContext == null) return delegate.getMessages();
+      if (!isJSFRequestDone()) return delegate.getMessages();
       
       return this.allMessages.iterator();
    }
@@ -216,13 +215,18 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
       setCurrentInstance(this);
    }
    
+   public boolean isJSFRequestDone()
+   {
+      return this.extContext != null;
+   }
+   
    public ELContext getELContext()
    {
       ELContext elContext = delegate.getELContext();
       
       // if JSF lifecycle is over we are using the JSFUnitFacesContext
       // instead of the delegate.  So we need to replace it in ELContext
-      if (this.extContext != null)
+      if (isJSFRequestDone())
       {
          elContext.putContext(FacesContext.class, this);
       }

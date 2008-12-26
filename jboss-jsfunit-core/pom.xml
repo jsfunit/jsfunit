@@ -75,13 +75,13 @@
        <artifactId>commons-io</artifactId>
        <scope>compile</scope>
     </dependency>
-    
+    <!--
     <dependency>
       <groupId>rhino</groupId>
       <artifactId>js</artifactId>
       <scope>compile</scope>
     </dependency>
-    
+    -->
     <dependency>
        <groupId>net.sourceforge.cssparser</groupId>
        <artifactId>cssparser</artifactId>
