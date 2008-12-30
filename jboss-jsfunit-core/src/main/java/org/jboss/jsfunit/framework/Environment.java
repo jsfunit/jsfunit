@@ -22,6 +22,9 @@
 
 package org.jboss.jsfunit.framework;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Contains methods to determine the test environment.
  *
@@ -29,55 +32,98 @@ package org.jboss.jsfunit.framework;
  */
 public class Environment
 {
+   private static final Class appClass = loadClass("javax.faces.application.Application");
+   
+   private static final List methods12 = 
+           Arrays.asList(new String[] {"getELResolver", 
+                                       "getExpressionFactory"});
+   
+   private static final List methods20 = 
+           Arrays.asList(new String[] {"getResourceHandler", 
+                                       "setResourceHandler",
+                                       "setPageDeclarationLanguage"});
+   
+   private static final boolean is12Compatible;
+   private static final boolean is20Compatible;
+   
+   static
+   {
+      if (appClass != null)
+      {
+         is12Compatible = appHasMethod("getELResolver") &&
+                          appHasMethod("getExpressionFactory");
+         
+         is20Compatible = appHasMethod("getResourceHandler") &&
+                          appHasMethod("getProjectStage");
+      }
+      else
+      {
+         is12Compatible = false;
+         is20Compatible = false;
+      }
+   }
    
    // don't allow an instance of this static utility class
    private Environment()
    {
    }
    
+   private static boolean appHasMethod(String methodName, Class... params)
+   {
+      try
+      {
+         return appClass.getMethod(methodName, params) != null;
+      }
+      catch (Throwable e)
+      {
+         return false;
+      }
+   }
+   
    /**
-    * Until JSF 2.0 is released, this will always return 1.
+    * Determine if the running JSF version is compatible with the JSF 2.0
+    * specification.
+    * 
+    * @return <code>true</code> if running JSF 2.0 or higher, <code>false</code> otherwise.
+    */
+   public static boolean is20Compatible()
+   {
+      return is20Compatible;
+   }
+   
+   /**
+    * Determine if the running JSF version is compatible with the JSF 1.2
+    * specification.
+    * 
+    * @return <code>true</code> if running JSF 1.2 or higher, <code>false</code> otherwise.
+    */
+   public static boolean is12Compatible()
+   {
+      return is12Compatible;
+   }
+
+   /**
+    * Return 2 for JSF 2.0 and above.  Return 1 otherwise.
     *
-    * @return 1
+    * @return 2 for JSF 2.0 and above.  Return 1 otherwise.
     */
    public static int getJSFMajorVersion()
    {
+      if (is20Compatible()) return 2;
+      
       return 1;
    }
    
    /**
-    * Returns the JSF minor version.  The method will not detect JSF 1.0.
+    * Returns the JSF minor version.  This method will not detect JSF 1.0.
     *
-    * @return 2 for JSF 1.2, otherwise returns 1
-    *
-    * @throws IllegalStateException if minor version can not be determined.
+    * @return 1 for JSF 1.1, 2 for JSF 1.2, or 0 for JSF 2.0.
     */
    public static int getJSFMinorVersion()
    {
-      try
-      {
-         Class appClass = loadClass("javax.faces.application.Application");
+      if (is20Compatible()) return 0;
       
-         if (appClass == null) return 1;
-         
-         if ((appClass.getMethod("getELResolver") != null) &&
-             (appClass.getMethod("getExpressionFactory") != null))
-         {
-            return 2;
-         }
-      }
-      catch (NoSuchMethodException e)
-      {
-         // do nothing
-      }
-      catch (NoClassDefFoundError e)
-      {
-         // do nothing
-      }
-      catch (Exception e)
-      {
-         throw new IllegalStateException(e);
-      }
+      if (is12Compatible()) return 2;
       
       return 1;
    }

@@ -24,6 +24,8 @@ package org.jboss.jsfunit.context;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.Principal;
@@ -39,6 +41,7 @@ import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.jboss.jsfunit.framework.Environment;
 
 /**
  * The JSFUnitExternalContext is created at the end of the JSF lifecycle.  It
@@ -74,6 +77,7 @@ public class JSFUnitExternalContext extends ExternalContext
    private Object session;
    private Map sessionMap;
    private Principal userPrincipal;
+   private int requestContentLength;
    
    public JSFUnitExternalContext(ExternalContext delegate)
    {
@@ -106,7 +110,13 @@ public class JSFUnitExternalContext extends ExternalContext
       this.sessionMap = new HashMap(delegate.getSessionMap());
       this.userPrincipal = delegate.getUserPrincipal();
       
+      if (Environment.is20Compatible())
+      {
+         this.requestContentLength = delegate.getRequestContentLength();
+      }
+      
       this.httpServletRequest = new JSFUnitHttpServletRequest(this, (HttpServletRequest)delegate.getRequest());
+      
    }
    
    public Map getRequestCookieMap()
@@ -302,10 +312,171 @@ public class JSFUnitExternalContext extends ExternalContext
       return url;
    }
    
+   //----------------- JSF 2.0 Methods --------------------------------------------
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void addResponseCookie(String name, String value, Map<String, Object> properties)
+   {
+      delegate.addResponseCookie(name, value, properties);
+   }
+
+   @Override
+   public String getMimeType(String file)
+   {
+      return context.getMimeType(file);
+   }
+
+   @Override
+   public String getRealPath(String path)
+   {
+      return context.getRealPath(path);
+   }
+
+   @Override
+   public String getRequestCharacterEncoding()
+   {
+      return httpServletRequest.getCharacterEncoding();
+   }
+
+   @Override
+   public String getRequestContentType()
+   {
+      return httpServletRequest.getContentType();
+   }
+
+   @Override
+   public String getRequestScheme()
+   {
+      return httpServletRequest.getScheme();
+   }
+
+   @Override
+   public String getRequestServerName()
+   {
+      return httpServletRequest.getServerName();
+   }
+
+   @Override
+   public int getRequestServerPort()
+   {
+      return httpServletRequest.getServerPort();
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public String getResponseCharacterEncoding()
+   {
+      return delegate.getResponseCharacterEncoding();
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public String getResponseContentType()
+   {
+      return delegate.getResponseContentType();
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public OutputStream getResponseOutputStream() throws IOException
+   {
+      return delegate.getResponseOutputStream();
+   }
+
+   @Override
+   public void invalidateSession()
+   {
+      ((JSFUnitHttpSession)session).invalidate();
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void setRequest(Object request)
+   {
+      delegate.setRequest(request);
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void setRequestCharacterEncoding(String encoding) throws UnsupportedEncodingException
+   {
+      delegate.setRequestCharacterEncoding(encoding);
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void setResponse(Object response)
+   {
+      delegate.setResponse(response);
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void setResponseCharacterEncoding(String encoding)
+   {
+      delegate.setResponseCharacterEncoding(encoding);
+   }
+
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void setResponseContentType(String contentType)
+   {
+      delegate.setResponseContentType(contentType);
+   }
+
+   @Override
+   public String getContextName()
+   {
+      return context.getServletContextName();
+   }
+
+   @Override
+   public int getRequestContentLength()
+   {
+      return this.requestContentLength;
+   }
+   
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void addResponseHeader(String name, String value)
+   {
+      delegate.addResponseHeader(name, value);
+   }
+   
+   /**
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
+    */
+   @Override
+   public void setResponseHeader(String name, String value)
+   {
+      delegate.setResponseHeader(name, value);
+   }
+//----------------- End JSF 2.0  Methods --------------------------------------------
+   
 // ----- Methods that rely on HttpRequest or HttpResponse: These objects may
 // ----- have been recycled/reclaimed by the servlet container.
    /**
-    * Warning: This method could yield unexpected results.
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
     */
    public boolean isUserInRole(String string)
    {
@@ -313,7 +484,7 @@ public class JSFUnitExternalContext extends ExternalContext
    }
 
    /**
-    * Warning: This method could yield unexpected results.
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
     */
    public Object getResponse()
    {
@@ -321,7 +492,7 @@ public class JSFUnitExternalContext extends ExternalContext
    }
    
    /**
-    * Warning: This method could yield unexpected results.
+    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
     */
    public Object getRequest()
    {

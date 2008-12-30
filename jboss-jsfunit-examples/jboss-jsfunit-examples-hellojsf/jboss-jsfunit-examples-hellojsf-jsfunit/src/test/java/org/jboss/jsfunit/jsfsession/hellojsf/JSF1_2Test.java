@@ -35,10 +35,9 @@ import org.xml.sax.SAXException;
 
 /**
  * This class does all of the tests in the FacadeAPITest, but it does it
- * against a form that uses a <f:subview> and prependId="false".  Also, we
- * use this class to test the Environment class.
+ * against a form that uses a <f:subview> and prependId="false".  
  *
- * These tests will only run in a JSF 1.2 environment.
+ * These tests will only run in a JSF 1.2 compatible environment.
  * 
  * @author Stan Silvert
  */
@@ -64,20 +63,8 @@ public class JSF1_2Test extends ServletTestCase
     */
    public static Test suite()
    {
-      if (Environment.getJSFMinorVersion() != 2) return new TestSuite();
+      if (!Environment.is12Compatible()) return new TestSuite();
       return new TestSuite( JSF1_2Test.class );
-   }
-   
-   public void testJSFMajorVersion() 
-   {
-      assertEquals(1, Environment.getJSFMajorVersion());
-   }
-   
-   public void testJSFMinorVersion()
-   {
-      String jsfMinorProp = System.getProperty("jsfunit.jsfMinorVersion", "2");
-      int minorVersion = Integer.parseInt(jsfMinorProp);
-      assertEquals(minorVersion, Environment.getJSFMinorVersion());
    }
    
    public void testSetParamAndSubmit() throws IOException, SAXException

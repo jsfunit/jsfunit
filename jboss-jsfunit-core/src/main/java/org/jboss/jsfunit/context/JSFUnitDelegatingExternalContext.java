@@ -24,6 +24,7 @@ package org.jboss.jsfunit.context;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -318,4 +319,89 @@ public class JSFUnitDelegatingExternalContext extends ExternalContext
    {
       wrapped.setRequestCharacterEncoding(encoding);
    }
+   
+   //--------- JSF 2.0 Methods -------------------------------------
+   @Override
+   public void addResponseCookie(String name, String value, Map<String, Object> properties)
+   {
+      wrapped.addResponseCookie(name, value, properties);
+   }
+
+   @Override
+   public String getContextName()
+   {
+      return wrapped.getContextName();
+   }
+
+   @Override
+   public String getMimeType(String arg0)
+   {
+      return wrapped.getMimeType(arg0);
+   }
+
+   @Override
+   public String getRealPath(String arg0)
+   {
+      return wrapped.getRealPath(arg0);
+   }
+
+   @Override
+   public int getRequestContentLength()
+   {
+      return wrapped.getRequestContentLength();
+   }
+
+   @Override
+   public String getRequestScheme()
+   {
+      return wrapped.getRequestScheme();
+   }
+
+   @Override
+   public String getRequestServerName()
+   {
+      return wrapped.getRequestServerName();
+   }
+
+   @Override
+   public int getRequestServerPort()
+   {
+      return wrapped.getRequestServerPort();
+   }
+
+   @Override
+   public OutputStream getResponseOutputStream() throws IOException
+   {
+      return wrapped.getResponseOutputStream();
+   }
+
+   /**
+    * Invalidate the session.  This does not actually destroy the session.  It
+    * leaves the session intact and removes all elements except those used
+    * by the JSFUnit framework.
+    */
+   @Override
+   public void invalidateSession()
+   {
+      if (this.session != null) this.session.invalidate();
+   }
+
+   @Override
+   public void setResponseContentType(String arg0)
+   {
+      wrapped.setResponseContentType(arg0);
+   }
+   
+   @Override
+   public void addResponseHeader(String name, String value)
+   {
+      wrapped.addResponseHeader(name, value);
+   }
+   
+   @Override
+   public void setResponseHeader(String name, String value)
+   {
+      wrapped.setResponseHeader(name, value);
+   }
+   //--------- End JSF 2.0 Methods ---------------------------------
 }

@@ -14,6 +14,14 @@
 
   <profiles>
     <profile>
+       <id>jboss4.2</id>
+       <properties>
+         <jsfMajorVersion>1</jsfMajorVersion>
+         <jsfMinorVersion>2</jsfMinorVersion>
+      </properties>
+    </profile>
+    
+    <profile>
       <id>jboss5x</id>   
       <build>
         <plugins>
@@ -29,6 +37,10 @@
           </plugin>
         </plugins>
       </build>
+      <properties>
+         <jsfMajorVersion>2</jsfMajorVersion>
+         <jsfMinorVersion>0</jsfMinorVersion>
+      </properties>
     </profile>
     
     <profile>
@@ -169,5 +181,11 @@
         </configuration>
       </plugin>
     </plugins>  
+    <resources>
+       <resource>
+          <directory>src/test/java</directory>
+          <filtering>true</filtering>
+       </resource>
+    </resources>
   </build>
 </project>

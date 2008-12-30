@@ -33,10 +33,13 @@ import javax.el.ELContext;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.PartialViewContext;
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
+import javax.faces.event.PhaseId;
 import javax.faces.render.RenderKit;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -55,7 +58,7 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    
    // initialized after the JSF lifecycle is over
    private ExternalContext extContext = null;
-   
+
    // Must save FacesMessages for use when request is over: JSFUNIT-82
    private List<FacesMessage> allMessages = new ArrayList<FacesMessage>();
    private Map<String, List<FacesMessage>> messagesByClientId = new HashMap<String, List<FacesMessage>>();
@@ -199,6 +202,64 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
       this.extContext = new JSFUnitExternalContext(extCtx);
       extCtx.getSessionMap().put(SESSION_KEY, this);
    }
+   
+   //-------- JSF 2.0 -----------------------------------------
+   @Override
+   public Map<Object, Object> getAttributes() 
+   {
+      return this.delegate.getAttributes();
+   }
+
+   @Override
+   public PhaseId getCurrentPhaseId() 
+   {
+      return this.delegate.getCurrentPhaseId();
+   }
+
+   @Override
+   public boolean isPostback() 
+   {
+      return this.delegate.isPostback();
+   }
+
+   @Override
+   public void setCurrentPhaseId(PhaseId phaseId) 
+   {
+      this.delegate.setCurrentPhaseId(phaseId);
+   }
+
+   @Override
+   public ExceptionHandler getExceptionHandler()
+   {
+      return delegate.getExceptionHandler();
+   }
+
+   @Override
+   public List<FacesMessage> getMessageList()
+   {
+      return delegate.getMessageList();
+   }
+
+   @Override
+   public List<FacesMessage> getMessageList(String clientId)
+   {
+      return delegate.getMessageList(clientId);
+   }
+
+   @Override
+   public PartialViewContext getPartialViewContext()
+   {
+      return delegate.getPartialViewContext();
+   }
+
+   @Override
+   public void setExceptionHandler(ExceptionHandler exceptionHandler)
+   {
+      delegate.setExceptionHandler(exceptionHandler);
+   }
+   
+   
+   //-----End JSF 2.0 Methods-----------------------------------------------------
    
    private boolean viewHasChildren()
    {
