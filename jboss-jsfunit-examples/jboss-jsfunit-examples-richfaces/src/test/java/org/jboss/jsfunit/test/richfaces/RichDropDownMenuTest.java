@@ -104,7 +104,7 @@ public class RichDropDownMenuTest extends ServletTestCase
       String newUrl = client.getContentPage().getWebResponse().getUrl().toString();
       assertEquals("http://www.jboss.org/jsfunit/", newUrl);
    }
-   /* JSFUNIT-182
+
    public void testServerModeDropDownMenuWithIE6() throws IOException, SAXException
    {
       WebClientSpec wcSpec = new WebClientSpec("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
@@ -162,7 +162,7 @@ public class RichDropDownMenuTest extends ServletTestCase
       client.click("ExitServerMode");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
       assertEquals("Exit", selection);
-   } */
+   }
    
    public static Test suite()
    {
