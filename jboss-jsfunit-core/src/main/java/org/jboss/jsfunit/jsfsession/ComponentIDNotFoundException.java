@@ -27,6 +27,7 @@ package org.jboss.jsfunit.jsfsession;
  * page (client side) or component tree (server side).
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class ComponentIDNotFoundException extends RuntimeException
 {

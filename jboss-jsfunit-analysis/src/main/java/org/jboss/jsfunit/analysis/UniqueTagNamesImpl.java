@@ -32,6 +32,7 @@ import net.sf.maventaglib.checker.Tld;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 class UniqueTagNamesImpl {

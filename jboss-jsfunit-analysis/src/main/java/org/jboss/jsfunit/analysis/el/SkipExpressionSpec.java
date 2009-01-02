@@ -26,6 +26,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
  * We're using regular expressions to filter ELExpressions because I'm lazy.
  *
  * @author Jason
+ * @since 1.0
  *
  */
 public class SkipExpressionSpec

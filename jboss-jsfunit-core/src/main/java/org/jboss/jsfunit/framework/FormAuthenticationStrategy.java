@@ -43,6 +43,7 @@ import java.util.List;
  * call setSubmitComponent() for your own component name.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
 {

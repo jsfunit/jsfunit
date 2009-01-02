@@ -37,6 +37,7 @@ import org.jboss.jsfunit.seam.SeamUtil;
  * redirector request.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitServletRedirector extends ServletTestRedirector
 {

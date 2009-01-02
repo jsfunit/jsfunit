@@ -38,6 +38,7 @@ import org.apache.commons.httpclient.HttpState;
  * the client side.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitWebConnection implements WebConnection
 {

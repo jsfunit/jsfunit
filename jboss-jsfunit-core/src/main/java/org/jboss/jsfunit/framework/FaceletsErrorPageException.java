@@ -29,6 +29,7 @@ import com.gargoylesoftware.htmlunit.WebResponse;
  * error page.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class FaceletsErrorPageException extends RuntimeException
 {

@@ -25,6 +25,7 @@ package org.jboss.jsfunit.analysis.util;
 import static junit.framework.Assert.fail;
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 public class ClassUtils {

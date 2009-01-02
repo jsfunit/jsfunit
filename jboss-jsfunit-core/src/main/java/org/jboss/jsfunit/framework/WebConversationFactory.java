@@ -37,6 +37,7 @@ import org.jboss.seam.contexts.ServletLifecycle;
  * first request to JSF.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class WebConversationFactory
 {

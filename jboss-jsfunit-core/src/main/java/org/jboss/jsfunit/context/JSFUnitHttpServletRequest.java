@@ -26,14 +26,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -55,6 +53,7 @@ import javax.servlet.http.HttpSession;
  * are unreliable have a warning in the javadoc.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitHttpServletRequest implements HttpServletRequest
 {
@@ -128,41 +127,49 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       this.remotePort = request.getRemotePort();
    }
    
+   @Override
    public String getQueryString()
    {
       return this.queryString;
    }
 
+   @Override
    public String getProtocol()
    {
       return this.protocol;
    }
 
+   @Override
    public String getPathTranslated()
    {
       return this.pathTranslated;
    }
 
+   @Override
    public String getPathInfo()
    {
       return this.extCtx.getRequestPathInfo();
    }
 
+   @Override
    public Enumeration getParameterNames()
    {
       return Collections.enumeration(this.extCtx.getRequestParameterMap().keySet());
    }
 
+   @Override
    public Map getParameterMap()
    {
       return this.parameterMap;
    }
 
+   @Override
    public String getMethod()
    {
       return this.method;
    }
 
+   @Override
    public Enumeration getLocales()
    {
       return makeEnumeration(this.extCtx.getRequestLocales());
@@ -179,46 +186,55 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       return Collections.enumeration(mySet);
    }
 
+   @Override
    public Locale getLocale()
    {
       return this.extCtx.getRequestLocale();
    }
 
+   @Override
    public Enumeration getAttributeNames()
    {
       return Collections.enumeration(this.extCtx.getRequestMap().keySet());
    }
 
+   @Override
    public String getAuthType()
    {
       return this.extCtx.getAuthType();
    }
 
+   @Override
    public String getCharacterEncoding()
    {
       return this.extCtx.getRequestCharacterEncoding();
    }
 
+   @Override
    public int getContentLength()
    {
       return this.contentLength;
    }
 
+   @Override
    public String getContentType()
    {
       return this.extCtx.getRequestContentType();
    }
 
+   @Override
    public String getContextPath()
    {
       return this.extCtx.getRequestContextPath();
    }
 
+   @Override
    public Cookie[] getCookies()
    {
       return this.cookies;
    }
 
+   @Override
    public Enumeration getHeaderNames()
    {
       return Collections.enumeration(this.extCtx.getRequestHeaderMap().keySet());
@@ -227,6 +243,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    /**
     * @throws UnsupportedOperationException
     */
+   @Override
    public ServletInputStream getInputStream() throws IOException
    {
       throw new UnsupportedOperationException();
@@ -235,101 +252,121 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    /**
     * @throws UnsupportedOperationException
     */
+   @Override
    public BufferedReader getReader() throws IOException
    {
       throw new UnsupportedOperationException();
    }
 
+   @Override
    public String getRemoteAddr()
    {
       return this.remoteAddr;
    }
 
+   @Override
    public String getRemoteHost()
    {
       return this.remoteHost;
    }
 
+   @Override
    public String getRemoteUser()
    {
       return this.extCtx.getRemoteUser();
    }
 
+   @Override
    public String getRequestURI()
    {
       return this.requestURI;
    }
 
+   @Override
    public StringBuffer getRequestURL()
    {
       return this.requestURL;
    }
 
+   @Override
    public String getRequestedSessionId()
    {
       return this.requestedSessionId;
    }
 
+   @Override
    public String getScheme()
    {
       return this.scheme;
    }
 
+   @Override
    public String getServerName()
    {
       return this.serverName;
    }
 
+   @Override
    public int getServerPort()
    {
       return this.serverPort;
    }
 
+   @Override
    public String getServletPath()
    {
       return this.extCtx.getRequestServletPath();
    }
 
+   @Override
    public HttpSession getSession()
    {
       return (HttpSession)this.extCtx.getSession(true);
    }
 
+   @Override
    public Principal getUserPrincipal()
    {
       return this.extCtx.getUserPrincipal();
    }
 
+   @Override
    public boolean isRequestedSessionIdFromCookie()
    {
       return this.isRequestedSessionIdFromCookie();
    }
 
+   @Override
    public boolean isRequestedSessionIdFromURL()
    {
       return this.isRequestedSessionIdFromURL;
    }
 
+   @Override
    public boolean isRequestedSessionIdFromUrl()
    {
       return isRequestedSessionIdFromURL();
    }
 
+   @Override
    public boolean isRequestedSessionIdValid()
    {
       return this.isRequestedSessionIdValid;
    }
 
+   @Override
    public boolean isSecure()
    {
       return this.isSecure;
    }
 
+   @Override
    public HttpSession getSession(boolean create)
    {
       return (HttpSession)this.extCtx.getSession(create);
    }
 
+   @Override
    public void setAttribute(String attribute, Object value)
    {
       this.extCtx.getRequestMap().put(attribute, value);
@@ -340,21 +377,25 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
     * object is active, it is too late to override the name of the character
     * encoding.
     */
+   @Override
    public void setCharacterEncoding(String string) throws UnsupportedEncodingException
    {
       //No-op
    }
 
+   @Override
    public String[] getParameterValues(String name)
    {
       return (String[])this.extCtx.getRequestParameterValuesMap().get(name);
    }
 
+   @Override
    public String getParameter(String name)
    {
       return (String)this.extCtx.getRequestParameterMap().get(name);
    }
 
+   @Override
    public int getIntHeader(String name)
    {
       String header = getHeader(name);
@@ -362,11 +403,13 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       return Integer.parseInt(header);
    }
 
+   @Override
    public Object getAttribute(String name)
    {
       return this.extCtx.getRequestMap().get(name);
    }
 
+   @Override
    public long getDateHeader(String name)
    {
       String header = getHeader(name);
@@ -374,11 +417,13 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       return Date.parse(header);
    }
 
+   @Override
    public String getHeader(String name)
    {
       return (String)this.extCtx.getRequestHeaderMap().get(name);
    }
 
+   @Override
    public Enumeration getHeaders(String name)
    {
       String[] headers = (String[])this.extCtx.getRequestHeaderValuesMap().get(name);
@@ -389,6 +434,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    /**
     * @throws UnsupportedOperationException
     */
+   @Override
    public String getRealPath(String string)
    {
       throw new UnsupportedOperationException();
@@ -397,6 +443,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    /**
     * @throws UnsupportedOperationException
     */
+   @Override
    public RequestDispatcher getRequestDispatcher(String string)
    {
       throw new UnsupportedOperationException();
@@ -405,11 +452,13 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    /**
     * Warning: This method could yield unexpected results.
     */
+   @Override
    public boolean isUserInRole(String name)
    {
       return this.extCtx.isUserInRole(name);
    }
 
+   @Override
    public void removeAttribute(String name)
    {
       this.extCtx.getRequestMap().remove(name);
@@ -420,6 +469,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
     *         does not support servlet 2.4 or greater.
     *                                   
     */
+   @Override
    public int getLocalPort()
    {
       if (!isServlet14OrGreater) throw new UnsupportedOperationException();
@@ -431,6 +481,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
     *         does not support servlet 2.4 or greater.
     *                                   
     */
+   @Override
    public int getRemotePort()
    {
       if (!isServlet14OrGreater) throw new UnsupportedOperationException();
@@ -442,6 +493,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
     *         does not support servlet 2.4 or greater.
     *                                   
     */
+   @Override
    public String getLocalName()
    {
       if (!isServlet14OrGreater) throw new UnsupportedOperationException(); 
@@ -453,6 +505,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
     *         does not support servlet 2.4 or greater.
     *                                   
     */
+   @Override
    public String getLocalAddr()
    {
       if (!isServlet14OrGreater) throw new UnsupportedOperationException();

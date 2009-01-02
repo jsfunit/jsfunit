@@ -32,6 +32,7 @@ import javax.faces.el.VariableResolver;
  * an ELResolver because we want to maintain compatibility with JSF 1.1.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class ConversationScopeVariableResolver extends VariableResolver
 {

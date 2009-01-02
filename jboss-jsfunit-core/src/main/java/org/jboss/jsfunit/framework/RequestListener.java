@@ -29,6 +29,7 @@ import com.gargoylesoftware.htmlunit.WebResponse;
  * Implementor listens for Http requests from the client side.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public interface RequestListener
 {

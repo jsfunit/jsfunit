@@ -14,6 +14,11 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class ELExpressionIterator implements Iterator<ELBundle>
 {
 	private static final Pattern EL_EXPRESSION_PATTERN =

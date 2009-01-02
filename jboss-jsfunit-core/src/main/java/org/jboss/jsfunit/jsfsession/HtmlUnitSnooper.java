@@ -35,6 +35,7 @@ import org.jboss.jsfunit.framework.RequestListener;
  *  To enable, set system property jsfunit.htmlunitsnooper.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class HtmlUnitSnooper implements RequestListener
 {

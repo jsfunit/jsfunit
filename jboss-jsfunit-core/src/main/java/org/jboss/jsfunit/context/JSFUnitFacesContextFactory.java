@@ -28,7 +28,6 @@ import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.Lifecycle;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import org.jboss.jsfunit.framework.JSFTimer;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 
 /**
@@ -37,6 +36,7 @@ import org.jboss.jsfunit.framework.WebConversationFactory;
  * request it just returns the true FacesContext.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitFacesContextFactory extends FacesContextFactory
 {
@@ -47,6 +47,7 @@ public class JSFUnitFacesContextFactory extends FacesContextFactory
       this.parent = parent;
    }
    
+   @Override
    public FacesContext getFacesContext(Object context, 
                                        Object request, 
                                        Object response, 

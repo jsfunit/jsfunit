@@ -11,6 +11,11 @@ import junit.framework.TestSuite;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class ELTestSuiteBuilder
 {
 	public static TestSuite getTestSuite(final File baseDir,

@@ -31,6 +31,7 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  * with the JSFUnit thread.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class FacesContextBridge
 {

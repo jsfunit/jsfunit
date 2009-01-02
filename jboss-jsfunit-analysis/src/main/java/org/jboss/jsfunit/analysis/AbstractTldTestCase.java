@@ -44,6 +44,7 @@ import org.w3c.dom.Document;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 public abstract class AbstractTldTestCase extends TestCase {

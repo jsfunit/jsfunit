@@ -29,6 +29,7 @@ import java.util.List;
  * Contains methods to determine the test environment.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class Environment
 {

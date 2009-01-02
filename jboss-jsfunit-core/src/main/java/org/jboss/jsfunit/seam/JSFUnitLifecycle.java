@@ -32,6 +32,7 @@ import javax.faces.lifecycle.Lifecycle;
  * scope objects in the session so they are fully available for tests.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitLifecycle extends Lifecycle
 {

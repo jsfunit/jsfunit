@@ -30,6 +30,7 @@ import javax.faces.event.PhaseListener;
  * This PhaseListener provides time stamps for each phase of the JSF lifecycle.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFTimerPhaseListener implements PhaseListener
 {

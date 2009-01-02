@@ -29,7 +29,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
@@ -37,13 +36,14 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
+import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
-import org.w3c.dom.Element;
 
 /**
  * This class provides helper methods for RichFaces controls.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class RichFacesClient
 {

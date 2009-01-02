@@ -51,6 +51,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 class ClassDefinitionsImpl {

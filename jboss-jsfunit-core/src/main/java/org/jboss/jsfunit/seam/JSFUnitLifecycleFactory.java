@@ -32,6 +32,7 @@ import javax.faces.lifecycle.LifecycleFactory;
  * HttpSession so that they are available for inspection by JSFUnit tests.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitLifecycleFactory extends LifecycleFactory
 {

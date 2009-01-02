@@ -35,6 +35,7 @@ import org.w3c.dom.Element;
  * The message in this exception will tell you which client IDs matched the ID suffix.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class DuplicateClientIDException extends RuntimeException
 {

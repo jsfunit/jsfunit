@@ -44,6 +44,7 @@ import org.jboss.jsfunit.seam.SeamUtil;
  * interaction with JSFUnit.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class WebClientSpec implements HttpSessionBindingListener
 {

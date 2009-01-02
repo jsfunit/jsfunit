@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 public class ParserUtils {

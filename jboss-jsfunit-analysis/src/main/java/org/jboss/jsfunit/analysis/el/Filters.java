@@ -8,6 +8,7 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
 /**
  * Convenience class for some common filters.
  * @author Jason
+ * @since 1.0
  */
 public class Filters
 {

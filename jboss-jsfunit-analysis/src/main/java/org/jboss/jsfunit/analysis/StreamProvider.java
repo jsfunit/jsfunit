@@ -26,6 +26,7 @@ import java.io.InputStream;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 public interface StreamProvider {

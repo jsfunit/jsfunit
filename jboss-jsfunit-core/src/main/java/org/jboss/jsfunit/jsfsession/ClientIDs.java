@@ -43,6 +43,7 @@ import org.jboss.jsfunit.framework.FacesContextBridge;
  * "mysubview:myform:mycomponentID".
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class ClientIDs
 {

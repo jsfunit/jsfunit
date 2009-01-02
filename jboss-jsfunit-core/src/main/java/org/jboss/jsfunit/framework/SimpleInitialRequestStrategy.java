@@ -29,6 +29,7 @@ import java.io.IOException;
  * This initial request strategy does a simple JSF request to the server.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class SimpleInitialRequestStrategy implements InitialRequestStrategy
 {

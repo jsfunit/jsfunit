@@ -42,6 +42,7 @@ import javax.servlet.http.HttpSession;
  * JSFUnitHttpSession that protects JSFUnit's session attributes.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitDelegatingExternalContext extends ExternalContext
 {

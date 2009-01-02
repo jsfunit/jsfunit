@@ -44,7 +44,15 @@ import org.xml.sax.SAXException;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
-public class JSFUnitWarTask extends Task{
+/**
+ * This class provides for an Ant task that will "JSFUnify" a WAR.
+ * 
+ * @author Matt Wringe
+ * @author Stan Silvert
+ * @since 1.0
+ */
+public class JSFUnitWarTask extends Task
+{
 
 	private File srcfile;
 	private File destfile;

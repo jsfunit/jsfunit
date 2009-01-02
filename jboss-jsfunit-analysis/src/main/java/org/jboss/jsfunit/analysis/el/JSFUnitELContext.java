@@ -9,6 +9,11 @@ import javax.el.ExpressionFactory;
 import javax.el.FunctionMapper;
 import javax.el.VariableMapper;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class JSFUnitELContext extends ELContext
 {
 	private final ELResolver resolver = new JSFUnitELResolver();

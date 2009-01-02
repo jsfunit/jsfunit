@@ -31,6 +31,7 @@ import java.io.IOException;
  * only a user name and password.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class BasicAuthenticationStrategy extends SimpleInitialRequestStrategy
 {

@@ -43,6 +43,7 @@ import org.jboss.seam.web.ServletContexts;
  * function normally.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class SeamRequestListener implements RequestListener
 {

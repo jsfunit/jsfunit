@@ -78,6 +78,7 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  * </p> 
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitFilter implements Filter
 {

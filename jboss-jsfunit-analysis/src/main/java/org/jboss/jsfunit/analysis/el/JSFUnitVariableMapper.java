@@ -6,7 +6,11 @@ import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.el.VariableMapper;
 
-
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class JSFUnitVariableMapper extends VariableMapper
 {
 	private final Map<String, Class<?>> managedBeans;

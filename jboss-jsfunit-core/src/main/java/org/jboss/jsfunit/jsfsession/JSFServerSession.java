@@ -38,6 +38,7 @@ import org.jboss.jsfunit.framework.RequestListener;
  * for things that you would commonly do in testing.
  * 
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFServerSession implements RequestListener
 {

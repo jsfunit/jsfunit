@@ -40,6 +40,7 @@ import javax.faces.event.PhaseId;
  * this class during the JSF lifecycle or afterwards in a JSFUnit test.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFTimer
 {

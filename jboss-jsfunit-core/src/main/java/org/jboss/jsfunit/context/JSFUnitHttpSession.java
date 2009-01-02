@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSessionContext;
  * actually destroy the session.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitHttpSession implements HttpSession
 {
@@ -46,43 +47,51 @@ public class JSFUnitHttpSession implements HttpSession
       this.wrapped = wrapped;
    }
    
+   @Override
    public Enumeration getAttributeNames()
    {
       return wrapped.getAttributeNames();
    }
 
+   @Override
    public long getCreationTime()
    {
       return wrapped.getCreationTime();
    }
 
+   @Override
    public String getId()
    {
       return wrapped.getId();
    }
 
+   @Override
    public long getLastAccessedTime()
    {
       return wrapped.getLastAccessedTime();
    }
 
+   @Override
    public int getMaxInactiveInterval()
    {
       return wrapped.getMaxInactiveInterval();
    }
 
+   @Override
    public ServletContext getServletContext()
    {
       return wrapped.getServletContext();
    }
 
    @Deprecated
+   @Override
    public HttpSessionContext getSessionContext()
    {
       return wrapped.getSessionContext();
    }
 
    @Deprecated
+   @Override
    public String[] getValueNames()
    {
       return wrapped.getValueNames();
@@ -92,6 +101,7 @@ public class JSFUnitHttpSession implements HttpSession
     * Instead of invalidating the session, clear all attributes except those
     * used by JSFUnit.
     */
+   @Override
    public void invalidate()
    {
       for (Enumeration e = getAttributeNames(); e.hasMoreElements();)
@@ -104,44 +114,52 @@ public class JSFUnitHttpSession implements HttpSession
       }
    }
 
+   @Override
    public boolean isNew()
    {
       return wrapped.isNew();
    }
 
+   @Override
    public void setMaxInactiveInterval(int i)
    {
       wrapped.setMaxInactiveInterval(i);
    }
 
    @Deprecated
+   @Override
    public void removeValue(String name)
    {
       wrapped.removeValue(name);
    }
 
+   @Override
    public void removeAttribute(String name)
    {
       wrapped.removeAttribute(name);
    }
 
+   @Override
    public Object getAttribute(String name)
    {
       return wrapped.getAttribute(name);
    }
 
    @Deprecated
+   @Override
    public Object getValue(String name)
    {
       return wrapped.getValue(name);
    }
 
+   @Override
    public void setAttribute(String name, Object value)
    {
       wrapped.setAttribute(name, value);
    }
 
    @Deprecated
+   @Override
    public void putValue(String name, Object value)
    {
       wrapped.putValue(name, value);

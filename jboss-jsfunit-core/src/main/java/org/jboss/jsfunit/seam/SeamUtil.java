@@ -33,6 +33,7 @@ import org.jboss.seam.web.Session;
  * framework.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class SeamUtil
 {

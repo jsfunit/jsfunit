@@ -32,6 +32,7 @@ import org.jboss.jsfunit.framework.WebClientSpec;
  * This class starts and manages the JSF Session on both the client and server side.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFSession
 {

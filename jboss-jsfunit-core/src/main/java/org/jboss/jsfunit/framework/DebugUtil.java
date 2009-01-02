@@ -30,6 +30,7 @@ import javax.faces.context.FacesContext;
  * the client IDs in the component tree.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class DebugUtil
 {

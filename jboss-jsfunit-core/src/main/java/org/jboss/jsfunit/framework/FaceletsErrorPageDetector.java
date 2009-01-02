@@ -30,6 +30,7 @@ import com.gargoylesoftware.htmlunit.WebResponse;
  *  If so, it throws a FaceletsErrorPageException.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class FaceletsErrorPageDetector implements RequestListener
 {

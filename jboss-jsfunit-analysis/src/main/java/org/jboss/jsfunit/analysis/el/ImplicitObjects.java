@@ -9,6 +9,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class ImplicitObjects
 {
 	private static final Map<String, Class<?>> implicitObjectMap

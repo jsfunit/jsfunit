@@ -39,7 +39,7 @@ import java.util.zip.ZipOutputStream;
  * useful but for some odd reason not implemeneted in the jdk itself.
  * 
  * @author Matt Wringe
- *
+ * @since 1.0
  */
 public class Utils {
 

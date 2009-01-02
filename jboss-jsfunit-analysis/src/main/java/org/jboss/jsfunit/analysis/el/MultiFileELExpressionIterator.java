@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 import org.apache.commons.collections.collection.CompositeCollection;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class MultiFileELExpressionIterator implements Iterator<ELBundle>
 {
 	private final Iterator<File> fileIter;

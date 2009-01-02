@@ -52,6 +52,7 @@ import org.jboss.jsfunit.framework.Environment;
  * unexpected results.  These methods are noted in the javadoc.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitExternalContext extends ExternalContext
 {
@@ -119,36 +120,43 @@ public class JSFUnitExternalContext extends ExternalContext
       
    }
    
+   @Override
    public Map getRequestCookieMap()
    {
       return this.cookieMap;
    }
 
+   @Override
    public String getRequestContextPath()
    {
       return this.requestContextPath;
    }
 
+   @Override
    public String getRemoteUser()
    {
       return this.remoteUser;
    }
 
+   @Override
    public String getInitParameter(String string)
    {
       return (String)this.initParameterMap.get(string);
    }
    
+   @Override
    public Map getInitParameterMap()
    {
       return this.initParameterMap;
    }
 
+   @Override
    public Object getContext()
    {
       return this.context;
    }
 
+   @Override
    public String getAuthType()
    {
       return this.authType;
@@ -167,61 +175,73 @@ public class JSFUnitExternalContext extends ExternalContext
     * appContext.setAttribute("documentsByPath", "bar");
     * </code>
     */
+   @Override
    public Map getApplicationMap()
    {
       return this.applicationMap;
    }
 
+   @Override
    public Map getRequestHeaderMap()
    {
       return this.requestHeaderMap;
    }
 
+   @Override
    public Map getRequestHeaderValuesMap()
    {
       return this.requestHeaderValuesMap;
    }
 
+   @Override
    public Locale getRequestLocale()
    {
       return this.locale;
    }
 
+   @Override
    public Iterator getRequestLocales()
    {
       return this.locales.iterator();
    }
 
+   @Override
    public Map getRequestMap()
    {
       return this.requestMap;
    }
 
+   @Override
    public Map getRequestParameterMap()
    {
       return this.requestParameterMap;
    }
 
+   @Override
    public Iterator getRequestParameterNames()
    {
       return this.requestParameterMap.keySet().iterator();
    }
 
+   @Override
    public Map getRequestParameterValuesMap()
    {
       return this.requestParameterValuesMap;
    }
 
+   @Override
    public String getRequestPathInfo()
    {
       return this.requestPathInfo;
    }
 
+   @Override
    public String getRequestServletPath()
    {
       return this.requestServletPath;
    }
    
+   @Override
    public Object getSession(boolean b)
    {
       return this.session;
@@ -240,41 +260,49 @@ public class JSFUnitExternalContext extends ExternalContext
     * session.setAttribute("documentsByPath", "bar");
     * </code>
     */
+   @Override
    public Map getSessionMap()
    {
       return this.sessionMap;
    }
    
+   @Override
    public Principal getUserPrincipal()
    {
       return this.userPrincipal;
    }
    
+   @Override
    public URL getResource(String string) throws MalformedURLException
    {
       return this.context.getResource(string);
    }
 
+   @Override
    public InputStream getResourceAsStream(String string)
    {
       return this.context.getResourceAsStream(string);
    }
    
+   @Override
    public Set getResourcePaths(String string)
    {
       return this.context.getResourcePaths(string);
    }
    
+   @Override
    public void log(String string, Throwable throwable)
    {
       this.context.log(string, throwable);
    }
 
+   @Override
    public void log(String string)
    {
       this.context.log(string);
    }
    
+   @Override
    public String encodeNamespace(String string)
    {
       return string;
@@ -290,6 +318,7 @@ public class JSFUnitExternalContext extends ExternalContext
     *
     * @throws NullPointerException if the url is null
     */
+   @Override
    public String encodeResourceURL(String url)
    {
       if (url == null) throw new NullPointerException("url can not be null.");
@@ -306,6 +335,7 @@ public class JSFUnitExternalContext extends ExternalContext
     *
     * @throws NullPointerException if the url is null
     */
+   @Override
    public String encodeActionURL(String url)
    {
       if (url == null) throw new NullPointerException("url can not be null.");
@@ -478,6 +508,7 @@ public class JSFUnitExternalContext extends ExternalContext
    /**
     * Warning: Calling this method from a JSFUnit test could yield unexpected results.
     */
+   @Override
    public boolean isUserInRole(String string)
    {
       return delegate.isUserInRole(string);
@@ -486,6 +517,7 @@ public class JSFUnitExternalContext extends ExternalContext
    /**
     * Warning: Calling this method from a JSFUnit test could yield unexpected results.
     */
+   @Override
    public Object getResponse()
    {
       return delegate.getResponse();
@@ -494,6 +526,7 @@ public class JSFUnitExternalContext extends ExternalContext
    /**
     * Warning: Calling this method from a JSFUnit test could yield unexpected results.
     */
+   @Override
    public Object getRequest()
    {
       return this.httpServletRequest;
@@ -509,6 +542,7 @@ public class JSFUnitExternalContext extends ExternalContext
     * @throws UnsupportedOperationException if this method is called during
     *                                       a JSFUnit test.
     */
+   @Override
    public void dispatch(String string) throws IOException
    {
       throw new UnsupportedOperationException("Dispatch not allowed after request is complete");
@@ -522,6 +556,7 @@ public class JSFUnitExternalContext extends ExternalContext
     * @throws UnsupportedOperationException if this method is called during
     *                                       a JSFUnit test.
     */
+   @Override
    public void redirect(String string) throws IOException
    {
       throw new UnsupportedOperationException("Redirect not allowed after request is complete");

@@ -14,6 +14,11 @@ import javax.faces.event.ActionEvent;
 import junit.framework.TestCase;
 import de.odysseus.el.ExpressionFactoryImpl;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class ELTestCase extends TestCase
 {
 	private final ELBundle expression;

@@ -15,6 +15,11 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class ELIterFactory
 {
 	public static final Iterator<ELBundle> EMPTY_ITER = new Iterator<ELBundle>() {

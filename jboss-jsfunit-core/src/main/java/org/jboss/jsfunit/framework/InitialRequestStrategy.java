@@ -32,6 +32,7 @@ import java.io.IOException;
  * to be JSF-specific.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public interface InitialRequestStrategy
 {

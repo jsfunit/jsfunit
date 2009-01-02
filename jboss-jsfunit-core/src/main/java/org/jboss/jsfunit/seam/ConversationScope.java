@@ -37,6 +37,7 @@ import org.jboss.seam.contexts.Contexts;
  * should not access this class directly.
  * 
  * @author Stan Silvert
+ * @since 1.0
  */
 public class ConversationScope 
 {

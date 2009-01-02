@@ -62,6 +62,7 @@ import org.jboss.xb.builder.JBossXBBuilder;
  * classpath of the WAR.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaData>
 {

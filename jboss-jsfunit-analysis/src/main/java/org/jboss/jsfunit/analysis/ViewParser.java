@@ -33,6 +33,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 public class ViewParser {

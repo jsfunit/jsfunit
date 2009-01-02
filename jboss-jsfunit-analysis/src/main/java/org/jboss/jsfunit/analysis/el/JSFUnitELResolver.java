@@ -14,6 +14,11 @@ import javax.el.ELException;
 import javax.el.ELResolver;
 import javax.el.PropertyNotFoundException;
 
+/**
+ * 
+ * @author Jason
+ * @since 1.0
+ */
 public class JSFUnitELResolver extends ELResolver
 {
 	//TODO: do we need to implement the current unsupported operations?

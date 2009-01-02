@@ -29,6 +29,7 @@ import java.io.InputStream;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 class DefaultStreamProvider implements StreamProvider {

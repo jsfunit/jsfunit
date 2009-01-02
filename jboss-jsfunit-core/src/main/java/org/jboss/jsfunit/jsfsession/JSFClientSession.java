@@ -49,8 +49,11 @@ import javax.faces.context.FacesContext;
 import org.w3c.dom.Element;
 
 /**
+ * This class provides a wrapper for HtmlUnit that imitates browser
+ * interaction with a JSF application.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 public class JSFClientSession implements WebWindowListener
 {

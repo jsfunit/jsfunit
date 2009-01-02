@@ -39,6 +39,7 @@ import org.w3c.dom.Document;
 
 /**
  * @author Dennis Byrne
+ * @since 1.0
  */
 
 public class AbstractViewTestCase extends TestCase {

@@ -6,6 +6,7 @@ import java.io.File;
  * An EL-expression bundled with information about its physical location.
  *
  * @author Jason
+ * @since 1.0
  */
 public class ELBundle
 {
