@@ -25,6 +25,9 @@ package org.jboss.jsfunit.example.ajax4jsf;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
+import javax.faces.component.UIComponent;
+import javax.faces.component.ValueHolder;
+import javax.faces.component.html.HtmlDataTable;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
@@ -163,6 +166,29 @@ public class A4JTest extends ServletTestCase
       client.click("0:command_link_up");
       assertEquals(1, server.getManagedBeanValue("#{bean.requestCounter}"));
       assertEquals(1, server.getManagedBeanValue("#{bean.collection[0]}"));
+   }
+
+   // JSFUNIT-186
+   public void testGetComponentValueInDatatable() throws IOException
+   {
+      JSFSession jsfSession = new JSFSession("/pages/a4j-repeat-rerender.jsf");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      HtmlDataTable table = (HtmlDataTable)server.findComponent("repeat");
+      for (int i=0; i < table.getRowCount(); i++)
+      {
+         int rowIndex = table.getRowIndex();
+         
+         String id = i + ":item";
+         ValueHolder component = (ValueHolder)server.findComponent(id);
+         assertNull(component.getLocalValue());
+         assertNull(component.getValue());
+         
+         assertNotNull(server.getComponentValue(id));
+         
+         // make sure rowIndex was not corrupted
+         assertEquals(rowIndex, table.getRowIndex());
+      }
    }
    
    /**

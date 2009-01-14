@@ -109,13 +109,7 @@ public class JSFServerSession implements RequestListener
     */
    public Object getComponentValue(String componentID)
    {
-      UIComponent component = findComponent(componentID);
-      if (!(component instanceof ValueHolder))
-      {
-         throw new ClassCastException(componentID + " must be an instance of ValueHolder.");
-      }
-      
-      return ((ValueHolder)component).getValue();
+      return clientIDs.getComponentValue(componentID);
    }
    
    /**

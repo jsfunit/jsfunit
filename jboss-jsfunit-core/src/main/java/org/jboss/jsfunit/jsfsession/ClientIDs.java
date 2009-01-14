@@ -32,6 +32,7 @@ import java.util.Set;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 
@@ -52,6 +53,9 @@ public class ClientIDs
    
    // key = clientID; value = set of ancestor clientID's including my own
    private Map<String, Set> ancestors = new HashMap<String, Set>();
+   
+   // key = clientID; value = the value manager for a component in a UIData
+   private Map<String, UIDataValueManager> uiDataMap = new HashMap<String, UIDataValueManager>();
    
    /**
     * Create a new instance of ClientIDs.
@@ -123,12 +127,36 @@ public class ClientIDs
          for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
          {
             UIComponent facetOrChild = (UIComponent)facetsAndChildren.next();
+            fillUIDataMap(component, facetOrChild, facesContext);
             addAncestors(component, facetOrChild, facesContext);
             addAllIDs(facetOrChild, facesContext);
          } 
       }
       
       component.setRowIndex(-1);
+   }
+   
+   private void fillUIDataMap(UIData uiData, UIComponent component, FacesContext facesContext)
+   {
+      updateUIDataMap(uiData, component, facesContext);
+      
+      for (Iterator facetsAndChildren = component.getFacetsAndChildren(); facetsAndChildren.hasNext();)
+      {
+         UIComponent facetOrChild = (UIComponent)facetsAndChildren.next();
+         fillUIDataMap(uiData, facetOrChild, facesContext);
+      }
+   }
+   
+   private void updateUIDataMap(UIData uiData, UIComponent facetOrChild, FacesContext facesContext)
+   {
+      if (!(facetOrChild instanceof ValueHolder)) return;
+      
+      String clientID = facetOrChild.getClientId(facesContext);
+      // System.out.println("*** Adding " + clientID + " to UIDataMap");
+      ValueHolder valueHolder = (ValueHolder)facetOrChild;
+      int rowIndex = uiData.getRowIndex();
+      this.uiDataMap.put(clientID, 
+                         new UIDataValueManager(uiData, valueHolder, rowIndex));
    }
    
    private void addClientID(UIComponent component, FacesContext facesContext)
@@ -188,6 +216,35 @@ public class ClientIDs
    public UIComponent findComponent(String suffix)
    {
       return allComponents.get(findClientID(suffix));
+   }
+   
+      /**
+    * Find a component in the JSF component tree and return its value.
+    * Note that the found component must implement ValueHolder.
+    *
+    * @param componentID The JSF component ID or client ID suffix.
+    *
+    * @return The value contained in the component.
+    *
+    * @throws ComponentIDNotFoundException if the component can not be found 
+    * @throws DuplicateClientIDException if more than one client ID matches the componentID suffix
+    * @throws ClassCastException if the found component does not implement ValueHolder
+    */
+   public Object getComponentValue(String componentID)
+   {
+      UIComponent component = findComponent(componentID);
+      if (!(component instanceof ValueHolder))
+      {
+         throw new ClassCastException(componentID + " must be an instance of ValueHolder.");
+      }
+      
+      String clientId = findClientID(componentID);
+      if (uiDataMap.containsKey(clientId))
+      {
+         return uiDataMap.get(clientId).getValue();
+      }
+      
+      return ((ValueHolder)component).getValue();
    }
    
    /**
