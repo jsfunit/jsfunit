@@ -152,11 +152,12 @@ public class ClientIDs
       if (!(facetOrChild instanceof ValueHolder)) return;
       
       String clientID = facetOrChild.getClientId(facesContext);
-      // System.out.println("*** Adding " + clientID + " to UIDataMap");
+      if (uiDataMap.containsKey(clientID)) return; // optimization
+      
+      //System.out.println("*** Adding " + clientID + " to UIDataMap");
       ValueHolder valueHolder = (ValueHolder)facetOrChild;
-      int rowIndex = uiData.getRowIndex();
       this.uiDataMap.put(clientID, 
-                         new UIDataValueManager(uiData, valueHolder, rowIndex));
+                         new UIDataValueManager(uiData, valueHolder));
    }
    
    private void addClientID(UIComponent component, FacesContext facesContext)

@@ -22,36 +22,70 @@
 
 package org.jboss.jsfunit.jsfsession;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.ValueHolder;
 
 /**
  * This class provides a way to get the value from a component that is
- * inside a UIData.  Before a value can be returned, the proper row index
+ * inside a UIData.  Before a value can be returned, the proper row indexes
  * must be set on the UIData.
  *
  * @author Stan Silvert
+ * @since 1.0
  */
 class UIDataValueManager 
 {
-
-    private UIData parent;
+    // key = a UIData ancestor of the component
+    // value = the row id needed to get the component's value
+    private Map<UIData, Integer> uiDataRowMap = new HashMap<UIData, Integer>();
+    
     private ValueHolder component;
-    private int row;
 
-    UIDataValueManager(UIData parent, ValueHolder component, int row)
+    UIDataValueManager(UIData parent, ValueHolder component)
     {
-       this.parent = parent;
        this.component = component;
-       this.row = row;
+       
+       // find all UIData ancestors
+       UIComponent uiComponent = parent;
+       do
+       {
+          if (uiComponent instanceof UIData)
+          {
+             UIData uiData = (UIData)uiComponent;
+            // System.out.println("$$$ Adding " + uiData.getClientId(javax.faces.context.FacesContext.getCurrentInstance()) 
+            //                    + " to uiDataRowMap with index=" + uiData.getRowIndex());
+             uiDataRowMap.put(uiData, uiData.getRowIndex());
+          }
+          uiComponent = uiComponent.getParent();
+       }
+       while (uiComponent != null);
     }
     
     Object getValue()
     {
-       int currentRow = parent.getRowIndex();
-       parent.setRowIndex(row);
+       Map<UIData, Integer> savedRowIndexes = new HashMap<UIData, Integer>();
+       
+       // save current row and set row needed to get value
+       for (Iterator<UIData> i = uiDataRowMap.keySet().iterator(); i.hasNext();)
+       {
+          UIData uiData = i.next();
+          savedRowIndexes.put(uiData, uiData.getRowIndex());
+          uiData.setRowIndex(uiDataRowMap.get(uiData));
+       }
+       
        Object value = component.getValue();
-       parent.setRowIndex(currentRow);
+       
+       // restore rows
+       for (Iterator<UIData> i = savedRowIndexes.keySet().iterator(); i.hasNext();)
+       {
+          UIData uiData = i.next();
+          uiData.setRowIndex(savedRowIndexes.get(uiData));
+       }
+       
        return value;
     }
 }

@@ -179,7 +179,7 @@ public class A4JTest extends ServletTestCase
       {
          int rowIndex = table.getRowIndex();
          
-         String id = i + ":item";
+         String id = "repeat:" + i + ":item";
          ValueHolder component = (ValueHolder)server.findComponent(id);
          assertNull(component.getLocalValue());
          assertNull(component.getValue());
@@ -189,6 +189,40 @@ public class A4JTest extends ServletTestCase
          // make sure rowIndex was not corrupted
          assertEquals(rowIndex, table.getRowIndex());
       }
+   }
+   
+   // JSFUNIT-186
+   public void testGetComponentValueInNestedDatatable() throws IOException
+   {
+      //System.out.println("*************************");
+      JSFSession jsfSession = new JSFSession("/pages/a4j-repeat-rerender.jsf");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      client.click("1:command_link_up");
+      client.click("1:command_link_up");
+      
+      HtmlDataTable table = (HtmlDataTable)server.findComponent("repeat");
+      HtmlDataTable nestedtable = (HtmlDataTable)server.findComponent("1:nestedtable");
+      for (int i=0; i < nestedtable.getRowCount(); i++)
+      {
+         int rowIndex = table.getRowIndex();
+         int nestedRowIndex = nestedtable.getRowIndex();
+         
+         String id = "1:nestedtable:" + i + ":itemnested";
+         ValueHolder component = (ValueHolder)server.findComponent(id);
+         assertNull(component.getLocalValue());
+         //assertNull(component.getValue());
+        // if (i==1) System.out.println("componentValue for " + id + "=" + server.getComponentValue(id));
+        // if (i==1) System.out.println("class=" + server.getComponentValue(id).getClass().getName());
+         assertNotNull(server.getComponentValue(id));
+         
+         if (i == 1) assertEquals(new Long(4), server.getComponentValue(id));
+         
+         // make sure rowIndex was not corrupted
+         assertEquals(rowIndex, table.getRowIndex());
+         assertEquals(nestedRowIndex, nestedtable.getRowIndex());
+      }
+      //System.out.println("******************************");
    }
    
    /**

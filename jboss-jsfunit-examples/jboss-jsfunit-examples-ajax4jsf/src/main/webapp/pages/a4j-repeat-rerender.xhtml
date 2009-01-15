@@ -95,15 +95,22 @@ color: rgb(0,0,196); background-color: rgb(228,230,160);
 					<h:outputText id="item" value="#{item}" styleClass="output" />
 				</h:column>
 				<h:column>
-					<a4j:commandLink id="command_link_up" value="Up"  reRender="item, counter" action="#{bean.up}" styleClass="output">
+					<a4j:commandLink id="command_link_up" value="Up"  reRender="item, counter, nestedtable" action="#{bean.up}" styleClass="output">
 						<a4j:ajaxListener type="org.ajax4jsf.ajax.ForceRender" /> 
 					</a4j:commandLink>
 				</h:column>
 				<h:column>
-					<a4j:commandLink id="command_link_down" value="Down"  reRender="item, counter" action="#{bean.down}" styleClass="output">
+					<a4j:commandLink id="command_link_down" value="Down"  reRender="item, counter, nestedtable" action="#{bean.down}" styleClass="output">
 						<a4j:ajaxListener type="org.ajax4jsf.ajax.ForceRender" /> 
 					</a4j:commandLink>
 				</h:column>
+                                <h:column rendered="false">
+                                  <h:dataTable id="nestedtable" value="#{bean.collection}" var="nestedItem">
+                                    <h:column>
+					<h:outputText id="itemnested" value="#{item * nestedItem}" styleClass="output" />
+                                    </h:column>
+                                  </h:dataTable>
+                                </h:column>
 			</h:dataTable>
 		</h:form>
 	</h:panelGrid>
