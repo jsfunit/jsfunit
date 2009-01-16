@@ -7,6 +7,12 @@
 
 <faces-config>
 
+<managed-bean>
+  <managed-bean-name>supertable</managed-bean-name>
+  <managed-bean-class>demo.Table</managed-bean-class>
+  <managed-bean-scope>request</managed-bean-scope>
+ </managed-bean>
+ 
  <managed-bean>
   <managed-bean-name>bean</managed-bean-name>
   <managed-bean-class>demo.Bean</managed-bean-class>

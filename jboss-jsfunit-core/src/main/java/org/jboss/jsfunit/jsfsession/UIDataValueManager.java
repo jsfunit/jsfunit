@@ -22,8 +22,11 @@
 
 package org.jboss.jsfunit.jsfsession;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
@@ -41,7 +44,7 @@ class UIDataValueManager
 {
     // key = a UIData ancestor of the component
     // value = the row id needed to get the component's value
-    private Map<UIData, Integer> uiDataRowMap = new HashMap<UIData, Integer>();
+    private Map<UIData, Integer> uiDataRowMap = new LinkedHashMap<UIData, Integer>();
     
     private ValueHolder component;
 
@@ -56,8 +59,8 @@ class UIDataValueManager
           if (uiComponent instanceof UIData)
           {
              UIData uiData = (UIData)uiComponent;
-            // System.out.println("$$$ Adding " + uiData.getClientId(javax.faces.context.FacesContext.getCurrentInstance()) 
-            //                    + " to uiDataRowMap with index=" + uiData.getRowIndex());
+             //System.out.println("$$$ Adding " + uiData.getClientId(javax.faces.context.FacesContext.getCurrentInstance()) 
+             //                   + " to uiDataRowMap with index=" + uiData.getRowIndex());
              uiDataRowMap.put(uiData, uiData.getRowIndex());
           }
           uiComponent = uiComponent.getParent();
@@ -65,12 +68,19 @@ class UIDataValueManager
        while (uiComponent != null);
     }
     
+    private Iterator<UIData> reverse(Iterator<UIData> i)
+    {
+       List list = new ArrayList();
+       while (i.hasNext()) list.add(0, i.next());
+       return list.iterator();
+    }
+    
     Object getValue()
     {
        Map<UIData, Integer> savedRowIndexes = new HashMap<UIData, Integer>();
        
        // save current row and set row needed to get value
-       for (Iterator<UIData> i = uiDataRowMap.keySet().iterator(); i.hasNext();)
+       for (Iterator<UIData> i = reverse(uiDataRowMap.keySet().iterator()); i.hasNext();)
        {
           UIData uiData = i.next();
           savedRowIndexes.put(uiData, uiData.getRowIndex());
@@ -80,7 +90,7 @@ class UIDataValueManager
        Object value = component.getValue();
        
        // restore rows
-       for (Iterator<UIData> i = savedRowIndexes.keySet().iterator(); i.hasNext();)
+       for (Iterator<UIData> i = reverse(savedRowIndexes.keySet().iterator()); i.hasNext();)
        {
           UIData uiData = i.next();
           uiData.setRowIndex(savedRowIndexes.get(uiData));
