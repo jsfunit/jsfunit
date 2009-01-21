@@ -47,7 +47,7 @@ public class RichTabPanelTest extends ServletTestCase
            
    public void setUp() throws IOException
    {
-     this.jsfSession = new JSFSession("/richfaces/tabPanel.jsf");
+     this.jsfSession = JSFSessionFactory.makeSession("/richfaces/tabPanel.jsf");
      this.client = jsfSession.getJSFClientSession();
      this.ajaxClient = new RichFacesClient(this.client);
      this.server = jsfSession.getJSFServerSession();

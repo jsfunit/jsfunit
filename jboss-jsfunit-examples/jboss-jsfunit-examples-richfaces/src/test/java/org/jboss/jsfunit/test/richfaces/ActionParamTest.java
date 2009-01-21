@@ -43,7 +43,7 @@ public class ActionParamTest extends ServletTestCase
 
    public void testActionParam() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/actionparam.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/actionparam.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

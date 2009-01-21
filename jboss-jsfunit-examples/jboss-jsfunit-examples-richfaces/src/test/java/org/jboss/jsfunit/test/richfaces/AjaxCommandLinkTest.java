@@ -43,7 +43,7 @@ public class AjaxCommandLinkTest extends ServletTestCase
 
    public void testCommandLink() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/commandLink.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/commandLink.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

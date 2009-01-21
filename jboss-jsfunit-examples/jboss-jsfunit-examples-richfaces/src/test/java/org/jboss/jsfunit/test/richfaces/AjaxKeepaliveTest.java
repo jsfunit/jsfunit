@@ -38,7 +38,7 @@ public class AjaxKeepaliveTest extends ServletTestCase
 { 
    public void testWithoutKeepalive() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/keepAlive.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/keepAlive.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
@@ -55,7 +55,7 @@ public class AjaxKeepaliveTest extends ServletTestCase
    
    public void testWithKeepalive() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/keepAlive.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/keepAlive.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 

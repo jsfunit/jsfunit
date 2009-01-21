@@ -39,7 +39,7 @@ public class AjaxOutputPanelTest extends ServletTestCase
 { 
    public void testLayoutNone() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/outputPanel.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/outputPanel.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 

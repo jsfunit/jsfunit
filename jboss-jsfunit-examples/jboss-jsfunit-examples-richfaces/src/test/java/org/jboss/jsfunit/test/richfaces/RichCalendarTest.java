@@ -43,7 +43,7 @@ public class RichCalendarTest extends ServletTestCase
 {
    public void testCalendar() throws IOException, SAXException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/calendar.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/calendar.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = jsfSession.getJSFServerSession();

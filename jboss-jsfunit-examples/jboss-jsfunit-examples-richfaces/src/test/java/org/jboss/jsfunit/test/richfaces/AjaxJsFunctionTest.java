@@ -43,7 +43,7 @@ public class AjaxJsFunctionTest extends ServletTestCase
 
    public void testJsFunction() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/jsFunction.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/jsFunction.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 

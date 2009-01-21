@@ -39,7 +39,7 @@ public class RichInputNumberSliderTest extends ServletTestCase
 {
    public void testNumberSliders() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/inputNumberSlider.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/inputNumberSlider.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient ajaxClient = new RichFacesClient(client);
       JSFServerSession server = jsfSession.getJSFServerSession();

@@ -38,7 +38,7 @@ public class AjaxIncludeTest extends ServletTestCase
 {
    public void testWizard() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/include.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/include.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

@@ -39,7 +39,7 @@ public class RichDataFilterSliderTest extends ServletTestCase
 {
    public void testDataFilterSlider() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/dataFilterSlider.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dataFilterSlider.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient richClient = new RichFacesClient(client);
       

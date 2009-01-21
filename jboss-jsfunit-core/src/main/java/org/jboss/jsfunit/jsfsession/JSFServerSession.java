@@ -27,7 +27,6 @@ import com.gargoylesoftware.htmlunit.WebResponse;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.context.JSFUnitFacesContext;
 import org.jboss.jsfunit.framework.FacesContextBridge;

@@ -29,25 +29,25 @@ package demo;
  */
 public class Table 
 {
-   private int nestLevel;
+   private String parentKey;
    private int row;
    
    public Table()
    {
-      nestLevel = -1;
+      parentKey = "";
       row = -1;
    }
    
-   public Table(int parent, int row)
+   public Table(String parent, int row)
    {
-      this.nestLevel = parent;
+      this.parentKey = parent;
       this.row = row;
    }
 
    private String makeColumnName(String column)
    {
       String colName = "";
-      if (nestLevel > 0) colName += nestLevel + "_";
+      if (parentKey.length() > 0) colName = parentKey + "_";
       
       return colName + row + "_" + column;
    }
@@ -69,7 +69,17 @@ public class Table
    
    public Table[] getSubTable()
    {
-      int myNestLevel = nestLevel + 1;
+      String myNestLevel = "";
+      //Append parent nest level:
+      if (this.parentKey.length() > 0 && this.row != -1)
+      {
+        myNestLevel = parentKey + "_";
+      }
+      //Dont' add row on top level table:
+      if (this.row != -1)
+      {
+        myNestLevel += this.row;
+      }
       return new Table[] { new Table(myNestLevel, 0),
                            new Table(myNestLevel, 1),
                            new Table(myNestLevel, 2) };

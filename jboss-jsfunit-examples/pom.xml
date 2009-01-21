@@ -154,6 +154,12 @@
                 <home>${JBOSS_HOME}</home>
                 <log>${basedir}/target/jboss5.x/cargo.log</log>
                 <output>${basedir}/target/jboss5.x/container.log</output>
+                <dependencies>
+                   <dependency>
+                      <groupId>commons-codec</groupId>
+                      <artifactId>commons-codec</artifactId>
+                   </dependency>
+                </dependencies>
               </container>
             </configuration>
           </plugin>

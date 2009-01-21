@@ -44,9 +44,51 @@
   <param-value>false</param-value>
  </context-param>
  <context-param>
+  <param-name>org.ajax4jsf.COMPRESS_STYLE</param-name>
+  <param-value>true</param-value>
+</context-param>
+ <context-param>
   <param-name>org.ajax4jsf.xmlparser.ORDER</param-name>
   <param-value>NEKO</param-value>
  </context-param>
+ <context-param>
+   <param-name>org.richfaces.CONTROL_SKINNING</param-name>
+   <param-value>enable</param-value>
+ </context-param>
+
+ <context-param>
+  <param-name>org.richfaces.LoadStyleStrategy</param-name>
+  <param-value>ALL</param-value>
+ </context-param>
+ <context-param>
+  <param-name>org.richfaces.LoadScriptStrategy</param-name>
+  <param-value>ALL</param-value>
+ </context-param>
+
+ <listener>
+   <listener-class>org.jboss.seam.servlet.SeamListener</listener-class>
+ </listener>
+
+ <filter>
+  <filter-name>Seam Filter</filter-name>
+  <filter-class>org.jboss.seam.servlet.SeamFilter</filter-class>
+  <init-param>
+    <param-name>createTempFiles</param-name>
+    <param-value>false</param-value>
+  </init-param>
+  <init-param>
+    <param-name>maxRequestSize</param-name>
+    <param-value>100000</param-value>
+  </init-param>
+ </filter>
+ <filter-mapping>
+   <filter-name>Seam Filter</filter-name>
+   <servlet-name>Faces Servlet</servlet-name>
+   <dispatcher>FORWARD</dispatcher>
+   <dispatcher>REQUEST</dispatcher>
+   <dispatcher>INCLUDE</dispatcher>
+   <dispatcher>ERROR</dispatcher>
+ </filter-mapping>
 
  <filter>
    <filter-name>RequestDumper</filter-name>

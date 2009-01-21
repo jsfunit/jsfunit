@@ -45,7 +45,7 @@ public class AjaxRegionValidationErrorTest extends ServletTestCase
 
    public void testNoAjaxRegion() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/region.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/region.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       
@@ -59,7 +59,7 @@ public class AjaxRegionValidationErrorTest extends ServletTestCase
    
    public void testWithAjaxRegion() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/region.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/region.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

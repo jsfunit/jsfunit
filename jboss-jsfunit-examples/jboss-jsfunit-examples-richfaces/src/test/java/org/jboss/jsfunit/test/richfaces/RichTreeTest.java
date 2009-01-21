@@ -61,7 +61,7 @@ public class RichTreeTest extends ServletTestCase {
 
 	public void setUp() throws IOException
 	{
-		this.jsfSession = new JSFSession("/richfaces/tree.jsf");
+		this.jsfSession = JSFSessionFactory.makeSession("/richfaces/tree.jsf");
 		this.client = jsfSession.getJSFClientSession();
 		this.richClient = new RichFacesClient(client);
 		this.server = jsfSession.getJSFServerSession();

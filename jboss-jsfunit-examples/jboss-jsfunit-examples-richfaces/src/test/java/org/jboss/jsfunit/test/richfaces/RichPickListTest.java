@@ -54,7 +54,7 @@ public class RichPickListTest extends ServletTestCase
 
    public void testCopyAll() throws IOException
    { 
-     /* JSFSession jsfSession = new JSFSession("/richfaces/pickList.jsf");
+     /* JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/pickList.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       client.getPageAsText();
       JSFServerSession server = jsfSession.getJSFServerSession();

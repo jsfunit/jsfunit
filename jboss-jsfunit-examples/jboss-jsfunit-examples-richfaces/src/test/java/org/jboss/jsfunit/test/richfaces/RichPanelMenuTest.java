@@ -38,7 +38,7 @@ public class RichPanelMenuTest extends ServletTestCase
 {
    public void testAjaxModePanelMenu() throws IOException
    { 
-    /*  JSFSession jsfSession = new JSFSession("/richfaces/panelMenu.jsf");
+    /*  JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/panelMenu.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

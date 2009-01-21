@@ -73,7 +73,7 @@ public class RichInplaceInputTest extends ServletTestCase
    
    public void setUp() throws IOException
    {
-      this.jsfSession = new JSFSession("/richfaces/inplaceInput.jsf");
+      this.jsfSession = JSFSessionFactory.makeSession("/richfaces/inplaceInput.jsf");
       this.client = jsfSession.getJSFClientSession();
       this.ajaxClient = new RichFacesClient(client);
       this.server = jsfSession.getJSFServerSession();

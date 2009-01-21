@@ -48,7 +48,7 @@ public class AjaxSupportTest extends ServletTestCase
 
    public void testAjaxSupportWithOnkeyup() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/support.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 
@@ -72,7 +72,7 @@ public class AjaxSupportTest extends ServletTestCase
    
    public void testAjaxSupportWithOnchange() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/support.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/support.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
 

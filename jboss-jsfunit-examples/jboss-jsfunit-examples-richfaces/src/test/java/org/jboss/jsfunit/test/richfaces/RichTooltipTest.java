@@ -73,7 +73,7 @@ public class RichTooltipTest extends ServletTestCase {
 
 	public void setUp() throws IOException
 	{
-		this.jsfSession = new JSFSession("/richfaces/toolTip.jsf");
+		this.jsfSession = JSFSessionFactory.makeSession("/richfaces/toolTip.jsf");
 		this.client = jsfSession.getJSFClientSession();
 		this.ajaxClient = new RichFacesClient(client);
 		this.server = jsfSession.getJSFServerSession();

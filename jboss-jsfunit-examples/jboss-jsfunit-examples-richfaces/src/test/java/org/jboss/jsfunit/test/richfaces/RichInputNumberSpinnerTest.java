@@ -39,7 +39,7 @@ public class RichInputNumberSpinnerTest extends ServletTestCase
 {
    public void testNumberSpinners() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/inputNumberSpinner.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/inputNumberSpinner.jsf");
       JSFServerSession server = jsfSession.getJSFServerSession();
       JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient ajaxClient = new RichFacesClient(client);

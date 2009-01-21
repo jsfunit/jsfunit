@@ -22,12 +22,10 @@
 package org.jboss.jsfunit.test.richfaces;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -42,8 +40,7 @@ public class RichDropDownMenuTest extends ServletTestCase
 {
    public void testDropDownMenuWithIE6() throws IOException, SAXException
    {
-      WebClientSpec wcSpec = new WebClientSpec("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
-      JSFSession jsfSession = new JSFSession(wcSpec);
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       
@@ -70,7 +67,7 @@ public class RichDropDownMenuTest extends ServletTestCase
    
    public void testDropDownMenu() throws IOException, SAXException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/dropDownMenu.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       
@@ -97,7 +94,7 @@ public class RichDropDownMenuTest extends ServletTestCase
    
    public void testClickHomePageLink() throws IOException, SAXException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/dropDownMenu.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       jsfSession.getWebClient().setThrowExceptionOnFailingStatusCode(false);
       client.click("jsfunitHomePageLink");
@@ -107,8 +104,7 @@ public class RichDropDownMenuTest extends ServletTestCase
 
    public void testServerModeDropDownMenuWithIE6() throws IOException, SAXException
    {
-      WebClientSpec wcSpec = new WebClientSpec("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
-      JSFSession jsfSession = new JSFSession(wcSpec);
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       
@@ -135,17 +131,13 @@ public class RichDropDownMenuTest extends ServletTestCase
    
    public void testServerModeDropDownMenu() throws IOException, SAXException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/dropDownMenu.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
-      System.out.println("&&&&& # 1 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+      
       client.click("NewServerMode");
-      HtmlElement html = (HtmlElement)client.getElement("NewServerMode");
-      System.out.println("#2: " + html.asXml());
       String selection = (String)server.getManagedBeanValue("#{ddmenu.current}");
-      System.out.println("#3");
       assertEquals("New", selection);
-      System.out.println("&&&&&&& # 4 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
       
       client.click("OpenServerMode");
       selection = (String)server.getManagedBeanValue("#{ddmenu.current}");

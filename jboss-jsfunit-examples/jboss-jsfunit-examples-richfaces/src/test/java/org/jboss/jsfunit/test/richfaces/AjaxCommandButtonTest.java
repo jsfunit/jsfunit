@@ -44,7 +44,7 @@ public class AjaxCommandButtonTest extends ServletTestCase
 
    public void testCommandButton() throws IOException, SAXException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/commandButton.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/commandButton.jsf");
       JSFServerSession server = jsfSession.getJSFServerSession();
       JSFClientSession client = jsfSession.getJSFClientSession();
       

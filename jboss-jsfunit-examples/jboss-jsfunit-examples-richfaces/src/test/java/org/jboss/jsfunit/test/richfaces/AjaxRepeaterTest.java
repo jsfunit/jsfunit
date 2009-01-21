@@ -38,7 +38,7 @@ public class AjaxRepeaterTest extends ServletTestCase
 {
    public void testRepeater() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/repeat.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/repeat.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

@@ -53,8 +53,8 @@ public class NestedTableTest extends ServletTestCase
       
       // assert on values from the middle of the table
       assertEquals(  "1_1", server.getComponentValue("form:table:1:column1"));
-      assertEquals("1_2_1", server.getComponentValue("form:table:2:nestedtable:2:column1"));
-      assertEquals("2_1_1", server.getComponentValue("form:table:0:nestedtable:0:nestednestedtable:1:column1"));
+      assertEquals("2_2_1", server.getComponentValue("form:table:2:nestedtable:2:column1"));
+      assertEquals("0_0_1_1", server.getComponentValue("form:table:0:nestedtable:0:nestednestedtable:1:column1"));
       
       // assert on all values
       for (int i=0; i < 3; i++)
@@ -67,19 +67,19 @@ public class NestedTableTest extends ServletTestCase
             
             String id = "form:table:" + i + ":column" + j;
             assertEquals(i + "_" + j, server.getComponentValue(id));
-            System.out.println(id + "=" + server.getComponentValue(id));
+            //System.out.println(id + "=" + server.getComponentValue(id));
             
             for (int k=0; k < 3; k++)
             {  // 1 is nesting depth
                String nestedId = "form:table:" + i + ":nestedtable:" + j + ":column" + k;
-               assertEquals("1_" + j + "_" + k, server.getComponentValue(nestedId));  
-               System.out.println(nestedId + "=" + server.getComponentValue(nestedId));
+               assertEquals(i + "_" + j + "_" + k, server.getComponentValue(nestedId));  
+               //System.out.println(nestedId + "=" + server.getComponentValue(nestedId));
                
                for (int l=0; l < 3; l++)
                {  // 2 is nesting depth
                   String nestednestedId = "form:table:" + i + ":nestedtable:" + j + ":nestednestedtable:" + k + ":column" + l;
-                  assertEquals("2_" + k + "_" + l, server.getComponentValue(nestednestedId));  
-                  System.out.println(nestednestedId + "=" + server.getComponentValue(nestednestedId));
+                  assertEquals(i + "_" + j + "_" + k + "_" + l, server.getComponentValue(nestednestedId));  
+                  //System.out.println(nestednestedId + "=" + server.getComponentValue(nestednestedId));
                }
             }
          }

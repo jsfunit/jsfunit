@@ -44,7 +44,7 @@ public class RichComboBoxTest extends ServletTestCase
            
    public void setUp() throws IOException
    {
-     this.jsfSession = new JSFSession("/richfaces/comboBox.jsf");
+     this.jsfSession = JSFSessionFactory.makeSession("/richfaces/comboBox.jsf");
      this.client = jsfSession.getJSFClientSession();
      this.ajaxClient = new RichFacesClient(this.client);
      this.server = jsfSession.getJSFServerSession();

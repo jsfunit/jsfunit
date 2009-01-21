@@ -44,7 +44,7 @@ public class AjaxRegionSelfRenderTest extends ServletTestCase
 
    public void testNotUsingOutputTextTag() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/region.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/region.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       
@@ -64,7 +64,7 @@ public class AjaxRegionSelfRenderTest extends ServletTestCase
    
    public void testUsingOutputTextTag() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/region.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/region.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

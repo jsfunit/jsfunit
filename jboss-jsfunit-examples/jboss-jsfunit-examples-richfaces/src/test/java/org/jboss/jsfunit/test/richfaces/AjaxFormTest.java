@@ -43,7 +43,7 @@ public class AjaxFormTest extends ServletTestCase
 
    public void testAjaxForm() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/richfaces/form.jsf");
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/form.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

@@ -38,8 +38,8 @@
         </plugins>
       </build>
       <properties>
-         <jsfMajorVersion>2</jsfMajorVersion>
-         <jsfMinorVersion>0</jsfMinorVersion>
+         <jsfMajorVersion>1</jsfMajorVersion>
+         <jsfMinorVersion>2</jsfMinorVersion>
       </properties>
     </profile>
     

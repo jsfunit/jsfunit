@@ -61,7 +61,7 @@ public class AjaxPollTest extends ServletTestCase {
 	
 	public void testPoll_OnOffTest() throws InterruptedException, IOException
 	{
-		JSFSession jsfSession = new JSFSession("/richfaces/poll.jsf");
+		JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/poll.jsf");
 		JSFClientSession client = jsfSession.getJSFClientSession();
 		RichFacesClient ajaxClient = new RichFacesClient(client);
 		JSFServerSession server = jsfSession.getJSFServerSession();
@@ -126,7 +126,7 @@ public class AjaxPollTest extends ServletTestCase {
 	
 	public void testPoll_StillRunning() throws InterruptedException, IOException
 	{
-		JSFSession jsfSession = new JSFSession("/richfaces/inplaceInput.jsf");	// Anything but the Polling page
+		JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/inplaceInput.jsf");	// Anything but the Polling page
 		JSFClientSession client = jsfSession.getJSFClientSession();
 		RichFacesClient ajaxClient = new RichFacesClient(client);
 		JSFServerSession server = jsfSession.getJSFServerSession();
