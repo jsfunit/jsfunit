@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
  */
 public class TextBean
 {
-   private String text;
+   private String text = "";
    
    public TextBean()
    {

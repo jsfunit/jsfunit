@@ -23,10 +23,6 @@
   <managed-bean-name>textbean</managed-bean-name>
   <managed-bean-class>org.jboss.jsfunit.example.ajax4jsf.TextBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
-  <managed-property>
-    <property-name>text</property-name>
-    <value/>
-  </managed-property>
  </managed-bean>
  
  <managed-bean>
