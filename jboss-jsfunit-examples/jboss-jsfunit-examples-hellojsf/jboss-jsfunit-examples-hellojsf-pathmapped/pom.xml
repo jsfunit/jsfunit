@@ -86,18 +86,6 @@
   <dependencies>
 
     <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  
-    <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jboss-jsfunit-core</artifactId>
       <version>${project.version}</version>

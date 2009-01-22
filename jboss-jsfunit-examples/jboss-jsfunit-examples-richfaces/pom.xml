@@ -97,6 +97,20 @@
     </profile>    
     
     <profile>
+      <id>tomcat6x</id>
+      <dependencies>
+         <dependency>
+           <groupId>org.richfaces.samples</groupId>
+           <artifactId>richfaces-demo</artifactId>
+           <version>${richfaces-version}</version>
+           <classifier>tomcat6</classifier>
+           <type>war</type>
+           <scope>runtime</scope>
+         </dependency>
+      </dependencies>
+    </profile>    
+    
+    <profile>
        <id>myfaces1.1</id>
        <dependencies>
          <dependency>

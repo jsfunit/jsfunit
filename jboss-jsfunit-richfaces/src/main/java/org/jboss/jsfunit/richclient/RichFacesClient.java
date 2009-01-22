@@ -314,9 +314,7 @@ public class RichFacesClient
    public void clickInputNumberSpinnerUp(String componentID)
          throws IOException
    {
-      HtmlTable table = (HtmlTable)jsfClient.getElement(componentID + "Buttons");
-      HtmlInput input = (HtmlInput)table.getByXPath("tbody/tr/td/input").get(0);
-      input.click();
+      clickSpinnerButton(componentID, "SpinnerButtonUp");
    }
    
    /**
@@ -332,9 +330,24 @@ public class RichFacesClient
    public void clickInputNumberSpinnerDown(String componentID)
          throws IOException
    {
+      clickSpinnerButton(componentID, "SpinnerButtonDown");
+   }
+   
+   private void clickSpinnerButton(String componentID, String imageName)
+          throws IOException
+   {
       DomNode table = (DomNode)jsfClient.getElement(componentID + "Buttons");
-      HtmlInput input = (HtmlInput)table.getByXPath("tbody/tr[2]/td/input").get(0);
-      input.click();
+      List inputs = table.getByXPath("tbody/tr/td/input");
+      for (Iterator i = inputs.iterator(); i.hasNext();)
+      {
+         HtmlInput input = (HtmlInput)i.next();
+         if (input.asXml().contains(imageName))
+         {
+            input.click();
+            return;
+         }
+      }
+      throw new RuntimeException("Can't find image for " + imageName);
    }
 
    /**

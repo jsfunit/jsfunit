@@ -129,6 +129,7 @@
       <groupId>javax.faces</groupId>
       <artifactId>jsf-api</artifactId>
       <scope>provided</scope>
+      <version>2.0.0-PR</version>
     </dependency>
 
     <dependency>

@@ -157,15 +157,15 @@
       <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-api</artifactId>
-        <version>2.0.0-PR</version>
-       <!-- <version>1.2_08</version> -->
+        <!--<version>2.0.0-PR</version>-->
+        <version>1.2_08</version>
       </dependency>
       
       <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-impl</artifactId>
-        <version>2.0.0-PR</version>
-        <!-- <version>1.2_08</version> -->
+        <!--<version>2.0.0-PR</version>-->
+        <version>1.2_08</version>
       </dependency>
 
       <dependency>

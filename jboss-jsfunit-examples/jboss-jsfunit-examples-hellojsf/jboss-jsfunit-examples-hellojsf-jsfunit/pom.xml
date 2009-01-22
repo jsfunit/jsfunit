@@ -44,6 +44,14 @@
     </profile>
     
     <profile>
+       <id>mojarra1.2</id>
+       <properties>
+         <jsfMajorVersion>1</jsfMajorVersion>
+         <jsfMinorVersion>2</jsfMinorVersion>
+      </properties>
+    </profile>
+    
+    <profile>
       <id>test</id>        
       <build>
         <plugins>
@@ -115,18 +123,6 @@
   
   <dependencies>
 
-    <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jboss-jsfunit-core</artifactId>
