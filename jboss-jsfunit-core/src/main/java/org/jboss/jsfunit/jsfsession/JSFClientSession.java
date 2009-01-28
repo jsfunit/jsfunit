@@ -153,6 +153,7 @@ public class JSFClientSession implements WebWindowListener
    public void setValue(String componentID, String value)
    {
       Element input = getElement(componentID);
+      if (input == null) throw new ComponentIDNotFoundException(componentID);
       
       if (input instanceof HtmlInput) 
       {
@@ -189,6 +190,7 @@ public class JSFClientSession implements WebWindowListener
    public void type(String componentID, char c) throws IOException
    {
       HtmlElement element = (HtmlElement)getElement(componentID);
+      if (element == null) throw new ComponentIDNotFoundException(componentID);
       element.type(c);
    }
    
@@ -217,6 +219,8 @@ public class JSFClientSession implements WebWindowListener
          clickRadio(componentID);
          return;
       }
+      
+      if (element == null) throw new ComponentIDNotFoundException(componentID);
       
       if (element instanceof ClickableElement)
       {
