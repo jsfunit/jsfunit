@@ -38,6 +38,7 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.example.hellojsf.MyBean;
 import org.jboss.jsfunit.framework.Environment;
 import org.jboss.jsfunit.framework.WebClientSpec;
+import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
@@ -346,6 +347,45 @@ public class FacadeAPITest extends ServletTestCase
       bean = (MyBean)server.getManagedBeanValue("#{referencedrequestbean}");
       assertNotNull(bean);
       assertEquals(1, bean.myValue);
+   }
+   
+   public void testClickThrowsComponentNotFound() throws IOException
+   {
+      try
+      {
+         client.click("thiselementisnotthere");
+         fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // OK
+      }
+   }
+   
+   public void testSetValueThrowsComponentNotFound() throws IOException
+   {
+      try
+      {
+         client.setValue("thiselementisnotthere", "bogusvalue");
+         fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // OK
+      }
+   }
+   
+   public void testTypeThrowsComponentNotFound() throws IOException
+   {
+      try
+      {
+         client.type("thiselementisnotthere", 'b');
+         fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // OK
+      }
    }
    
 }
