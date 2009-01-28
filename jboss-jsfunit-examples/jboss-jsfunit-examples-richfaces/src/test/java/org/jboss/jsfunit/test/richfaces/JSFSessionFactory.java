@@ -48,7 +48,11 @@ public class JSFSessionFactory
    
    public static JSFSession makeSession(String initialPage, BrowserVersion browserVersion) throws IOException
    {
-      WebClientSpec wcSpec = new WebClientSpec(initialPage, browserVersion);
+      return makeSession(new WebClientSpec(initialPage, browserVersion));
+   }
+   
+   public static JSFSession makeSession(WebClientSpec wcSpec) throws IOException
+   {
       wcSpec.getWebClient().setCssErrorHandler(silentHandler);
       return new JSFSession(wcSpec);
    }

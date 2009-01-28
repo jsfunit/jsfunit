@@ -45,7 +45,15 @@
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
-              <wait>false</wait>  
+              <wait>false</wait>
+              <container>
+                <systemProperties>
+                <!-- snoops request and response from client side
+                     result is in server.log 
+                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
+                  <jsfunit.testdata>${basedir}/testdata</jsfunit.testdata>
+                </systemProperties>
+              </container>
               <configuration>                  
                 <deployables>
                   <deployable>

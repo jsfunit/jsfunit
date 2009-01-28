@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<ui:composition template="/templates/component-sample.xhtml">
+		<ui:define name="sample">
+			<p><b>
+				rich:fileUpload</b> is a component which provides files upload functionality and 
+				extends functionality of standard <i>input </i>with <i>type=file</i>. 
+			</p>
+			<p>
+				Next example shows you <b>File Upload</b> which allows you to upload files to server. 
+				Files count allowed to upload managed with <b>maxFilesQuantity </b>attribute. 
+				Every uploaded file should be managed through <b>fileUploadListener </b>which called after
+				every single file upload finished.
+			</p>
+
+			<fieldset class="demo_fieldset">
+				<legend class="demo_legend">FileUpload example</legend>
+				<div class="sample-container" >
+					<p>This example allows to download up to 5 files. The file extension is limited to GIF, JPG, 
+						BMP, PNG and the maximum size of each file must not exceed 100kB</p>
+					<br/>
+					<ui:include src="/richfaces/fileUpload/examples/fileUpload.xhtml"/>
+					<ui:include src="/templates/include/sourceview.xhtml">
+						<ui:param name="sourcepath" value="/richfaces/fileUpload/examples/fileUpload.xhtml"/>
+					</ui:include>
+				</div>
+			</fieldset>
+			<fieldset class="demo_fieldset">
+				<legend class="demo_legend">Details of Usage</legend>
+				<p>
+					File upload could works in <b>automatic upload</b> mode. You should just define 
+					<b>immediateUpload </b>upload attribute as <b>true </b>(<i>false by default</i>) and upload will be started 
+					just after file added to list. But you could freely manage the list (add 
+					or remove some files from list while upload performed) 
+				</p>
+				<p>
+					Also starting from 3.2.2 version File Upload could be configured to use flash
+					object in order to provide additional features (covered in developer guide) 
+					to component.
+				</p>
+				<h:form>
+				<h:panelGrid columns="2">
+					<h:panelGroup>
+						<h:outputText value="Turn Automatic upload on:"/>
+						<h:selectBooleanCheckbox id="autoupload" value="#{fileUploadBean.autoUpload}">
+							<a4j:support event="onclick" reRender="richfileupload" ajaxSingle="true"/>
+						</h:selectBooleanCheckbox>
+					</h:panelGroup>
+					<h:panelGroup>
+						<h:outputText value="Turn using flash on:"/>
+						<h:selectBooleanCheckbox value="#{fileUploadBean.useFlash}">
+							<a4j:support event="onclick" reRender="richfileupload" ajaxSingle="true"/>
+						</h:selectBooleanCheckbox>
+					</h:panelGroup>
+				</h:panelGrid>
+				</h:form>
+				<p>
+					In this example file types restricted to jpg, gif, png and bmp files using <b>acceptedTypes </b>attribute. 
+				</p>
+				<p>
+					FileUpload uses two init parameters which should be defined in Filter definition
+					in web.xml: 
+				</p>
+				<ul>
+					<li>
+						<b>createTempFiles</b> boolean attribute which defines if the uploaded files
+						will be stored in temporary files or available in listener just as byte[] data
+						(false for this example).
+					</li>
+					<li>
+						<b>maxRequestSize</b> attribute defines max size in bytes of the uploaded files
+						(1000000 for this example).
+					</li>  
+				</ul>
+			</fieldset>			
+		</ui:define>
+
+	</ui:composition>
+</html>
