@@ -12,10 +12,8 @@
   <name>HelloJSF Ant Task Test</name>
 
   <profiles>
-    <!-- Because the sourcewar bundles myfaces, it only works -->
-    <!-- with the myfaces1.1 profile.                         -->
     <profile>
-      <id>myfaces1.1</id>        
+      <id>test</id>        
       <build>
         <plugins>
           <plugin>
@@ -84,23 +82,10 @@
     </profile>
     
     <profile>
-      <id>tomcat5x</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
-            <configuration>
-              <container>
-                <containerId>tomcat5x</containerId>
-                <home>${CATALINA_HOME}</home>
-                <log>${basedir}/target/tomcat5x/cargo.log</log>
-                <output>${basedir}/target/tomcat5x/container.log</output>
-              </container>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
+       <id>jboss5x</id>
+       <properties>
+         <containerId>jboss5x</containerId>
+      </properties>
     </profile>
   </profiles>
   
@@ -143,9 +128,8 @@
                 <typedef resource="org/apache/maven/artifact/ant/antlib.xml" classpathref="maven-ant-tasks.classpath" />
                          
                 <dependencies filesetId="dependency.fileset" pathId="jsfunit.classpath">
+                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.4" />
                    <dependency groupId="cactus" artifactId="cactus" version="13-1.7.1" />
-                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.3" />
-                   <dependency groupId="commons-httpclient" artifactId="commons-httpclient" version="3.1" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-core" version="${project.version}" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-ant" version="${project.version}" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-examples-hellojsf-webapp" version="${project.version}" type="war" />
@@ -173,7 +157,7 @@
                 <property name="xalan.jar" location="${jsfunit.lib.dir}/xalan-2.7.0.jar" />
                 
                 <delete file="${dest.war}" />
-                <jsfunitwar srcfile="${src.war}" destfile="${dest.war}" autoaddjars="true">
+                <jsfunitwar srcfile="${src.war}" destfile="${dest.war}" autoaddjars="true" container="${containerId}">
                   <TestRunner />
                   <classes dir="${classes.test}" includes="**/*.class" />
                   <lib file="${xercesImpl.jar}" />

@@ -54,6 +54,7 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 public class JSFUnitWarTask extends Task
 {
 
+        private String containerId = "";
 	private File srcfile;
 	private File destfile;
 	private List<JSFUnitFilter> jsfFilters = new ArrayList<JSFUnitFilter>();
@@ -68,6 +69,10 @@ public class JSFUnitWarTask extends Task
 		super();
 	}
 	
+        public void setContainer(String containerId)
+        {
+           this.containerId = containerId;
+        }
 	/**
 	 * Sets the original archive that should have JSFUnit specifics added
 	 * @param srcfile the srcfile
@@ -474,22 +479,34 @@ public class JSFUnitWarTask extends Task
             log("Automatically adding JSFunit required jars to the new war", Project.MSG_INFO);
             // TODO: pick out actual classes used, these ones were picked at random from the jars
             String[][] classNames = new String[][] {
-                            {"/org/jboss/jsfunit/framework/JSFUnitFilter.class", "JSFUnit Beta 3 or higher"},
-                            {"/org/aspectj/runtime/CFlow.class", "AspectJ 1.2.1 or higher"},
-                            {"/org/apache/cactus/Request.class", "Cactus 1.7.1 or higher"},
-                            {"/junit/framework/Assert.class", "JUnit 3.8.1 or higher"},
-                            {"/org/cyberneko/html/ObjectFactory.class", "NekoHTML 1.9.9 or higher"},
-                            {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.3 or higher"},
-                            {"/org/mozilla/javascript/Script.class", "HTMLUnitJavascript 2.2 or higher"},
-                            {"/com/steadystate/css/parser/HandlerBase.class", "CSSParser 0.9.5 or higher"},
-                            {"/org/apache/commons/httpclient/auth/CredentialsProvider.class", "CommonsHttpClient 3.1 or higher"},
-                            {"/org/apache/commons/io/FileUtils.class", "CommonsIO 1.4 or higher"},
-                            {"/org/w3c/css/sac/SACMediaList.class", "W3C SAC 1.3 or higher"},
+              {"/org/jboss/jsfunit/framework/JSFUnitFilter.class", "JSFUnit Beta 3 or higher"},
+                 {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.4 or higher"},
+                    {"/org/apache/commons/codec/BinaryDecoder.class", "Commons Codec 1.3 or higher"},
+                    {"/org/mozilla/javascript/Script.class", "HTMLUnitJavascript 2.4 or higher"},
+                    {"/org/apache/commons/logging/Log.class", "Commons Logging 1.0.4 or higher"},
+                 {"/org/apache/commons/httpclient/auth/CredentialsProvider.class", "Commons HTTP Client 3.1 or higher"},
+                 {"/org/apache/commons/lang/ArrayUtils.class", "Commons Lang 2.4 or higher"},
+                 {"/org/apache/commons/collections/ArrayStack.class", "Commons Collections 3.2 or higher"},
+                 {"/org/apache/commons/io/FileUtils.class", "CommonsIO 1.4 or higher"},
+                 {"/com/steadystate/css/parser/HandlerBase.class", "CSSParser 0.9.5 or higher"},
+                    {"/org/w3c/css/sac/SACMediaList.class", "W3C SAC 1.3 or higher"},
+                 {"/org/cyberneko/html/ObjectFactory.class", "NekoHTML 1.9.9 or higher"},
+                    {"/org/apache/html/dom/CollectionIndex.class", "XercesImpl 2.8.1 or higher"},
+                 {"/org/apache/xalan/extensions/ExpressionContext.class", "Xalan 2.7.0 or higher"},
+                   // should be in JDK {"/org/w3c/dom/Attr.class", "XML APIs 1.0.b2 or higher"},
+                 {"/org/apache/cactus/Request.class", "Cactus 1.7.1 or higher"},
+                    {"/org/apache/cactus/integration/ant/CactifyEarTask.class", "Cactus Ant 1.7.1 or higher"},
+                    {"/junit/framework/Assert.class", "JUnit 3.8.1 or higher"},
+                    {"/org/aspectj/runtime/CFlow.class", "AspectJ 1.2.1 or higher"},
+                    {"/org/codehaus/cargo/ant/CargoTask.class", "Cargo 0.5 or higher"},
+                    {"/org/apache/tools/ant/AntClassLoader.class", "Ant 1.5.4 or higher"}
             };
 
 
             for (int i=0; i<classNames.length; i++)
             {
+                    if (skipForJBoss5(classNames[i][1])) continue;
+
                     try{
                     File jar = ResourceUtils.getResourceLocation(classNames[i][0]);
                     if (jar == null)
@@ -508,6 +525,14 @@ public class JSFUnitWarTask extends Task
                     }
             }
 	}
+
+        private boolean skipForJBoss5(String libraryName)
+        {
+           if (!"jboss5x".equalsIgnoreCase(this.containerId)) return false;
+           if (libraryName.startsWith("XercesImpl")) return true;
+           if (libraryName.startsWith("Xalan")) return true;
+           return false;
+        }
 
 	/**
 	 * Add a specified File into the WEB-INF/lib directory of the archive

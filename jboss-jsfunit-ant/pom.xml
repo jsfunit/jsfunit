@@ -39,7 +39,7 @@
     <dependency>
       <groupId>cactus</groupId>
       <artifactId>cactus</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
