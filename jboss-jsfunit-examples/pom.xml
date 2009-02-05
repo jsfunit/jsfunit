@@ -16,6 +16,7 @@
     <module>jboss-jsfunit-examples-hellojsf</module>
     <module>jboss-jsfunit-examples-ajax4jsf</module>
     <module>jboss-jsfunit-examples-richfaces</module>
+    <module>jboss-jsfunit-examples-icefaces</module>
     <module>jboss-jsfunit-examples-seam</module>
   </modules>
     

@@ -76,18 +76,19 @@ public class JSFSession
     */
    public JSFSession(WebClientSpec wcSpec) throws IOException
    {
-      Page initialPage = wcSpec.doInitialRequest();
-      
       this.webClient = wcSpec.getWebClient();
+      this.jsfClientSession = new JSFClientSession();
+      this.webClient.addWebWindowListener(this.jsfClientSession);
+      
+      wcSpec.doInitialRequest();
   
       this.jsfServerSession = new JSFServerSession();
+      this.jsfClientSession.setJSFServerSession(this.jsfServerSession);
+      
       JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.webClient.getWebConnection();
       webConnection.addListener(this.jsfServerSession);
       
       if (HtmlUnitSnooper.enabled()) webConnection.addListener(new HtmlUnitSnooper());
-      
-      this.jsfClientSession = new JSFClientSession(this.jsfServerSession, initialPage);
-      this.webClient.addWebWindowListener(this.jsfClientSession);
    }
    
    /**

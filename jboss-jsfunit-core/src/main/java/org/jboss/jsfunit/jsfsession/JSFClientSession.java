@@ -26,6 +26,8 @@ import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.UnexpectedPage;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebWindow;
 import com.gargoylesoftware.htmlunit.WebWindowEvent;
 import com.gargoylesoftware.htmlunit.WebWindowListener;
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
@@ -57,14 +59,16 @@ import org.w3c.dom.Element;
  */
 public class JSFClientSession implements WebWindowListener
 {
-   
    private JSFServerSession jsfServerSession;
    private Page contentPage;
    
-   JSFClientSession(JSFServerSession jsfServerSession, Page initialPage)
+   JSFClientSession()
+   {
+   }
+   
+   void setJSFServerSession(JSFServerSession jsfServerSession)
    {
       this.jsfServerSession = jsfServerSession;
-      this.contentPage = initialPage;
    }
    
    /**
@@ -303,30 +307,79 @@ public class JSFClientSession implements WebWindowListener
       return null;
    }
    
-   // ------ Implementation of WebWindowListener
-   public void webWindowOpened(WebWindowEvent webWindowEvent)
+   public void setCurrentWindow(String name)
    {
+      setCurrentWindow(webClient().getWebWindowByName(name));
    }
-
-   public void webWindowContentChanged(WebWindowEvent webWindowEvent)
+   
+   public void setCurrentWindow(WebWindow window)
    {
-      Page page = webWindowEvent.getNewPage();
-      if (page instanceof UnexpectedPage) return;
+      boolean success = setContentPage(window.getEnclosedPage());
+      if (!success) throw new IllegalArgumentException("Page in window " + window + " can't be used by JSFClientSession.");
+      webClient().setCurrentWindow(window);
+   }
+   
+   private WebClient webClient()
+   {
+      return this.contentPage.getEnclosingWindow().getWebClient();
+   }
+   
+   public WebWindow getCurrentWindow()
+   {
+      return webClient().getCurrentWindow();
+   }
+   
+   private boolean setContentPage(Page page)
+   {
+      if (page == null) return false;
+      
+      if (page instanceof UnexpectedPage) return false;
       
       if(!(page instanceof HtmlPage)) 
       {
          this.contentPage = page;
-         return;
+         return true;
       }
       
       HtmlPage ht = (HtmlPage)page;
       if( ht.getDocumentElement().hasChildNodes() )
       {
          this.contentPage = page;
+         return true;
       }
+      
+      return false;
+   }
+   
+   // ------ Implementation of WebWindowListener
+   public void webWindowOpened(WebWindowEvent webWindowEvent)
+   {
+     // System.out.println("*******************");
+     // System.out.println("Window opened: " + webWindowEvent.getWebWindow());
+     // System.out.println("*******************");
+   }
+
+   public void webWindowContentChanged(WebWindowEvent webWindowEvent)
+   {
+     // System.out.println("*******************");
+     // System.out.println("Window changed: " + webWindowEvent.getWebWindow());
+     // System.out.println("*******************");
+      
+      Page page = webWindowEvent.getNewPage();
+      
+      if (this.contentPage != null)
+      {
+         WebWindow currentWindow = webClient().getCurrentWindow();
+         if (currentWindow != page.getEnclosingWindow()) return;
+      }
+      
+      setContentPage(page);
    }
 
    public void webWindowClosed(WebWindowEvent webWindowEvent)
    {
+    //  System.out.println("*******************");
+    //  System.out.println("Window closed: " + webWindowEvent.getWebWindow());
+    //  System.out.println("*******************");
    }
 }

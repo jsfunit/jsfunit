@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  ~
+  ~ "The contents of this file are subject to the Mozilla Public License
+  ~ Version 1.1 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://www.mozilla.org/MPL/
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations under
+  ~ the License.
+  ~
+  ~ The Original Code is ICEfaces 1.5 open source software code, released
+  ~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+  ~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+  ~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+  ~
+  ~ Contributor(s): _____________________.
+  ~
+  ~ Alternatively, the contents of this file may be used under the terms of
+  ~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+  ~ License), in which case the provisions of the LGPL License are
+  ~ applicable instead of those above. If you wish to allow use of your
+  ~ version of this file only under the terms of the LGPL License and not to
+  ~ allow others to use your version of this file under the MPL, indicate
+  ~ your decision by deleting the provisions above and replace them with
+  ~ the notice and other provisions required by the LGPL License. If you do
+  ~ not delete the provisions above, a recipient may use your version of
+  ~ this file under either the MPL or the LGPL License."
+  ~
+  -->
+
+<!DOCTYPE web-app PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+    <display-name>ICEfaces Address: Intelligent form demo</display-name>
+    <description>
+        ICEfaces Address Demo
+    </description>
+
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>javax.faces.application.CONFIG_FILES</param-name>
+        <param-value>/WEB-INF/faces-config.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>com.sun.faces.validateXml</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+<!-- Specifies to the ICEfaces framework that synchronous update mode is to be 
+     used.  By default, ICEfaces uses asynchronous update mode to support 
+     server-initiated updates (AJAX push).  Setting to true will enable 
+     synchronous update mode and disable AJAX push features. -->
+    <context-param>
+        <param-name>com.icesoft.faces.synchronousUpdate</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+<!-- Specifies the amount of time in milliseconds that the bridge will wait for  
+     a response from the server for a user-initiated request before declaring 
+     the connection lost.  Un-comment and change the default value, if necessary.    
+    <context-param>
+        <param-name>com.icesoft.faces.connectionTimeout</param-name>
+        <param-value>60000</param-value>
+    </context-param>
+-->
+
+<!-- Specifies to the ICEfaces framework whether to support multiple views of a 
+     single application from the same browser.  When running in a Portlet 
+     environment, this parameter must be set to true.  Un-comment and change the 
+     default value, if necessary.
+    <context-param>
+        <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+        <param-value>FALSE</param-value>
+    </context-param>
+-->
+
+    <context-param>
+      <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+      <param-value>.jspx</param-value>
+    </context-param>
+
+<!-- ConfigureListener is not generally required. Due to an apparent bug in 
+     Tomcat users have reported seeing the following error "SEVERE: ICEfaces 
+     could not initialize JavaServer Faces. Please check that the JSF .jar files 
+     are installed correctly.". Specifying the ConfigureListener resolves the 
+     issue. 
+    <listener> 
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class> 
+    </listener>
+--> 
+
+	<listener>
+		<listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
+	</listener>
+
+   <filter>
+     <filter-name>JSFUnitFilter</filter-name>
+     <filter-class>org.jboss.jsfunit.framework.JSFUnitFilter</filter-class>
+   </filter>
+
+   <filter-mapping>
+     <filter-name>JSFUnitFilter</filter-name>
+     <servlet-name>ServletTestRunner</servlet-name>
+   </filter-mapping>	
+   
+   <filter-mapping>
+     <filter-name>JSFUnitFilter</filter-name>
+     <servlet-name>ServletRedirector</servlet-name>
+   </filter-mapping>
+
+    <!-- Faces Servlet -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup> 1 </load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Persistent Faces Servlet</servlet-name>
+        <servlet-class>com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet</servlet-class>
+        <load-on-startup> 1 </load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Blocking Servlet</servlet-name>
+        <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
+        <load-on-startup> 1 </load-on-startup>
+    </servlet>
+    
+    <servlet>
+     <servlet-name>ServletRedirector</servlet-name>
+     <servlet-class>org.jboss.jsfunit.framework.JSFUnitServletRedirector</servlet-class>
+    </servlet>
+   
+    <servlet>
+      <servlet-name>ServletTestRunner</servlet-name>
+      <servlet-class>org.apache.cactus.server.runner.ServletTestRunner</servlet-class>
+    </servlet> 
+
+    <servlet-mapping>
+     <servlet-name>ServletRedirector</servlet-name>
+     <url-pattern>/ServletRedirector</url-pattern>
+    </servlet-mapping> 
+   
+    <servlet-mapping>
+      <servlet-name>ServletTestRunner</servlet-name>
+      <url-pattern>/ServletTestRunner</url-pattern>
+    </servlet-mapping> 
+   
+    <!-- Faces Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jspx</url-pattern>
+    </servlet-mapping>
+
+    <!-- Persistent Faces Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>Persistent Faces Servlet</servlet-name>
+        <url-pattern>*.iface</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Persistent Faces Servlet</servlet-name>
+        <url-pattern>/xmlhttp/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Blocking Servlet</servlet-name>
+        <url-pattern>/block/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+      <session-timeout>30</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
