@@ -33,9 +33,7 @@ import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
- * This class tests all of the API's in the JSFClientSession and JSFServerSession.
- * 
- * 
+ * This class tests using JSFClientSession with multiple windows.
  * 
  * @author Stan Silvert
  */
@@ -66,45 +64,45 @@ public class WebWindowTest extends ServletTestCase
       return new TestSuite( WebWindowTest.class  );
    }
    
-   public void testDoNotFollowNewWindow() throws IOException
+   public void testFollowNewWindow() throws IOException
    {
-      System.out.println("********** Start testDoNotFollowNewWindow");
       client.click("child1");
-      assertFalse(client.getPageAsText().contains("Hello from Window #1"));
-      System.out.println("********** End testDoNotFollowNewWindow");
+      assertTrue(client.getPageAsText().contains("Hello from Window #1"));
    }
-   
+  
    public void testSetCurrentWindow() throws IOException
    {
-      System.out.println("*********** Start testSetCurrentWindow");
+      WebWindow parent = jsfSession.getWebClient().getCurrentWindow();
       client.click("child1");
-      //System.out.println("current page=" + client.getPageAsText());
+      jsfSession.getWebClient().setCurrentWindow(parent);
       client.click("child2");
-      client.setCurrentWindow("child1");
+      
+      WebWindow child1Window = jsfSession.getWebClient().getWebWindowByName("child1");
+      jsfSession.getWebClient().setCurrentWindow(child1Window);
       assertTrue(client.getPageAsText().contains("Hello from Window #1"));
-      client.setCurrentWindow("child2");
+      
+      child1Window = jsfSession.getWebClient().getWebWindowByName("child2");
+      jsfSession.getWebClient().setCurrentWindow(child1Window);
       assertTrue(client.getPageAsText().contains("Hello from Window #2"));
-      System.out.println("*********** End testSetCurrentWindow");
    }
    
    public void testCloseWindow() throws IOException
    {
-      System.out.println("******** Start testCloseWindow");
-      WebWindow parentWindow = client.getCurrentWindow();
+      WebWindow parentWindow = jsfSession.getWebClient().getCurrentWindow();
       client.click("child1");
-      client.setCurrentWindow("child1");
-      System.out.println("Closing window");
+      
+      WebWindow child1Window = jsfSession.getWebClient().getWebWindowByName("child1");
+      jsfSession.getWebClient().setCurrentWindow(child1Window);
       client.click("close");
-      System.out.println("window closed");
-      assertNotSame("child1", client.getCurrentWindow().getName());
-      System.out.println("asserting parent window is current");
-      assertEquals(parentWindow, client.getCurrentWindow());
-      System.out.println("******** End testCloseWindow");
+      assertNotSame("child1", jsfSession.getWebClient().getCurrentWindow().getName());
+      assertEquals(parentWindow, jsfSession.getWebClient().getCurrentWindow());
    }
    
    public void testThreeOpenWindows() throws IOException
    {
+      WebWindow parent = jsfSession.getWebClient().getCurrentWindow();
       client.click("child1");
+      jsfSession.getWebClient().setCurrentWindow(parent);
       client.click("child2");
       int count = 0;
       for (Iterator i = jsfSession.getWebClient().getWebWindows().iterator(); i.hasNext(); i.next()) count++;

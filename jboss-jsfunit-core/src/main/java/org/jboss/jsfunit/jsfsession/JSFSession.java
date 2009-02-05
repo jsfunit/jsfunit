@@ -22,7 +22,6 @@
 
 package org.jboss.jsfunit.jsfsession;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import java.io.IOException;
 import org.jboss.jsfunit.framework.JSFUnitWebConnection;
@@ -77,13 +76,11 @@ public class JSFSession
    public JSFSession(WebClientSpec wcSpec) throws IOException
    {
       this.webClient = wcSpec.getWebClient();
-      this.jsfClientSession = new JSFClientSession();
-      this.webClient.addWebWindowListener(this.jsfClientSession);
       
       wcSpec.doInitialRequest();
   
       this.jsfServerSession = new JSFServerSession();
-      this.jsfClientSession.setJSFServerSession(this.jsfServerSession);
+      this.jsfClientSession = new JSFClientSession(webClient, jsfServerSession);
       
       JSFUnitWebConnection webConnection = (JSFUnitWebConnection)this.webClient.getWebConnection();
       webConnection.addListener(this.jsfServerSession);
