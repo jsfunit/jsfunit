@@ -22,18 +22,17 @@
 
 package org.jboss.jsfunit.icefacestest;
 
-import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
-import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
- * Peform JSFUnit tests on three of the Ajax4jsf demo applications.
+ * Peform JSFUnit tests on the ICEfaces AddressForm demo
  *
  * @author Stan Silvert
  */
@@ -49,14 +48,26 @@ public class AddressFormTest extends ServletTestCase
    }
 
    /**
-    * Test the Echo demo page.
+    * Basic client side test for Address Form
     */
-   public void testInitialPage() throws IOException
+   public void testAddressForm() throws IOException
    {
       JSFSession jsfSession = new JSFSession("/");
       JSFClientSession client = jsfSession.getJSFClientSession();
-      JSFServerSession server = jsfSession.getJSFServerSession();
-      System.out.println(client.getPageAsText());
+      
+      HtmlPage page = (HtmlPage)client.getContentPage();
+      ClickableElement mrTitle = (ClickableElement)page.getFirstByXPath(".//option[@value='Mr.']");
+      mrTitle.click();
+      
+      client.setValue("zip", "42303");
+      //client.setValue("city", "Owensboro");
+      //client.setValue("state", "KY");
+      client.setValue("firstName", "Stan");
+      client.setValue("lastName", "Silvert");
+      client.click("Submit");
+      
+      //System.out.println(client.getPageAsText());
+      assertTrue(client.getPageAsText().contains("AddressForm Results"));
    }
    
 }
