@@ -67,7 +67,7 @@ public class AddressFormTest extends ServletTestCase
       client.click("Submit");
       
       //System.out.println(client.getPageAsText());
-      assertTrue(client.getPageAsText().contains("AddressForm Results"));
+      assertTrue(client.getPageAsText().contains("AddressForm Results")); 
    }
    
 }

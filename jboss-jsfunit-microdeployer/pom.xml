@@ -65,8 +65,99 @@
         <version>2.8.1</version>
      </dependency>
      
+     <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+        <scope>test</scope>
+     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+     <id>jboss5x</id>
+     <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <configuration>
+              <wait>false</wait>
+              <configuration>      
+                <home>${project.build.directory}/cargoconfig</home>
+                <configfiles>
+                  <configfile>
+                    <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                    <todir>deployers</todir>
+                    <tofile>jboss-jsfunit-microdeployer.jar</tofile>
+                  </configfile>
+                  <configfile>
+                     <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/FacadeAPITest.class</file>
+                     <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
+                  </configfile>
+                </configfiles>
+                <deployables>
+                  <deployable>
+                    <location>${project.build.directory}/dependency/${webapp.name}.war</location>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+              <container>
+                <containerId>jboss5x</containerId>
+                <timeout>240000</timeout>  <!-- 4 minutes -->
+                <home>${JBOSS_HOME}</home>
+                <log>${basedir}/target/jboss5.x/cargo.log</log>
+                <output>${basedir}/target/jboss5.x/container.log</output>
+              </container>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            
+            <executions>
+              <execution>
+                <id>surefire-it</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <skip>false</skip>
+                  <systemProperties>
+                    <property>
+                      <name>cactus.contextURL</name>
+                      <value>http://localhost:8080/${webapp.name}</value>
+                    </property>
+                  </systemProperties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
   <build>
     <plugins>
       <plugin>
@@ -81,7 +172,45 @@
           </execution>
         </executions>
       </plugin>
+      
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-dependency-plugin</artifactId>
+         <executions>
+            <execution>
+               <id>copy-dependencies</id>
+               <phase>package</phase>
+               <goals>
+                  <goal>copy</goal>
+               </goals>
+               <configuration>
+                  <artifactItems>
+                     <artifactItem>
+                        <groupId>org.jboss.jsfunit</groupId>
+                        <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
+                        <version>${project.version}</version>
+                        <type>war</type>
+                        <destFileName>${webapp.name}.war</destFileName>
+                     </artifactItem>
+                  </artifactItems>
+               </configuration>
+            </execution>
+         </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      
     </plugins>
+    
   </build>
 
+  <properties>
+     <webapp.name>hellojsf-webapp-jsfunit</webapp.name>
+  </properties>
 </project>

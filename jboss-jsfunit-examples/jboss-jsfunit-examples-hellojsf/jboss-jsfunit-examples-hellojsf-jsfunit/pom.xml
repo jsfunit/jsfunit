@@ -84,7 +84,7 @@
             <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
               <wait>false</wait>  
-              <configuration>                  
+              <configuration>            
                 <deployables>
                   <deployable>
                     <location>${project.build.directory}/${artifactId}.war</location>

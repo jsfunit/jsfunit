@@ -166,9 +166,6 @@
           </plugin>
         </plugins>
       </build>
-      <properties>
-         <jsfunit.htmlparser>NEKO</jsfunit.htmlparser>
-      </properties>
     </profile>
     
     <profile>

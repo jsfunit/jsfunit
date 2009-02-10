@@ -93,6 +93,8 @@ public class JSFUnitDeployer extends AbstractSimpleVFSRealDeployer<JBossWebMetaD
       
       // the deployer's classes need to be added to each WAR
       this.classpathUrls.add(findDeployerBaseURL());
+      
+      log.info("JSFUnit Deployer is initialized");
    }
    
    private String findDeployerBaseURL()

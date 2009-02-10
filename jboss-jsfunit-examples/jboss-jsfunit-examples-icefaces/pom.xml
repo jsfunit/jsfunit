@@ -11,7 +11,7 @@
   <artifactId>jboss-jsfunit-examples-icefaces</artifactId>
   <packaging>war</packaging>  
   <name>Test IceFaces address app</name>      
-   
+   <!--
   <profiles>
     <profile>
       <id>jee5</id>        
@@ -47,11 +47,11 @@
             <configuration>
               <wait>false</wait>
               <container>
-                <systemProperties>
+                <systemProperties> -->
                 <!-- snoops request and response from client side
                      result is in server.log 
                   <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
-                </systemProperties>
+      <!--          </systemProperties>
               </container>
               <configuration>                  
                 <deployables>
@@ -118,11 +118,11 @@
             <configuration>
               <wait>false</wait>
               <container>
-                <systemProperties>
+                <systemProperties> -->
                 <!-- snoops request and response from client side
                      result is in server.log 
                   <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
-                </systemProperties>
+     <!--           </systemProperties>
               </container>
               <configuration>                  
                 <deployables>
@@ -155,7 +155,7 @@
       </build>
     </profile>
   </profiles>
-  
+  -->
   <dependencies>    
     <dependency>
        <groupId>org.jboss.jsfunit</groupId>
