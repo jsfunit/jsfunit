@@ -95,6 +95,10 @@
                      <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/FacadeAPITest.class</file>
                      <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
                   </configfile>
+                  <configfile>
+                     <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/HelloJSFIntegrationTest.class</file>
+                     <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
+                  </configfile>
                 </configfiles>
                 <deployables>
                   <deployable>
