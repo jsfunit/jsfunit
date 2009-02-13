@@ -85,27 +85,36 @@
               <wait>false</wait>
               <configuration>      
                 <home>${project.build.directory}/cargoconfig</home>
-                <configfiles>
-                  <configfile>
+                <files>
+                  <copy>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                     <todir>deployers</todir>
                     <tofile>jboss-jsfunit-microdeployer.jar</tofile>
-                  </configfile>
-                  <configfile>
-                     <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/FacadeAPITest.class</file>
-                     <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
-                  </configfile>
-                  <configfile>
-                     <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/HelloJSFIntegrationTest.class</file>
-                     <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
-                  </configfile>
-                </configfiles>
+                    <configfile>false</configfile>
+                    <overwrite>true</overwrite>
+                  </copy>
+                  <copy>
+                    <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/FacadeAPITest.class</file>
+                    <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
+                    <configfile>false</configfile>
+                    <overwrite>true</overwrite>
+                  </copy>
+                  <copy>
+                    <file>${project.build.directory}/test-classes/org/jboss/jsfunit/jsfsession/hellojsf/HelloJSFIntegrationTest.class</file>
+                    <todir>jsfunitTests/org/jboss/jsfunit/jsfsession/hellojsf</todir>
+                    <configfile>false</configfile>
+                    <overwrite>true</overwrite>
+                  </copy>
+                </files>
                 <deployables>
                   <deployable>
                     <location>${project.build.directory}/dependency/${webapp.name}.war</location>
                     <type>war</type>
                   </deployable>
                 </deployables>
+                <properties>
+                  <cargo.jboss.configuration>cargoconfig</cargo.jboss.configuration>
+                </properties>
               </configuration>
               <container>
                 <containerId>jboss5x</containerId>
