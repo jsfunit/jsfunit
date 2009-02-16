@@ -112,9 +112,6 @@
                     <type>war</type>
                   </deployable>
                 </deployables>
-                <properties>
-                  <cargo.jboss.configuration>cargoconfig</cargo.jboss.configuration>
-                </properties>
               </configuration>
               <container>
                 <containerId>jboss5x</containerId>

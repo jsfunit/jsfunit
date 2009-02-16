@@ -39,8 +39,7 @@ import java.util.List;
  * needs to know the name of a submit button or other component that can
  * submit the form containing the login credentials.  Because this might not
  * be a JSF page, this class finds the "submit" component using the name 
- * attribute.  The default value is "Submit", but you will probably need to
- * call setSubmitComponent() for your own component name.
+ * attribute.  The default value is "Submit".
  *
  * @author Stan Silvert
  * @since 1.0

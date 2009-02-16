@@ -69,7 +69,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <aggregate>true</aggregate>
-          <excludePackageNames>org.jboss.jsfunit.example.*:demo:filters:org.jboss.jsfunit.jsfsession.hellojsf:org.jboss.jsfunit.seam.booking:org.jboss.jsfunit.seam.registration:org.jboss.jsfunit.test.*:org.richfaces.demo.*:org.jboss.seam.*:org.jboss.jsfunit.analysis.el</excludePackageNames>
+          <excludePackageNames>org.jboss.jsfunit.analysis:org.jboss.jsfunit.analysis.util:org.jboss.jsfunit.icefacestest:org.jboss.jsfunit.example.*:demo:filters:org.jboss.jsfunit.jsfsession.hellojsf:org.jboss.jsfunit.seam.booking:org.jboss.jsfunit.seam.registration:org.jboss.jsfunit.test.*:org.richfaces.demo.*:org.jboss.seam.*:org.jboss.jsfunit.analysis.el</excludePackageNames>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
             <link>http://java.sun.com/javaee/javaserverfaces/1.2/docs/api/</link>

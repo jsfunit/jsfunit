@@ -30,8 +30,9 @@ import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.framework.Environment;
 
 /**
- * This class relies on setting two system properties to test the Environment
- * class against.
+ * The JSFUnit Environment class allows you to programatically find which version
+ * of JSF you are running.  Because this is the test for the Environment class,
+ * the JSF version is known beforehand and loaded via a properties file.
  * 
  * @author Stan Silvert
  */

@@ -80,6 +80,36 @@
                   value="FacadeAPITest.java">
           <h:outputText value="View Source"/>
       </h:outputLink>
+      
+      <h:outputText value="CustomWebClientTest"/>
+      <h:outputLink id="RunCustomWebClientTest" 
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.CustomWebClientTest&xsl=cactus-report.xsl">
+          <h:outputText value="Run Test"/>
+      </h:outputLink>
+      <h:outputLink id="SourceCustomWebClientTest" 
+                  value="CustomWebClientTest.java">
+          <h:outputText value="View Source"/>
+      </h:outputLink>
+      
+      <h:outputText value="JSFTimerTest"/>
+      <h:outputLink id="RunJSFTimerTest" 
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.JSFTimerTest&xsl=cactus-report.xsl">
+          <h:outputText value="Run Test"/>
+      </h:outputLink>
+      <h:outputLink id="SourceJSFTimerTest" 
+                  value="JSFTimerTest.java">
+          <h:outputText value="View Source"/>
+      </h:outputLink>
+      
+      <h:outputText value="EnvironmentTest"/>
+      <h:outputLink id="RunEnvironmentTest" 
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.EnvironmentTest&xsl=cactus-report.xsl">
+          <h:outputText value="Run Test"/>
+      </h:outputLink>
+      <h:outputLink id="SourceEnvironmentTest" 
+                  value="EnvironmentTest.java">
+          <h:outputText value="View Source"/>
+      </h:outputLink>
 
    </h:panelGrid>
       

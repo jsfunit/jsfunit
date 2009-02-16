@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -69,13 +69,22 @@ public class JSFUnitWarTask extends Task
 		super();
 	}
 	
+        /**
+         * Set the container Id for the target WAR.  This is sometimes needed
+         * to auto-add jars correctly.  Currently, the container value that has
+         * an affect is "jboss5x".  
+         * 
+         * @param containerId "jboss5x" or ""
+         */
         public void setContainer(String containerId)
         {
            this.containerId = containerId;
         }
+        
 	/**
 	 * Sets the original archive that should have JSFUnit specifics added
-	 * @param srcfile the srcfile
+         * 
+	 * @param srcfile A WAR file or a directory containing an exploded WAR.
 	 */
 	public void setSrcfile (File srcfile)
 	{ 
@@ -84,7 +93,8 @@ public class JSFUnitWarTask extends Task
 
 	/**
 	 * Sets the destination for the newly created archive with JSFUnit specifics
-	 * @param destfile
+         * 
+	 * @param destfile The destination WAR or directory for an exploded WAR.
 	 */
 	public void setDestfile (File destfile)
 	{
@@ -93,7 +103,8 @@ public class JSFUnitWarTask extends Task
 
 	/**
 	 * Sets the fileset that should be added to the WEB-INF/lib directory of the 
-	 * created archive
+	 * created archive.
+         * 
 	 * @param libFileSet The fileset to add 
 	 */
 	public void addLib (FileSet libFileSet)
@@ -103,8 +114,10 @@ public class JSFUnitWarTask extends Task
 
 	/**
 	 * Sets the fileset that should be added to the WEB-INF/classes directory of
-	 * the created archive
-	 * @param classesFileSet
+	 * the created archive.  This is typically used to specify the JSFUnit test
+         * classes.
+         * 
+	 * @param classesFileSet Files to be added to WEB-INF/classes
 	 */
 	public void addClasses (FileSet classesFileSet)
 	{
@@ -113,7 +126,8 @@ public class JSFUnitWarTask extends Task
 
 	/**
 	 * Sets whether or not to automatically add needed jars into the
-	 * WEB-INF/lib directory of the crearted archive
+	 * WEB-INF/lib directory of the crearted archive.
+         * 
 	 * @param autoAddJars True to automatically add jars, false otherwise
 	 */
 	public void setAutoAddJars (Boolean autoAddJars)
@@ -121,6 +135,9 @@ public class JSFUnitWarTask extends Task
 		this.autoAddJars = autoAddJars;
 	}
 
+        /**
+         * This class represents a filter declaration and mapping that will be added to web.xml.
+         */
 	public static class Filter
 	{
 		protected String name;
@@ -163,6 +180,9 @@ public class JSFUnitWarTask extends Task
 		}
 	}
 	
+        /**
+         *  This class represents the JSFUnitFilter that will be added to web.xml.
+         */
 	public static class JSFUnitFilter extends Filter
 	{
 		private final String DEFAULT_NAME = "JSFUnitFilter";
@@ -181,6 +201,9 @@ public class JSFUnitWarTask extends Task
 		
 	}
 	
+        /**
+         * This class represents the ServletTestFilter that may be added to web.xml.
+         */
 	public static class JSFUnitTestRunnerFilter extends Filter
 	{
 		private final String DEFAULT_NAME = "ServletTestFilter";
@@ -211,10 +234,18 @@ public class JSFUnitWarTask extends Task
 		jsfFilters.add(jsfFilter);
 	}
 	
+        /**
+         * Add the ServletTestRunner filter to web.xml.
+         * 
+         * @param testRunnerFilter An instance of JSFUnitTestRunnerFilter
+         */
 	public void addTestRunner(JSFUnitTestRunnerFilter testRunnerFilter){
 		testRunnerFilters.add(testRunnerFilter);
 	}
 
+        /**
+         * Execute the ant task.
+         */
 	public void execute()
 	{
 		if (srcfile == null)
@@ -225,11 +256,8 @@ public class JSFUnitWarTask extends Task
 		{
 			throw new BuildException ("A destfile must be specified");
 		}
-		else if (destfile == srcfile)
+		else if (destfile.equals(srcfile))
 		{
-			// Note: it could be changed so that having a srcfile and destfile locations
-			//       being the same would result in the srcfile being overwritten in the end.
-			//       Not sure how useful this would be.
 			throw new BuildException ("The destfile and srcfile must not be the same");
 		}
 		else
@@ -237,7 +265,7 @@ public class JSFUnitWarTask extends Task
 			log("using srcfile :" + srcfile, Project.MSG_DEBUG);
 			if (srcfile.isDirectory())
 			{
-				log("srcfile is an directory", Project.MSG_DEBUG);
+				log("srcfile is a directory", Project.MSG_DEBUG);
 				JSFUnitExplodedWar();
 			}
 			else if (srcfile.isFile())
@@ -267,7 +295,8 @@ public class JSFUnitWarTask extends Task
 		} 
 		catch (Exception e)
 		{
-			e.printStackTrace();
+                   e.printStackTrace();
+                   log(e.getMessage(), Project.MSG_ERR);
 		}
 
 		try
@@ -284,7 +313,8 @@ public class JSFUnitWarTask extends Task
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+                   e.printStackTrace();
+                   log(e.getMessage(), Project.MSG_ERR);
 		}
 	}
 	
@@ -370,7 +400,8 @@ public class JSFUnitWarTask extends Task
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+                   log(e.getMessage(), Project.MSG_ERR);
+                   e.printStackTrace();
 		}
 	}
 
@@ -479,7 +510,7 @@ public class JSFUnitWarTask extends Task
             log("Automatically adding JSFunit required jars to the new war", Project.MSG_INFO);
             // TODO: pick out actual classes used, these ones were picked at random from the jars
             String[][] classNames = new String[][] {
-              {"/org/jboss/jsfunit/framework/JSFUnitFilter.class", "JSFUnit Beta 3 or higher"},
+              {"/org/jboss/jsfunit/jsfsession/UIDataValueManager.class", "JSFUnit 1.0 or higher"},
                  {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.4 or higher"},
                     {"/org/apache/commons/codec/BinaryDecoder.class", "Commons Codec 1.3 or higher"},
                     {"/org/mozilla/javascript/Script.class", "HTMLUnitJavascript 2.4 or higher"},
