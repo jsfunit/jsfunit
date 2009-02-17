@@ -80,7 +80,6 @@
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven2-plugin</artifactId>
-            <version>1.0-SNAPSHOT</version>
             <configuration>
               <wait>false</wait>
               <configuration>      
@@ -177,6 +176,31 @@
             </executions>
           </plugin>
           
+          <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-dependency-plugin</artifactId>
+               <executions>
+                  <execution>
+                     <id>copy-dependencies</id>
+                     <phase>package</phase>
+                     <goals>
+                        <goal>copy</goal>
+                     </goals>
+                     <configuration>
+                        <artifactItems>
+                           <artifactItem>
+                              <groupId>org.jboss.jsfunit</groupId>
+                              <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
+                              <version>${project.version}</version>
+                              <type>war</type>
+                              <destFileName>${webapp.name}.war</destFileName>
+                           </artifactItem>
+                        </artifactItems>
+                     </configuration>
+                  </execution>
+               </executions>
+            </plugin>
+      
         </plugins>
       </build>
     </profile>
@@ -195,31 +219,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      
-      <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-dependency-plugin</artifactId>
-         <executions>
-            <execution>
-               <id>copy-dependencies</id>
-               <phase>package</phase>
-               <goals>
-                  <goal>copy</goal>
-               </goals>
-               <configuration>
-                  <artifactItems>
-                     <artifactItem>
-                        <groupId>org.jboss.jsfunit</groupId>
-                        <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
-                        <version>${project.version}</version>
-                        <type>war</type>
-                        <destFileName>${webapp.name}.war</destFileName>
-                     </artifactItem>
-                  </artifactItems>
-               </configuration>
-            </execution>
-         </executions>
       </plugin>
       
       <plugin>

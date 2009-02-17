@@ -13,6 +13,7 @@
   <name>Test IceFaces address app</name>      
  
   <profiles>
+     <!--
     <profile>
       <id>jee5</id>        
       <build>
@@ -75,7 +76,7 @@
 
         </plugins>
       </build>
-    </profile>
+    </profile> -->
     
     <profile>
       <id>tomcat6x</id>        
