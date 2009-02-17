@@ -29,6 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
+import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
@@ -52,8 +53,11 @@ public class AddressFormTest extends ServletTestCase
     */
    public void testAddressForm() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/");
+      JSFSession jsfSession = new JSFSession("/address.iface");
       JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+      
+      assertNotNull(server.getFacesContext());
       
       HtmlPage page = (HtmlPage)client.getContentPage();
       ClickableElement mrTitle = (ClickableElement)page.getFirstByXPath(".//option[@value='Mr.']");
