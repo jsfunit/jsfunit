@@ -84,8 +84,15 @@
             <configuration>
               <wait>false</wait>
               <configuration>      
-                <home>${project.build.directory}/cargoconfig</home>
+                <home>${JBOSS_HOME}/server/cargoconfig</home>
                 <files>
+                  <copy>
+                    <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                    <todir>../default/deployers</todir>
+                    <tofile>jboss-jsfunit-microdeployer.jar</tofile>
+                    <configfile>false</configfile>
+                    <overwrite>true</overwrite>
+                  </copy>
                   <copy>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                     <todir>deployers</todir>
@@ -112,6 +119,9 @@
                     <type>war</type>
                   </deployable>
                 </deployables>
+ <!--               <properties>
+                  <cargo.jboss.configuration>default</cargo.jboss.configuration>
+                </properties> -->
               </configuration>
               <container>
                 <containerId>jboss5x</containerId>
@@ -119,6 +129,10 @@
                 <home>${JBOSS_HOME}</home>
                 <log>${basedir}/target/jboss5.x/cargo.log</log>
                 <output>${basedir}/target/jboss5.x/container.log</output>
+                <systemProperties>
+  <!--                 <jboss.server.base.dir>${project.build.directory}/cargoconfig</jboss.server.base.dir>
+                  <jboss.serv.config.url>file://${project.build.directory}/cargoconfig/conf</jboss.serv.config.url> -->
+                </systemProperties>
               </container>
             </configuration>
             <executions>
