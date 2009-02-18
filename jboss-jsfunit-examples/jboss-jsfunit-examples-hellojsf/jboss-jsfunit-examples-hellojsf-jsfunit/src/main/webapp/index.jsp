@@ -110,6 +110,16 @@
                   value="EnvironmentTest.java">
           <h:outputText value="View Source"/>
       </h:outputLink>
+      
+      <h:outputText value="BasicAuthenticationTest"/>
+      <h:outputLink id="RunBasicAuthenticationTest" 
+                  value="ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.BasicAuthenticationTest&xsl=cactus-report.xsl">
+          <h:outputText value="Run Test"/>
+      </h:outputLink>
+      <h:outputLink id="SourceBasicAuthenticationTest" 
+                  value="BasicAuthenticationTest.java">
+          <h:outputText value="View Source"/>
+      </h:outputLink>
 
    </h:panelGrid>
       

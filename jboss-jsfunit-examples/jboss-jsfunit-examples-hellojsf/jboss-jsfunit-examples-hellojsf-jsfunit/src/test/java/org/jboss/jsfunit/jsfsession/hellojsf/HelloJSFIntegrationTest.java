@@ -40,8 +40,12 @@ import org.jboss.jsfunit.framework.WebClientSpec;
 import org.xml.sax.SAXException;
 
 /**
- * This class does tests using only the JSFUnit framework package.  See 
- * the FacadeAPITest for examples using a simpler API.
+ * This class does tests using only the JSFUnit framework package along with
+ * raw HtmlUnit calls.  I don't recommend that you use the lower-level API
+ * shown here, but it can be useful to see how JSFUnit works.
+ * 
+ * See the FacadeAPITest or SimplifiedHelloJSFIntegrationTest for examples using 
+ * the simpler JSFClientSession API.
  *
  * @author Stan Silvert
  */
@@ -73,8 +77,7 @@ public class HelloJSFIntegrationTest extends ServletTestCase
    public void testInitialPage() throws IOException, SAXException
    {
       // JSF normally destroys the FacesContext, but JSFUnit keeps it and hands it
-      // to your test thread via the bridge.  You should call this after each request
-      // to get the latest FacesContext.
+      // to your test thread via the bridge.  
       FacesContext facesContext = FacesContextBridge.getCurrentInstance();
 
       // Now you have the key to all state as of the last request

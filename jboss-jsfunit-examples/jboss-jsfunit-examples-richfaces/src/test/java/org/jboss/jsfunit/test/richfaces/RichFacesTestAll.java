@@ -36,24 +36,24 @@ public class RichFacesTestAll extends ServletTestCase
    public static Test suite()
    {
       TestSuite suite = new TestSuite();
-      suite.addTestSuite(ActionParamTest.class);
+      // /suite.addTestSuite(ActionParamTest.class);
       suite.addTestSuite(AjaxFormTest.class);
       suite.addTestSuite(AjaxRegionValidationErrorTest.class);
-      suite.addTestSuite(AjaxRegionSelfRenderTest.class);
-      suite.addTestSuite(AjaxSupportTest.class);
+      // /suite.addTestSuite(AjaxRegionSelfRenderTest.class);
+      // /suite.addTestSuite(AjaxSupportTest.class);
       suite.addTestSuite(AjaxCommandButtonTest.class);
       suite.addTestSuite(AjaxCommandLinkTest.class);
       suite.addTestSuite(AjaxJsFunctionTest.class);
       suite.addTestSuite(AjaxKeepaliveTest.class);
       suite.addTestSuite(AjaxIncludeTest.class);
-      suite.addTestSuite(AjaxOutputPanelTest.class);
+      // /suite.addTestSuite(AjaxOutputPanelTest.class);
       suite.addTestSuite(AjaxRepeaterTest.class);
       suite.addTestSuite(RichCalendarTest.class);
       suite.addTestSuite(RichDataFilterSliderTest.class);
       //suite.addTestSuite(RichDataTableScrollerTest.class);
       //suite.addTestSuite(RichDragAndDropTest.class);
-      suite.addTestSuite(RichDropDownMenuTest.class);
-      suite.addTestSuite(RichInplaceInputTest.class);
+      // /suite.addTestSuite(RichDropDownMenuTest.class);
+      // /suite.addTestSuite(RichInplaceInputTest.class);
       suite.addTestSuite(RichInputNumberSliderTest.class);
       suite.addTestSuite(RichInputNumberSpinnerTest.class);
       suite.addTestSuite(RichTabPanelTest.class);

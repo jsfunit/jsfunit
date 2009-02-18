@@ -34,8 +34,9 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * This is a simplified version of the HelloJSFIntegrationTest.  Instead of using
- * HttpUnit and JSF API's, it uses JSFUnit's JSFClientSession and JSFServerSession classes
- * to do most of the work.
+ * HtmlUnit and JSF API's, it uses JSFUnit's JSFClientSession and JSFServerSession classes
+ * to do most of the work.  JSFSession maintains your HttpSession, so you can do
+ * tests that navigate between views.
  * 
  * JSFUnit is designed to allow complete integration testing and debugging of
  * JSF applications at the JSF level.  In short, it gives you
@@ -43,9 +44,8 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
  * request.  With the FacesContext in hand, you are able to do integration testing
  * of JSF applications at the proper level of abstraction.
  * 
- * The typical usage pattern of JSFUnit is to submit a request with httpunit and then
- * examine both the raw HTML output (httpunit tests) and JSF internals (JSFUnit tests).
- * The httpunit-style tests are not shown here.
+ * The typical usage pattern of JSFUnit is to submit a request with JSFSession and then
+ * examine both the HTML output and JSF internals.
  * 
  * The JSFUnit tests below demonstrate testing:
  * - Navigation:      "Did this input take me to the correct view?"
@@ -70,8 +70,6 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
  * 
  * This class tests the HelloJSF application.  This is a simple Hello World
  * application written in JSF with a single managed bean bound to the name "foo" in request scope.
- * 
- * 
  * 
  * @author Stan Silvert
  */
