@@ -32,9 +32,8 @@ import org.jboss.jsfunit.seam.SeamUtil;
 import org.jboss.seam.contexts.ServletLifecycle;
 
 /**
- * The WebConversationFactory dispenses a clean WebConversation for use with
- * JSFUnit.  The WebConversation returned will be set up as if it is the
- * first request to JSF.
+ * The WebConversationFactory manages the environment needed to set up the WebClientSpec
+ * to be used with an HtmlUnit WebClient.
  *
  * @author Stan Silvert
  * @since 1.0
@@ -60,6 +59,11 @@ public class WebConversationFactory
       }
    };
    
+   /**
+    * Associates the HttpSession and WAR URL with ThreadLocals.
+    * 
+    * @param req The request that kicks off the tests.
+    */
    public static void setThreadLocals(HttpServletRequest req)
    {
       tlsession.set(req.getSession());
@@ -67,17 +71,31 @@ public class WebConversationFactory
       warURL.set(stringWARURL);
    }
    
+   /**
+    * Get the shared HttpSession from the ThreadLocal variable.
+    * 
+    * @return The shared HttpSession.
+    */
    protected static HttpSession getSessionFromThreadLocal()
    {
       return (HttpSession)tlsession.get();
    }
    
+   /**
+    * Returns the complete WAR URL including everything excluding the query params.
+    * 
+    * @param req The request that kicks off the tests.
+    * @return The WAR URL as a String.
+    */
    public static String makeWARURL(HttpServletRequest req)
    {
      return req.getScheme() + "://" + req.getServerName() + ":" + 
             req.getServerPort() + req.getContextPath();
    }
    
+   /**
+    * Clean up the ThreadLocal variables set in setThreadLocals.
+    */
    public static void removeThreadLocals()
    {
       tlsession.remove();
@@ -123,8 +141,13 @@ public class WebConversationFactory
       wcSpec.addCookie(JSF_UNIT_CONVERSATION_FLAG, JSF_UNIT_CONVERSATION_FLAG);
    }
    
-   // We need to start with a clean (but not new) session at the beginning of each
-   // WebConversation.
+   /**
+    * Clear the HttpSession for use by the WebClientSpec and JSFSession.  We 
+    * need to start with a clean (but not new) HttpSession at the beginning of each
+    * test.
+    * 
+    * @param session The shared HttpSession
+    */
    protected static void clearSession(HttpSession session)
    {
       for (Enumeration e = session.getAttributeNames(); e.hasMoreElements();)

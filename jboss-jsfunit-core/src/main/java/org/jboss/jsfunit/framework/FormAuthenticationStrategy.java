@@ -39,7 +39,10 @@ import java.util.List;
  * needs to know the name of a submit button or other component that can
  * submit the form containing the login credentials.  Because this might not
  * be a JSF page, this class finds the "submit" component using the name 
- * attribute.  The default value is "Submit".
+ * attribute.<br/><br/>
+ * 
+ * For non-JEE login, there is a second constructor that allows username and
+ * password components to have non-standard names.
  *
  * @author Stan Silvert
  * @since 1.0
@@ -55,8 +58,9 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
    private String submitComponent = "Submit";
    
    /**
-    * Create a new FormAuthenticationStrategy.  User name and password fields
-    * default to standard JEE/Servlet naming standard.
+    * Create a new FormAuthenticationStrategy for JEE container-managed security.  
+    * User name and password fields default to the JEE/Servlet naming standard
+    * of j_username and j_password.
     *
     * @param userName The user name.
     * @param password The password.
@@ -70,7 +74,8 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
    }
    
    /**
-    * Create a new FormAuthenticationStrategy.  Typically, this constructor is subclassed.
+    * Create a new FormAuthenticationStrategy for non-JEE logins.  
+    * Typically, this constructor is overridden in a subclass.
     *
     * @param userName The user name.
     * @param password The password.
@@ -103,6 +108,13 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
       return clickSubmitComponent(page);
    }
    
+   /**
+    * Click the component needed to submit the form.
+    * 
+    * @param page The page where credentials are entered.
+    * @return The resulting Page
+    * @throws java.io.IOException If the form can not be submitted.
+    */
    protected Page clickSubmitComponent(HtmlPage page) throws IOException
    {
       HtmlElement htmlElement = getElement(page, this.submitComponent);
@@ -115,6 +127,13 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
       return clickable.click();
    }
    
+   /**
+    * Find an element by its name attribute and set its value.
+    * 
+    * @param page The page.
+    * @param elementName The value of the name attribute.
+    * @param value The value to set.
+    */
    protected void setValue(HtmlPage page, String elementName, String value)
    {
       HtmlElement element = getElement(page, elementName);
@@ -126,6 +145,15 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
       inputElement.setValueAttribute(value);
    }
    
+   /**
+    * Find an element by its name attribute.
+    * 
+    * @param page The page.
+    * @param elementName The value of the name attribute.
+    * @return The element found.
+    * @throws IllegalArgumentException if the element is not found or if more than
+    *         one element has that value for the name attribute.
+    */
    protected HtmlElement getElement(HtmlPage page, String elementName)
    {
       List<HtmlElement> elements = page.getHtmlElementsByName(elementName);

@@ -30,7 +30,8 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.jboss.jsfunit.framework.RequestListener;
 
 /**
- *  RequestListener outputs before and after each request made by HtmlUnit.
+ * RequestListener outputs before and after each request made by HtmlUnit.
+ * It outputs the messages to standard out.
  *  
  *  To enable, set system property jsfunit.htmlunitsnooper.
  *

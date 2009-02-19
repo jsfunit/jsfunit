@@ -22,6 +22,7 @@
             <link>http://java.sun.com/javaee/javaserverfaces/1.2/docs/api/</link>
             <link>http://jakarta.apache.org/cactus/api/framework-13</link>
             <link>http://httpunit.sourceforge.net/doc/api</link>
+            <link>http://java.sun.com/products/servlet/2.5/docs/servlet-2_5-mr2</link>
           </links>
         </configuration>
       </plugin>

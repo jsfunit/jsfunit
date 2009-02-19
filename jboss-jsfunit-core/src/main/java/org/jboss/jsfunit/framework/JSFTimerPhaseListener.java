@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -28,9 +28,11 @@ import javax.faces.event.PhaseListener;
 
 /**
  * This PhaseListener provides time stamps for each phase of the JSF lifecycle.
+ * To use this class, you must enable it in faces-config.xml.
  *
  * @author Stan Silvert
  * @since 1.0
+ * @see org.jboss.jsfunit.framework.JSFTimer
  */
 public class JSFTimerPhaseListener implements PhaseListener
 {

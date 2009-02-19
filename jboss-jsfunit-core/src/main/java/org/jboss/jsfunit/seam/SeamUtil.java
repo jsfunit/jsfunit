@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2008, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -58,6 +58,11 @@ public class SeamUtil
       isLog4JAvailable = available;
    }
    
+   /**
+    * Determines if Seam is present in this web application.
+    * 
+    * @return <code>true</code> if Seam is present, <code>false</code> otherwise.
+    */
    public static boolean isSeamPresent()
    {
       Class lifecycle = getSeamLifecycle();
@@ -113,6 +118,11 @@ public class SeamUtil
       }
    }
    
+   /**
+    * The Seam Component class puts out lots of warning messages when the Seam
+    * session is manipulated with JSFUnit.  This method supresses those warnings
+    * and sets the log level to ERROR (for Log4J) or SEVERE (for java.util.logging).
+    */
    public static void suppressSeamComponentWarning()
    {
       if (isLog4JAvailable) supressLog4J();

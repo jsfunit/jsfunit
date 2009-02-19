@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2008, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -183,6 +183,7 @@ public class JSFClientSession
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
     *                            specified component is not an HtmlElement.
+    * @throws IOExceptioin if typing causes a failed request to the server.
     */
    public void type(String componentID, char c) throws IOException
    {
@@ -200,6 +201,7 @@ public class JSFClientSession
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
     *                            specified component is not a ClickableElement.
+    * @throws IOException if clicking causes a failed request to the server.
     */
    public void click(String componentID) throws IOException
    {

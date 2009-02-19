@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -260,6 +260,9 @@ public class ClientIDs
       return ancestorSet.contains(ancestorClientID);
    }
    
+   /**
+    * Debugging method that dumps all Client IDs to standard out.
+    */
    public void dumpAllIDs()
    {
       for (Iterator<String> i = this.allClientIDs.iterator(); i.hasNext();)

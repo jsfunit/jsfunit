@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2008, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -38,9 +38,12 @@ import javax.faces.event.PhaseId;
  *
  * Statistics are reset at the beginning of each JSF request.  So you can use
  * this class during the JSF lifecycle or afterwards in a JSFUnit test.
- *
+ * 
+ * To use this class, you must enable the JSFTimerPhaseListener in faces-config.xml.
+ * 
  * @author Stan Silvert
  * @since 1.0
+ * @see org.jboss.jsfunit.framework.JSFTimerPhaseListener
  */
 public class JSFTimer
 {

@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2008, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -42,11 +42,21 @@ public class ConversationScopeVariableResolver extends VariableResolver
    
    private boolean isSeamPresent = SeamUtil.isSeamPresent();
    
+   /**
+    * Create a new instance of ConversationScopeVariableResolver.
+    * 
+    * @param delegate The next VariableResolver in the resolver chain.
+    */
    public ConversationScopeVariableResolver(VariableResolver delegate)
    {
       this.delegate = delegate;
    }
 
+   /**
+    * See javadoc for VariableResolver.
+    * 
+    * @see javax.faces.el.VariableResolver#resolveVariable(javax.faces.context.FacesContext, java.lang.String) 
+    */
    public Object resolveVariable(FacesContext facesContext, String name) throws EvaluationException 
    {
       if (isSeamPresent && SEAM_CONVERSATION_EL_IDENTIFIER.equals(name)) {

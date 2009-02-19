@@ -32,8 +32,13 @@ package org.jboss.jsfunit.jsfsession;
 public class ComponentIDNotFoundException extends RuntimeException
 {
    
-   public ComponentIDNotFoundException(String suffix)
+   /**
+    * Create a new instance of ComponentIDNotFoundException.
+    * 
+    * @param componentID The JSF component id (or a suffix of the client ID)
+    */
+   public ComponentIDNotFoundException(String componentID)
    {
-      super("No component ID was found for " + suffix);
+      super("No component ID was found for " + componentID);
    }
 }

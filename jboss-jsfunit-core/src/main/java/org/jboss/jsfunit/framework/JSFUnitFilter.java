@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2007, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -68,7 +68,7 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  * </p> 
  * <p>
  * If you are using a secure Cacuts redirector, you will also
- * need to declare the filter for that servele:
+ * need to declare the filter for that servlet:
  * <code><pre>
  * &lt;filter-mapping&gt;
  *   &lt;filter-name&gt;JSFUnitFilter&lt;/filter-name&gt;

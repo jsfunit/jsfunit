@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2008, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -24,13 +24,11 @@ package org.jboss.jsfunit.richclient;
 
 import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import java.io.IOException;
 import java.util.Iterator;
@@ -157,7 +155,7 @@ public class RichFacesClient
     * @param treeNodeId id of the treeNode template
     * 
     * @throws IOException 
-    * @throws ComponentIDNotFoundException
+    * @throws ComponentIDNotFoundException if the component can not be found 
     */
    public void clickTreeNodeHandle( String treeNodeKey, String treeNodeId ) throws IOException
    {
@@ -178,7 +176,7 @@ public class RichFacesClient
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void clickDataTableScroller(String componentID, int value) 
+/*   public void clickDataTableScroller(String componentID, int value) 
          throws IOException
    {
       String strValue = Integer.toString(value);
@@ -207,7 +205,7 @@ public class RichFacesClient
       throw new ComponentIDNotFoundException(componentID);
       
       // /html/body/table[3]/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tr/td/div/form/div/table/tbody/tr/td[5]
-   }
+   } */
    
    /**
     * Drag a component with rich:dragSupport to a component with rich:dropSupport.
@@ -222,7 +220,7 @@ public class RichFacesClient
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
-   public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
+ /*  public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
          throws IOException
    {
       HtmlElement dragElement = (HtmlElement)jsfClient.getElement(dragComponentID);
@@ -233,14 +231,14 @@ public class RichFacesClient
       dragElement.mouseDown();
       dropElement.mouseMove();
       dropElement.mouseUp();
-     /* String dragClientID = client.getClientIDs().findClientID(dragComponentID);
+      String dragClientID = client.getClientIDs().findClientID(dragComponentID);
       String dropClientID = client.getClientIDs().findClientID(dropTargetComponentID);
       Map<String, String> params = new HashMap<String, String>(3);
       params.put("dragSourceId", dragClientID);
       params.put("dropTargetId", dropClientID);
       params.put(dragClientID, dragClientID);
-      ajaxSubmit(dropClientID, params); */
-   }
+      ajaxSubmit(dropClientID, params);
+   } */
    
    /**
     * Click a tab on a TabPanel.  Note that this method is a no-op if the tab
