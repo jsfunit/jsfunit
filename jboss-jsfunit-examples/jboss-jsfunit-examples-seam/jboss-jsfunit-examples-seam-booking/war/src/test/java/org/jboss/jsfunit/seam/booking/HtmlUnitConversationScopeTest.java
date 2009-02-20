@@ -71,7 +71,7 @@ public class HtmlUnitConversationScopeTest extends ServletTestCase
       client.click("hotel:bookHotel");
       
       Hotel hotel = (Hotel)server.getManagedBeanValue("#{seamconversation.hotel}");
-      assertNotNull(hotel);
+      assertNotNull(server.getManagedBeanValue("#{hotel}"));
       assertEquals("Hilton Diagonal Mar", hotel.getName());
       
       HotelBooking booking = (HotelBooking)server.getManagedBeanValue("#{seamconversation.hotelBooking}");
