@@ -277,6 +277,7 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <!--
     <repository>
 	<id>java.net</id>
 	<name>java.net Maven 1 Repository</name>
@@ -305,7 +306,7 @@
        <url>http://htmlunit.sourceforge.net/m2-repo-snapshots</url>
        <layout>default</layout>
      </repository>
-     
+     -->
    </repositories>
 
   <modules>
