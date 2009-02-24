@@ -17,7 +17,7 @@
     <module>jboss-jsfunit-examples-ajax4jsf</module>
     <module>jboss-jsfunit-examples-richfaces</module>
     <module>jboss-jsfunit-examples-icefaces</module>
-    <!--<module>jboss-jsfunit-examples-seam</module>-->
+    <module>jboss-jsfunit-examples-seam</module>
   </modules>
     
   <profiles>
@@ -221,20 +221,6 @@
     
   </profiles>
   
-  <dependencies>
-      <dependency>
-        <groupId>org.apache.myfaces.core</groupId>
-        <artifactId>myfaces-impl</artifactId>
-        <scope>provided</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.myfaces.core</groupId>
-        <artifactId>myfaces-api</artifactId>
-        <scope>provided</scope>
-      </dependency>
-   </dependencies>
-       
   <build>
     <plugins>
       <plugin>
