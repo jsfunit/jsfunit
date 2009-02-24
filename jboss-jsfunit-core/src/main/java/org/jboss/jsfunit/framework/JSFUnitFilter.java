@@ -121,6 +121,7 @@ public class JSFUnitFilter implements Filter
          if (session != null)
          {
             session.removeAttribute(JSFUnitFacesContext.SESSION_KEY);
+            session.removeAttribute(WebClientSpec.SESSION_KEY);
          }
          
          WebConversationFactory.removeThreadLocals();
