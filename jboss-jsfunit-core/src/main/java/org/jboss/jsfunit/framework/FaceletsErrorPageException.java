@@ -52,7 +52,10 @@ public class FaceletsErrorPageException extends RuntimeException
     */
    public static boolean isFaceletsErrorPage(WebResponse response)
    {
-      String responseBody = new String(response.getResponseBody());
+      byte[] responseBytes = response.getContentAsBytes();
+      if ((responseBytes == null) || (responseBytes.length == 0)) return false;
+      
+      String responseBody = new String(responseBytes);
       return response.getContentType().equals("text/html") &&
              responseBody.contains(TRACE_OFF) &&
              responseBody.contains(TRACE_ON) &&
@@ -68,7 +71,7 @@ public class FaceletsErrorPageException extends RuntimeException
    
    private static String extractStackTrace(WebResponse response)
    {
-      String responseBody = new String(response.getResponseBody());
+      String responseBody = new String(response.getContentAsBytes());
       int beginning = responseBody.indexOf(STACK_TRACE_BEGIN) + STACK_TRACE_BEGIN.length();
       int ending = responseBody.indexOf(STACK_TRACE_END, beginning);
       return HEADER + responseBody.substring(beginning, ending) + FOOTER;
