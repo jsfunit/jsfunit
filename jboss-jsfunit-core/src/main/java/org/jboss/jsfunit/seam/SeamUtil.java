@@ -126,7 +126,7 @@ public class SeamUtil
    public static void suppressSeamComponentWarning()
    {
       if (isLog4JAvailable) supressLog4J();
-      if (!isLog4JAvailable) supressJUL();
+      supressJUL();
    }
    
    private static void supressLog4J()
