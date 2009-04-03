@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
+import org.jboss.jsfunit.framework.JSFUnitFilter;
 import org.jboss.jsfunit.seam.SeamRequestListener;
 import org.jboss.jsfunit.seam.SeamUtil;
 
@@ -121,6 +122,21 @@ public class WebClientSpec implements HttpSessionBindingListener
    {
       JSFUnitWebConnection webConnection = (JSFUnitWebConnection)webClient.getWebConnection();
       webConnection.addListener(new FaceletsErrorPageDetector());
+   }
+   
+   /**
+    * Get an immutable Map of all request params sent to the ServletRedirector or ServletTestRunner.
+    * 
+    * <b>Note that the Map returned is the same one returned from ServletRequest.getParameterMap().
+    * This Map is defined with a key of type String and a value of type String array - not plain String.</b>
+    * 
+    * @return The Map of params.
+    * @since 1.1
+    */
+   public static Map getRedirectorRequestParams()
+   {
+      return (Map)WebConversationFactory.getSessionFromThreadLocal()
+                                        .getAttribute(JSFUnitFilter.REDIRECTOR_REQUEST_PARAMS_KEY);
    }
    
    /**

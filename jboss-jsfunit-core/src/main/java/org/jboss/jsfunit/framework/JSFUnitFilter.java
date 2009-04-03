@@ -82,6 +82,8 @@ import org.jboss.jsfunit.context.JSFUnitFacesContext;
  */
 public class JSFUnitFilter implements Filter
 {
+   public static final String REDIRECTOR_REQUEST_PARAMS_KEY = JSFUnitFilter.class.getName() + ".sessionkey";
+   
    private ServletContext servletContext;
 
    private void putWarURLinApplication(HttpServletRequest request)
@@ -101,6 +103,7 @@ public class JSFUnitFilter implements Filter
       HttpServletRequest request = (HttpServletRequest)req;
       HttpServletResponse response = (HttpServletResponse)res;
       putWarURLinApplication(request);
+      storeRequestParamsInSession(request);
       
       try 
       {
@@ -126,6 +129,12 @@ public class JSFUnitFilter implements Filter
          
          WebConversationFactory.removeThreadLocals();
       }
+   }
+   
+   private void storeRequestParamsInSession(HttpServletRequest request)
+   {
+      HttpSession session = request.getSession();
+      session.setAttribute(REDIRECTOR_REQUEST_PARAMS_KEY, request.getParameterMap());
    }
    
    private boolean isSnoopRequest(HttpServletRequest request)

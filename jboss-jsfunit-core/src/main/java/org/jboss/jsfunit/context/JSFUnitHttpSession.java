@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
+import org.jboss.jsfunit.framework.JSFUnitFilter;
 
 /**
  * This HttpSession delegates everything to the real HttpSession except for
@@ -130,13 +131,16 @@ public class JSFUnitHttpSession implements HttpSession
    @Override
    public void removeValue(String name)
    {
-      wrapped.removeValue(name);
+      removeAttribute(name);
    }
 
    @Override
    public void removeAttribute(String name)
    {
-      wrapped.removeAttribute(name);
+      if (!name.equals(JSFUnitFilter.REDIRECTOR_REQUEST_PARAMS_KEY))
+      {
+         wrapped.removeAttribute(name);
+      }
    }
 
    @Override

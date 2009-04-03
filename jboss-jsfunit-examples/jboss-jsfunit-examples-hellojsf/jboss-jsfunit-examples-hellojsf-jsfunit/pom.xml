@@ -74,6 +74,9 @@
                       <value>http://localhost:8080/${artifactId}</value>
                     </property>
                   </systemProperties>
+                  <excludes>
+                     <exclude>**/PassServletRedirectParamsTest.java</exclude>
+                  </excludes>
                 </configuration>
               </execution>
             </executions>

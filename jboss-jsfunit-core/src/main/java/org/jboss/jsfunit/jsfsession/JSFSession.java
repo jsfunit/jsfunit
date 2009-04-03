@@ -24,6 +24,7 @@ package org.jboss.jsfunit.jsfsession;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import java.io.IOException;
+import java.util.Map;
 import org.jboss.jsfunit.framework.JSFUnitWebConnection;
 import org.jboss.jsfunit.framework.WebClientSpec;
 
@@ -86,6 +87,20 @@ public class JSFSession
       webConnection.addListener(this.jsfServerSession);
       
       if (HtmlUnitSnooper.enabled()) webConnection.addListener(new HtmlUnitSnooper());
+   }
+   
+   /**
+    * Get an immutable Map of all request params sent to the ServletRedirector or ServletTestRunner.
+    * 
+    * <b>Note that the Map returned is the same one returned from ServletRequest.getParameterMap().
+    * This Map is defined with a key of type String and a value of type String array - not plain String.</b>
+    *  
+    * @return The Map of params.
+    * @since 1.1
+    */
+   public Map getRedirectorRequestParams()
+   {
+      return WebClientSpec.getRedirectorRequestParams();
    }
    
    /**

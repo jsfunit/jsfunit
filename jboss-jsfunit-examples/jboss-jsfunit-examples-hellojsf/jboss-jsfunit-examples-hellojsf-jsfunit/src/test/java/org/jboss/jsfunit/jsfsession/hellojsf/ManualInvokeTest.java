@@ -40,7 +40,6 @@ import junit.framework.TestSuite;
  */
 public class ManualInvokeTest extends TestCase
 {
-   
    private String contextURL;
    
    public void setUp() throws IOException
@@ -97,4 +96,21 @@ public class ManualInvokeTest extends TestCase
                  && text.contains("failures=\"0\"") 
                  && text.contains("name=\"org.jboss.jsfunit.jsfsession.hellojsf.HelloJSFIntegrationTest\""));
    } 
+   
+   /**
+    * This tests passing params from the redirector to the JSFUnit test.
+    * 
+    * @throws java.lang.Exception
+    */
+   public void testPassServletRedirectorParams() throws Exception
+   {
+      WebClient webClient = new WebClient();
+      Page page = webClient.getPage(contextURL + "/ServletTestRunner?suite=org.jboss.jsfunit.jsfsession.hellojsf.PassServletRedirectParamsTest&foo=bar");
+      String text = ((XmlPage)page).asXml();
+      assertTrue(text.contains("errors=\"0\"") 
+                 && text.contains("tests=\"1\"") 
+                 && text.contains("failures=\"0\"") 
+                 && text.contains("name=\"org.jboss.jsfunit.jsfsession.hellojsf.PassServletRedirectParamsTest\""));
+   }
+   
 }

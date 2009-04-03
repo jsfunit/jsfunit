@@ -22,7 +22,6 @@
 
 package org.jboss.jsfunit.framework;
 
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebConnection;
 import com.gargoylesoftware.htmlunit.WebRequestSettings;
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -30,7 +29,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.commons.httpclient.HttpState;
 
 /**
  * The JSFUnitWebConnection wraps the HtmlUnit WebConnection.  It allows

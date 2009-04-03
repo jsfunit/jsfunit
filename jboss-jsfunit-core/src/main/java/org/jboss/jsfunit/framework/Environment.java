@@ -22,9 +22,6 @@
 
 package org.jboss.jsfunit.framework;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Contains methods to determine the test environment.
  *
@@ -34,15 +31,6 @@ import java.util.List;
 public class Environment
 {
    private static final Class appClass = loadClass("javax.faces.application.Application");
-   
-   private static final List methods12 = 
-           Arrays.asList(new String[] {"getELResolver", 
-                                       "getExpressionFactory"});
-   
-   private static final List methods20 = 
-           Arrays.asList(new String[] {"getResourceHandler", 
-                                       "setResourceHandler",
-                                       "setPageDeclarationLanguage"});
    
    private static final boolean is12Compatible;
    private static final boolean is20Compatible;

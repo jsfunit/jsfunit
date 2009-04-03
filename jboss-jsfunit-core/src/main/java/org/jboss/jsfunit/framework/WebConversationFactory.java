@@ -152,7 +152,11 @@ public class WebConversationFactory
    {
       for (Enumeration e = session.getAttributeNames(); e.hasMoreElements();)
       {
-         session.removeAttribute((String)e.nextElement());
+         String attrName = (String)e.nextElement();
+         if (!attrName.equals(JSFUnitFilter.REDIRECTOR_REQUEST_PARAMS_KEY))
+         {
+            session.removeAttribute(attrName);
+         }
       }
       
       JSFUnitFacesContext.cleanUpOldFacesContext();
