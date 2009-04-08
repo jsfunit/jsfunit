@@ -31,6 +31,7 @@ public class MyBean {
 
     // public on purpose
     public int myValue = -1;
+    private String scope = "none";
     
     public MyBean()
     {
@@ -45,6 +46,16 @@ public class MyBean {
     public void setMyValue(int myValue)
     {
        this.myValue = myValue;
+    }
+    
+    public String getScope()
+    {
+       return this.scope;
+    }
+    
+    public void setScope(String scope)
+    {
+       this.scope = scope;
     }
 
 }

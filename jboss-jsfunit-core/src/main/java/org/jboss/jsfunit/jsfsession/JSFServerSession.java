@@ -27,8 +27,10 @@ import com.gargoylesoftware.htmlunit.WebResponse;
 import java.util.Iterator;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.jboss.jsfunit.context.JSFUnitFacesContext;
+import org.jboss.jsfunit.context.NoNewEntryMap;
 import org.jboss.jsfunit.framework.FacesContextBridge;
 import org.jboss.jsfunit.framework.RequestListener;
 
@@ -123,14 +125,55 @@ public class JSFServerSession implements RequestListener
     *
     * @param elExpression The expression.
     *
-    * @return The value.
+    * @return The value. Return <code>null</code> if the managed bean is
+    *         request, session, or application scope and does not yet exist.
     */
    public Object getManagedBeanValue(String elExpression)
    {
       FacesContext facesContext = getFacesContext();
-      return facesContext.getApplication()
-                         .createValueBinding(elExpression)
-                         .getValue(facesContext);
+      
+      try
+      {
+         setELRunning(true, facesContext.getExternalContext());
+         return facesContext.getApplication()
+                            .createValueBinding(elExpression)
+                            .getValue(facesContext);
+      }
+      catch (RuntimeException re)
+      {  // JSFUNIT-164
+         Throwable chain = re;
+         do
+         {
+            if (chain instanceof NoNewEntryMap.NewEntryNotAllowedException)
+            {
+               return null;
+            }
+            chain = chain.getCause();
+         }
+         while (chain != null);
+         
+         throw re;
+      }
+      finally
+      {
+         setELRunning(false, facesContext.getExternalContext());
+      }
+   }
+   
+   // This tells the Map to throw an exception if an EL expression tries to
+   // create a new managed bean in request, session, or applicaiton scope.
+   // In a JSF request, we want the bean to be created by EL.  But in a test we 
+   // want to know that the previous request DID NOT create it.
+   private void setELRunning(boolean isELRunning, ExternalContext extContext)
+   {
+      NoNewEntryMap requestMap = (NoNewEntryMap)extContext.getRequestMap();
+      requestMap.setELRunning(isELRunning);
+      
+      NoNewEntryMap sessionMap = (NoNewEntryMap)extContext.getSessionMap();
+      sessionMap.setELRunning(isELRunning);
+      
+      NoNewEntryMap applicationMap = (NoNewEntryMap)extContext.getApplicationMap();
+      applicationMap.setELRunning(isELRunning);
    }
    
    /**
@@ -169,10 +212,10 @@ public class JSFServerSession implements RequestListener
       // FacesContext.getCurrentInstance() will work.
       JSFUnitFacesContext facesContext = (JSFUnitFacesContext)FacesContextBridge.getCurrentInstance();
       
-      // if no FacesContext exists, we can't get the Client IDs
+      // if no FacesContext exists, we can're get the Client IDs
       if (facesContext == null) return;
       
-      // Peformance optimization.  If the FacesContext instance didn't change,
+      // Peformance optimization.  If the FacesContext instance didn're change,
       // there is no need to re-create the ClientIDs.
       if (this.currentFacesContext != facesContext)
       {

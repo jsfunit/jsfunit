@@ -91,7 +91,7 @@ public class JSFUnitExternalContext extends ExternalContext
       this.initParameterMap = new HashMap(delegate.getInitParameterMap());
       this.context = (ServletContext)delegate.getContext();
       this.authType = delegate.getAuthType();
-      this.applicationMap = new HashMap(delegate.getApplicationMap());
+      this.applicationMap = new NoNewEntryMap(delegate.getApplicationMap());
       this.requestHeaderMap = new HashMap(delegate.getRequestHeaderMap());
       this.requestHeaderValuesMap = new HashMap(delegate.getRequestHeaderValuesMap());
       this.locale = delegate.getRequestLocale();
@@ -102,13 +102,13 @@ public class JSFUnitExternalContext extends ExternalContext
          this.locales.add(i.next());
       }
       
-      this.requestMap = new HashMap(delegate.getRequestMap());
+      this.requestMap = new NoNewEntryMap(delegate.getRequestMap());
       this.requestParameterMap = new HashMap(delegate.getRequestParameterMap());
       this.requestParameterValuesMap = new HashMap(delegate.getRequestParameterValuesMap());
       this.requestPathInfo = delegate.getRequestPathInfo();
       this.requestServletPath = delegate.getRequestServletPath();
       this.session = new JSFUnitHttpSession((HttpSession)delegate.getSession(true));
-      this.sessionMap = new HashMap(delegate.getSessionMap());
+      this.sessionMap = new NoNewEntryMap(delegate.getSessionMap());
       this.userPrincipal = delegate.getUserPrincipal();
       
       if (Environment.is20Compatible())

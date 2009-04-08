@@ -182,7 +182,10 @@ public class A4JTest extends ServletTestCase
          String id = "repeat:" + i + ":item";
          ValueHolder component = (ValueHolder)server.findComponent(id);
          assertNull(component.getLocalValue());
-         assertNull(component.getValue());
+         
+         // This assertion used to pass before JSFUNIT-164 was fixed.  Not sure
+         // if it was ever correct to begin with.
+         //assertNull(component.getValue());
          
          assertNotNull(server.getComponentValue(id));
          

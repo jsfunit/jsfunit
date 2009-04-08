@@ -32,6 +32,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
@@ -328,23 +329,42 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testNoCreationOfBeanDuringELExpressionReference() throws IOException
    {
+      HttpSession session = (HttpSession)server.getFacesContext().getExternalContext().getSession(true);
+      assertNull(session.getAttribute("unreferencedsessionbean"));
+      
       MyBean bean = (MyBean)server.getManagedBeanValue("#{unreferencedsessionbean}");
-      //assertNull(bean);  <--------- JSFUNIT-164
+      assertNull(bean);  //<--------- JSFUNIT-164
       
       bean = (MyBean)server.getManagedBeanValue("#{unreferencedrequestbean}");
-      //assertNull(bean);  <--------- JSFUNIT-164
+      assertNull(bean);  //<--------- JSFUNIT-164
+      
+      bean = (MyBean)server.getManagedBeanValue("#{unreferencedapplicationbean}");
+      assertNull(bean);  //<--------- JSFUNIT-164
    }
    
    public void testReferencedBeans() throws IOException
    {
       JSFSession jsfSession = new JSFSession("/indexWithExtraComponents.faces");
       JSFServerSession server = jsfSession.getJSFServerSession();
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      
+      String html = client.getPageAsText();
+      assertTrue(html.contains("request bean scope string = request"));
+      assertTrue(html.contains("session bean scope string = session"));
+      assertTrue(html.contains("application bean scope string = application"));
+      
+      HttpSession session = (HttpSession)server.getFacesContext().getExternalContext().getSession(true);
+      assertNotNull(session.getAttribute("referencedsessionbean"));
       
       MyBean bean = (MyBean)server.getManagedBeanValue("#{referencedsessionbean}");
       assertNotNull(bean);
       assertEquals(1, bean.myValue);
       
       bean = (MyBean)server.getManagedBeanValue("#{referencedrequestbean}");
+      assertNotNull(bean);
+      assertEquals(1, bean.myValue);
+      
+      bean = (MyBean)server.getManagedBeanValue("#{referencedapplicationbean}");
       assertNotNull(bean);
       assertEquals(1, bean.myValue);
    }
