@@ -26,14 +26,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.Principal;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.Flash;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -335,15 +338,15 @@ public class JSFUnitDelegatingExternalContext extends ExternalContext
    }
 
    @Override
-   public String getMimeType(String arg0)
+   public String getMimeType(String file)
    {
-      return wrapped.getMimeType(arg0);
+      return wrapped.getMimeType(file);
    }
 
    @Override
-   public String getRealPath(String arg0)
+   public String getRealPath(String path)
    {
-      return wrapped.getRealPath(arg0);
+      return wrapped.getRealPath(path);
    }
 
    @Override
@@ -388,9 +391,9 @@ public class JSFUnitDelegatingExternalContext extends ExternalContext
    }
 
    @Override
-   public void setResponseContentType(String arg0)
+   public void setResponseContentType(String contentType)
    {
-      wrapped.setResponseContentType(arg0);
+      wrapped.setResponseContentType(contentType);
    }
    
    @Override
@@ -404,5 +407,85 @@ public class JSFUnitDelegatingExternalContext extends ExternalContext
    {
       wrapped.setResponseHeader(name, value);
    }
+
+   @Override
+   public String encodeBookmarkableURL(String baseUrl, Map<String, List<String>> parameters)
+   {
+      return wrapped.encodeBookmarkableURL(baseUrl, parameters);
+   }
+
+   @Override
+   public String encodePartialActionURL(String url)
+   {
+      return wrapped.encodePartialActionURL(url);
+   }
+
+   @Override
+   public String encodeRedirectURL(String baseUrl, Map<String, List<String>> parameters)
+   {
+      return wrapped.encodeRedirectURL(baseUrl, parameters);
+   }
+
+   @Override
+   public Flash getFlash()
+   {
+      return wrapped.getFlash();
+   }
+
+   @Override
+   public int getResponseBufferSize()
+   {
+      return wrapped.getResponseBufferSize();
+   }
+
+   @Override
+   public Writer getResponseOutputWriter() throws IOException
+   {
+      return wrapped.getResponseOutputWriter();
+   }
+
+   @Override
+   public boolean isResponseCommitted()
+   {
+      return wrapped.isResponseCommitted();
+   }
+
+   @Override
+   public void responseFlushBuffer() throws IOException
+   {
+      wrapped.responseFlushBuffer();
+   }
+
+   @Override
+   public void responseReset()
+   {
+      wrapped.responseReset();
+   }
+
+   @Override
+   public void responseSendError(int statusCode, String message) throws IOException
+   {
+      wrapped.responseSendError(statusCode, message);
+   }
+
+   @Override
+   public void setResponseBufferSize(int size)
+   {
+      wrapped.setResponseBufferSize(size);
+   }
+
+   @Override
+   public void setResponseContentLength(int length)
+   {
+      wrapped.setResponseContentLength(length);
+   }
+
+   @Override
+   public void setResponseStatus(int statusCode)
+   {
+      wrapped.setResponseStatus(statusCode);
+   }
+   
+   
    //--------- End JSF 2.0 Methods ---------------------------------
 }

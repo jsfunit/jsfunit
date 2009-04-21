@@ -261,9 +261,9 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    }
 
    @Override
-   public List<FacesMessage> getMessageList(String clientId)
+   public List<FacesMessage> getMessageList(String arg0)
    {
-      return delegate.getMessageList(clientId);
+      return delegate.getMessageList(arg0);
    }
 
    @Override
@@ -273,12 +273,36 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    }
 
    @Override
+   public boolean isProcessingEvents()
+   {
+      return delegate.isProcessingEvents();
+   }
+
+   @Override
+   public boolean isValidationFailed()
+   {
+      return delegate.isValidationFailed();
+   }
+
+   @Override
    public void setExceptionHandler(ExceptionHandler exceptionHandler)
    {
       delegate.setExceptionHandler(exceptionHandler);
    }
-   
-   
+
+   @Override
+   public void setProcessingEvents(boolean processingEvents)
+   {
+      delegate.setProcessingEvents(processingEvents);
+   }
+
+   @Override
+   public void validationFailed()
+   {
+      delegate.validationFailed();
+   }
+
+      
    //-----End JSF 2.0 Methods-----------------------------------------------------
    private boolean viewHasChildren()
    {

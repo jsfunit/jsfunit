@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.Principal;
@@ -38,6 +39,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.context.Flash;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -473,34 +475,108 @@ public class JSFUnitExternalContext extends ExternalContext
    }
 
    @Override
-   public String getContextName()
+   public Flash getFlash()
    {
-      return context.getServletContextName();
+      return delegate.getFlash();
    }
 
-   @Override
-   public int getRequestContentLength()
-   {
-      return this.requestContentLength;
-   }
-   
-   /**
-    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
-    */
    @Override
    public void addResponseHeader(String name, String value)
    {
       delegate.addResponseHeader(name, value);
    }
-   
-   /**
-    * Warning: Calling this method from a JSFUnit test could yield unexpected results.
-    */
+
+   @Override
+   public String encodeBookmarkableURL(String baseUrl, Map<String, List<String>> parameters)
+   {
+      return delegate.encodeBookmarkableURL(baseUrl, parameters);
+   }
+
+   @Override
+   public String encodePartialActionURL(String url)
+   {
+      return delegate.encodePartialActionURL(url);
+   }
+
+   @Override
+   public String encodeRedirectURL(String baseUrl, Map<String, List<String>> parameters)
+   {
+      return delegate.encodeRedirectURL(baseUrl, parameters);
+   }
+
+   @Override
+   public String getContextName()
+   {
+      return delegate.getContextName();
+   }
+
+   @Override
+   public int getRequestContentLength()
+   {
+      return delegate.getRequestContentLength();
+   }
+
+   @Override
+   public int getResponseBufferSize()
+   {
+      return delegate.getResponseBufferSize();
+   }
+
+   @Override
+   public Writer getResponseOutputWriter() throws IOException
+   {
+      return delegate.getResponseOutputWriter();
+   }
+
+   @Override
+   public boolean isResponseCommitted()
+   {
+      return delegate.isResponseCommitted();
+   }
+
+   @Override
+   public void responseFlushBuffer() throws IOException
+   {
+      delegate.responseFlushBuffer();
+   }
+
+   @Override
+   public void responseReset()
+   {
+      delegate.responseReset();
+   }
+
+   @Override
+   public void responseSendError(int statusCode, String message) throws IOException
+   {
+      delegate.responseSendError(statusCode, message);
+   }
+
+   @Override
+   public void setResponseBufferSize(int size)
+   {
+      delegate.setResponseBufferSize(size);
+   }
+
+   @Override
+   public void setResponseContentLength(int length)
+   {
+      delegate.setResponseContentLength(length);
+   }
+
    @Override
    public void setResponseHeader(String name, String value)
    {
       delegate.setResponseHeader(name, value);
    }
+
+   @Override
+   public void setResponseStatus(int statusCode)
+   {
+      delegate.setResponseStatus(statusCode);
+   }
+   
+   
 //----------------- End JSF 2.0  Methods --------------------------------------------
    
 // ----- Methods that rely on HttpRequest or HttpResponse: These objects may
