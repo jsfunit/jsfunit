@@ -21,17 +21,10 @@
  */
 package org.jboss.jsfunit.test.richfaces;
 
-import com.gargoylesoftware.htmlunit.html.HtmlFileInput;
 import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.framework.WebClientSpec;
-import org.jboss.jsfunit.jsfsession.JSFClientSession;
-import org.jboss.jsfunit.jsfsession.JSFServerSession;
-import org.jboss.jsfunit.jsfsession.JSFSession;
-import org.mozilla.javascript.Function;
-import org.richfaces.demo.fileUpload.FileUploadBean;
 
 /**
  * Peform JSFUnit tests on RichFaces demo application.

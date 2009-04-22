@@ -124,7 +124,7 @@ public class HelloJSFIntegrationTest extends ServletTestCase
       HtmlInput inputText = (HtmlInput)htmlPage.getElementById("form1:input_foo_text");
       inputText.setValueAttribute("Stan");
       HtmlSubmitInput submit = (HtmlSubmitInput)htmlPage.getElementById("form1:submit_button");
-      submit.click();
+      htmlPage = submit.click();
       // ---------------------------------------------------
 
       FacesContext facesContext = FacesContextBridge.getCurrentInstance();
