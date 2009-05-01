@@ -22,60 +22,73 @@
 
 package org.jboss.jsfunit.seam;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import org.jboss.jsfunit.framework.WebConversationFactory;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.contexts.Context;
-import org.jboss.seam.contexts.Contexts;
+import org.jboss.seam.contexts.ServerConversationContext;
 
 /**
  * This class manages Seam conversation scope objects that are cached in the
  * HttpSession.  This makes the objects available to JSFUnit tests through EL
  * expressions that start with "seamconversation."
  *
- * All methods in this class have default scope.  Application and test code
- * should not access this class directly.
- * 
  * @author Stan Silvert
  * @since 1.0
  */
 public class ConversationScope 
 {
-   private static final String SEAM_CONVERSATION_CACHE = JSFUnitLifecycle.class.getName() + ".SEAM_CONVERSATION_CACHE";
-   
    // don't allow instance of static class
    private ConversationScope() {}
    
-   static Map convCache(FacesContext context)
+   static Map getConversationCache()
    {
-      Map sessionMap = (Map)context.getExternalContext().getSessionMap();
-      Map convMap = (Map)sessionMap.get(SEAM_CONVERSATION_CACHE);
-      if (convMap == null)
+      Map convCache = new HashMap();
+      
+      String convId = findConversationId();
+      if (convId == null) return convCache;
+      
+      Context conversationContext = new ServerConversationContext(sessionMap(), convId);
+      for (String name : conversationContext.getNames() )
       {
-         convMap = new HashMap();
-         sessionMap.put(SEAM_CONVERSATION_CACHE, convMap);
+         Object value = conversationContext.get(name);
+         convCache.put(name, value);
+      } 
+      
+      return convCache;
+   }
+     
+   // figure out the conversationId based on attributes in the session
+   private static String findConversationId()
+   {
+      HttpSession session = WebConversationFactory.getSessionFromThreadLocal();
+      for (Enumeration names = session.getAttributeNames(); names.hasMoreElements();)
+      {
+         String name = (String)names.nextElement();
+         if (name.startsWith(ScopeType.CONVERSATION.getPrefix()))
+         {
+            String conversationKey = name.substring(ScopeType.CONVERSATION.getPrefix().length() + 1);
+            return conversationKey.substring(0, conversationKey.indexOf('$'));
+         }
       }
       
-      return convMap;
+      return null;
    }
    
-   static Object get(FacesContext context, String name)
+   // need map from true HttpSession that I can pass to ServerConversationContext
+   private static Map sessionMap()
    {
-      return convCache(context).get(name);
-   }
-   
-   static void cache(FacesContext context)
-   {
-      Map convCache = convCache(context);
-      
-      Context convContext = Contexts.getConversationContext();
-      if (convContext == null) return;
-      
-      String[] names = convContext.getNames();
-      for (int i=0; i < names.length; i++)
+      HttpSession session = WebConversationFactory.getSessionFromThreadLocal();
+      Map sessionMap = new HashMap();
+      for (Enumeration names = session.getAttributeNames(); names.hasMoreElements();)
       {
-         convCache.put(names[i], convContext.get(names[i]));
+         String name = (String)names.nextElement();
+         sessionMap.put(name, session.getAttribute(name));
       }
+      
+      return sessionMap;
    }
-   
 }

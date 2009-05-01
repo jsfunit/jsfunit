@@ -31,7 +31,6 @@
    
   <factory>
     <faces-context-factory>org.jboss.jsfunit.context.JSFUnitFacesContextFactory</faces-context-factory>
-    <lifecycle-factory>org.jboss.jsfunit.seam.JSFUnitLifecycleFactory</lifecycle-factory>
   </factory>
   
   <application>

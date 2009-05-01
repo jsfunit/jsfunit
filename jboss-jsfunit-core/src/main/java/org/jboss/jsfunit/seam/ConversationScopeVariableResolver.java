@@ -60,10 +60,10 @@ public class ConversationScopeVariableResolver extends VariableResolver
    public Object resolveVariable(FacesContext facesContext, String name) throws EvaluationException 
    {
       if (isSeamPresent && SEAM_CONVERSATION_EL_IDENTIFIER.equals(name)) {
-         return ConversationScope.convCache(facesContext);
+         return ConversationScope.getConversationCache();
       }
          
       return delegate.resolveVariable(facesContext, name);
    }
-
+   
 }

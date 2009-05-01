@@ -76,7 +76,7 @@ public class WebConversationFactory
     * 
     * @return The shared HttpSession.
     */
-   protected static HttpSession getSessionFromThreadLocal()
+   public static HttpSession getSessionFromThreadLocal()
    {
       return (HttpSession)tlsession.get();
    }
