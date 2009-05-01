@@ -348,7 +348,7 @@
     
   <properties>
     <richfaces-version>3.3.0.GA</richfaces-version>
-    <seam-version>2.1.0.SP1</seam-version>
+    <seam-version>2.1.1.GA</seam-version>
   </properties>
   
 </project>
