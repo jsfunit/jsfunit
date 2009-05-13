@@ -95,10 +95,9 @@ public class JSFUnitWebConnection implements WebConnection
    
    private void notifyListenersAfter(WebResponse response)
    {
-      for (int i=this.listeners.size() - 1; i > -1; i--)
+      for (Iterator<RequestListener> i = this.listeners.iterator(); i.hasNext();)
       {
-         RequestListener listener = this.listeners.get(i);
-         listener.afterRequest(response);
+         i.next().afterRequest(response);
       }
    }
    
