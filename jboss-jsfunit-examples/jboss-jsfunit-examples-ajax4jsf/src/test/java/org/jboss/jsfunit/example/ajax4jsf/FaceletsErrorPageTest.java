@@ -99,14 +99,13 @@ public class FaceletsErrorPageTest extends ServletTestCase implements RequestLis
       try
       {
          new JSFSession(wcSpec);
+         fail("Expected FaceleteErrorPageException");
       } 
       catch (FaceletsErrorPageException e)
       {
-         // ignore
+         // Because of the exception, afterRequest was never called for me
+         assertNull(this.latestResponse);
       }
-
-      assertNotNull(this.latestResponse);
-      assertTrue(FaceletsErrorPageException.isFaceletsErrorPage(this.latestResponse));
    }
 
    // ----------- Implement RequestListener -------------------------
