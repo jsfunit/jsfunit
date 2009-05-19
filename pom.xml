@@ -312,6 +312,7 @@
     <module>jboss-jsfunit-examples</module>
     <module>jboss-jsfunit-analysis</module>
     <module>jboss-jsfunit-microdeployer</module>
+    <module>jboss-jsfunit-spy</module>
   </modules>
 
   <pluginRepositories>
@@ -348,7 +349,9 @@
     
   <properties>
     <richfaces-version>3.3.0.GA</richfaces-version>
-    <seam-version>2.1.1.GA</seam-version>
+    <!-- <seam-version>2.1.1.GA</seam-version> -->
+    <!--<seam-version>2.1.2.CR1</seam-version> -->
+    <seam-version>2.1.2-SNAPSHOT</seam-version>
   </properties>
   
 </project>

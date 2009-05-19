@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-SnapshotTest</actionName>
+            <displayName>SnapshotTest</displayName>
+            <properties>
+                <test>SnapshotTest</test>
+            </properties>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>test</activatedProfile>
+                <activatedProfile>myfaces1.1</activatedProfile>
+            </activatedProfiles>
+        </action>
+        <action>
+            <actionName>CUSTOM-SpyManagerTest</actionName>
+            <displayName>SpyManagerTest</displayName>
+            <properties>
+                <test>SpyManagerTest</test>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>test</activatedProfile>
+                <activatedProfile>myfaces1.1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    </actions>

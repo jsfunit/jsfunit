@@ -5,7 +5,33 @@
 
        no-conversation-view-id="/main.xhtml"
                  login-view-id="/home.xhtml">
-
+<!--
+    <page view-id="/modules/sales/test1.xhtml">
+    
+        <action if="#{validation.failed}"
+           execute="#{register.invalid}"/>
+    
+        <navigation>
+            <rule if="#{register.registered}">
+                <redirect view-id="/home.xhtml"/>
+            </rule>
+        </navigation>
+        
+    </page>
+    
+    <page view-id="/modules/sales/test2.xhtml">
+    
+        <action if="#{validation.failed}"
+           execute="#{register.invalid}"/>
+    
+        <navigation>
+            <rule if="#{register.registered}">
+                <redirect view-id="/home.xhtml"/>
+            </rule>
+        </navigation>
+        
+    </page>
+    -->
     <page view-id="/register.xhtml">
     
         <action if="#{validation.failed}"

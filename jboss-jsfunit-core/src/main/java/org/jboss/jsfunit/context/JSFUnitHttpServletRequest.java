@@ -333,7 +333,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public boolean isRequestedSessionIdFromCookie()
    {
-      return this.isRequestedSessionIdFromCookie();
+      return this.isRequestedSessionIdFromCookie;
    }
 
    @Override
@@ -345,7 +345,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public boolean isRequestedSessionIdFromUrl()
    {
-      return isRequestedSessionIdFromURL();
+      return isRequestedSessionIdFromURL;
    }
 
    @Override
