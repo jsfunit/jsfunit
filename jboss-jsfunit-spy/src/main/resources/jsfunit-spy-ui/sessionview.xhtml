@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html 
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+  
+  <ui:composition template="layout.xhtml">
+    <ui:define name="header">Requests for Session #{spybackingbean.selectedSession.id}</ui:define>
+    <ui:define name="content">
+      <p>
+        <f:view>
+          <h:panelGrid columns="1">
+            <h:outputText id="userId" rendered="#{not empty spybackingbean.selectedSession.userId}" value="#{spybackingbean.selectedSession.userId}">
+              <h:outputLabel for="userId" value="User: "/>
+            </h:outputText>
+            <h:outputText id="creationTime" value="#{spybackingbean.selectedSession.creationTime}">
+              <h:outputLabel for="creationTime" value="Session Created: "/>
+              <f:convertDateTime type="both" dateStyle="short" timeStyle="long" timeZone="#{spybackingbean.timeZone}"/>
+            </h:outputText>
+            <h:outputText id="maxInactiveInterval" value="#{spybackingbean.selectedSession.maxInactiveInterval} seconds">
+              <h:outputLabel for="maxInactiveInterval" value="Max Inactive Interval: "/>
+            </h:outputText>
+          </h:panelGrid>
+          <h:form id="request_list_form">
+            <h:dataTable value="#{spybackingbean.selectedSession.requests}" var="spyrequest" columnClasses=",,integer,,">
+              <h:column>
+                <f:facet name="header"><h:outputText value="View Request Data"/></f:facet>
+                <h:commandLink id="selectRequestData" action="#{spybackingbean.selectRequestData}">
+                  <h:outputText value="View Request Data"/>
+                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
+                </h:commandLink>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="Start Time"/></f:facet>
+                <h:outputText value="#{spyrequest.firstSnapshot.timestamp}">
+                  <f:convertDateTime type="both" dateStyle="short" timeStyle="long" timeZone="#{spybackingbean.timeZone}"/>
+                </h:outputText>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="Elapsed Time (ms)"/></f:facet>
+                <h:outputText value="#{spyrequest.elapsedTime}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="From View"/></f:facet>
+                <h:outputText value="#{spyrequest.fromView}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="To View"/></f:facet>
+                <h:outputText value="#{spyrequest.toView}"/>
+              </h:column>
+            </h:dataTable>
+            <h:outputText id="NoSessionSelected" rendered="#{spybackingbean.selectedSession == Empty}" value="No Session Selected"/>
+          </h:form>
+        </f:view>
+      </p>
+    </ui:define>
+  </ui:composition>
+</html>

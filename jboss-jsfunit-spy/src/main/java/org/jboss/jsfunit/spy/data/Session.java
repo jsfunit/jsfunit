@@ -22,11 +22,11 @@
 
 package org.jboss.jsfunit.spy.data;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -41,6 +41,7 @@ public class Session
    private String sessionId;
    private long creationTime;
    private long maxInactiveInterval;
+   private String userId;
    
    Session (FacesContext facesContext)
    {
@@ -54,7 +55,24 @@ public class Session
    synchronized int addNewRequestData(RequestData requestData, FacesContext facesContext)
    {
       requestList.add(requestData);
+      setUserId(requestData);
       return requestList.indexOf(requestData);
+   }
+   
+   private void setUserId(RequestData requestData)
+   {
+      if (this.userId != null) return;
+   
+      Principal principal = requestData.getHttpRequest().getUserPrincipal();
+      if (principal != null)
+      {
+         this.userId = principal.toString();
+      }
+   }
+   
+   public String getUserId()
+   {
+      return this.userId;
    }
    
    public synchronized List<RequestData> getRequests()
@@ -75,6 +93,11 @@ public class Session
    public long getMaxInactiveInterval()
    {
       return this.maxInactiveInterval;
+   }
+   
+   public int getRequestCount()
+   {
+      return this.requestList.size();
    }
    
    @Override

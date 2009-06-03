@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html 
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+  
+  <h2>#{scopename}</h2>
+  <h:dataTable value="#{scopevalues}" var="phaseValues" footerClass="integer">
+    <h:column>
+      <f:facet name="header"><h:outputText value="Attribute"/></f:facet>
+      <h:outputText value="#{phaseValues.attributeName}"/>
+      <f:facet name="footer"><h:outputText value="Attribute"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[0][0]}">
+      <f:facet name="header"><h:outputText value="Restore View Before"/></f:facet>
+      <h:outputText value="#{phaseValues.restoreViewBefore}"/>
+      <f:facet name="footer"><h:outputText value="Restore View Before"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[0][1]}">
+      <f:facet name="header"><h:outputText value="Restore View After"/></f:facet>
+      <h:outputText value="#{phaseValues.restoreViewAfter}"/>
+      <f:facet name="footer"><h:outputText value="Restore View After"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[1][0]}">
+      <f:facet name="header"><h:outputText value="Apply Request Values Before"/></f:facet>
+      <h:outputText value="#{phaseValues.applyRequestValuesBefore}"/>
+      <f:facet name="footer"><h:outputText value="Apply Request Values Before"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[1][1]}">
+      <f:facet name="header"><h:outputText value="Apply Request Values After"/></f:facet>
+      <h:outputText value="#{phaseValues.applyRequestValuesAfter}"/>
+      <f:facet name="footer"><h:outputText value="Apply Request Values After"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[2][0]}">
+      <f:facet name="header"><h:outputText value="Process Validations Before"/></f:facet>
+      <h:outputText value="#{phaseValues.processValidationsBefore}"/>
+      <f:facet name="footer"><h:outputText value="Process Validations Before"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[2][1]}">
+      <f:facet name="header"><h:outputText value="Process Validations After"/></f:facet>
+      <h:outputText value="#{phaseValues.processValidationsAfter}"/>
+      <f:facet name="footer"><h:outputText value="Process Validations After"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[3][0]}">
+      <f:facet name="header"><h:outputText value="Update Model Values Before"/></f:facet>
+      <h:outputText value="#{phaseValues.updateModelValuesBefore}"/>
+      <f:facet name="footer"><h:outputText value="Update Model Values Before"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[3][1]}">
+      <f:facet name="header"><h:outputText value="Update Model Values After"/></f:facet>
+      <h:outputText value="#{phaseValues.updateModelValuesAfter}"/>
+      <f:facet name="footer"><h:outputText value="Update Model Values After"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[4][0]}">
+      <f:facet name="header"><h:outputText value="Invoke Application Before"/></f:facet>
+      <h:outputText value="#{phaseValues.invokeApplicationBefore}"/>
+      <f:facet name="footer"><h:outputText value="Invoke Application Before"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[4][1]}">
+      <f:facet name="header"><h:outputText value="Invoke Application After"/></f:facet>
+      <h:outputText value="#{phaseValues.invokeApplicationAfter}"/>
+      <f:facet name="footer"><h:outputText value="Invoke Application After"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[5][0]}">
+      <f:facet name="header"><h:outputText value="Render Response Before"/></f:facet>
+      <h:outputText value="#{phaseValues.renderResponseBefore}"/>
+      <f:facet name="footer"><h:outputText value="Render Response Before"/></f:facet>
+    </h:column>
+    <h:column rendered="#{spybackingbean.selectedRequestData.snapshotsTaken[5][1]}">
+      <f:facet name="header"><h:outputText value="Render Response After"/></f:facet>
+      <h:outputText value="#{phaseValues.renderResponseAfter}"/>
+      <f:facet name="footer"><h:outputText value="Render Response After"/></f:facet>
+    </h:column>
+  </h:dataTable>
+  
+  
+</html>

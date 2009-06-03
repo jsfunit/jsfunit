@@ -6,6 +6,11 @@
     
     <display-name>Seam Booking Example</display-name>
     
+    <context-param>
+      <param-name>org.jboss.seam.core.init.debug</param-name>
+      <param-value>true</param-value>
+    </context-param>
+
     <!-- JSFUnit -->
     <filter>
      <filter-name>JSFUnitFilter</filter-name>

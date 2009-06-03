@@ -33,6 +33,7 @@ import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.spy.data.BeforeOrAfter;
 import org.jboss.jsfunit.spy.data.RequestData;
+import org.jboss.jsfunit.spy.data.Scope;
 import org.jboss.jsfunit.spy.data.Snapshot;
 import org.jboss.jsfunit.spy.data.SpyManager;
 
@@ -42,14 +43,18 @@ import org.jboss.jsfunit.spy.data.SpyManager;
  */
 public class SnapshotTest extends ServletTestCase 
 {
-   JSFServerSession server;
-   JSFClientSession client;
+   private JSFServerSession server;
+   private JSFClientSession client;
+   private SpyManager spyManager;
+   private RequestData request;
    
    public void setUp() throws IOException
    {
       JSFSession jsfSession = new JSFSession("/index.jsf");
       this.server = jsfSession.getJSFServerSession();
       this.client = jsfSession.getJSFClientSession();
+      this.spyManager = SpyManager.getInstance();
+      this.request = spyManager.getCurrentRequest();
    }
    
    /**
@@ -60,31 +65,51 @@ public class SnapshotTest extends ServletTestCase
       return new TestSuite( SnapshotTest.class );
    }
 
+   public void testGetFromView() throws IOException
+   {
+      assertEquals("/index.xhtml", request.getFromView());
+   }
+   
+   public void testGetElapsedTime() throws IOException
+   {
+      assertTrue(request.getElapsedTime() > 0);
+   }
+   
+   public void testGetFirstLastSnapshot() throws IOException
+   {
+      Snapshot first = request.getFirstSnapshot();
+      assertNotNull(first);
+      assertEquals(PhaseId.RESTORE_VIEW, first.getPhaseId());
+      
+      Snapshot last = request.getLastSnapshot();
+      assertNotNull(last);
+      assertEquals(PhaseId.RENDER_RESPONSE, last.getPhaseId());
+   }
+   
    public void testGetValuesFromSnapshot() throws IOException
    {
       client.click("submit_button");
       
-      SpyManager spyManager = SpyManager.getInstance();
-      RequestData request = spyManager.getCurrentRequest();
+      request = spyManager.getCurrentRequest();
       List<Snapshot> snapshots = request.getSnapshots();
       BeforeOrAfter beforeOrAfter = BeforeOrAfter.BEFORE;
       for (Snapshot snapshot : snapshots)
       {
          assertNotNull(snapshot.getPhaseId());
          assertEquals(beforeOrAfter, snapshot.getBeforeOrAfter());
-         assertEquals("application scope bean", snapshot.getApplicationScope().get("appscope1"));
-         assertEquals("session scope bean", snapshot.getSessionScope().get("sessscope1"));
+         assertEquals("application scope bean", snapshot.getScopeMap(Scope.APPLICATION).get("appscope1"));
+         assertEquals("session scope bean", snapshot.getScopeMap(Scope.SESSION).get("sessscope1"));
          
          // Req scope doesn't get applied until after PROCESS_VALIDATIONS
          if (snapshot.getPhaseId().getOrdinal() > PhaseId.PROCESS_VALIDATIONS.getOrdinal())
          {
-            assertEquals("request scope bean", snapshot.getRequestScope().get("reqscope1"));
+            assertEquals("request scope bean", snapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
          }
          else
          {
             if (snapshot.getPhaseId() != PhaseId.PROCESS_VALIDATIONS)
             {
-               assertNull(snapshot.getRequestScope().get("reqscope1"));
+               assertNull(snapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
             }
          }
          
@@ -99,18 +124,17 @@ public class SnapshotTest extends ServletTestCase
       client.setValue("reqscope1", "reqfoo");
       client.click("submit_button");
       
-      SpyManager spyManager = SpyManager.getInstance();
-      RequestData request = spyManager.getCurrentRequest();
+      request = spyManager.getCurrentRequest();
       List<Snapshot> snapshots = request.getSnapshots();
       
       Snapshot firstSnapshot = snapshots.get(0);
-      assertEquals("application scope bean", firstSnapshot.getApplicationScope().get("appscope1"));
-      assertEquals("session scope bean", firstSnapshot.getSessionScope().get("sessscope1"));
-      assertNull(firstSnapshot.getRequestScope().get("reqscope1"));
+      assertEquals("application scope bean", firstSnapshot.getScopeMap(Scope.APPLICATION).get("appscope1"));
+      assertEquals("session scope bean", firstSnapshot.getScopeMap(Scope.SESSION).get("sessscope1"));
+      assertNull(firstSnapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
       
       Snapshot lastSnapshot = snapshots.get(snapshots.size() - 1);
-      assertEquals("appfoo", lastSnapshot.getApplicationScope().get("appscope1"));
-      assertEquals("sessfoo", lastSnapshot.getSessionScope().get("sessscope1"));
-      assertEquals("reqfoo", lastSnapshot.getRequestScope().get("reqscope1"));
+      assertEquals("appfoo", lastSnapshot.getScopeMap(Scope.APPLICATION).get("appscope1"));
+      assertEquals("sessfoo", lastSnapshot.getScopeMap(Scope.SESSION).get("sessscope1"));
+      assertEquals("reqfoo", lastSnapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
    }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html 
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+  
+  <ui:composition template="layout.xhtml">
+    <ui:define name="header">JSFSpy Request Data View</ui:define>
+    <ui:define name="content">
+      <p>
+        <f:view>
+          <ui:include src="httprequest.xhtml">
+            <ui:param name="httpreq" value="#{spybackingbean.selectedRequestData.httpRequest}"/>
+          </ui:include>
+          <hr/>
+          <ui:include src="requestparams.xhtml">
+            <ui:param name="sectiontitle" value="HttpRequest Headers"/>
+            <ui:param name="paramlist" value="#{spybackingbean.selectedRequestData.httpRequest.headersAsList}"/>
+          </ui:include>
+          <hr/>
+          <ui:include src="requestparams.xhtml">
+            <ui:param name="sectiontitle" value="HttpRequest Params"/>
+            <ui:param name="paramlist" value="#{spybackingbean.selectedRequestData.httpRequest.paramsAsList}"/>
+          </ui:include>
+          <hr/>
+          <ui:include src="cookies.xhtml"/>
+          <hr/>
+          <ui:include src="perfdata.xhtml"/>
+          <hr/>
+          <ui:include src="scopetable.xhtml">
+            <ui:param name="scopename" value="Request Scope" />
+            <ui:param name="scopevalues" value="#{spybackingbean.requestScopeValues}"/>
+          </ui:include>
+          
+          <hr/>
+          <ui:include src="scopetable.xhtml">
+            <ui:param name="scopename" value="Session Scope" />
+            <ui:param name="scopevalues" value="#{spybackingbean.sessionScopeValues}"/>
+          </ui:include>
+          
+          <hr/>
+          <ui:include src="scopetable.xhtml">
+            <ui:param name="scopename" value="Application Scope" />
+            <ui:param name="scopevalues" value="#{spybackingbean.applicationScopeValues}"/>
+          </ui:include>
+          
+        </f:view>
+      </p>
+    </ui:define>
+  </ui:composition>
+</html>

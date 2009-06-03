@@ -32,4 +32,41 @@
   <lifecycle>
      <phase-listener>org.jboss.jsfunit.spy.data.SpyPhaseListener</phase-listener>
   </lifecycle>    
+  
+  <managed-bean>
+     <managed-bean-name>spybackingbean</managed-bean-name>
+     <managed-bean-class>org.jboss.jsfunit.spy.ui.SpyUIBackingBean</managed-bean-class>
+     <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  
+  <navigation-rule>
+     <navigation-case>
+        <from-outcome>spysessionexpired</from-outcome>
+        <to-view-id>/jsfunit-spy-ui/index.xhtml</to-view-id>
+     </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+     <from-view-id>/jsfunit-spy-ui/*</from-view-id>
+     <navigation-case>
+       <from-outcome>allsessions</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/index.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>sessionview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/sessionview.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>requestdataview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/requestdataview.xhtml</to-view-id>
+     </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+     <from-view-id>/jsfunit-spy-ui/sessionview.xhtml</from-view-id>
+     <navigation-case>
+       <from-outcome>requestdataview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/requestdataview.xhtml</to-view-id>
+     </navigation-case>
+  </navigation-rule>
 </faces-config>

@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpSession;
@@ -64,6 +63,7 @@ public class SpyManager {
        if (session == null) session = makeNewSession(facesContext);
        
        int sequenceNumber = session.addNewRequestData(requestData, facesContext);
+       requestData.setSequenceNumber(sequenceNumber);
        
        Map attributeMap = facesContext.getExternalContext().getRequestMap();
        attributeMap.put(REQUEST_SEQUENCE_KEY, new Integer(sequenceNumber));
@@ -122,14 +122,9 @@ public class SpyManager {
        return sessions.get(sessionId(facesContext));
     }
     
-    /**
-     *  Returns the default time zone for the server.
-     * 
-     * @return The default time zone for the server.
-     */
-    public TimeZone getTimeZone()
+    public Session getSession(String sessionId)
     {
-       return TimeZone.getDefault();
+       return sessions.get(sessionId);
     }
     
     private static String sessionId(FacesContext facesContext)

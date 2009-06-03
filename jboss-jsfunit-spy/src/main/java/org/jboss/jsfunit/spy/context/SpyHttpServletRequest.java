@@ -26,11 +26,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -68,7 +70,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
    private String pathInfo;
    private String pathTranslated;
    private String method;
-   private Map parameterMap;
+   private Map<String, String[]> parameterMap;
    private int contentLength;
    private Cookie[] cookies;
    private String remoteAddr;
@@ -82,7 +84,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
    private boolean isRequestedSessionIdFromCookie;
    private boolean isRequestedSessionIdFromURL;
    private boolean isRequestedSessionIdValid;
-   private List requestLocales;
+   private List<Locale> requestLocales;
    private Locale locale;
    private boolean isSecure;
    private String authType;
@@ -104,9 +106,9 @@ public class SpyHttpServletRequest implements HttpServletRequest
       this.pathInfo = request.getPathInfo();
       this.pathTranslated = request.getPathTranslated();
       this.method = request.getMethod();
-      this.parameterMap = Collections.unmodifiableMap(new HashMap(request.getParameterMap()));
+      this.parameterMap = (Map<String, String[]>)Collections.unmodifiableMap(new HashMap(request.getParameterMap()));
       this.contentLength = request.getContentLength();
-      this.cookies = request.getCookies();
+      this.cookies = cloneCookies(request);
       this.remoteAddr = request.getRemoteAddr();
       this.remoteHost = request.getRemoteHost();
       this.requestURI = request.getRequestURI();
@@ -118,7 +120,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
       this.isRequestedSessionIdFromCookie = request.isRequestedSessionIdFromCookie();
       this.isRequestedSessionIdFromURL = request.isRequestedSessionIdFromURL();
       this.isRequestedSessionIdValid = request.isRequestedSessionIdValid();
-      this.requestLocales = Collections.list(request.getLocales());
+      this.requestLocales = (List<Locale>)Collections.list(request.getLocales());
       this.locale = request.getLocale();
       this.isSecure = request.isSecure();
       this.authType = request.getAuthType();
@@ -134,6 +136,18 @@ public class SpyHttpServletRequest implements HttpServletRequest
          this.userPrincipal = new SpyPrincipal(request.getUserPrincipal());
       }
       
+   }
+   
+   private Cookie[] cloneCookies(HttpServletRequest request)
+   {
+      Cookie[] reqCookies = request.getCookies();
+      Cookie[] clonedCookies = new Cookie[reqCookies.length];
+      for (int i=0; i < reqCookies.length; i++)
+      {
+         clonedCookies[i] = (Cookie)reqCookies[i].clone();
+      }
+      
+      return clonedCookies;
    }
    
    private Map<String, String[]> makeHeaderMap(HttpServletRequest request)
@@ -152,7 +166,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
    private boolean isServlet14OrGreater()
    {
       ServletContext servletContext = (ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
-      return servletContext.getMinorVersion() > 3;
+      return (servletContext.getMinorVersion() > 3) || (servletContext.getMajorVersion() > 1);
    }
    
    private void cacheServlet14RequestValues(HttpServletRequest request)
@@ -213,6 +227,23 @@ public class SpyHttpServletRequest implements HttpServletRequest
       return Collections.enumeration(this.requestLocales);
    }
    
+   /**
+    * Return getLocales() as a comma-seperated String.
+    * 
+    * @return getLocales() as a comma-seperated String.
+    */
+   public String getAcceptableLocales()
+   {
+      StringBuilder strLocales = new StringBuilder();
+      for (Iterator<Locale> locales = this.requestLocales.iterator(); locales.hasNext();)
+      {
+         strLocales.append(locales.next().toString());
+         if (locales.hasNext()) strLocales.append(", ");
+      }
+      
+      return strLocales.toString();
+   }
+   
    @Override
    public Locale getLocale()
    {
@@ -260,7 +291,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
    {
       return this.cookies;
    }
-
+   
    @Override
    public Enumeration getHeaderNames()
    {
@@ -400,9 +431,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
    }
 
    /**
-    * This method is a no-op.  Since the response is over by the time this
-    * object is active, it is too late to override the name of the character
-    * encoding.
+    * This method is a no-op.
     */
    @Override
    public void setCharacterEncoding(String string) throws UnsupportedEncodingException
@@ -410,6 +439,32 @@ public class SpyHttpServletRequest implements HttpServletRequest
       //No-op
    }
 
+   public List<ParamPair> getParamsAsList()
+   {
+      return makeParamList(getParameterMap());
+   }
+   
+   public List<ParamPair> getHeadersAsList()
+   {
+      return makeParamList(this.headerMap);
+   }
+      
+   private List<ParamPair> makeParamList(Map<String, String[]> params)
+   {
+      List<ParamPair> paramList = new ArrayList<ParamPair>();
+      
+      for (String param : params.keySet())
+      {
+         String[] values = params.get(param);
+         for (String value : values)
+         {
+            paramList.add(new ParamPair(param, value));
+         }
+      }
+      
+      return paramList;
+   }
+   
    @Override
    public String[] getParameterValues(String name)
    {
@@ -498,38 +553,29 @@ public class SpyHttpServletRequest implements HttpServletRequest
    }
 
    /**
-    * @throws UnsupportedOperationException if running in a container that
-    *         does not support servlet 2.4 or greater.
     *                                   
     */
    @Override
    public int getLocalPort()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
       return this.localPort;
    }
    
    /**
-    * @throws UnsupportedOperationException if running in a container that
-    *         does not support servlet 2.4 or greater.
     *                                   
     */
    @Override
    public int getRemotePort()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
       return this.remotePort;
    }
    
    /**
-    * @throws UnsupportedOperationException if running in a container that
-    *         does not support servlet 2.4 or greater.
     *                                   
     */
    @Override
    public String getLocalName()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException(); 
       return this.localName;
    }
    
@@ -541,7 +587,6 @@ public class SpyHttpServletRequest implements HttpServletRequest
    @Override
    public String getLocalAddr()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
       return this.localAddr;
    }
    

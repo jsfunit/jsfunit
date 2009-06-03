@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html 
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+  
+  <h2>HTTP Cookies</h2>
+  <h:dataTable value="#{spybackingbean.selectedRequestData.httpRequest.cookies}" 
+               var="thecookie" >
+    <h:column>
+      <f:facet name="header"><h:outputText value="Name"/></f:facet>
+      <h:outputText value="#{thecookie.name}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Value"/></f:facet>
+      <h:outputText value="#{thecookie.value}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Domain"/></f:facet>
+      <h:outputText value="#{thecookie.domain}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Comment"/></f:facet>
+      <h:outputText value="#{thecookie.comment}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Max Age"/></f:facet>
+      <h:outputText value="#{thecookie.maxAge}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Path"/></f:facet>
+      <h:outputText value="#{thecookie.path}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Secure"/></f:facet>
+      <h:outputText value="#{thecookie.secure}"/>
+    </h:column>
+    <h:column>
+      <f:facet name="header"><h:outputText value="Version"/></f:facet>
+      <h:outputText value="#{thecookie.version}"/>
+    </h:column>
+  </h:dataTable>
+  
+</html>

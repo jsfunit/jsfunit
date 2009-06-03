@@ -20,37 +20,15 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.spy.context;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import org.jboss.jsfunit.spy.data.SpyManager;
+package org.jboss.jsfunit.spy.data;
 
 /**
- * This listener installs the SpyManager in application scope when the
- * webapp is initialized.
  *
  * @author Stan Silvert
  * @since 1.1
  */
-public class SpyManagerContextListener implements ServletContextListener
-{
+public enum Scope {
 
-   public void contextInitialized(ServletContextEvent event)
-   {
-      ServletContext ctx = event.getServletContext();
-      SpyManager spyManager = (SpyManager)ctx.getAttribute(SpyManager.EL_KEY);
-      
-      if (spyManager == null)
-      {
-         spyManager = new SpyManager();
-         ctx.setAttribute(SpyManager.EL_KEY, spyManager);
-      }
-   }
-   
-   public void contextDestroyed(ServletContextEvent event)
-   {
-      
-   }
+    REQUEST, SESSION, APPLICATION;
+
 }

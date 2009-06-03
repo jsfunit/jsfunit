@@ -22,35 +22,31 @@
 
 package org.jboss.jsfunit.spy.context;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import org.jboss.jsfunit.spy.data.SpyManager;
-
 /**
- * This listener installs the SpyManager in application scope when the
- * webapp is initialized.
+ * Simple name and value class.
  *
  * @author Stan Silvert
  * @since 1.1
  */
-public class SpyManagerContextListener implements ServletContextListener
-{
+public class ParamPair {
 
-   public void contextInitialized(ServletContextEvent event)
+   private String name;
+   private String value;
+
+   ParamPair(String name, String value)
    {
-      ServletContext ctx = event.getServletContext();
-      SpyManager spyManager = (SpyManager)ctx.getAttribute(SpyManager.EL_KEY);
-      
-      if (spyManager == null)
-      {
-         spyManager = new SpyManager();
-         ctx.setAttribute(SpyManager.EL_KEY, spyManager);
-      }
+      this.name = name;
+      this.value = value;
    }
    
-   public void contextDestroyed(ServletContextEvent event)
+   public String getName()
    {
-      
+      return name;
    }
+
+   public String getValue()
+   {
+      return value;
+   }
+
 }

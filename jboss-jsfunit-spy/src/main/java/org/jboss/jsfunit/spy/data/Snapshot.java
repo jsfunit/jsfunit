@@ -45,6 +45,9 @@ public class Snapshot {
    private PhaseId phaseId;
    
    private long timestamp;
+   
+   private Map<Scope, Map<String, String>> scopes = new HashMap<Scope, Map<String, String>>();
+   
    private Map<String, String> appScope = new HashMap<String, String>();
    private Map<String, String> sessScope = new HashMap<String, String>();
    private Map<String, String> reqScope = new HashMap<String, String>();
@@ -58,9 +61,9 @@ public class Snapshot {
       
       FacesContext facesContext = event.getFacesContext();
       ExternalContext extContext = facesContext.getExternalContext();
-      this.appScope = makeStringMap(extContext.getApplicationMap());
-      this.sessScope = makeStringMap(extContext.getSessionMap());
-      this.reqScope = makeStringMap(extContext.getRequestMap());
+      scopes.put(Scope.APPLICATION, makeStringMap(extContext.getApplicationMap()));
+      scopes.put(Scope.SESSION, makeStringMap(extContext.getSessionMap()));
+      scopes.put(Scope.REQUEST, makeStringMap(extContext.getRequestMap()));
    }
    
    private Map<String, String> makeStringMap(Map map)
@@ -76,7 +79,15 @@ public class Snapshot {
             key = key + "_spydupkey";
          }
          //System.out.println(key + "=" + map.get(objKey).toString());
-         stringMap.put(key.intern(), map.get(objKey).toString().intern());
+         
+         try
+         {
+            stringMap.put(key.intern(), map.get(objKey).toString().intern());
+         }
+         catch (Exception e)
+         { // Sometimes in Seam, toString() fails with NotLoggedInException
+            stringMap.put(key.intern(), "toString() raised Exception: " + e.getLocalizedMessage());
+         }
       }
       
       return stringMap;
@@ -97,18 +108,9 @@ public class Snapshot {
       return this.timestamp;
    }
    
-   public Map<String, String> getApplicationScope()
+   public Map<String, String> getScopeMap(Scope scope)
    {
-      return Collections.unmodifiableMap(this.appScope);
+      return Collections.unmodifiableMap(this.scopes.get(scope));
    }
    
-   public Map<String, String> getSessionScope()
-   {
-      return Collections.unmodifiableMap(this.sessScope);
-   }
-   
-   public Map<String, String> getRequestScope()
-   {
-      return Collections.unmodifiableMap(this.reqScope);
-   }
 }

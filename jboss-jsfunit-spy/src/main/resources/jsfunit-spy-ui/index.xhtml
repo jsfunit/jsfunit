@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+  
+  <ui:composition template="layout.xhtml">
+    <ui:define name="header">HttpSessions for this JSF Application</ui:define>
+    <ui:define name="content">
+      
+      <p>
+        <f:view>
+          <h:form id="session_list_form">
+            <h:dataTable value="#{spymanager.sessions}" var="httpsession" columnClasses=",,,integer">
+              <h:column>
+                <f:facet name="header"><h:outputText value="Session Id"/></f:facet>
+                <h:commandLink id="selectSession" action="#{spybackingbean.selectSession}">
+                  <h:outputText value="#{session.id}"/>
+                  <f:param name="selectedSession" value="#{httpsession.id}"/>
+                </h:commandLink>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="User Id"/></f:facet>
+                <h:outputText value="#{httpsession.userId}"/>
+                <h:outputText rendered="#{empty httpsession.userId}" value="&lt;unknown&gt;"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="Creation Time"/></f:facet>
+                <h:outputText value="#{httpsession.creationTime}">
+                  <f:convertDateTime type="both" dateStyle="short" timeStyle="long" timeZone="#{spybackingbean.timeZone}"/>
+                </h:outputText>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="JSF Requests"/></f:facet>
+                <h:outputText value="#{httpsession.requestCount}"/>
+              </h:column>
+            </h:dataTable>
+          </h:form>
+        </f:view>
+      </p>
+    </ui:define>
+  </ui:composition>
+  
+</html>

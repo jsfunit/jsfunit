@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
-import org.jboss.jsfunit.framework.JSFUnitFilter;
 import org.jboss.jsfunit.seam.SeamRequestListener;
 import org.jboss.jsfunit.seam.SeamUtil;
 

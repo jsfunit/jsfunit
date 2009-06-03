@@ -1,0 +1,48 @@
+h1,h2
+{
+font-family: arial, 'sans serif'; 
+}
+
+h3
+{
+  font-family: arial, 'sans serif'; 
+  color: black;
+  font-weight: bold;
+}
+
+p,table,li,address
+{
+font-family: arial, 'sans serif'; 
+margin-left: 15pt;
+}
+
+p,li,th,td
+{
+font-size: 80%;
+}
+
+.integer
+{
+  text-align: center;
+}
+
+th, tfoot
+{
+  background-color:#FAEBD7;
+  font-weight: bold;
+}
+
+label 
+{
+  font-weight: bold;
+}
+
+body
+{
+background-color: #ffffff;
+}
+
+h1,h2,hr 
+{
+color:saddlebrown; 
+}

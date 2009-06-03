@@ -45,6 +45,7 @@ public class WebConversationFactory
    
    private static ThreadLocal tlsession = new ThreadLocal()
    {
+      @Override
       protected Object initialValue()
       {
          return null;
@@ -53,6 +54,7 @@ public class WebConversationFactory
    
    private static ThreadLocal warURL = new ThreadLocal()
    {
+      @Override
       protected Object initialValue()
       {
          return null;
