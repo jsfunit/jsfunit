@@ -45,6 +45,7 @@ public class SpyUIBackingBean {
 
     private Session selectedSession;
     private RequestData selectedRequestData;
+    private boolean showAllPhases = false;
 
     public Session getSelectedSession()
     {
@@ -59,12 +60,61 @@ public class SpyUIBackingBean {
     /**
      * JSF Action method.
      * 
-     * @return 'requestdataview'
+     * @return 'scopesview'
      */
-    public String selectRequestData()
+    public String scopesView()
     {
       this.selectedRequestData = this.selectedSession.getRequests().get(findSequenceNumber());
-      return "requestdataview";
+      return "scopesview";
+    }
+    
+    /**
+     * JSF Action method.
+     * 
+     * @return 'scopesview'
+     */
+    public String showAllPhases()
+    {
+      this.showAllPhases = true;
+      return "scopesview";
+    }
+    
+    /**
+     * JSF Action method.
+     * 
+     * @return 'scopesview'
+     */
+    public String showFirstAndLastPhase()
+    {
+      this.showAllPhases = false;
+      return "scopesview";
+    }
+    
+    public boolean getShowAllPhasesFlag()
+    {
+       return this.showAllPhases;
+    }
+    
+    /**
+     * JSF Action method.
+     * 
+     * @return 'httprequestview'
+     */
+    public String httprequestView()
+    {
+      this.selectedRequestData = this.selectedSession.getRequests().get(findSequenceNumber());
+      return "httprequestview";
+    }
+    
+    /**
+     * JSF Action method.
+     * 
+     * @return 'perfview'
+     */
+    public String perfView()
+    {
+      this.selectedRequestData = this.selectedSession.getRequests().get(findSequenceNumber());
+      return "perfview";
     }
     
     /**
@@ -144,5 +194,69 @@ public class SpyUIBackingBean {
     public TimeZone getTimeZone()
     {
        return TimeZone.getDefault();
+    }
+    
+    public String getSelectedSessionRowFormat()
+    {
+       return makeRowFormat(getSelectedSession(), 
+                            SpyManager.getInstance().getSessions());
+    }
+    
+    public String getSelectedRequestRowFormat()
+    {
+       return makeRowFormat(getSelectedRequestData(), 
+                            getSelectedSession().getRequests());
+    }
+    
+    private String makeRowFormat(Object selected, List rowData)
+    {
+       if (selected == null) return "";
+       if (rowData == null) return "";
+       if (rowData.size() < 2) return "";
+       
+       StringBuilder formatString = new StringBuilder();
+       for (Iterator rows = rowData.iterator(); rows.hasNext();)
+       {
+          Object row = rows.next();
+          if (row == selected) formatString.append("highlight");
+          if (row != selected) formatString.append("noop");
+          if (rows.hasNext()) formatString.append(",");
+       }
+       
+       return formatString.toString();
+    }
+    
+    public boolean[][] getRenderScopeColumns()
+    {
+       int totalPhases = 6;
+       Snapshot firstSnap = getSelectedRequestData().getFirstSnapshot();
+       Snapshot lastSnap = getSelectedRequestData().getLastSnapshot();
+       
+       boolean[][] renderColumn = new boolean[totalPhases][2];
+       for (int i = 0; i < totalPhases; i++) 
+       {
+          for (int j = 0; j < 2; j++)
+          {
+             if (this.showAllPhases) 
+             {
+               renderColumn[i][j] = true;
+               continue;
+             }
+             
+             if ((firstSnap.getBeforeOrAfter().ordinal() == j) &&
+                 (firstSnap.getPhaseId().getOrdinal() == (i+1)) )
+             {
+                renderColumn[i][j] = true;
+             }
+             
+             if ((lastSnap.getBeforeOrAfter().ordinal() == j) &&
+                 (lastSnap.getPhaseId().getOrdinal() == (i+1)) )
+             {
+                renderColumn[i][j] = true;
+             }
+          }
+       }
+       
+       return renderColumn;
     }
 }

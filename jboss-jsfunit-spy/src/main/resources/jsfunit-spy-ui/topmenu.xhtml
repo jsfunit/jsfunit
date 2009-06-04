@@ -9,8 +9,25 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   
   <f:view>
     <h:form id="topmenuform">
-      <h:commandButton id="allsessions" action="allsessions" value="All Sessions"/>
-      <h:commandButton id="sessionview" action="sessionview" value="JSF Requests"/>
+      <h:commandButton id="allsessions" 
+                       action="allsessions" 
+                       value="All Sessions"/>
+      <h:commandButton id="sessionview" 
+                       action="sessionview" 
+                       value="JSF Requests"
+                       rendered="#{not empty spybackingbean.selectedSession}"/>
+      <h:commandButton id="scopesview" 
+                       action="scopesview" 
+                       value="Scopes View"
+                       rendered="#{not empty spybackingbean.selectedRequestData}"/>
+      <h:commandButton id="httprequestview" 
+                       action="httprequestview" 
+                       value="HTTP Request"
+                       rendered="#{not empty spybackingbean.selectedRequestData}"/>
+      <h:commandButton id="perfview" 
+                       action="perfview" 
+                       value="Performance"
+                       rendered="#{not empty spybackingbean.selectedRequestData}"/>
     </h:form>
   </f:view>
 </html>

@@ -13,7 +13,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <ui:define name="content">
       <p>
         <f:view>
-          <h:panelGrid columns="1">
+          <h:panelGrid rendered="#{not empty spybackingbean.selectedSession}" columns="1" cellpadding="5">
             <h:outputText id="userId" rendered="#{not empty spybackingbean.selectedSession.userId}" value="#{spybackingbean.selectedSession.userId}">
               <h:outputLabel for="userId" value="User: "/>
             </h:outputText>
@@ -24,13 +24,27 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <h:outputText id="maxInactiveInterval" value="#{spybackingbean.selectedSession.maxInactiveInterval} seconds">
               <h:outputLabel for="maxInactiveInterval" value="Max Inactive Interval: "/>
             </h:outputText>
+            <h:outputText id="requestCount" value="#{spybackingbean.selectedSession.requestCount}">
+              <h:outputLabel for="requestCount" value="JSF Requests: "/>
+            </h:outputText>
           </h:panelGrid>
+          
           <h:form id="request_list_form">
-            <h:dataTable value="#{spybackingbean.selectedSession.requests}" var="spyrequest" columnClasses=",,integer,,">
+            <h:dataTable value="#{spybackingbean.selectedSession.requests}" 
+                         var="spyrequest" 
+                         columnClasses=",,,integer,,"
+                         rowClasses="#{spybackingbean.selectedRequestRowFormat}">
               <h:column>
-                <f:facet name="header"><h:outputText value="View Request Data"/></f:facet>
-                <h:commandLink id="selectRequestData" action="#{spybackingbean.selectRequestData}">
-                  <h:outputText value="View Request Data"/>
+                <f:facet name="header"><h:outputText value="View Scopes"/></f:facet>
+                <h:commandLink id="selectScopes" action="#{spybackingbean.scopesView}">
+                  <h:outputText value="View Scopes"/>
+                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
+                </h:commandLink>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="View HttpServletRequest"/></f:facet>
+                <h:commandLink id="selectHttpServletRequest" action="#{spybackingbean.httprequestView}">
+                  <h:outputText value="View HttpServletRequest"/>
                   <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
                 </h:commandLink>
               </h:column>
@@ -42,7 +56,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
               </h:column>
               <h:column>
                 <f:facet name="header"><h:outputText value="Elapsed Time (ms)"/></f:facet>
-                <h:outputText value="#{spyrequest.elapsedTime}"/>
+                <h:commandLink id="selectPerfView" action="#{spybackingbean.perfView}">
+                  <h:outputText value="#{spyrequest.elapsedTime}"/>
+                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
+                </h:commandLink>
               </h:column>
               <h:column>
                 <f:facet name="header"><h:outputText value="From View"/></f:facet>
@@ -53,7 +70,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 <h:outputText value="#{spyrequest.toView}"/>
               </h:column>
             </h:dataTable>
-            <h:outputText id="NoSessionSelected" rendered="#{spybackingbean.selectedSession == Empty}" value="No Session Selected"/>
+            <h:outputText id="NoSessionSelected" rendered="#{empty spybackingbean.selectedSession}" value="No Session Selected"/>
           </h:form>
         </f:view>
       </p>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html 
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+  
+  <ui:composition template="layout.xhtml">
+    <ui:define name="header">JSFSpy Perf Data View</ui:define>
+    <ui:define name="content">
+      <f:view>
+        <h2>Performance Data</h2>
+        <h:dataTable value="#{spybackingbean.selectedRequestData.phaseData}" 
+                     var="phaseData" 
+                     footerClass="integer"
+                     columnClasses=",,integer">
+          <h:column>
+            <f:facet name="header"><h:outputText value="PhaseId"/></f:facet>
+            <h:outputText value="#{phaseData.phaseId}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header"><h:outputText value="Status"/></f:facet>
+            <h:outputText value="#{phaseData.status}"/>
+            <f:facet name="footer"><h:outputText value="Total: "/></f:facet>
+          </h:column>
+          <h:column>
+            <f:facet name="header"><h:outputText value="Elapsed Time (ms)"/></f:facet>
+            <h:outputText value="#{phaseData.elapsedTime}"/>
+            <f:facet name="footer"><h:outputText value="#{spybackingbean.selectedRequestData.elapsedTime}"/></f:facet>
+          </h:column>
+        </h:dataTable>
+      </f:view>
+    </ui:define>
+  </ui:composition>
+</html>

@@ -14,7 +14,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       <p>
         <f:view>
           <h:form id="session_list_form">
-            <h:dataTable value="#{spymanager.sessions}" var="httpsession" columnClasses=",,,integer">
+            <h:dataTable value="#{spymanager.sessions}" 
+                         var="httpsession" 
+                         columnClasses=",,,integer"
+                         rowClasses="#{spybackingbean.selectedSessionRowFormat}">
               <h:column>
                 <f:facet name="header"><h:outputText value="Session Id"/></f:facet>
                 <h:commandLink id="selectSession" action="#{spybackingbean.selectSession}">

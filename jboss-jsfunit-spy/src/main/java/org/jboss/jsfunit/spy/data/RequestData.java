@@ -25,7 +25,6 @@ package org.jboss.jsfunit.spy.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;

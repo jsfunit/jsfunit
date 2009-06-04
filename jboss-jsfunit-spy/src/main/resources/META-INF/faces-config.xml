@@ -57,16 +57,32 @@
        <to-view-id>/jsfunit-spy-ui/sessionview.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
-       <from-outcome>requestdataview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/requestdataview.xhtml</to-view-id>
+       <from-outcome>scopesview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/scopesview.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>httprequestview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/httprequestview.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>perfview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/perfview.xhtml</to-view-id>
      </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
      <from-view-id>/jsfunit-spy-ui/sessionview.xhtml</from-view-id>
      <navigation-case>
-       <from-outcome>requestdataview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/requestdataview.xhtml</to-view-id>
+       <from-outcome>scopesview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/scopesview.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>httprequestview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/httprequestview.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>perfview</from-outcome>
+       <to-view-id>/jsfunit-spy-ui/perfview.xhtml</to-view-id>
      </navigation-case>
   </navigation-rule>
 </faces-config>
