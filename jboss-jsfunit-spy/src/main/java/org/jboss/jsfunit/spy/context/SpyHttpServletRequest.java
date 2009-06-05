@@ -141,6 +141,7 @@ public class SpyHttpServletRequest implements HttpServletRequest
    private Cookie[] cloneCookies(HttpServletRequest request)
    {
       Cookie[] reqCookies = request.getCookies();
+      if (reqCookies == null) reqCookies = new Cookie[0];
       Cookie[] clonedCookies = new Cookie[reqCookies.length];
       for (int i=0; i < reqCookies.length; i++)
       {

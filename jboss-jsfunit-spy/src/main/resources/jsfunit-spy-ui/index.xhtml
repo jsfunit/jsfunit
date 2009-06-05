@@ -21,7 +21,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
               <h:column>
                 <f:facet name="header"><h:outputText value="Session Id"/></f:facet>
                 <h:commandLink id="selectSession" action="#{spybackingbean.selectSession}">
-                  <h:outputText value="#{session.id}"/>
+                  <h:outputText value="#{httpsession.id}"/>
                   <f:param name="selectedSession" value="#{httpsession.id}"/>
                 </h:commandLink>
               </h:column>

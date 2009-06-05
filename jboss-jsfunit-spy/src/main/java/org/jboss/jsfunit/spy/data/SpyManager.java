@@ -55,7 +55,7 @@ public class SpyManager {
        return spyManager;
     }
     
-    void newRequest(FacesContext facesContext)
+    RequestData newRequest(FacesContext facesContext)
     {
        RequestData requestData = new RequestData(facesContext);
 
@@ -67,11 +67,19 @@ public class SpyManager {
        
        Map attributeMap = facesContext.getExternalContext().getRequestMap();
        attributeMap.put(REQUEST_SEQUENCE_KEY, new Integer(sequenceNumber));
+       
+       return requestData;
     }
     
     void takeSnapshotBefore(PhaseEvent event)
     {
-       getCurrentRequest().takeSnapshotBefore(event);
+       RequestData  requestData = getCurrentRequest();
+       if (requestData == null) 
+       {
+          requestData = newRequest(event.getFacesContext());
+       }  
+       
+       requestData.takeSnapshotBefore(event);
     }
     
     void takeSnapshotAfter(PhaseEvent event)
@@ -82,16 +90,22 @@ public class SpyManager {
     /**
      * Get the latest RequestData from the current or most recent JSF request.
      * 
-     * @return The RequestData from the current or most recent request.
+     * @return The RequestData from the current or most recent request.  Return
+     *         <code>null</code> if no Snapshot has been yet recorded for the
+     *         current Request.
      */
     public RequestData getCurrentRequest()
     {
+       Session session = getMySession();
+       if (session == null) return null;
+       
        Integer requestIndex = (Integer)FacesContext.getCurrentInstance()
                                                    .getExternalContext()
                                                    .getRequestMap()
                                                    .get(REQUEST_SEQUENCE_KEY);
+       if (requestIndex == null) return null;
        
-       return getMySession().getRequests().get(requestIndex.intValue());
+       return session.getRequests().get(requestIndex.intValue());
     }
     
     private synchronized Session makeNewSession(FacesContext facesContext)

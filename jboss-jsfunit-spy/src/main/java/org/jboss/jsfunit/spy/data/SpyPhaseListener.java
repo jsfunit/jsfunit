@@ -58,14 +58,7 @@ public class SpyPhaseListener implements PhaseListener
 
       if (handleSessionExpired(event)) return;
       
-      SpyManager spyManager = SpyManager.getInstance();
-      
-      if (event.getPhaseId() == PhaseId.RESTORE_VIEW) 
-      {
-         spyManager.newRequest(event.getFacesContext());
-      }
-      
-      spyManager.takeSnapshotBefore(event);
+      SpyManager.getInstance().takeSnapshotBefore(event);
    }
    
    // Handle session expired for the jsf spy UI
