@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.spy.test;
 
 /**
+ * Simple Bean that can get/set a String.
  *
  * @author Stan Silvert
  * @since 1.1

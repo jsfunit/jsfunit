@@ -42,47 +42,47 @@
   <navigation-rule>
      <navigation-case>
         <from-outcome>spysessionexpired</from-outcome>
-        <to-view-id>/jsfunit-spy-ui/index.xhtml</to-view-id>
+        <to-view-id>/jsf-spy-ui/index.xhtml</to-view-id>
      </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
-     <from-view-id>/jsfunit-spy-ui/*</from-view-id>
+     <from-view-id>/jsf-spy-ui/*</from-view-id>
      <navigation-case>
        <from-outcome>allsessions</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/index.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/index.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
        <from-outcome>sessionview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/sessionview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/sessionview.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
        <from-outcome>scopesview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/scopesview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/scopesview.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
        <from-outcome>httprequestview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/httprequestview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/httprequestview.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
        <from-outcome>perfview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/perfview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/perfview.xhtml</to-view-id>
      </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
-     <from-view-id>/jsfunit-spy-ui/sessionview.xhtml</from-view-id>
+     <from-view-id>/jsf-spy-ui/sessionview.xhtml</from-view-id>
      <navigation-case>
        <from-outcome>scopesview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/scopesview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/scopesview.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
        <from-outcome>httprequestview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/httprequestview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/httprequestview.xhtml</to-view-id>
      </navigation-case>
      <navigation-case>
        <from-outcome>perfview</from-outcome>
-       <to-view-id>/jsfunit-spy-ui/perfview.xhtml</to-view-id>
+       <to-view-id>/jsf-spy-ui/perfview.xhtml</to-view-id>
      </navigation-case>
   </navigation-rule>
 </faces-config>

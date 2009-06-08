@@ -24,9 +24,7 @@ package org.jboss.jsfunit.spy.test;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.TimeZone;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import junit.framework.Test;
 import junit.framework.TestSuite;

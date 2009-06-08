@@ -23,8 +23,6 @@
 package org.jboss.jsfunit.spy.test;
 
 import java.io.IOException;
-import javax.faces.context.ExternalContext;
-import javax.servlet.http.HttpSession;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
@@ -48,7 +46,7 @@ public class NavigationTest extends ServletTestCase
    @Override
    public void setUp() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/jsfunit-spy-ui/index.jsf");
+      JSFSession jsfSession = new JSFSession("/jsf-spy-ui/index.jsf");
       this.server = jsfSession.getJSFServerSession();
       this.client = jsfSession.getJSFClientSession();
       this.spyManager = SpyManager.getInstance();
@@ -66,28 +64,28 @@ public class NavigationTest extends ServletTestCase
    public void testGotoScopesView() throws IOException
    {
       client.click(":0:selectSession");
-      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/sessionview.xhtml", server.getCurrentViewID());
       
       client.click(":0:selectScopes");
-      assertEquals("/jsfunit-spy-ui/scopesview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/scopesview.xhtml", server.getCurrentViewID());
    }
    
    public void testGotoHttpRequestView() throws IOException
    {
       client.click(":0:selectSession");
-      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/sessionview.xhtml", server.getCurrentViewID());
       
       client.click(":0:selectHttpServletRequest");
-      assertEquals("/jsfunit-spy-ui/httprequestview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/httprequestview.xhtml", server.getCurrentViewID());
    }
    
    public void testGotoPerfView() throws IOException
    {
       client.click(":0:selectSession");
-      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/sessionview.xhtml", server.getCurrentViewID());
       
       client.click(":0:selectPerfView");
-      assertEquals("/jsfunit-spy-ui/perfview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/perfview.xhtml", server.getCurrentViewID());
    }
    
    public void testTopmenuNavigation() throws IOException
@@ -96,16 +94,16 @@ public class NavigationTest extends ServletTestCase
       client.click(":0:selectScopes");
       
       client.click("topmenuform:allsessions");
-      assertEquals("/jsfunit-spy-ui/index.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/index.xhtml", server.getCurrentViewID());
       
       client.click("topmenuform:sessionview");
-      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/sessionview.xhtml", server.getCurrentViewID());
       
       client.click("topmenuform:scopesview");
-      assertEquals("/jsfunit-spy-ui/scopesview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/scopesview.xhtml", server.getCurrentViewID());
       
       client.click("topmenuform:perfview");
-      assertEquals("/jsfunit-spy-ui/perfview.xhtml", server.getCurrentViewID());
+      assertEquals("/jsf-spy-ui/perfview.xhtml", server.getCurrentViewID());
    }
    
 }

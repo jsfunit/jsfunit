@@ -163,7 +163,7 @@
                    <type>jar</type>
                    <overWrite>true</overWrite>
                    <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
-                   <includes>**/jsfunit-spy-ui/**</includes>
+                   <includes>**/jsf-spy-ui/**</includes>
                  </artifactItem>
                </artifactItems>
              </configuration>

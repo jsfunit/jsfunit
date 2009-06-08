@@ -44,7 +44,7 @@ public class UITest extends ServletTestCase
    @Override
    public void setUp() throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/jsfunit-spy-ui/index.jsf");
+      JSFSession jsfSession = new JSFSession("/jsf-spy-ui/index.jsf");
       this.server = jsfSession.getJSFServerSession();
       this.client = jsfSession.getJSFClientSession();
    }
