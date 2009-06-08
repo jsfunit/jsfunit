@@ -71,25 +71,14 @@ public class SpyManagerTest extends ServletTestCase
       assertEquals(spyManagerViaEL, spyManagerViaContext);
    } 
    
-   public void testGetCurrentRequest() throws IOException
-   {
-      SpyManager spyManager = SpyManager.getInstance();
-      RequestData data = spyManager.getCurrentRequest();
-      assertNotNull(data);
-      HttpServletRequest request = data.getHttpRequest();
-      assertNotNull(request);
-      assertEquals("/jboss-jsfunit-examples-spy", request.getContextPath());
-      assertEquals("/index.jsf", request.toString());
-   }
-   
    public void testGetSessions() throws IOException
    {
       SpyManager spyManager = SpyManager.getInstance();
       Collection<Session> sessions = spyManager.getSessions();
       assertNotNull(sessions);
       
-      // Two tests before this also created sessions
-      assertTrue(sessions.size() > 2);
+      // Test before this also created a session
+      assertTrue(sessions.size() > 1);
    }
    
    public void testGetMySession() throws IOException
@@ -117,11 +106,4 @@ public class SpyManagerTest extends ServletTestCase
       assertEquals("value2", request.getHttpRequest().getParameter("form1:param2"));
    }
    
-   public void testGetTimeZone() throws IOException
-   {
-      SpyManager spyManager = SpyManager.getInstance();
-      TimeZone timeZone = spyManager.getTimeZone();
-      assertNotNull(timeZone);
-      assertEquals(TimeZone.getDefault(), timeZone);
-   }
 }

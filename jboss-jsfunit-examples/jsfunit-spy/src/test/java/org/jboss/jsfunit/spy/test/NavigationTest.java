@@ -63,45 +63,49 @@ public class NavigationTest extends ServletTestCase
       return new TestSuite( NavigationTest.class  );
    }
 
-   public void testSimpleNavigation() throws IOException
+   public void testGotoScopesView() throws IOException
    {
       client.click(":0:selectSession");
       assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
       
-      client.click(":0:selectRequestData");
-      assertEquals("/jsfunit-spy-ui/requestdataview.xhtml", server.getCurrentViewID());
+      client.click(":0:selectScopes");
+      assertEquals("/jsfunit-spy-ui/scopesview.xhtml", server.getCurrentViewID());
+   }
+   
+   public void testGotoHttpRequestView() throws IOException
+   {
+      client.click(":0:selectSession");
+      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      
+      client.click(":0:selectHttpServletRequest");
+      assertEquals("/jsfunit-spy-ui/httprequestview.xhtml", server.getCurrentViewID());
+   }
+   
+   public void testGotoPerfView() throws IOException
+   {
+      client.click(":0:selectSession");
+      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      
+      client.click(":0:selectPerfView");
+      assertEquals("/jsfunit-spy-ui/perfview.xhtml", server.getCurrentViewID());
    }
    
    public void testTopmenuNavigation() throws IOException
    {
       client.click(":0:selectSession");
-      client.click(":0:selectRequestData");
+      client.click(":0:selectScopes");
       
       client.click("topmenuform:allsessions");
       assertEquals("/jsfunit-spy-ui/index.xhtml", server.getCurrentViewID());
       
       client.click("topmenuform:sessionview");
       assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
+      
+      client.click("topmenuform:scopesview");
+      assertEquals("/jsfunit-spy-ui/scopesview.xhtml", server.getCurrentViewID());
+      
+      client.click("topmenuform:perfview");
+      assertEquals("/jsfunit-spy-ui/perfview.xhtml", server.getCurrentViewID());
    }
    
-   // simulate session time out
-   public void testBackingBeanTimedOut() throws IOException
-   {
-      client.click(":0:selectSession");
-      client.click(":0:selectRequestData");
-      
-      ExternalContext extCtx = server.getFacesContext().getExternalContext();
-      HttpSession session = (HttpSession)extCtx.getSession(true);
-      session.removeAttribute("spybackingbean");
-      
-      client.click("topmenuform:allsessions");
-      assertEquals("/jsfunit-spy-ui/index.xhtml", server.getCurrentViewID());
-      
-      client.click(":0:selectSession");
-      client.click(":0:selectRequestData");
-      session.removeAttribute("spybackingbean");
-      client.click("topmenuform:sessionview");
-      assertEquals("/jsfunit-spy-ui/sessionview.xhtml", server.getCurrentViewID());
-      assertTrue(client.getPageAsText().contains("No Session Selected"));
-   }
 }

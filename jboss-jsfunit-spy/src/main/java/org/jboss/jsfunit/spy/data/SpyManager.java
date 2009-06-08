@@ -88,9 +88,9 @@ public class SpyManager {
     }
     
     /**
-     * Get the latest RequestData from the current or most recent JSF request.
+     * Get the RequestData from the current JSF request.
      * 
-     * @return The RequestData from the current or most recent request.  Return
+     * @return The RequestData from the current request.  Return
      *         <code>null</code> if no Snapshot has been yet recorded for the
      *         current Request.
      */

@@ -44,7 +44,10 @@ public class SpyPhaseListener implements PhaseListener
     */
    public SpyPhaseListener()
    {
-      ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
+      FacesContext facesCtx = FacesContext.getCurrentInstance();
+      if (facesCtx == null) return; // can't create it now
+      
+      ExternalContext extCtx = facesCtx.getExternalContext();
       Map appMap = extCtx.getApplicationMap();
       if (!appMap.containsKey(SpyManager.EL_KEY))
       {
@@ -55,7 +58,6 @@ public class SpyPhaseListener implements PhaseListener
    
    public void beforePhase(PhaseEvent event)
    {
-
       if (handleSessionExpired(event)) return;
       
       SpyManager.getInstance().takeSnapshotBefore(event);
