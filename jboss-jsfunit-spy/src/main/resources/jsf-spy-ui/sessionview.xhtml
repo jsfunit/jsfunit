@@ -13,41 +13,30 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <ui:define name="content">
       <p>
         <f:view>
-          <h:panelGrid rendered="#{not empty spybackingbean.selectedSession}" columns="1" cellpadding="5">
-            <h:outputText id="userId" rendered="#{not empty spybackingbean.selectedSession.userId}" value="#{spybackingbean.selectedSession.userId}">
-              <h:outputLabel for="userId" value="User: "/>
-            </h:outputText>
-            <h:outputText id="creationTime" value="#{spybackingbean.selectedSession.creationTime}">
-              <h:outputLabel for="creationTime" value="Session Created: "/>
-              <f:convertDateTime type="both" dateStyle="short" timeStyle="long" timeZone="#{spybackingbean.timeZone}"/>
-            </h:outputText>
-            <h:outputText id="maxInactiveInterval" value="#{spybackingbean.selectedSession.maxInactiveInterval} seconds">
-              <h:outputLabel for="maxInactiveInterval" value="Max Inactive Interval: "/>
-            </h:outputText>
-            <h:outputText id="requestCount" value="#{spybackingbean.selectedSession.requestCount}">
-              <h:outputLabel for="requestCount" value="JSF Requests: "/>
-            </h:outputText>
-          </h:panelGrid>
+          <div id="infoHeading">
+            <h:panelGrid rendered="#{not empty spybackingbean.selectedSession}" columns="1" cellpadding="5">
+              <h:outputText id="userId" rendered="#{not empty spybackingbean.selectedSession.userId}" value="#{spybackingbean.selectedSession.userId}">
+                <h:outputLabel for="userId" value="User: "/>
+              </h:outputText>
+              <h:outputText id="creationTime" value="#{spybackingbean.selectedSession.creationTime}">
+                <h:outputLabel for="creationTime" value="Session Created: "/>
+                <f:convertDateTime type="both" dateStyle="short" timeStyle="long" timeZone="#{spybackingbean.timeZone}"/>
+              </h:outputText>
+              <h:outputText id="maxInactiveInterval" value="#{spybackingbean.selectedSession.maxInactiveInterval} seconds">
+                <h:outputLabel for="maxInactiveInterval" value="Max Inactive Interval: "/>
+              </h:outputText>
+              <h:outputText id="requestCount" value="#{spybackingbean.selectedSession.requestCount}">
+                <h:outputLabel for="requestCount" value="JSF Requests: "/>
+              </h:outputText>
+            </h:panelGrid>
+          </div>
           
           <h:form id="request_list_form">
             <h:dataTable value="#{spybackingbean.selectedSession.requests}" 
                          var="spyrequest" 
                          columnClasses=",,,integer,,"
                          rowClasses="#{spybackingbean.selectedRequestRowFormat}">
-              <h:column>
-                <f:facet name="header"><h:outputText value="View Scopes"/></f:facet>
-                <h:commandLink id="selectScopes" action="#{spybackingbean.scopesView}">
-                  <h:outputText value="View Scopes"/>
-                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
-                </h:commandLink>
-              </h:column>
-              <h:column>
-                <f:facet name="header"><h:outputText value="View HttpServletRequest"/></f:facet>
-                <h:commandLink id="selectHttpServletRequest" action="#{spybackingbean.httprequestView}">
-                  <h:outputText value="View HttpServletRequest"/>
-                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
-                </h:commandLink>
-              </h:column>
+              
               <h:column>
                 <f:facet name="header"><h:outputText value="Start Time"/></f:facet>
                 <h:outputText value="#{spyrequest.firstSnapshot.timestamp}">
@@ -68,6 +57,27 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
               <h:column>
                 <f:facet name="header"><h:outputText value="To View"/></f:facet>
                 <h:outputText value="#{spyrequest.toView}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="Scopes"/></f:facet>
+                <h:commandLink id="selectScopes" action="#{spybackingbean.scopesView}">
+                  <h:outputText value="Scopes"/>
+                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
+                </h:commandLink>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="HttpServletRequest"/></f:facet>
+                <h:commandLink id="selectHttpServletRequest" action="#{spybackingbean.httprequestView}">
+                  <h:outputText value="HttpServletRequest"/>
+                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
+                </h:commandLink>
+              </h:column>
+              <h:column>
+                <f:facet name="header"><h:outputText value="FacesMessages"/></f:facet>
+                <h:commandLink id="selectFacesMessages" rendered="#{not empty spyrequest.facesMessages}" action="#{spybackingbean.facesMessagesView}">
+                  <h:outputText value="FacesMessages"/>
+                  <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />
+                </h:commandLink>
               </h:column>
             </h:dataTable>
             <h:outputText id="NoSessionSelected" rendered="#{empty spybackingbean.selectedSession}" value="No Session Selected"/>

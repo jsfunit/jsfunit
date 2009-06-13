@@ -19,16 +19,54 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.jboss.jsfunit.spy.data;
 
+import javax.faces.application.FacesMessage;
+
 /**
+ * Read-only FacesMessage adds the Client Id (if any) that generated
+ * the message.
  *
  * @author Stan Silvert
  * @since 1.1
  */
-public enum Scope {
+public class SpyFacesMessage
+{
 
-    REQUEST, CONVERSATION, SESSION, APPLICATION;
+   private String clientId;
+   private String severity;
+   private String summary;
+   private String detail;
 
+   SpyFacesMessage(String clientId, FacesMessage facesMessage)
+   {
+      if (facesMessage == null)
+      {
+         throw new NullPointerException("facesMessage can not be nuill");
+      }
+      this.clientId = clientId;
+      this.severity = facesMessage.getSeverity().toString();
+      this.summary = facesMessage.getSummary();
+      this.detail = facesMessage.getDetail();
+   }
+
+   public String getClientId()
+   {
+      return clientId;
+   }
+
+   public String getDetail()
+   {
+      return detail;
+   }
+
+   public String getSeverity()
+   {
+      return severity;
+   }
+
+   public String getSummary()
+   {
+      return summary;
+   }
 }

@@ -29,13 +29,19 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <ui:param name="scopevalues" value="#{spybackingbean.requestScopeValues}"/>
           </ui:include>
           
-          <hr/>
+          <f:subview rendered="#{spybackingbean.seamPresent}">
+            <ui:include src="scopetable.xhtml" >
+              <ui:param name="scopename" value="Seam Conversation Scope" />
+              <ui:param name="minornote" value="#{!spybackingbean.showAllPhasesFlag ? 'First and last values are often null for conversation scope. Show all phases to view values.':''}"/>
+              <ui:param name="scopevalues" value="#{spybackingbean.conversationScopeValues}"/>
+            </ui:include>
+          </f:subview>
+          
           <ui:include src="scopetable.xhtml">
             <ui:param name="scopename" value="Session Scope" />
             <ui:param name="scopevalues" value="#{spybackingbean.sessionScopeValues}"/>
           </ui:include>
           
-          <hr/>
           <ui:include src="scopetable.xhtml">
             <ui:param name="scopename" value="Application Scope" />
             <ui:param name="scopevalues" value="#{spybackingbean.applicationScopeValues}"/>

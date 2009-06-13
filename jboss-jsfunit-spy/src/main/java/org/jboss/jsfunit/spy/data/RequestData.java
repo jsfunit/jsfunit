@@ -24,7 +24,11 @@ package org.jboss.jsfunit.spy.data;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -46,6 +50,7 @@ public class RequestData
    private String fromView = null;
    private String toView = null;
    private List<PhaseData> phaseData;
+   private List<SpyFacesMessage> facesMessages;
    
    private boolean[][] snapshotTaken = new boolean[PhaseId.VALUES.size()][BeforeOrAfter.values().length];
    
@@ -67,8 +72,7 @@ public class RequestData
 
    void takeSnapshotBefore(PhaseEvent event)
    {
-      this.snapshots.add(new Snapshot(BeforeOrAfter.BEFORE, event));
-      this.snapshotTaken[event.getPhaseId().getOrdinal() - 1][BeforeOrAfter.BEFORE.ordinal()] = true;
+      recordBasicInfo(event, BeforeOrAfter.BEFORE);
       
       if (event.getPhaseId() == PhaseId.RENDER_RESPONSE)
       {
@@ -77,10 +81,38 @@ public class RequestData
       }
    }
    
+   private List<SpyFacesMessage> makeSpyFacesMessages(FacesContext facesCtx)
+   {
+      Map<FacesMessage, String> messageToIdMap = new HashMap<FacesMessage, String>();
+      for (Iterator<String> clientIds = facesCtx.getClientIdsWithMessages(); clientIds.hasNext();)
+      {
+         String clientId = clientIds.next();
+         for (Iterator<FacesMessage> messages = facesCtx.getMessages(clientId); messages.hasNext();)
+         {
+            messageToIdMap.put(messages.next(), clientId);
+         }
+      }
+      
+      List<SpyFacesMessage> msgList = new ArrayList<SpyFacesMessage>();
+      for (Iterator<FacesMessage> msgs = facesCtx.getMessages(); msgs.hasNext();)
+      {
+         FacesMessage msg = msgs.next();
+         msgList.add(new SpyFacesMessage(messageToIdMap.get(msg),msg));
+      }
+      
+      return msgList;
+   }
+   
+   private void recordBasicInfo(PhaseEvent event, BeforeOrAfter beforeOrAfter)
+   {
+      this.snapshots.add(new Snapshot(beforeOrAfter, event));
+      this.snapshotTaken[event.getPhaseId().getOrdinal() - 1][beforeOrAfter.ordinal()] = true;
+      this.facesMessages = makeSpyFacesMessages(event.getFacesContext());
+   }
+   
    void takeSnapshotAfter(PhaseEvent event)
    {
-      this.snapshots.add(new Snapshot(BeforeOrAfter.AFTER, event));
-      this.snapshotTaken[event.getPhaseId().getOrdinal() - 1][BeforeOrAfter.AFTER.ordinal()] = true;
+      recordBasicInfo(event, BeforeOrAfter.AFTER);
       
       if (event.getPhaseId() == PhaseId.RESTORE_VIEW)
       {
@@ -149,6 +181,11 @@ public class RequestData
       }
       
       return this.phaseData;
+   }
+   
+   public List<SpyFacesMessage> getFacesMessages()
+   {
+      return this.facesMessages;
    }
    
 }

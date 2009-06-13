@@ -68,6 +68,10 @@
        <from-outcome>perfview</from-outcome>
        <to-view-id>/jsf-spy-ui/perfview.xhtml</to-view-id>
      </navigation-case>
+     <navigation-case>
+       <from-outcome>facesmessagesview</from-outcome>
+       <to-view-id>/jsf-spy-ui/facesmessagesview.xhtml</to-view-id>
+     </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
@@ -83,6 +87,10 @@
      <navigation-case>
        <from-outcome>perfview</from-outcome>
        <to-view-id>/jsf-spy-ui/perfview.xhtml</to-view-id>
+     </navigation-case>
+     <navigation-case>
+       <from-outcome>facesmessagesview</from-outcome>
+       <to-view-id>/jsf-spy-ui/facesmessagesview.xhtml</to-view-id>
      </navigation-case>
   </navigation-rule>
 </faces-config>

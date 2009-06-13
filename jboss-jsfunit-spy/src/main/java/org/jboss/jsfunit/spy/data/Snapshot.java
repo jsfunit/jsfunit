@@ -30,6 +30,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
+import org.jboss.jsfunit.spy.seam.SeamUtil;
 
 /**
  * A snapshot records the state of scoped data and the component tree at a
@@ -48,10 +49,6 @@ public class Snapshot {
    
    private Map<Scope, Map<String, String>> scopes = new HashMap<Scope, Map<String, String>>();
    
-   private Map<String, String> appScope = new HashMap<String, String>();
-   private Map<String, String> sessScope = new HashMap<String, String>();
-   private Map<String, String> reqScope = new HashMap<String, String>();
-   
    Snapshot(BeforeOrAfter beforeOrAfter, PhaseEvent event)
    {
       this.beforeOrAfter = beforeOrAfter;
@@ -64,6 +61,7 @@ public class Snapshot {
       scopes.put(Scope.APPLICATION, makeStringMap(extContext.getApplicationMap()));
       scopes.put(Scope.SESSION, makeStringMap(extContext.getSessionMap()));
       scopes.put(Scope.REQUEST, makeStringMap(extContext.getRequestMap()));
+      scopes.put(Scope.CONVERSATION, makeStringMap(SeamUtil.getConversationMap()));
    }
    
    private Map<String, String> makeStringMap(Map map)

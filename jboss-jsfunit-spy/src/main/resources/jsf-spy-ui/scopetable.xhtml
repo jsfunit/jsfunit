@@ -9,6 +9,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       xmlns:f="http://java.sun.com/jsf/core">
   
   <h2>#{scopename}</h2>
+  <h4>#{minornote}</h4>
   
   <ui:param name="snapshotsTaken" value="#{spybackingbean.selectedRequestData.snapshotsTaken}"/>
   <ui:param name="renderColumns" value="#{spybackingbean.renderScopeColumns}"/>
@@ -84,6 +85,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       <f:facet name="footer"><h:outputText value="Render Response After"/></f:facet>
     </h:column>
   </h:dataTable>
-  
+  <hr/>
   
 </html>

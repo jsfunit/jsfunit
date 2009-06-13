@@ -35,6 +35,7 @@ import org.jboss.jsfunit.spy.data.Scope;
 import org.jboss.jsfunit.spy.data.Session;
 import org.jboss.jsfunit.spy.data.Snapshot;
 import org.jboss.jsfunit.spy.data.SpyManager;
+import org.jboss.jsfunit.spy.seam.SeamUtil;
 
 /**
  *
@@ -117,6 +118,12 @@ public class SpyUIBackingBean {
       return "perfview";
     }
     
+    public String facesMessagesView()
+    {
+      this.selectedRequestData = this.selectedSession.getRequests().get(findSequenceNumber());
+      return "facesmessagesview";
+    }
+    
     /**
      * JSF Action method.
      * 
@@ -162,6 +169,11 @@ public class SpyUIBackingBean {
        return getScopedValues(Scope.APPLICATION);
     }
     
+    public List<PhaseValues> getConversationScopeValues()
+    {
+       return getScopedValues(Scope.CONVERSATION);
+    }
+    
     private List<PhaseValues> getScopedValues(Scope scope)
     {
        Map<String, PhaseValues> valuesMap = new LinkedHashMap<String, PhaseValues>();
@@ -194,6 +206,11 @@ public class SpyUIBackingBean {
     public TimeZone getTimeZone()
     {
        return TimeZone.getDefault();
+    }
+    
+    public boolean isSeamPresent()
+    {
+       return SeamUtil.isSeamPresent();
     }
     
     public String getSelectedSessionRowFormat()

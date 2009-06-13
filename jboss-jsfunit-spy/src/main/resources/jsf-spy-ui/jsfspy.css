@@ -16,6 +16,19 @@ font-family: arial, 'sans serif';
 margin-left: 15pt;
 }
 
+#infoheading
+{
+  font-family: arial, 'sans serif'; 
+  color: black;
+  font-weight: bold;
+  
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #FAEBD7;
+}
+
 p,li,th,td
 {
 font-size: 80%;
