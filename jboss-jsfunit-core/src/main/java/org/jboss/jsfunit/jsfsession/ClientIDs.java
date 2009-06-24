@@ -119,7 +119,15 @@ public class ClientIDs
       String parentClientID = component.getClientId(facesContext);
       // TODO: find out if headers and footers are found
       int rowsToDisplay = component.getRows();
-      if (rowsToDisplay == 0) rowsToDisplay = component.getRowCount();
+      try
+      {
+         if (rowsToDisplay == 0) rowsToDisplay = component.getRowCount();
+      } 
+      catch (Exception e)
+      {
+         // ignore
+      }
+              
       for (int i=0; i < rowsToDisplay; i++)
       {
          component.setRowIndex(i);
@@ -133,7 +141,14 @@ public class ClientIDs
          } 
       }
       
-      component.setRowIndex(-1);
+      try
+      {
+         component.setRowIndex(-1);
+      }
+      catch (Exception e)
+      {
+         // ignore
+      }
    }
    
    private void fillUIDataMap(UIData uiData, UIComponent component, FacesContext facesContext)
