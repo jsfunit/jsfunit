@@ -125,7 +125,7 @@ public class ClientIDs
       } 
       catch (Exception e)
       {
-         // ignore
+         // ignore see JSFUNIT-215
       }
               
       for (int i=0; i < rowsToDisplay; i++)
@@ -147,7 +147,7 @@ public class ClientIDs
       }
       catch (Exception e)
       {
-         // ignore
+         // ignore see JSFUNIT-215
       }
    }
    

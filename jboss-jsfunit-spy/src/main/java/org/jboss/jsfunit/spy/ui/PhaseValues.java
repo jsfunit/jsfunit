@@ -23,6 +23,7 @@
 package org.jboss.jsfunit.spy.ui;
 
 import java.util.List;
+import java.util.Map;
 import javax.faces.event.PhaseId;
 import org.jboss.jsfunit.spy.data.BeforeOrAfter;
 import org.jboss.jsfunit.spy.data.Scope;
@@ -39,21 +40,43 @@ public class PhaseValues {
    
    private String[][] values = new String[PhaseId.VALUES.size()][BeforeOrAfter.values().length];
    
+   PhaseValues(String customScopeName, String attributeName, List<Snapshot> snapshots)
+   {
+      this.attributeName = attributeName;
+      
+      for (Snapshot snapshot: snapshots)
+      {
+         Map<String, String> customScope = snapshot.getCustomScopes().get(customScopeName);
+         String value = "*scope not available*";
+         if (customScope != null)
+         {
+            value = customScope.get(attributeName);
+         }
+         
+         setPhaseValue(snapshot, value);
+      }
+   }
+   
    PhaseValues(Scope scope, String attributeName, List<Snapshot> snapshots)
    {
       this.attributeName = attributeName;
       
       for (Snapshot snapshot : snapshots)
       {
-         String value = snapshot.getScopeMap(scope).get(attributeName);
+         String value = snapshot.getScope(scope).get(attributeName);
      /*    System.out.println("***********************");
          System.out.println("scope=" + scope);
          System.out.println("PhaseId=" + snapshot.getPhaseId());
          System.out.println("BeforeOrAfter=" + snapshot.getBeforeOrAfter());
          System.out.println("value=" + value);
          System.out.println("***********************"); */
-         values[snapshot.getPhaseId().getOrdinal()][snapshot.getBeforeOrAfter().ordinal()] = value;
+         setPhaseValue(snapshot, value);
       }
+   }
+   
+   private void setPhaseValue(Snapshot snapshot, String value)
+   {
+      values[snapshot.getPhaseId().getOrdinal()][snapshot.getBeforeOrAfter().ordinal()] = value;
    }
    
    public String getAttributeName()

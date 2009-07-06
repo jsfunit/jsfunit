@@ -34,7 +34,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           <h:form id="request_list_form">
             <h:dataTable value="#{spybackingbean.selectedSession.requests}" 
                          var="spyrequest" 
-                         columnClasses=",,,integer,,"
+                         columnClasses=",integer,,,,"
                          rowClasses="#{spybackingbean.selectedRequestRowFormat}">
               
               <h:column>
@@ -74,6 +74,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
               </h:column>
               <h:column>
                 <f:facet name="header"><h:outputText value="FacesMessages"/></f:facet>
+                <h:outputText rendered="#{empty spyrequest.facesMessages}" value="none"/>
                 <h:commandLink id="selectFacesMessages" rendered="#{not empty spyrequest.facesMessages}" action="#{spybackingbean.facesMessagesView}">
                   <h:outputText value="FacesMessages"/>
                   <f:param name="selectedRequestData" value="#{spyrequest.sequenceNumber}" />

@@ -24,9 +24,15 @@ package org.jboss.jsfunit.spy.data;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PostConstructCustomScopeEvent;
+import javax.faces.event.PreDestroyCustomScopeEvent;
+import javax.faces.event.ScopeContext;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -43,12 +49,29 @@ public class Session
    private long maxInactiveInterval;
    private String userId;
    
+   private Map<String, ScopeContext> customScopes = new HashMap<String, ScopeContext>();
+   
    Session (FacesContext facesContext)
    {
       HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
       this.sessionId = session.getId();
       this.creationTime = session.getCreationTime();
       this.maxInactiveInterval = session.getMaxInactiveInterval();
+   }
+   
+   void customScopeCreated(PostConstructCustomScopeEvent event)
+   {
+      customScopes.put(event.getContext().getScopeName(), event.getContext());
+   }
+   
+   void customScopeDestroyed(PreDestroyCustomScopeEvent event)
+   {
+      customScopes.remove(event.getContext().getScopeName());
+   }
+   
+   public Collection<ScopeContext> getCustomScopes()
+   {
+      return customScopes.values();
    }
 
    // returns its position in the request list

@@ -97,19 +97,19 @@ public class SnapshotTest extends ServletTestCase
       {
          assertNotNull(snapshot.getPhaseId());
          assertEquals(beforeOrAfter, snapshot.getBeforeOrAfter());
-         assertEquals("application scope bean", snapshot.getScopeMap(Scope.APPLICATION).get("appscope1"));
-         assertEquals("session scope bean", snapshot.getScopeMap(Scope.SESSION).get("sessscope1"));
+         assertEquals("application scope bean", snapshot.getScope(Scope.APPLICATION).get("appscope1"));
+         assertEquals("session scope bean", snapshot.getScope(Scope.SESSION).get("sessscope1"));
          
          // Req scope doesn't get applied until after PROCESS_VALIDATIONS
          if (snapshot.getPhaseId().getOrdinal() > PhaseId.PROCESS_VALIDATIONS.getOrdinal())
          {
-            assertEquals("request scope bean", snapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
+            assertEquals("request scope bean", snapshot.getScope(Scope.REQUEST).get("reqscope1"));
          }
          else
          {
             if (snapshot.getPhaseId() != PhaseId.PROCESS_VALIDATIONS)
             {
-               assertNull(snapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
+               assertNull(snapshot.getScope(Scope.REQUEST).get("reqscope1"));
             }
          }
          
@@ -128,13 +128,13 @@ public class SnapshotTest extends ServletTestCase
       List<Snapshot> snapshots = request.getSnapshots();
       
       Snapshot firstSnapshot = snapshots.get(0);
-      assertEquals("application scope bean", firstSnapshot.getScopeMap(Scope.APPLICATION).get("appscope1"));
-      assertEquals("session scope bean", firstSnapshot.getScopeMap(Scope.SESSION).get("sessscope1"));
-      assertNull(firstSnapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
+      assertEquals("application scope bean", firstSnapshot.getScope(Scope.APPLICATION).get("appscope1"));
+      assertEquals("session scope bean", firstSnapshot.getScope(Scope.SESSION).get("sessscope1"));
+      assertNull(firstSnapshot.getScope(Scope.REQUEST).get("reqscope1"));
       
       Snapshot lastSnapshot = snapshots.get(snapshots.size() - 1);
-      assertEquals("appfoo", lastSnapshot.getScopeMap(Scope.APPLICATION).get("appscope1"));
-      assertEquals("sessfoo", lastSnapshot.getScopeMap(Scope.SESSION).get("sessscope1"));
-      assertEquals("reqfoo", lastSnapshot.getScopeMap(Scope.REQUEST).get("reqscope1"));
+      assertEquals("appfoo", lastSnapshot.getScope(Scope.APPLICATION).get("appscope1"));
+      assertEquals("sessfoo", lastSnapshot.getScope(Scope.SESSION).get("sessscope1"));
+      assertEquals("reqfoo", lastSnapshot.getScope(Scope.REQUEST).get("reqscope1"));
    }
 }

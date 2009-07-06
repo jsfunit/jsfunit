@@ -47,6 +47,12 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <ui:param name="scopevalues" value="#{spybackingbean.applicationScopeValues}"/>
           </ui:include>
           
+          <ui:repeat value="#{spybackingbean.customScopeViews}" var="customScopeView">
+            <ui:include src="scopetable.xhtml">
+              <ui:param name="scopename" value="Custom Scope: #{customScopeView.scopeName}" />
+              <ui:param name="scopevalues" value="#{customScopeView.phaseValues}"/>
+            </ui:include>
+          </ui:repeat>
         </f:view>
       </p>
     </ui:define>

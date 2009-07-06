@@ -45,6 +45,17 @@
               <h:inputText id="reqscope1" value="#{reqscope1.text}"/>
               <h:commandButton value="Submit Data" id="submit_button"/>
             </h:form>
+            <hr/>
+            <h:form id="customscopeform">
+              <h:selectOneRadio value="#{customscopebean.scopeAction}">
+                <f:selectItem id="create1" itemValue="create1" itemLabel="Create Custom Scope 1"/>
+                <f:selectItem id="create2" itemValue="create2" itemLabel="Create Custom Scope 2"/>
+                <f:selectItem id="destroy1" itemValue="destroy1" itemLabel="Destroy Custom Scope 1"/>
+                <f:selectItem id="destroy2" itemValue="destroy2" itemLabel="Destroy Custom Scope 2"/>
+                <f:selectItem id="destroyinmiddle" itemValue="destroyinmiddle" itemLabel="Destroy CS1 during Restore View After"/>
+              </h:selectOneRadio>
+              <h:commandButton value="Do Scope Action" id="scope_button" action="#{customscopebean.doScopeAction}"/>
+            </h:form>
           </f:view>
         </p>
     </body>

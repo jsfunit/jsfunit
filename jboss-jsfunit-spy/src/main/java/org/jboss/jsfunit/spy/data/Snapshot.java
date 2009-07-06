@@ -30,10 +30,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
+import javax.faces.event.ScopeContext;
 import org.jboss.jsfunit.spy.seam.SeamUtil;
 
 /**
- * A snapshot records the state of scoped data and the component tree at a
+ * A snapshot records the state of scoped data at a
  * particular point in time during the JSF lifecycle.  A snapshot is taken
  * before and after each lifecycle phase.
  *
@@ -49,6 +50,8 @@ public class Snapshot {
    
    private Map<Scope, Map<String, String>> scopes = new HashMap<Scope, Map<String, String>>();
    
+   private Map<String, Map<String, String>> customScopes = new HashMap<String, Map<String, String>>();
+   
    Snapshot(BeforeOrAfter beforeOrAfter, PhaseEvent event)
    {
       this.beforeOrAfter = beforeOrAfter;
@@ -62,6 +65,17 @@ public class Snapshot {
       scopes.put(Scope.SESSION, makeStringMap(extContext.getSessionMap()));
       scopes.put(Scope.REQUEST, makeStringMap(extContext.getRequestMap()));
       scopes.put(Scope.CONVERSATION, makeStringMap(SeamUtil.getConversationMap()));
+      recordCustomScopes();
+   }
+   
+   private void recordCustomScopes()
+   {
+      Session session = SpyManager.getInstance().getMySession();
+      for (ScopeContext ctx : session.getCustomScopes())
+      {
+         customScopes.put(ctx.getScopeName(), 
+                          Collections.unmodifiableMap(makeStringMap(ctx.getScope())));
+      }
    }
    
    private Map<String, String> makeStringMap(Map map)
@@ -106,9 +120,14 @@ public class Snapshot {
       return this.timestamp;
    }
    
-   public Map<String, String> getScopeMap(Scope scope)
+   public Map<String, String> getScope(Scope scope)
    {
       return Collections.unmodifiableMap(this.scopes.get(scope));
+   }
+   
+   public Map<String, Map<String, String>> getCustomScopes()
+   {
+      return Collections.unmodifiableMap(this.customScopes);
    }
    
 }

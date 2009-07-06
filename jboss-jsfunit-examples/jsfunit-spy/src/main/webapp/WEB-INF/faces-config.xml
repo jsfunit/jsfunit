@@ -11,6 +11,12 @@
       </locale-config>
       <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
    </application>
+
+   <managed-bean>
+      <managed-bean-name>customscopebean</managed-bean-name>
+      <managed-bean-class>org.jboss.jsfunit.spy.test.customscope.CustomScopeBean</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+   </managed-bean>
    
    <managed-bean>
       <managed-bean-name>appscope1</managed-bean-name>

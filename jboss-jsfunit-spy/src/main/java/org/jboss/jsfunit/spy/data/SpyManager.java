@@ -26,8 +26,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.Application;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.PhaseEvent;
+import javax.faces.event.PostConstructCustomScopeEvent;
+import javax.faces.event.PreDestroyCustomScopeEvent;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -40,12 +46,20 @@ import javax.servlet.http.HttpSession;
  * @author Stan Silvert
  * @since 1.1
  */
-public class SpyManager {
+public class SpyManager implements SystemEventListener
+{
 
     public static final String EL_KEY = "spymanager";
     public static final String REQUEST_SEQUENCE_KEY = "jsfunit.spy.requestsequence";
     
     private Map<String, Session> sessions = new LinkedHashMap<String, Session>();
+    
+    void subscribeToSystemEvents()
+    {
+      Application application = FacesContext.getCurrentInstance().getApplication();
+      application.subscribeToEvent(PostConstructCustomScopeEvent.class, this);
+      application.subscribeToEvent(PreDestroyCustomScopeEvent.class, this);
+    }
     
     public static SpyManager getInstance()
     {
@@ -146,5 +160,20 @@ public class SpyManager {
        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
        return session.getId();
     }
-    
+
+   // ---- implementation of SystemEventListener. ------
+   public boolean isListenerForSource(Object source)
+   {
+      return true;
+   }
+
+   public void processEvent(SystemEvent event) throws AbortProcessingException
+   {
+      Session session = getMySession();
+      
+      if (event instanceof PostConstructCustomScopeEvent) session.customScopeCreated((PostConstructCustomScopeEvent)event); 
+      if (event instanceof PreDestroyCustomScopeEvent) session.customScopeDestroyed((PreDestroyCustomScopeEvent)event);
+   }
+   // ----------------------------------------------------
+   
 }

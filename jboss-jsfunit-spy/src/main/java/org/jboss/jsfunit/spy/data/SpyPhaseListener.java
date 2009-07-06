@@ -54,6 +54,10 @@ public class SpyPhaseListener implements PhaseListener
          SpyManager spyManager = new SpyManager();
          appMap.put(SpyManager.EL_KEY, spyManager);
       }
+      
+      // This only applies to JSF2.  We know that in JSF2, a FacesContext
+      // must be available at this point.
+      SpyManager.getInstance().subscribeToSystemEvents();
    }
    
    public void beforePhase(PhaseEvent event)

@@ -23,10 +23,12 @@
 package org.jboss.jsfunit.spy.ui;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -174,6 +176,57 @@ public class SpyUIBackingBean {
        return getScopedValues(Scope.CONVERSATION);
     }
     
+    public List<CustomScopeView> getCustomScopeViews()
+    {
+       List<CustomScopeView> customScopeView = new ArrayList();
+       for (String customScopeName : getCustomScopeNames())
+       {
+          customScopeView.add(new CustomScopeView(customScopeName, getCustomScopedValues(customScopeName)));
+       }
+       
+       return customScopeView;
+    }
+    
+    private Set<String> getCustomScopeNames()
+    {
+       Set<String> scopeNames = new HashSet<String>();
+       for (Snapshot snapshot : this.selectedRequestData.getSnapshots())
+       {
+         for (String scopeName : snapshot.getCustomScopes().keySet()) 
+         {
+            scopeNames.add(scopeName);
+         }
+       }
+       
+       return scopeNames;
+    }
+    
+    private List<PhaseValues> getCustomScopedValues(String customScopeName)
+    {
+       if (this.selectedRequestData == null)
+       {
+          return new ArrayList<PhaseValues>(0);
+       }
+       
+       Map<String, PhaseValues> valuesMap = new LinkedHashMap<String, PhaseValues>();
+       for (Snapshot snapshot : this.selectedRequestData.getSnapshots())
+       {
+          Map<String, String> customScope = snapshot.getCustomScopes().get(customScopeName);
+          if (customScope == null) continue; // scope destroyed in middle of lifecycle
+          
+          for (Iterator<String> keys = customScope.keySet().iterator(); keys.hasNext();)
+          {
+             String key = keys.next();
+             if (!valuesMap.containsKey(key))
+             {
+                valuesMap.put(key, new PhaseValues(customScopeName, key, this.selectedRequestData.getSnapshots()));
+             }
+          }
+       }
+       
+       return new ArrayList(valuesMap.values());
+    }
+    
     private List<PhaseValues> getScopedValues(Scope scope)
     {
        Map<String, PhaseValues> valuesMap = new LinkedHashMap<String, PhaseValues>();
@@ -185,7 +238,7 @@ public class SpyUIBackingBean {
        
        for (Snapshot snapshot : this.selectedRequestData.getSnapshots())
        {
-          for (Iterator<String> keys = snapshot.getScopeMap(scope).keySet().iterator(); keys.hasNext();)
+          for (Iterator<String> keys = snapshot.getScope(scope).keySet().iterator(); keys.hasNext();)
           {
              String key = keys.next();
              if (!valuesMap.containsKey(key))
