@@ -96,6 +96,20 @@
       <artifactId>jsf-impl</artifactId>
       <version>2.0.0-SNAPSHOT</version>
     </dependency>
+    
+    <!-- Change myfaces to runtime scope so that it won't be included in
+         the compile classpath during Hudson runs. -->
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-impl</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.myfaces.core</groupId>
+      <artifactId>myfaces-api</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
     
   <build>
