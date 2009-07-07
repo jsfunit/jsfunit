@@ -12,7 +12,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <ui:define name="header">JSFSpy Perf Data View</ui:define>
     <ui:define name="content">
       <f:view>
-        <h2>Performance Data</h2>
+        <h2>JSF Performance Data</h2>
         <h:dataTable value="#{spybackingbean.selectedRequestData.phaseData}" 
                      var="phaseData" 
                      footerClass="integer"
@@ -30,6 +30,26 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <f:facet name="header"><h:outputText value="Elapsed Time (ms)"/></f:facet>
             <h:outputText value="#{phaseData.elapsedTime}"/>
             <f:facet name="footer"><h:outputText value="#{spybackingbean.selectedRequestData.elapsedTime}"/></f:facet>
+          </h:column>
+        </h:dataTable>
+        <h2>Time used by JSF Spy</h2>
+        <h:dataTable value="#{spybackingbean.selectedRequestData.snapshots}"
+                     var="snapshot"
+                     footerClass="integer"
+                     columnClasses=",,integer">
+          <h:column>
+            <f:facet name="header"><h:outputText value="PhaseId"/></f:facet>
+            <h:outputText value="#{snapshot.phaseId}"/>
+          </h:column>  
+          <h:column>
+            <f:facet name="header"><h:outputText value="Before or After"/></f:facet>
+            <h:outputText value="#{snapshot.beforeOrAfter}"/>
+            <f:facet name="footer"><h:outputText value="Total: "/></f:facet>
+          </h:column>  
+          <h:column>
+            <f:facet name="header"><h:outputText value="Elapsed Time (ms)"/></f:facet>
+            <h:outputText value="#{snapshot.spyTime}"/>
+            <f:facet name="footer"><h:outputText value="#{spybackingbean.selectedRequestData.spyTime}"/></f:facet>
           </h:column>
         </h:dataTable>
       </f:view>

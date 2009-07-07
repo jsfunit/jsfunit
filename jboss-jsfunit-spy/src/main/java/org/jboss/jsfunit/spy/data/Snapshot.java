@@ -48,6 +48,8 @@ public class Snapshot {
    
    private long timestamp;
    
+   private long spyTime;
+   
    private Map<Scope, Map<String, String>> scopes = new HashMap<Scope, Map<String, String>>();
    
    private Map<String, Map<String, String>> customScopes = new HashMap<String, Map<String, String>>();
@@ -66,6 +68,9 @@ public class Snapshot {
       scopes.put(Scope.REQUEST, makeStringMap(extContext.getRequestMap()));
       scopes.put(Scope.CONVERSATION, makeStringMap(SeamUtil.getConversationMap()));
       recordCustomScopes();
+      
+      long spyStamp = System.currentTimeMillis();
+      this.spyTime = spyStamp - this.timestamp;
    }
    
    private void recordCustomScopes()
@@ -118,6 +123,16 @@ public class Snapshot {
    public long getTimestamp()
    {
       return this.timestamp;
+   }
+   
+   /**
+    * The amount of time in milliseconds that it took to take this snapshot.
+    * 
+    * @return The time to take this snapshot.
+    */
+   public long getSpyTime()
+   {
+      return this.spyTime;
    }
    
    public Map<String, String> getScope(Scope scope)

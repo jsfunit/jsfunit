@@ -25,6 +25,7 @@ package org.jboss.jsfunit.spy.ui;
 import java.util.List;
 
 /**
+ * Allows an easily displayable view with scope name.
  *
  * @author Stan Silvert
  * @since 1.1

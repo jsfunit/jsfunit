@@ -156,6 +156,21 @@ public class RequestData
       return getLastSnapshot().getTimestamp() - getFirstSnapshot().getTimestamp();
    }
    
+   /**
+    * Return the total amount of time used to take Spy snapshots.
+    * 
+    * @return The total spy time.
+    */
+   public long getSpyTime()
+   {
+      long total = 0;
+      for (Snapshot snapshot : getSnapshots())
+      {
+         total += snapshot.getSpyTime();
+      }
+      return total;
+   }
+   
    public String getFromView()
    {
       return this.fromView;
