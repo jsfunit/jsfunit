@@ -62,8 +62,6 @@ public class RichScrollableDataTableTest extends ServletTestCase
    
    public void testScrollableDataTable() throws IOException
    {
-      /* Uncomment when HtmlUnit 2.4 is available
-      // need to add methods to RichFacesClient for this
       ClickableElement stock = (ClickableElement)client.getElement("carList:c_0_5");
       stock.click();
       
@@ -71,7 +69,7 @@ public class RichScrollableDataTableTest extends ServletTestCase
       
       List selectedCars = (List)server.getManagedBeanValue("#{dataTableScrollerBean.selectedCars}");
       assertEquals(1, selectedCars.size());
-       */
+       
       assertTrue(true);
    }
    
