@@ -26,7 +26,6 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
-import org.jboss.jsfunit.framework.RequestListener;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
