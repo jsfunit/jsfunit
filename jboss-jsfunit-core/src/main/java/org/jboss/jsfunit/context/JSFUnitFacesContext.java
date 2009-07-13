@@ -32,6 +32,7 @@ import java.util.Map;
 import javax.el.ELContext;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ProjectStage;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExternalContext;
@@ -70,6 +71,12 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
       
       this.delegate = delegate;
       setCurrentInstance(this);
+   }
+
+   @Override
+   public boolean isProjectStage(ProjectStage projectStage)
+   {
+      return delegate.isProjectStage(projectStage);
    }
    
    @Override
@@ -261,9 +268,9 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
    }
 
    @Override
-   public List<FacesMessage> getMessageList(String arg0)
+   public List<FacesMessage> getMessageList(String clientId)
    {
-      return delegate.getMessageList(arg0);
+      return delegate.getMessageList(clientId);
    }
 
    @Override

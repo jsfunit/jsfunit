@@ -134,6 +134,13 @@
       <version>2.0.0-SNAPSHOT</version>
     </dependency>
 
+    <!-- Do this for now so that IDE sees com.sun.faces version instead -->
+    <dependency>
+       <groupId>javax.faces</groupId>
+       <artifactId>jsf-api</artifactId>
+       <scope>test</scope>
+    </dependency>
+    
     <dependency>
       <groupId>javax.el</groupId>
       <artifactId>el-api</artifactId>
