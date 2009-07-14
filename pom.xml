@@ -364,7 +364,7 @@
     <!-- <richfaces-version>3.3.0.GA</richfaces-version> -->
     <!-- <seam-version>2.1.1.GA</seam-version> -->
     <!--<seam-version>2.1.2.CR1</seam-version> -->
-    <seam-version>2.1.2-SNAPSHOT</seam-version>
+    <seam-version>2.1.2</seam-version>
   </properties>
   
 </project>
