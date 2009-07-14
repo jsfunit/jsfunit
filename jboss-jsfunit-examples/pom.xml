@@ -223,6 +223,14 @@
     
   </profiles>
   
+  <dependencies>
+     <dependency>
+        <groupId>org.apache.myfaces.core</groupId>
+        <artifactId>myfaces-api</artifactId>
+        <scope>compile</scope>
+     </dependency>
+  </dependencies>
+  
   <build>
     <plugins>
       <plugin>
