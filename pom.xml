@@ -335,7 +335,7 @@
     <module>jboss-jsfunit-core</module>
     <module>jboss-jsfunit-richfaces</module>
     <module>jboss-jsfunit-ant</module>
-    <module>jboss-jsfunit-examples</module>
+ <!--   <module>jboss-jsfunit-examples</module> -->
   <!--  <module>jboss-jsfunit-analysis</module> -->
     <module>jboss-jsfunit-microdeployer</module>
 <!--    <module>jboss-jsfunit-spy</module> -->
