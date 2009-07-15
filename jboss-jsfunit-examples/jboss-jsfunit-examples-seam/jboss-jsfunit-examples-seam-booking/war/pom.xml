@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
     <artifactId>jboss-jsfunit-examples-seam-booking</artifactId>
-    <version>1.1.0.GA-SNAPSHOT</version>
+    <version>1.1.0.GA</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
