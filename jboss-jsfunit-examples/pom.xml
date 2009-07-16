@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.jsfunit</groupId>
     <artifactId>jboss-jsfunit</artifactId>
-    <version>1.1.0.GA-SNAPSHOT</version>
+    <version>1.2.0.GA-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -18,8 +18,8 @@
     <module>jboss-jsfunit-examples-richfaces</module>
  <!--   <module>jboss-jsfunit-examples-icefaces</module> -->
     <module>jboss-jsfunit-examples-seam</module>
- <!--   <module>jsf2</module>
-    <module>jsfunit-spy</module>  -->
+    <module>jsf2</module>
+    <module>jsfunit-spy</module>
   </modules>
     
   <profiles>
@@ -222,14 +222,6 @@
     </profile>
     
   </profiles>
-  
-  <dependencies>
-     <dependency>
-        <groupId>org.apache.myfaces.core</groupId>
-        <artifactId>myfaces-api</artifactId>
-        <scope>compile</scope>
-     </dependency>
-  </dependencies>
   
   <build>
     <plugins>
