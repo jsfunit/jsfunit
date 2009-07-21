@@ -8,40 +8,80 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       xmlns:f="http://java.sun.com/jsf/core">
   
   <ui:composition template="layout.xhtml">
-    <ui:define name="header">HttpSessions for this JSF Application</ui:define>
+    <ui:define name="header">#{empty facesContext.externalContext.context.servletContextName ? 'JSF Application' : facesContext.externalContext.context.servletContextName}</ui:define>
     <ui:define name="content">
       
       <p>
         <f:view>
-          <h:form id="session_list_form">
-            <h:dataTable value="#{spymanager.sessions}" 
-                         var="httpsession" 
-                         columnClasses=",,,integer"
-                         rowClasses="#{spybackingbean.selectedSessionRowFormat}">
-              <h:column>
-                <f:facet name="header"><h:outputText value="Session Id"/></f:facet>
-                <h:commandLink id="selectSession" action="#{spybackingbean.selectSession}">
-                  <h:outputText value="#{httpsession.id}"/>
-                  <f:param name="selectedSession" value="#{httpsession.id}"/>
-                </h:commandLink>
-              </h:column>
-              <h:column>
-                <f:facet name="header"><h:outputText value="User Id"/></f:facet>
-                <h:outputText value="#{httpsession.userId}"/>
-                <h:outputText rendered="#{empty httpsession.userId}" value="&lt;unknown&gt;"/>
-              </h:column>
-              <h:column>
-                <f:facet name="header"><h:outputText value="Creation Time"/></f:facet>
-                <h:outputText value="#{httpsession.creationTime}">
-                  <f:convertDateTime type="both" dateStyle="short" timeStyle="long" timeZone="#{spybackingbean.timeZone}"/>
-                </h:outputText>
-              </h:column>
-              <h:column>
-                <f:facet name="header"><h:outputText value="JSF Requests"/></f:facet>
-                <h:outputText value="#{httpsession.requestCount}"/>
-              </h:column>
-            </h:dataTable>
-          </h:form>
+          <h:panelGrid columns="1" cellspacing="5">
+            <h:outputText id="serverinfo" value="#{facesContext.externalContext.context.serverInfo}">
+              <h:outputLabel for="serverinfo" value="Server Info: "/>
+            </h:outputText>
+            <h:outputText id="projectstage" value="#{facesContext.application.projectStage}">
+              <h:outputLabel for="projectstage" value="Project Stage: "/>
+            </h:outputText>
+          </h:panelGrid>
+  <!--        <h2>ServletContext Init Parameters</h2>
+          <h:dataTable value="#{spybackingbean.servletContextInitParameters}" 
+                       var="initParam">
+            <h:column>
+              <f:facet name="header"><h:outputText value="Key"/></f:facet>
+              <h:outputText value="#{initParam.key}"/>
+            </h:column>
+            <h:column>
+              <f:facet name="header"><h:outputText value="Value"/></f:facet>
+              <h:outputText value="#{initParam.value}"/>
+            </h:column>
+          </h:dataTable> -->
+          <h2>Phase Listeners</h2>
+          <h:dataTable value="#{spymanager.applicationData.phaseListeners}" 
+                       var="phaseListener"
+                       columnClasses="integer,,">
+            <h:column>
+              <f:facet name="header"><h:outputText value="Excecution Order"/></f:facet>
+              <h:outputText value="#{component.parent.parent.rowIndex}"/>
+            </h:column>
+            <h:column>
+              <f:facet name="header"><h:outputText value="Execution Phase"/></f:facet>
+              <h:outputText value="#{phaseListener.phaseId}"/>
+            </h:column>
+            <h:column>
+              <f:facet name="header"><h:outputText value="PhaseListener Class"/></f:facet>
+              <h:outputText value="#{phaseListener.class.name}"/>
+            </h:column>
+          </h:dataTable>
+   <!--       <h2>Registered Validators</h2>
+          <h:dataTable value="#{spybackingbean.registeredValidators}" 
+                       var="validator">
+            <h:column>
+              <f:facet name="header"><h:outputText value="Id"/></f:facet>
+              <h:outputText value="#{validator.key}"/>
+            </h:column>
+            <h:column>
+              <f:facet name="header"><h:outputText value="Class"/></f:facet>
+              <h:outputText value="#{validator.value}"/>
+            </h:column>
+          </h:dataTable> -->
+          <h2>Registered Component Types</h2>
+          <h:dataTable value="#{spybackingbean.registeredComponents}" 
+                       var="registeredComponent">
+            <h:column>
+              <f:facet name="header"><h:outputText value="Component Type"/></f:facet>
+              <h:outputText value="#{registeredComponent}"/>
+            </h:column>
+          </h:dataTable>
+          <h2>Application Scope Values</h2>
+          <h:dataTable value="#{spybackingbean.applicationScopeSimpleView}" 
+                       var="mapEntry">
+            <h:column>
+              <f:facet name="header"><h:outputText value="Key"/></f:facet>
+              <h:outputText value="#{mapEntry.key}"/>
+            </h:column>
+            <h:column>
+              <f:facet name="header"><h:outputText value="Value"/></f:facet>
+              <h:outputText value="#{mapEntry.value}"/>
+            </h:column>
+          </h:dataTable>
         </f:view>
       </p>
     </ui:define>

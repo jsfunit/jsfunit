@@ -56,10 +56,10 @@ public class Snapshot {
    
    Snapshot(BeforeOrAfter beforeOrAfter, PhaseEvent event)
    {
+      long spyStampStart = System.currentTimeMillis();
+      
       this.beforeOrAfter = beforeOrAfter;
       this.phaseId = event.getPhaseId();
-      
-      this.timestamp = System.currentTimeMillis();
       
       FacesContext facesContext = event.getFacesContext();
       ExternalContext extContext = facesContext.getExternalContext();
@@ -69,8 +69,8 @@ public class Snapshot {
       scopes.put(Scope.CONVERSATION, makeStringMap(SeamUtil.getConversationMap()));
       recordCustomScopes();
       
-      long spyStamp = System.currentTimeMillis();
-      this.spyTime = spyStamp - this.timestamp;
+      this.timestamp = System.currentTimeMillis();
+      this.spyTime = this.timestamp - spyStampStart;
    }
    
    private void recordCustomScopes()

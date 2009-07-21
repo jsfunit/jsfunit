@@ -23,6 +23,8 @@
 package org.jboss.jsfunit.spy.ui;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -30,8 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import javax.faces.application.Application;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import org.jboss.jsfunit.spy.data.RequestData;
 import org.jboss.jsfunit.spy.data.Scope;
 import org.jboss.jsfunit.spy.data.Session;
@@ -169,6 +173,62 @@ public class SpyUIBackingBean {
     public List<PhaseValues> getApplicationScopeValues()
     {
        return getScopedValues(Scope.APPLICATION);
+    }
+    
+    public List<Map.Entry<String, Object>> getApplicationScopeSimpleView()
+    {
+       ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
+       return new ArrayList<Map.Entry<String, Object>>(extCtx.getApplicationMap().entrySet());
+    }
+    
+    public List<KeyValuePair> getServletContextInitParameters()
+    {
+       ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
+       ServletContext servletContext = (ServletContext)extCtx.getContext();
+       ArrayList<KeyValuePair> pairs = new ArrayList<KeyValuePair>();
+       for (Enumeration i = servletContext.getInitParameterNames(); i.hasMoreElements(); )
+       {
+          String key = (String)i.nextElement();
+          pairs.add(new KeyValuePair(key, servletContext.getInitParameter(key)));
+       }
+       
+       return pairs;
+       //return new ArrayList<Map.Entry<String, Object>>(extCtx.getInitParameterMap().entrySet());
+    }
+    
+    public List<Map.Entry<String, String>> getRegisteredValidators()
+    {
+       //System.out.println("**********************************");
+       
+       Application application = FacesContext.getCurrentInstance().getApplication();
+       Set<Map.Entry<String, String>> validators = application.getDefaultValidatorInfo().entrySet();
+       //System.out.println("validators=" + validators);
+       //System.out.println("*********************************");
+       return new ArrayList<Map.Entry<String, String>>(validators);
+    }
+    
+    public List<String> getRegisteredComponents()
+    {
+       List<String> componentTypes = new ArrayList<String>();
+       Application application = FacesContext.getCurrentInstance().getApplication();
+       for (Iterator<String> i = application.getComponentTypes(); i.hasNext();)
+       {
+          String type = i.next();
+          componentTypes.add(type);
+       }
+      
+       Collections.sort(componentTypes);
+       return componentTypes;
+    }
+    
+    public static class KeyValuePair {
+       String key, value;
+       KeyValuePair(String key, String value) {
+          this.key = key;
+          this.value = value;
+       }
+       public String getKey() { return key; }
+       public String getValue() {return value; }
     }
     
     public List<PhaseValues> getConversationScopeValues()

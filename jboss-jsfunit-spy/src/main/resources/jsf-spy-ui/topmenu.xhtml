@@ -9,6 +9,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   
   <f:view>
     <h:form id="topmenuform">
+      <h:commandButton id="application" 
+                       action="application" 
+                       value="Application"/>
       <h:commandButton id="allsessions" 
                        action="allsessions" 
                        value="All Sessions"/>
@@ -28,7 +31,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                        action="perfview" 
                        value="Performance"
                        rendered="#{not empty spybackingbean.selectedRequestData}"/>
-     <h:commandButton id="facesmessagesview" 
+      <h:commandButton id="facesmessagesview" 
                        action="facesmessagesview" 
                        value="Faces Messages"
                        rendered="#{(not empty spybackingbean.selectedRequestData) and (not empty spyrequest.facesMessages)}"/>

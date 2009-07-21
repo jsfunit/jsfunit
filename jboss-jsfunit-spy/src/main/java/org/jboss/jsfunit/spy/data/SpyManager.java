@@ -52,6 +52,8 @@ public class SpyManager implements SystemEventListener
     public static final String EL_KEY = "spymanager";
     public static final String REQUEST_SEQUENCE_KEY = "jsfunit.spy.requestsequence";
     
+    private ApplicationData appData = new ApplicationData();
+    
     private Map<String, Session> sessions = new LinkedHashMap<String, Session>();
     
     void subscribeToSystemEvents()
@@ -161,6 +163,11 @@ public class SpyManager implements SystemEventListener
        return session.getId();
     }
 
+    public ApplicationData getApplicationData()
+    {
+       return this.appData;
+    }
+    
    // ---- implementation of SystemEventListener. ------
    public boolean isListenerForSource(Object source)
    {
