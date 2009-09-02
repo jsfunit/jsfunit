@@ -288,7 +288,7 @@ public class JSFClientSession
    {
       String clientID = jsfServerSession.getClientIDs().findClientID(componentID);
       HtmlPage htmlPage = (HtmlPage)getContentPage();
-      List<HtmlElement> elements = htmlPage.getHtmlElementsByName(clientID);
+      List<HtmlElement> elements = htmlPage.getElementsByName(clientID);
       for (Iterator<HtmlElement> i = elements.iterator(); i.hasNext();)
       {
          HtmlElement htmlElement = i.next();

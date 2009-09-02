@@ -156,7 +156,7 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
     */
    protected HtmlElement getElement(HtmlPage page, String elementName)
    {
-      List<HtmlElement> elements = page.getHtmlElementsByName(elementName);
+      List<HtmlElement> elements = page.getElementsByName(elementName);
       if (elements.size() == 0) 
       {
          throw new IllegalStateException("Component with name=" + elementName + " was not found on the login page.");

@@ -74,9 +74,9 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testCustomBrowserVersion() throws IOException
    {
-      WebClientSpec wcSpec = new WebClientSpec("/index.faces", BrowserVersion.INTERNET_EXPLORER_7_0);
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces", BrowserVersion.INTERNET_EXPLORER_7);
       JSFSession jsfSession = new JSFSession(wcSpec);
-      assertEquals(BrowserVersion.INTERNET_EXPLORER_7_0, jsfSession.getWebClient().getBrowserVersion());
+      assertEquals(BrowserVersion.INTERNET_EXPLORER_7, jsfSession.getWebClient().getBrowserVersion());
    }
    
    /**

@@ -40,7 +40,7 @@ public class RichDropDownMenuTest extends ServletTestCase
 {
    public void testDropDownMenuWithIE6() throws IOException, SAXException
    {
-      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6);
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       
@@ -105,7 +105,7 @@ public class RichDropDownMenuTest extends ServletTestCase
 
    public void testServerModeDropDownMenuWithIE6() throws IOException, SAXException
    {
-      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6_0);
+      JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/dropDownMenu.jsf", BrowserVersion.INTERNET_EXPLORER_6);
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
       

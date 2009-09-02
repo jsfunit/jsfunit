@@ -41,7 +41,6 @@ public class AjaxIncludeTest extends ServletTestCase
       JSFSession jsfSession = JSFSessionFactory.makeSession("/richfaces/include.jsf");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
-      
       client.setValue("fn", "Stan");
       client.setValue("ln", "Silvert");
       client.setValue("comp", "JBoss");

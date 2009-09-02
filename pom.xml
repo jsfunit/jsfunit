@@ -116,7 +116,8 @@
       <dependency>
         <groupId>net.sourceforge.htmlunit</groupId>
         <artifactId>htmlunit</artifactId>
-        <version>2.5</version>
+        <version>2.6-SNAPSHOT</version>
+        <!--<version>2.5</version>-->
       </dependency>
       
       <!-- needed by htmlunit                                -->
@@ -154,7 +155,8 @@
       <dependency>
         <groupId>net.sourceforge.nekohtml</groupId>
         <artifactId>nekohtml</artifactId>
-        <version>1.9.12</version>
+        <version>1.9.13-SNAPSHOT</version>
+        <!--<version>1.9.12</version>-->
       </dependency>
       
       <dependency>
@@ -306,17 +308,21 @@
 	<url>https://maven-repository.dev.java.net/nonav/repository</url>
 	<layout>legacy</layout>
     </repository>    
-    
+    -->
     <repository>
-       <snapshots>
-          <enabled>true</enabled>
-          <updatePolicy>always</updatePolicy>
-       </snapshots>
-       <id>nekoHtmlSnapshots</id>
-       <name>NekoHtTML Snapshots</name>
-       <url>http://nekohtml.sourceforge.net/m2-repo-snapshots</url>
-       <layout>default</layout>
-     </repository>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <id>NekoHTMLSnapshots</id>
+      <name>NekoHTML Snapshots</name>
+      <url>http://build.canoo.com/NekoHTML/artifacts/m2-repo</url>
+      <layout>default</layout>
+    </repository> 
+     
      
      <repository>
        <snapshots>
@@ -328,7 +334,7 @@
        <url>http://htmlunit.sourceforge.net/m2-repo-snapshots</url>
        <layout>default</layout>
      </repository>
-     -->
+     
    </repositories>
 
   <modules>

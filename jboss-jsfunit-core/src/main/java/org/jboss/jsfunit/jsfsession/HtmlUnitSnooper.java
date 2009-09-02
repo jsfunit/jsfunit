@@ -88,7 +88,7 @@ public class HtmlUnitSnooper implements RequestListener
          System.out.println("---------------------------------------------------------------");
       }
       
-      System.out.println("Response time=" + webResponse.getLoadTimeInMilliSeconds() + "ms");
+      System.out.println("Response time=" + webResponse.getLoadTime() + "ms");
       System.out.println("Status code=" + webResponse.getStatusCode());
       System.out.println("Status message=" + webResponse.getStatusMessage());
       System.out.println("Content type=" + webResponse.getContentType());

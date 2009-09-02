@@ -6,9 +6,9 @@
       xmlns:rich="http://richfaces.org/rich">
 			
 	<rich:separator height="1"/>
-	<h:form>
+	<h:form id="myform">
 		<h:panelGrid columns="2">
-			<h:inputText id="name" value="#{userBean.name}">
+			<h:inputText id="myinput" value="#{userBean.name}">
 				<a4j:support id="rerenderOuttext" event="onkeyup" reRender="outtext" />
                                 <a4j:support id="rerenderOuttextOnchange" event="onchange" reRender="outtext" />
 			</h:inputText>

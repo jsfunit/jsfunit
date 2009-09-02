@@ -49,8 +49,8 @@
               <container>
                 <systemProperties>
                 <!-- snoops request and response from client side
-                     result is in server.log 
-                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
+                     result is in server.log -->
+                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> 
                   <jsfunit.testdata>${basedir}/testdata</jsfunit.testdata>
                 </systemProperties>
               </container>
@@ -241,7 +241,7 @@
               </includes>
             </resource>
           </webResources>
-          <dependentWarExcludes>WEB-INF/lib/nekohtml-0.9.5.jar,WEB-INF/lib/commons-collections-3.1.jar</dependentWarExcludes>
+          <dependentWarExcludes>WEB-INF/lib/nekohtml-0.9.5.jar,WEB-INF/lib/commons-collections-3.1.jar,WEB-INF/lib/commons-beanutils-1.7.0.jar</dependentWarExcludes>
         </configuration>
       </plugin>
       
