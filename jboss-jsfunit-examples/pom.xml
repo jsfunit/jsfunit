@@ -18,7 +18,7 @@
     <module>jboss-jsfunit-examples-richfaces</module>
  <!--   <module>jboss-jsfunit-examples-icefaces</module> -->
     <module>jboss-jsfunit-examples-seam</module>
-    <module>jsf2</module>
+  <!--  <module>jsf2</module> -->
     <module>jsfunit-spy</module>
   </modules>
     
@@ -175,6 +175,22 @@
         </dependency>    
       </dependencies>
     </profile>    
+    
+    <profile>
+      <id>jee6</id>
+      <dependencies>
+        <dependency>
+          <groupId>javax.faces</groupId>
+          <artifactId>jsf-api</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+          <scope>provided</scope>
+        </dependency>    
+      </dependencies>
+    </profile>
     
     <profile>
        <id>myfaces1.1</id>

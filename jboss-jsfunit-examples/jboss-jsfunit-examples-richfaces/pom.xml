@@ -49,8 +49,8 @@
               <container>
                 <systemProperties>
                 <!-- snoops request and response from client side
-                     result is in server.log -->
-                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> 
+                     result is in server.log 
+                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
                   <jsfunit.testdata>${basedir}/testdata</jsfunit.testdata>
                 </systemProperties>
               </container>
@@ -102,7 +102,21 @@
            <scope>runtime</scope>
          </dependency>
       </dependencies>
-    </profile>    
+    </profile>   
+    
+    <profile>
+      <id>jee6</id>
+      <dependencies>
+         <dependency>
+           <groupId>org.richfaces.samples</groupId>
+           <artifactId>richfaces-demo</artifactId>
+           <version>${richfaces-version}</version>
+           <classifier>jee5</classifier>
+           <type>war</type>
+           <scope>runtime</scope>
+         </dependency>
+      </dependencies>
+    </profile>  
     
     <profile>
       <id>tomcat6x</id>
@@ -128,6 +142,18 @@
            <type>war</type>
            <scope>runtime</scope>
          </dependency>
+         <dependency>
+           <groupId>javax.el</groupId>
+           <artifactId>el-api</artifactId>
+           <version>1.0</version>
+           <scope>compile</scope>
+         </dependency>  
+         <dependency>
+           <groupId>com.sun.el</groupId>
+           <artifactId>el-ri</artifactId>
+           <version>1.0</version>
+           <scope>compile</scope>
+         </dependency> 
       </dependencies>
       <activation>
          <property>
@@ -187,20 +213,6 @@
       <scope>provided</scope>
     </dependency>
         
-    <dependency>
-      <groupId>javax.el</groupId>
-      <artifactId>el-api</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>  
-
-    <dependency>
-      <groupId>com.sun.el</groupId>
-      <artifactId>el-ri</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency> 
-    
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>

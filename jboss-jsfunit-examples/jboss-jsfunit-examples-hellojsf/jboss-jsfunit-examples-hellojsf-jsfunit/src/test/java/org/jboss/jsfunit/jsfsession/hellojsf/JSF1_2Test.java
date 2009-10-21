@@ -78,6 +78,7 @@ public class JSF1_2Test extends ServletTestCase
    
    public void testSetCheckbox() throws IOException, SAXException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("funcheck");
       client.click("submit_button");
       assertFalse((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
@@ -89,6 +90,10 @@ public class JSF1_2Test extends ServletTestCase
    
    public void testClickCommandLink() throws IOException, SAXException
    {
+      System.out.println("*********** Dumpint ID's ****************");
+      server.getClientIDs().dumpAllIDs();
+      System.out.println("****************************************");
+      client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("go_back_link");
       
@@ -98,6 +103,7 @@ public class JSF1_2Test extends ServletTestCase
    
    public void testCommandLinkWithoutViewChange() throws IOException, SAXException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("stay_here_link");
       

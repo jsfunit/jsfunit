@@ -56,8 +56,14 @@ public class AjaxFormTest extends ServletTestCase
       assertEquals("Name:Mark", server.getComponentValue("ajaxSubmitFalseForm:name"));
       
       client.click("SetToJohn");
-      assertEquals("Jonh", server.getManagedBeanValue("#{userBean.name}"));
-      assertEquals("Name:Jonh", server.getComponentValue("ajaxSubmitTrueForm:name"));
-      assertEquals("Name:Jonh", server.getComponentValue("ajaxSubmitFalseForm:name"));
+      
+      String johnManagedBean = (String)server.getManagedBeanValue("#{userBean.name}");
+      String johnComponentValueTrue = (String)server.getComponentValue("ajaxSubmitTrueForm:name");
+      String johnComponentValueFalse = (String)server.getComponentValue("ajaxSubmitFalseForm:name");
+      
+      // note: before RichFaces 3.3.2, John was incorrectly spelled "Jonh" in the app
+      assertTrue("John".equals(johnManagedBean) || "Jonh".equals(johnManagedBean));
+      assertTrue("Name:John".equals(johnComponentValueTrue) || "Name:Jonh".equals(johnComponentValueTrue));
+      assertTrue("Name:John".equals(johnComponentValueFalse) || "Name:Jonh".equals(johnComponentValueFalse));
    }
 }

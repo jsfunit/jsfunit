@@ -49,7 +49,7 @@
 </context-param>
  <context-param>
   <param-name>org.ajax4jsf.xmlparser.ORDER</param-name>
-  <param-value>NEKO</param-value>
+  <param-value>TIDY,NEKO</param-value>
  </context-param>
  <context-param>
    <param-name>org.richfaces.CONTROL_SKINNING</param-name>

@@ -37,7 +37,19 @@
           </plugin>
         </plugins>
       </build>
-      <properties>
+    </profile>
+    
+    <profile>
+       <id>jee6</id>
+       <properties>
+         <jsfMajorVersion>2</jsfMajorVersion>
+         <jsfMinorVersion>0</jsfMinorVersion>
+      </properties>
+    </profile>
+    
+    <profile>
+       <id>jee5</id>
+       <properties>
          <jsfMajorVersion>1</jsfMajorVersion>
          <jsfMinorVersion>2</jsfMinorVersion>
       </properties>
@@ -87,6 +99,13 @@
             <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
               <wait>false</wait>  
+              <container>
+                <systemProperties>
+                <!-- snoops request and response from client side
+                     result is in server.log 
+                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
+                </systemProperties>
+              </container>
               <configuration>            
                 <deployables>
                   <deployable>
