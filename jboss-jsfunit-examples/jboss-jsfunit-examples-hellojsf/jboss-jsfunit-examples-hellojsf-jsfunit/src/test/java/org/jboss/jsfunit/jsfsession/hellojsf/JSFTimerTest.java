@@ -25,6 +25,7 @@ package org.jboss.jsfunit.jsfsession.hellojsf;
 import java.io.IOException;
 import javax.faces.event.PhaseId;
 import org.apache.cactus.ServletTestCase;
+import org.jboss.jsfunit.framework.Environment;
 import org.jboss.jsfunit.framework.JSFTimer;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
@@ -49,6 +50,8 @@ public class JSFTimerTest extends ServletTestCase
    
    public void testNonFacesRequestGeneratesFacesResponse() throws SAXException, IOException
    {
+      if (Environment.is20Compatible()) return; // assertions below can fail under JSF2
+      
       JSFSession jsfSession = new JSFSession("/index.faces");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFTimer timer = JSFTimer.getTimer();
@@ -57,7 +60,6 @@ public class JSFTimerTest extends ServletTestCase
       assertEquals(0, timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS));
       assertEquals(0, timer.getPhaseTime(PhaseId.UPDATE_MODEL_VALUES));
       assertEquals(0, timer.getPhaseTime(PhaseId.INVOKE_APPLICATION));
-      //assertTrue(timer.getPhaseTime(PhaseId.RENDER_RESPONSE) > 0);
    }
    
    public void testTotalTime() throws SAXException, IOException
@@ -76,8 +78,11 @@ public class JSFTimerTest extends ServletTestCase
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFTimer timer = JSFTimer.getTimer();
       
-      // ProcessValidations should be skipped for a new session
-      assertEquals(0, timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS));
+      // ProcessValidations should be skipped for a new session in JSF 1.x
+      if (Environment.getJSFMajorVersion() < 2)
+      {
+         assertEquals(0, timer.getPhaseTime(PhaseId.PROCESS_VALIDATIONS));
+      }
       
       client.setValue("input_foo_text", "Stan"); 
       client.click("submit_button");

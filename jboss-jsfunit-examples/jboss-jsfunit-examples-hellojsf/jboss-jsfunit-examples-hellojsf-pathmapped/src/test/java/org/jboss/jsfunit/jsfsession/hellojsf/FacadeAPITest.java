@@ -101,6 +101,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testSetCheckbox() throws IOException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("funcheck"); // uncheck it
       client.click("submit_button");
       assertFalse((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
@@ -112,6 +113,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testClickCommandLink() throws IOException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("go_back_link");
       
@@ -121,6 +123,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testCommandLinkWithoutViewChange() throws IOException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("stay_here_link");
       
@@ -240,6 +243,7 @@ public class FacadeAPITest extends ServletTestCase
       JSFSession jsfSession = new JSFSession("/jsf/indexWithExtraComponents.jsp");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
+      client.setValue("input_foo_text", "Stan");
       assertEquals("Initial Value", server.getManagedBeanValue("#{foo2.text}"));
       client.setValue("MyTextArea", "New Value");
       client.click("submit_button");
@@ -251,6 +255,7 @@ public class FacadeAPITest extends ServletTestCase
       JSFSession jsfSession = new JSFSession("/jsf/indexWithExtraComponents.jsp");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
+      client.setValue("input_foo_text", "Stan");
       assertEquals("Blue", server.getManagedBeanValue("#{foo3.text}"));
       client.click("selectGreen");
       client.click("submit_button");

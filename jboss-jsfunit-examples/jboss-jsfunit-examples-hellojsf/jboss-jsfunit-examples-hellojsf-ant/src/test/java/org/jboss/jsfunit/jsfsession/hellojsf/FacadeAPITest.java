@@ -24,19 +24,15 @@ package org.jboss.jsfunit.jsfsession.hellojsf;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.cactus.ServletTestCase;
 import org.jboss.jsfunit.framework.Environment;
 import org.jboss.jsfunit.framework.WebClientSpec;
-import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -99,6 +95,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testSetCheckbox() throws IOException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("funcheck"); // uncheck it
       client.click("submit_button");
       assertFalse((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
@@ -110,6 +107,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testClickCommandLink() throws IOException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("go_back_link");
       
@@ -119,6 +117,7 @@ public class FacadeAPITest extends ServletTestCase
    
    public void testCommandLinkWithoutViewChange() throws IOException
    {
+      client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("stay_here_link");
       
