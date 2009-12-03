@@ -53,6 +53,12 @@
       <email>l.jinok.l@gmail.com</email>
       <url>http://jsf.jboss.org</url>
       <timezone>-8</timezone>
+    </developer>
+    <developer>
+    	<id>AJesse</id>
+    	<name>Alexander Jesse</name>
+    	<email>alejesse@gmail.com</email>
+    	<timezone>+1</timezone>
     </developer>    
   </developers>
 
