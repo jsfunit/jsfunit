@@ -18,39 +18,32 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
-
 package org.jboss.jsfunit.analysis;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-
 /**
- * @author Dennis Byrne
+ * A TestCase for a single JSF facesContext factory.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $$Revision:  $$
  */
+public class FacesContextFactoryTestCase extends AbstractInterfaceTestCase
+{
+   /**
+    * Create a new FacesContextFactoryTestCase.
+    * 
+    * @param name The name of the test-case in the JUnit test-hierarchy
+    * @param className to be checked
+    */
+   public FacesContextFactoryTestCase(String name, String className)
+   {
+      super(name, "FacesContext Factory", className);
+   }
 
-public class ManagedBean_JSFUNIT_32_TestCase extends TestCase {
-	
-	public void testDuplicateProperty() {
-		
-		String managedProperty = TestUtils.getManagedProperty("setter", "value");
-		String manageBean = TestUtils.getManagedBean("bad", ManagedBeanOneProperty.class, "none", managedProperty + managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			throw new RuntimeException("should have failed");
-			
-		}catch(AssertionFailedError e) { 
-			
-			String msg = "managed bean 'bad' in stubbed resource path has a duplicate property named setter";
-			assertEquals(msg, e.getMessage());
-			
-		}
-		
-	}
-
+   @Override
+   protected Class<?> getClassToExtend()
+   {
+      return javax.faces.context.FacesContextFactory.class;
+   }
 }

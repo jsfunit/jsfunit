@@ -18,20 +18,23 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
+package org.jboss.jsfunit.analysis.model;
 
-package org.jboss.jsfunit.analysis;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 
 /**
- * @author Dennis Byrne
+ * A TestActionListener, used to test the ActionListenerTestCase.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $Revision: 1.1 $
  */
-
-public class ManagedBeanOneProperty {
-
-	private String setter;
-
-	public void setSetter(String setter) {
-		this.setter = setter;
-	}
-	
+public class TestActionListener implements ActionListener
+{
+   public void processAction(ActionEvent event) throws AbortProcessingException
+   {
+   }
 }

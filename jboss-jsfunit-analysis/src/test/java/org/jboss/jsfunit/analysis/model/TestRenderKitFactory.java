@@ -1,4 +1,3 @@
-
 /*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
@@ -19,31 +18,40 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
 package org.jboss.jsfunit.analysis.model;
 
-import java.util.Map;
+import java.util.Iterator;
 
-import javax.faces.event.ActionEvent;
+import javax.faces.context.FacesContext;
+import javax.faces.render.RenderKit;
+import javax.faces.render.RenderKitFactory;
 
 /**
- * @author Dennis Byrne
+ * A TestRenderKitFactory.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $Revision: 1.1 $
  */
+public class TestRenderKitFactory extends RenderKitFactory
+{
 
-public class ManagedBean {
+   @Override
+   public void addRenderKit(String arg0, RenderKit arg1)
+   {
+   }
 
-	public String beanAction() { return null; }
+   @Override
+   public RenderKit getRenderKit(FacesContext arg0, String arg1)
+   {
+      return null;
+   }
 
-	/* attribute - accessor tests */
-	public String getExisting() { return null; }
-    public void setExisting(String value) {}
-    public boolean isExistingBoolean() { return false; }
-    public void setExistingBoolean(boolean value) {}
-    public Map<String, String> getExistingMap() { return null; }
-    public void setExistingMap(Map<String, String> value) {}
-    public String getNoSetter() { return null; }
-    public void setNoGetter(String value) {}
-	
-	public void beanActionListener(ActionEvent event) { };
-	
+   @Override
+   public Iterator<String> getRenderKitIds()
+   {
+      return null;
+   }
+
 }

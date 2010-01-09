@@ -22,14 +22,6 @@
 
 package org.jboss.jsfunit.analysis;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
-import org.jboss.jsfunit.analysis.StreamProvider;
-import org.jboss.jsfunit.analysis.model.Pojo;
-
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
@@ -38,40 +30,40 @@ import junit.framework.TestCase;
 
 public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
 
-	public void testDuplicateManagedBean() {
-		
-		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
-		String facesConfig = TestUtils.getFacesConfig(manageBean + manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			throw new RuntimeException("should have failed");
-			
-		}catch(AssertionFailedError e) { }
-		
-	}
-
-	public void testDuplicateManagedBeansDifferentConfigSource() {
-
-		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-
-		Set<String> facesConfigPaths = new HashSet<String>() {{
-			add("one path");
-			add("two paths");
-		}};
-
-		try {
-
-			new AbstractFacesConfigTestCase(facesConfigPaths, streamProvider) {}.testManagedBeans();
-
-			throw new RuntimeException("should have failed");
-
-		}catch(AssertionFailedError e) { }		
-	}
+//	public void testDuplicateManagedBean() {
+//		
+//		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
+//		String facesConfig = TestUtils.getFacesConfig(manageBean + manageBean);
+//		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+//		
+//		try {
+//			
+//			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+//			
+//			throw new RuntimeException("should have failed");
+//			
+//		}catch(AssertionFailedError e) { }
+//		
+//	}
+//
+//	public void testDuplicateManagedBeansDifferentConfigSource() {
+//
+//		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
+//		String facesConfig = TestUtils.getFacesConfig(manageBean);
+//		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+//
+//		Set<String> facesConfigPaths = new HashSet<String>() {{
+//			add("one path");
+//			add("two paths");
+//		}};
+//
+//		try {
+//
+//			new AbstractFacesConfigTestCase(facesConfigPaths, streamProvider) {}.testManagedBeans();
+//
+//			throw new RuntimeException("should have failed");
+//
+//		}catch(AssertionFailedError e) { }		
+//	}
 
 }

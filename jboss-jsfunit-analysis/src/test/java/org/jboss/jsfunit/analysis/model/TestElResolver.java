@@ -1,4 +1,3 @@
-
 /*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
@@ -19,31 +18,56 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
 package org.jboss.jsfunit.analysis.model;
 
-import java.util.Map;
+import java.beans.FeatureDescriptor;
+import java.util.Iterator;
 
-import javax.faces.event.ActionEvent;
+import javax.el.ELContext;
+import javax.el.ELResolver;
 
 /**
- * @author Dennis Byrne
+ * A TestElResolver.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $Revision: 1.1 $
  */
+public class TestElResolver extends ELResolver
+{
+   @Override
+   public Class<?> getCommonPropertyType(ELContext arg0, Object arg1)
+   {
+      return null;
+   }
 
-public class ManagedBean {
+   @Override
+   public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext arg0, Object arg1)
+   {
+      return null;
+   }
 
-	public String beanAction() { return null; }
+   @Override
+   public Class<?> getType(ELContext arg0, Object arg1, Object arg2)
+   {
+      return null;
+   }
 
-	/* attribute - accessor tests */
-	public String getExisting() { return null; }
-    public void setExisting(String value) {}
-    public boolean isExistingBoolean() { return false; }
-    public void setExistingBoolean(boolean value) {}
-    public Map<String, String> getExistingMap() { return null; }
-    public void setExistingMap(Map<String, String> value) {}
-    public String getNoSetter() { return null; }
-    public void setNoGetter(String value) {}
-	
-	public void beanActionListener(ActionEvent event) { };
-	
+   @Override
+   public Object getValue(ELContext arg0, Object arg1, Object arg2)
+   {
+      return null;
+   }
+
+   @Override
+   public boolean isReadOnly(ELContext arg0, Object arg1, Object arg2)
+   {
+      return false;
+   }
+
+   @Override
+   public void setValue(ELContext arg0, Object arg1, Object arg2, Object arg3)
+   {
+   }
 }

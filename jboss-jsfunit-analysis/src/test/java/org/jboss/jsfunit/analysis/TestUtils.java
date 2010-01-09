@@ -22,8 +22,16 @@
 
 package org.jboss.jsfunit.analysis;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+
+import org.jboss.jsfunit.analysis.util.ParserUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Dennis Byrne
@@ -70,4 +78,280 @@ public class TestUtils {
 		return getManagedBean(name, clazz, scope, "");
 	}
 	
+   public static Node createManagedPropertyNode(String facesConfig, String propertyName)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "//managed-bean/managed-property";
+      NodeList managedProperties = ParserUtils.query(document, xpath, configFilePath);
+      for (int j = 0; j < managedProperties.getLength(); j++)
+      {
+         Node property = managedProperties.item(j);
+         String propertyNameTemp = ParserUtils.querySingle(property, "./property-name/text()", configFilePath).trim();
+         if (propertyNameTemp != null && propertyNameTemp.trim().length() > 0 && propertyNameTemp.equals(propertyName))
+         {
+            return property;
+         }
+      }
+      return null;
+   }
+
+   public static Node createManagedBeanNode(String facesConfig, String managedBeanName)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/managed-bean";
+      String xpathBeanName = "./managed-bean-name/text()";
+      NodeList managedBeans = ParserUtils.query(document, xpath, configFilePath);
+      for (int i = 0; i < managedBeans.getLength(); i++)
+      {
+         Node bean = managedBeans.item(i);
+         String name = ParserUtils.querySingle(bean, xpathBeanName, configFilePath).trim();
+         if (name != null && name.trim().length() > 0 && managedBeanName.equals(name))
+         {
+            return bean;
+         }
+      }
+      return null;
+   }
+
+   public static Node extractFirstLifecycleNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/lifecycle";
+      NodeList lifecycles = ParserUtils.query(document, xpath, configFilePath);
+      if (lifecycles.getLength() > 0)
+      {
+         return lifecycles.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstManagedBeanNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "//managed-bean";
+      NodeList managedBeans = ParserUtils.query(document, xpath, configFilePath);
+      Node bean = null;
+      if (managedBeans.getLength() > 0)
+      {
+         bean = managedBeans.item(0);
+
+      }
+      return bean;
+   }
+
+   public static Node extractFirstRenderKitNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/render-kit";
+      NodeList renderKits = ParserUtils.query(document, xpath, configFilePath);
+      if (renderKits.getLength() > 0)
+      {
+         return renderKits.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstNavigationRuleNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/navigation-rule";
+      NodeList navigationRules = ParserUtils.query(document, xpath, configFilePath);
+      if (navigationRules.getLength() > 0)
+      {
+         return navigationRules.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstNavigationCaseNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/navigation-rule/navigation-case";
+      NodeList navigationCases = ParserUtils.query(document, xpath, configFilePath);
+      if (navigationCases.getLength() > 0)
+      {
+         return navigationCases.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstRendererNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/render-kit/renderer";
+      NodeList renderers = ParserUtils.query(document, xpath, configFilePath);
+      if (renderers.getLength() > 0)
+      {
+         return renderers.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstConverterNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/converter";
+      NodeList converters = ParserUtils.query(document, xpath, configFilePath);
+      if (converters.getLength() > 0)
+      {
+         return converters.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstValidatorNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/validator";
+      NodeList validators = ParserUtils.query(document, xpath, configFilePath);
+      if (validators.getLength() > 0)
+      {
+         return validators.item(0);
+      }
+      return null;
+   }
+
+   public static Node extractFirstComponentNode(String facesConfig)
+   {
+      StreamProvider streamProvider = new StringStreamProvider(facesConfig);
+      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String xml = ParserUtils.getXml(configFilePath, streamProvider);
+      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+      Document document = null;
+      try
+      {
+         document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Could not parse document '" + configFilePath + "'\n" + xml, e);
+      }
+      String xpath = "/faces-config/component";
+      NodeList validators = ParserUtils.query(document, xpath, configFilePath);
+      if (validators.getLength() > 0)
+      {
+         return validators.item(0);
+      }
+      return null;
+   }
 }

@@ -18,37 +18,55 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
+package org.jboss.jsfunit.analysis.model;
 
-package org.jboss.jsfunit.analysis;
+import java.io.OutputStream;
+import java.io.Writer;
 
-import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
-import org.jboss.jsfunit.analysis.StreamProvider;
-import org.jboss.jsfunit.analysis.model.Pojo;
-
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import javax.faces.context.ResponseStream;
+import javax.faces.context.ResponseWriter;
+import javax.faces.render.RenderKit;
+import javax.faces.render.Renderer;
+import javax.faces.render.ResponseStateManager;
 
 /**
- * @author Dennis Byrne
+ * A TestRenderKit.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $Revision: 1.1 $
  */
+public class TestRenderKit extends RenderKit
+{
 
-public class ManagedBeanScope_JSFUNIT_36_TestCase extends TestCase {
+   @Override
+   public void addRenderer(String arg0, String arg1, Renderer arg2)
+   {
+   }
 
-	public void testInvalidScope() {
-		
-		String manageBean = TestUtils.getManagedBean("bad", Pojo.class, "foo");
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			throw new RuntimeException("should have failed because foo is invalid scope");
-			
-		}catch(AssertionFailedError e) { }
-		
-	}
-	
+   @Override
+   public ResponseStream createResponseStream(OutputStream arg0)
+   {
+      return null;
+   }
+
+   @Override
+   public ResponseWriter createResponseWriter(Writer arg0, String arg1, String arg2)
+   {
+      return null;
+   }
+
+   @Override
+   public Renderer getRenderer(String arg0, String arg1)
+   {
+      return null;
+   }
+
+   @Override
+   public ResponseStateManager getResponseStateManager()
+   {
+      return null;
+   }
+
 }

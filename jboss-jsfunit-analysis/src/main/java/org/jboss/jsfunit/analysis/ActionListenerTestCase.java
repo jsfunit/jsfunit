@@ -1,4 +1,3 @@
-
 /*
  * JBoss, Home of Professional Open Source.
  * Copyright 2007, Red Hat Middleware LLC, and individual contributors
@@ -19,31 +18,32 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
-package org.jboss.jsfunit.analysis.model;
-
-import java.util.Map;
-
-import javax.faces.event.ActionEvent;
+package org.jboss.jsfunit.analysis;
 
 /**
- * @author Dennis Byrne
+ * A TestCase for a single JSF action listener.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $$Revision:  $$
  */
+public class ActionListenerTestCase extends AbstractInterfaceTestCase
+{
+   /**
+    * Create a new ActionListenerTestCase.
+    * 
+    * @param name test case name
+    * @param className to be checked
+    */
+   public ActionListenerTestCase(String name, String className)
+   {
+      super(name, "Action Listener", className);
+   }
 
-public class ManagedBean {
-
-	public String beanAction() { return null; }
-
-	/* attribute - accessor tests */
-	public String getExisting() { return null; }
-    public void setExisting(String value) {}
-    public boolean isExistingBoolean() { return false; }
-    public void setExistingBoolean(boolean value) {}
-    public Map<String, String> getExistingMap() { return null; }
-    public void setExistingMap(Map<String, String> value) {}
-    public String getNoSetter() { return null; }
-    public void setNoGetter(String value) {}
-	
-	public void beanActionListener(ActionEvent event) { };
-	
+   @Override
+   protected Class<?> getClassToExtend()
+   {
+      return javax.faces.event.ActionListener.class;
+   }
 }

@@ -18,38 +18,31 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 
  */
+package org.jboss.jsfunit.analysis.model;
 
-package org.jboss.jsfunit.analysis;
-
-import org.jboss.jsfunit.analysis.AbstractFacesConfigTestCase;
-import org.jboss.jsfunit.analysis.StreamProvider;
-import org.jboss.jsfunit.analysis.model.Pojo;
-
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 
 /**
- * @author Dennis Byrne
+ * A TestConverter.
+ * 
+ * @author <a href="alejesse@gmail.com">Alexander Jesse</a>
+ * @version $Revision: 1.1 $
  */
+public class TestConverter implements Converter
+{
 
-public class ManagedBean_JSFUNIT_33_TestCase extends TestCase {
+   public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2)
+   {
+      return null;
+   }
 
-	public void testMissingProperty() {
-		
-		String managedProperty = TestUtils.getManagedProperty("notThere", "value");
-		String managedBean = TestUtils.getManagedBean("bad", Pojo.class, "none", managedProperty);
-		String facesConfig = TestUtils.getFacesConfig(managedBean);
-		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-		
-		try {
-			
-			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
-			
-			throw new RuntimeException("should have failed");
-			
-		}catch(AssertionFailedError e) { }
-		
-	}
-	
+   public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2)
+   {
+      return null;
+   }
+
 }

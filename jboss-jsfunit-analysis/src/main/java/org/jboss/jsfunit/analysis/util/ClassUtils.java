@@ -23,54 +23,77 @@
 package org.jboss.jsfunit.analysis.util;
 
 import static junit.framework.Assert.fail;
+
 /**
  * @author Dennis Byrne
  * @since 1.0
  */
 
-public class ClassUtils {
-	
-	public boolean isAssignableFrom(Class[] constraints, Class clazz) {
-		
-		for(Class constraint : constraints) 
-			if(constraint.isAssignableFrom(clazz)) 
-				return true;
-		
-		return false;
-	}
-	
-	public Class loadClass(String clazzName, String elementName) {
+public class ClassUtils
+{
 
-		if(clazzName == null)
-			throw new RuntimeException("No class for element '" + elementName + "'");
-		
-		try {
+   public boolean isAssignableFrom(Class[] constraints, Class clazz)
+   {
 
-			return getClass().getClassLoader().loadClass(clazzName.trim()); 
+      for (Class constraint : constraints)
+         if (constraint.isAssignableFrom(clazz))
+            return true;
 
-		} catch (ClassNotFoundException e) {
+      return false;
+   }
 
-			try {
+   public Class loadClass(String clazzName, String elementName)
+   {
 
-				return Thread.currentThread().getContextClassLoader().loadClass(clazzName.trim());
+      if (clazzName == null)
+         throw new RuntimeException("No class for element '" + elementName + "' (classname null)");
 
-			}catch(ClassNotFoundException e2) {
+      try
+      {
 
-				fail("Could not load class '" + clazzName + "' for element '" + elementName + "'");
-				return null; // this line is unreachable but the compiler does not know this
-			}
-			
-		}
+         return getClass().getClassLoader().loadClass(clazzName.trim());
 
-	}
-	
-	public String getConstraintsList(Class[] constraints) {
-		
-		String msg = "";
-		
-		for(int c = 0; c < constraints.length ; c++) 
-			msg += constraints[c].getName() + ( (c == constraints.length - 1 ? "" : " or ") );
-		
-		return msg;
-	}
+      }
+      catch (ClassNotFoundException e)
+      {
+
+         try
+         {
+
+            return Thread.currentThread().getContextClassLoader().loadClass(clazzName.trim());
+
+         }
+         catch (ClassNotFoundException e2)
+         {
+
+            fail("Could not load class '" + clazzName + "' for element '" + elementName + "'");
+            return null; // this line is unreachable but the compiler does not know this
+         }
+         catch (NoClassDefFoundError ncdf2)
+         {
+            fail("Could not load class '" + clazzName + "' for element '" + elementName
+                  + "' because of NoClassDefFoundError (" + ncdf2.getMessage() + ")");
+            return null; // this line is unreachable but the compiler does not know this
+         }
+
+      }
+      catch (NoClassDefFoundError ncdf)
+      {
+         fail("Could not load class '" + clazzName + "' for element '" + elementName
+               + "' because of NoClassDefFoundError (" + ncdf.getMessage() + ")");
+         return null; // this line is unreachable but the compiler does not know this
+      }
+
+   }
+
+   public String getConstraintsList(Class[] constraints)
+   {
+
+      String msg = "";
+
+      for (int c = 0; c < constraints.length; c++)
+         msg += constraints[c].getName() + ((c == constraints.length - 1 ? "" : " or "));
+
+      return msg;
+   }
 }
