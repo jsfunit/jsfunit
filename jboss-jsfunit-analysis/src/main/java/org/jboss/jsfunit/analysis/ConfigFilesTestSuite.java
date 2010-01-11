@@ -66,6 +66,8 @@ public class ConfigFilesTestSuite extends TestSuite
    public Test getSuite(List<String> configFilePathList)
    {
       System.out.println("start building dynamic suite");
+      long timeStart = System.currentTimeMillis();
+
       if (configFilePathList == null)
       {
          throw new RuntimeException("Invalid input: null");
@@ -79,7 +81,10 @@ public class ConfigFilesTestSuite extends TestSuite
          subSuite.setStreamProvider(getStreamProvider());
          suite.addTest(subSuite.getSuite(singleConfigFilePath, configFilePathList));
       }
-      System.out.println("stop building dynamic suite");
+
+      long timeStop = System.currentTimeMillis();
+      double timeInSeconds = ((double)(timeStop - timeStart)) / 1000;
+      System.out.println("stop building dynamic suite (duration: " + timeInSeconds + " seconds) adding " + suite.countTestCases() + " testcases.");
       return suite;
    }
 

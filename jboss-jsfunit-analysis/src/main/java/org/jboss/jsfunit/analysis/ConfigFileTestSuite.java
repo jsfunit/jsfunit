@@ -77,6 +77,9 @@ public class ConfigFileTestSuite extends TestSuite
     */
    public Test getSuite(String configFilePath, List<String> configFilePathList)
    {
+      System.out.println("  start building dynamic suite for " + configFilePath);
+      long timeStart = System.currentTimeMillis();
+
       TestSuite suite = new TestSuite();
       suite.setName(getName());
       if (configFilePath == null || "".equals(configFilePath.trim()))
@@ -150,6 +153,10 @@ public class ConfigFileTestSuite extends TestSuite
          Node validatorNode = iterator.next();
          suite.addTest(new ValidatorTestCase(getName() + "_validator", validatorNode, configFilePath));
       }
+      long timeStop = System.currentTimeMillis();
+      double timeInSeconds = ((double)(timeStop - timeStart)) / 1000;
+      System.out.println("  stop building dynamic suite (duration: " + timeInSeconds + " seconds) adding " + suite.countTestCases() + " testcases.");
+
       return suite;
    }
 
