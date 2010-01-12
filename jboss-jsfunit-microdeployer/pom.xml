@@ -80,17 +80,18 @@
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven2-plugin</artifactId>
+            <!--<version>1.0.1-alpha-1</version>-->
             <configuration>
               <wait>false</wait>
               <configuration>      
                 <home>${project.build.directory}/cargoconfig</home>
                 <files>
-                  <copy>
+        <!--          <copy>
                     <file>${project.build.directory}/cargoconfig/conf/bootstrap-norepo.xml</file>
                     <tofile>conf/bootstrap.xml</tofile>
                     <configfile>false</configfile>
                     <overwrite>true</overwrite>
-                  </copy>
+                  </copy>  -->
                   <copy>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                     <todir>deployers</todir>
@@ -119,8 +120,8 @@
                 </deployables>
               </configuration>
               <container>
-                <containerId>jboss5x</containerId>
-                <timeout>240000</timeout>  <!-- 4 minutes -->
+                <containerId>jboss51x</containerId>
+                <timeout>480000</timeout>  <!-- 8 minutes -->
                 <home>${JBOSS_HOME}</home>
                 <log>${basedir}/target/jboss5.x/cargo.log</log>
                 <output>${basedir}/target/jboss5.x/container.log</output>

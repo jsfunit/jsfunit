@@ -8,10 +8,11 @@
 	<rich:separator height="1" />
 	
 	<a4j:form>
-		<h:panelGrid columns="3">
+		<h:panelGrid columns="4">
 			<h:outputText value="Name:" />
 			<h:inputText id="inputName" value="#{userBean.name}" />
 			<a4j:commandButton id="SayHelloButton" value="Say Hello" reRender="out" />
+                        <a4j:commandButton id="SayHelloButtonWithDelay" requestDelay="500" value="Say Hello" reRender="out" />
 		</h:panelGrid>
 	</a4j:form>
 	<h:panelGroup id="out">

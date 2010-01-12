@@ -22,10 +22,11 @@
 
 package org.jboss.jsfunit.richclient;
 
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
@@ -160,7 +161,7 @@ public class RichFacesClient
    public void clickTreeNodeHandle( String treeNodeKey, String treeNodeId ) throws IOException
    {
 	   final String handleId = ":"+treeNodeKey+"::"+treeNodeId+":handle";
-	   ClickableElement icon = (ClickableElement)jsfClient.getElement(handleId);
+	   HtmlElement icon = (HtmlElement)jsfClient.getElement(handleId);
 	   if( icon == null ) throw new ComponentIDNotFoundException(handleId);
 	   icon.click();	   
    }
@@ -260,7 +261,7 @@ public class RichFacesClient
    public void clickTab(String tabComponentID)
          throws IOException
    {
-      ClickableElement tab = (ClickableElement)jsfClient.getElement(tabComponentID + "_shifted");
+      HtmlElement tab = (HtmlElement)jsfClient.getElement(tabComponentID + "_shifted");
       tab.click();
    }
    
@@ -364,5 +365,96 @@ public class RichFacesClient
    {
       HtmlInput input = (HtmlInput)jsfClient.getElement(componentID + "Input");
       input.setValueAttribute(value);
+   }
+
+   /**
+    * Get the HtmlElement of the tree handle for a node in a RichTree.  Typically,
+    * you would then call HtmlElement.click() to toggle expanded/collapsed
+    *
+    * @param treeID id of the rich:tree
+    * @param treeNodeID id of the rich:treeNode
+    * @param nodeText text of the node
+    *
+    * @return The HtmlElement used to toggle expanded/collapsed,
+    *         or <code>null</code> if not found.
+    *
+    * @throws IOException
+    * @throws ComponentIDNotFoundException if the component can not be found
+    */
+   public HtmlElement getTreeHandle(String treeID, String treeNodeID, String nodeText) throws IOException
+   {
+       DomNode table = (DomNode)jsfClient.getElement(treeID);
+       String xpath = "//text()[. = '" + nodeText + "']/ancestor::*" +  // all ancestors of the target text node
+                      "/tr[contains(@id, ':" + treeNodeID + ":')]/descendant::*" + // which have tr descendants with the treeNodeID
+                      "/a[@class='rich-tree-node-handle'][contains(@id, ':" + treeNodeID + ":')]"; // that has decendants that are tree handles
+       
+       HtmlElement foundElement = (HtmlElement)table.getFirstByXPath(xpath);
+       if (foundElement != null) return foundElement;
+
+       // for ajax, RichFaces will sometimes use xhtml namespace
+       xpath = "//text()[. = '" + nodeText + "']/ancestor::*" +
+               "/self::node()[namespace-uri()='http://www.w3.org/1999/xhtml'][local-name()='tr'][contains(@id, ':" + treeNodeID + ":')]/descendant::*" +
+               "/self::node()[namespace-uri()='http://www.w3.org/1999/xhtml'][local-name()='a'][@class='rich-tree-node-handle'][contains(@id, ':" + treeNodeID + ":')]";
+       return (HtmlElement)table.getFirstByXPath(xpath);
+   }
+
+   /**
+    * Find out if a tree handle is expanded.
+    *
+    * @param treeID id of the rich:tree
+    * @param treeNodeID id of the rich:treeNode
+    * @param nodeText text of the node
+    *
+    * @return <code>true</code> if the tree handle is exapanded, <code>false</code> otherwise.
+    *
+    * @throws IOException
+    * @throws ComponentIDNotFoundException if the component can not be found
+    */
+   public boolean isTreeHandleExpanded(String treeID, String treeNodeID, String nodeText) throws IOException
+   {
+       HtmlElement treeHandle = getTreeHandle(treeID, treeNodeID, nodeText);
+       if (treeHandle == null) return false;
+
+       String classValue = treeHandle.getAttribute("class");
+       if ((classValue == null) || (!classValue.equals("rich-tree-node-handle")))
+       {
+           throw new IllegalArgumentException("treeHandle element is not a RichFaces tree node handle: " + treeHandle.asXml());
+       }
+
+       String handleXpath = treeHandle.getCanonicalXPath();
+       String imgXpath = handleXpath + "/img[@class='rich-tree-node-handleicon-expanded'][contains(@style, 'display: none;')]";
+       HtmlElement img = (HtmlElement)treeHandle.getFirstByXPath(imgXpath);
+       if (img != null) return false;
+
+       // for ajax, RichFaces will sometimes use xhtml namespace
+       imgXpath = handleXpath + "/child::*/self::node()[namespace-uri()='http://www.w3.org/1999/xhtml'][local-name()='img']" +
+                                             "[@class='rich-tree-node-handleicon-expanded'][contains(@style, 'display: none;')]";
+
+       img = (HtmlElement)treeHandle.getFirstByXPath(imgXpath);
+       return (img == null);
+   }
+
+   /**
+    * Get the HtmlElement of the tree node that contains the given text.
+    * Specifically, it finds a text node with the given text and then returns
+    * a parent node whose Id contains the treeID and treeNodeID.
+    *
+    * Typically, you would then call HtmlElement.click() to select the
+    * node.
+    *
+    * @param treeID id of the rich:tree
+    * @param treeNodeID id of the rich:treeNode
+    * @param nodeText text of the node
+    *
+    * @return The HtmlElement used to toggle expanded/collapsed
+    *
+    * @throws IOException
+    * @throws ComponentIDNotFoundException if the component can not be found
+    */
+   public HtmlElement getTreeNodeByText(String treeID, String treeNodeID, String nodeText) throws IOException
+   {
+       DomNode table = (DomNode)jsfClient.getElement(treeID);
+       String xpath = "//text()[. = '" + nodeText + "']/parent::*[contains(@id,'" + treeID + "')][contains(@id,'" + treeNodeID + "')]";
+       return (HtmlElement)table.getFirstByXPath(xpath);
    }
 }

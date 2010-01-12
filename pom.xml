@@ -185,13 +185,13 @@
       <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-api</artifactId>
-        <version>1.2_13</version>
+        <version>2.0.1-FCS</version>
       </dependency>
       
       <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-impl</artifactId>
-        <version>1.2_13</version>
+        <version>2.0.1-FCS</version>
       </dependency>
 
       <dependency>
@@ -313,7 +313,7 @@
 	<layout>legacy</layout>
     </repository>    
     -->
-    <repository>
+ <!--   <repository>
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
@@ -325,7 +325,7 @@
       <name>NekoHTML Snapshots</name>
       <url>http://build.canoo.com/NekoHTML/artifacts/m2-repo</url>
       <layout>default</layout>
-    </repository> 
+    </repository> -->
      
      
      <repository>
@@ -377,7 +377,7 @@
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
-        <version>1.0</version>
+        <version>1.0.1-alpha-1</version>
       </plugin>
       
     </plugins>
