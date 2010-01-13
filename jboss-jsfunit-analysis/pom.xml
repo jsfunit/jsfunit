@@ -27,7 +27,7 @@
         <version>2.1.2</version>
         <configuration>
           <excludes>
-            <exclude>**/TestUtils*</exclude>
+            <!-- exclude>**/TestUtils*</exclude -->
           </excludes>
         </configuration>
       </plugin>      
