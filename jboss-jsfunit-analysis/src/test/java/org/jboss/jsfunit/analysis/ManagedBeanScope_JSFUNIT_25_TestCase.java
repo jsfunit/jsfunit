@@ -30,6 +30,16 @@ import junit.framework.TestCase;
 
 public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
 
+   public void testDummy() {
+      /*
+       * The problem here is (with the issue JSFUNIT-25 is, that JSF allows for such duplicate 
+       * bean definitions and has well documented rules on how to deal with such a duplicate 
+       * configuration issue.
+       * That's why the validity of such a duplicate test should be questioned. And as such the 
+       * test is not migrated to the the new structure. For docuemtnation issue not deleted but 
+       * merely commented out.
+       */
+   }
 //	public void testDuplicateManagedBean() {
 //		
 //		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
