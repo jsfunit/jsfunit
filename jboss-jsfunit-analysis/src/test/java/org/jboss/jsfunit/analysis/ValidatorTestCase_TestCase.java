@@ -42,10 +42,10 @@ public class ValidatorTestCase_TestCase extends TestCase
    public void testHappyPaths()
    {
       String validator = "<validator><validator-class>org.jboss.jsfunit.analysis.model.TestValidator</validator-class></validator>";
-      String facesConfig = TestUtils.getFacesConfig(validator);
-      Node validatorNode = TestUtils.extractFirstValidatorNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(validator);
+      Node validatorNode = Utilities.extractFirstValidatorNode(facesConfig);
       ValidatorTestCase testcase = new ValidatorTestCase("testHappyPaths", validatorNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       testcase.runTest();
    }
 
@@ -55,10 +55,10 @@ public class ValidatorTestCase_TestCase extends TestCase
    public void testTestClassLoadable()
    {
       String validator = "<validator><validator-class>com.nonexist.Foo</validator-class></validator>";
-      String facesConfig = TestUtils.getFacesConfig(validator);
-      Node validatorNode = TestUtils.extractFirstValidatorNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(validator);
+      Node validatorNode = Utilities.extractFirstValidatorNode(facesConfig);
       ValidatorTestCase testcase = new ValidatorTestCase("testTestClassLoadable", validatorNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("com.nonexist.Foo");
@@ -77,10 +77,10 @@ public class ValidatorTestCase_TestCase extends TestCase
    public void testTestInterface()
    {
       String validator = "<validator><validator-class>org.jboss.jsfunit.analysis.model.Pojo</validator-class></validator>";
-      String facesConfig = TestUtils.getFacesConfig(validator);
-      Node validatorNode = TestUtils.extractFirstValidatorNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(validator);
+      Node validatorNode = Utilities.extractFirstValidatorNode(facesConfig);
       ValidatorTestCase testcase = new ValidatorTestCase("testTestInterface", validatorNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("org.jboss.jsfunit.analysis.model.Pojo");

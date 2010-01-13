@@ -35,7 +35,7 @@ import org.w3c.dom.Node;
  */
 public class NavigationCaseTestCase_TestCase extends TestCase
 {
-   private static final String CONFIG_FILE_PATH = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+   private static final String CONFIG_FILE_PATH = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
 
    private static final String CORRECT = "<navigation-rule>"
          + "<description>Test Navigation Rule</description><display-name>MyNavigationCase</display-name>"
@@ -45,8 +45,8 @@ public class NavigationCaseTestCase_TestCase extends TestCase
 
    public void testHappyPaths()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
-      Node navigationCaseNode = TestUtils.extractFirstNavigationCaseNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
+      Node navigationCaseNode = Utilities.extractFirstNavigationCaseNode(facesConfig);
       NavigationCaseTestCase testCase = new NavigationCaseTestCase("NavigationCaseTestCase_TestCase", CONFIG_FILE_PATH,
             navigationCaseNode);
       testCase.runTest();
@@ -58,8 +58,8 @@ public class NavigationCaseTestCase_TestCase extends TestCase
             + "<description>Test Navigation Rule</description><display-name>MyNavigationCase</display-name>"
             + "<from-view-id>/pages/myFromView.jsp</from-view-id>" + "<navigation-case>"
             + "<display-name>MyNavigationCase</display-name>" + "</navigation-case>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseNoToViewId);
-      Node navigationCaseNode = TestUtils.extractFirstNavigationCaseNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseNoToViewId);
+      Node navigationCaseNode = Utilities.extractFirstNavigationCaseNode(facesConfig);
       NavigationCaseTestCase testCase = new NavigationCaseTestCase("NavigationCaseTestCase_TestCase", CONFIG_FILE_PATH,
             navigationCaseNode);
       try
@@ -79,8 +79,8 @@ public class NavigationCaseTestCase_TestCase extends TestCase
             + "<from-view-id>/pages/myFromView.jsp</from-view-id>" + "<navigation-case>"
             + "<display-name>MyNavigationCase</display-name>" + "<to-view-id>/pages/myToView1.jsp</to-view-id>"
             + "<to-view-id>/pages/myToView2.jsp</to-view-id>" + "</navigation-case>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseDuplicateToViewId);
-      Node navigationCaseNode = TestUtils.extractFirstNavigationCaseNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseDuplicateToViewId);
+      Node navigationCaseNode = Utilities.extractFirstNavigationCaseNode(facesConfig);
       NavigationCaseTestCase testCase = new NavigationCaseTestCase("NavigationCaseTestCase_TestCase", CONFIG_FILE_PATH,
             navigationCaseNode);
       try
@@ -100,8 +100,8 @@ public class NavigationCaseTestCase_TestCase extends TestCase
             + "<from-view-id>/pages/myFromView.jsp</from-view-id>" + "<navigation-case>"
             + "<display-name>MyNavigationCase</display-name>" + "<to-view-id>/pages/myToView1.jsp</to-view-id>"
             + "<redirect />" + "<redirect />" + "</navigation-case>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseDuplicateRedirect);
-      Node navigationCaseNode = TestUtils.extractFirstNavigationCaseNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseDuplicateRedirect);
+      Node navigationCaseNode = Utilities.extractFirstNavigationCaseNode(facesConfig);
       NavigationCaseTestCase testCase = new NavigationCaseTestCase("NavigationCaseTestCase_TestCase", CONFIG_FILE_PATH,
             navigationCaseNode);
       try
@@ -122,8 +122,8 @@ public class NavigationCaseTestCase_TestCase extends TestCase
             + "<display-name>MyNavigationCase</display-name>" + "<to-view-id>/pages/myToView1.jsp</to-view-id>"
             + "<from-action>#{testBean.testAction1}</from-action>"
             + "<from-action>#{testBean.testAction2}</from-action>" + "</navigation-case>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseDuplicateFromAction);
-      Node navigationCaseNode = TestUtils.extractFirstNavigationCaseNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseDuplicateFromAction);
+      Node navigationCaseNode = Utilities.extractFirstNavigationCaseNode(facesConfig);
       NavigationCaseTestCase testCase = new NavigationCaseTestCase("NavigationCaseTestCase_TestCase", CONFIG_FILE_PATH,
             navigationCaseNode);
       try
@@ -143,8 +143,8 @@ public class NavigationCaseTestCase_TestCase extends TestCase
             + "<from-view-id>/pages/myFromView.jsp</from-view-id>" + "<navigation-case>"
             + "<display-name>MyNavigationCase</display-name>" + "<to-view-id>/pages/myToView1.jsp</to-view-id>"
             + "<from-action> </from-action>" + "</navigation-case>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseDuplicateFromAction);
-      Node navigationCaseNode = TestUtils.extractFirstNavigationCaseNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseDuplicateFromAction);
+      Node navigationCaseNode = Utilities.extractFirstNavigationCaseNode(facesConfig);
       NavigationCaseTestCase testCase = new NavigationCaseTestCase("NavigationCaseTestCase_TestCase", CONFIG_FILE_PATH,
             navigationCaseNode);
       try

@@ -42,10 +42,10 @@ public class RendererTestCase_TestCase extends TestCase
    public void testHappyPaths()
    {
       String renderer = "<render-kit><renderer><renderer-class>org.jboss.jsfunit.analysis.model.TestRenderer</renderer-class></renderer></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderer);
-      Node rendererNode = TestUtils.extractFirstRendererNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(renderer);
+      Node rendererNode = Utilities.extractFirstRendererNode(facesConfig);
       RendererTestCase testcase = new RendererTestCase("testHappyPaths", rendererNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       testcase.runTest();
    }
 
@@ -55,10 +55,10 @@ public class RendererTestCase_TestCase extends TestCase
    public void testTestClassLoadable()
    {
       String renderer = "<render-kit><renderer><renderer-class>com.nonexist.Foo</renderer-class></renderer></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderer);
-      Node rendererNode = TestUtils.extractFirstRendererNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(renderer);
+      Node rendererNode = Utilities.extractFirstRendererNode(facesConfig);
       RendererTestCase testcase = new RendererTestCase("testTestClassLoadable", rendererNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("com.nonexist.Foo");
@@ -77,10 +77,10 @@ public class RendererTestCase_TestCase extends TestCase
    public void testTestInterface()
    {
       String renderer = "<render-kit><renderer><renderer-class>org.jboss.jsfunit.analysis.model.Pojo</renderer-class></renderer></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderer);
-      Node rendererNode = TestUtils.extractFirstRendererNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(renderer);
+      Node rendererNode = Utilities.extractFirstRendererNode(facesConfig);
       RendererTestCase testcase = new RendererTestCase("testTestInterface", rendererNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("org.jboss.jsfunit.analysis.model.Pojo");

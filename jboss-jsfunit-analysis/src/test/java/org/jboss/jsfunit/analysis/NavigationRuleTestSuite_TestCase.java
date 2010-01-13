@@ -58,35 +58,35 @@ public class NavigationRuleTestSuite_TestCase extends TestCase
 
    public void testHappyPathDisplayName()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT_1);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT_1);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
       assertEquals(3, test.countTestCases());
    }
 
    public void testHappyPathViewId()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT_2);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT_2);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
       assertEquals(3, test.countTestCases());
    }
 
    public void testHappyPathEmpty()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
       assertEquals(1, test.countTestCases());
    }
 
    public void testHappyPathNullConfigFilePath()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
       Test test = testSuite.getSuite(null, navigationRuleNode);
       assertEquals(1, test.countTestCases());
@@ -94,8 +94,8 @@ public class NavigationRuleTestSuite_TestCase extends TestCase
 
    public void testHappyPathEmptyConfigFilePath()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
       Test test = testSuite.getSuite("", navigationRuleNode);
       assertEquals(1, test.countTestCases());
@@ -104,18 +104,18 @@ public class NavigationRuleTestSuite_TestCase extends TestCase
    public void testHappyPathNullNavigationRuleNode()
    {
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], null);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], null);
       assertEquals(1, test.countTestCases());
    }
 
    public void testNavigationCaseWithoutToViewId()
    {
-      String facesConfig = TestUtils.getFacesConfig(BAD_CASE_NO_TO_VIEW_ID);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(BAD_CASE_NO_TO_VIEW_ID);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
       try
       {
-         testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
+         testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], navigationRuleNode);
       }
       catch (RuntimeException re)
       {
@@ -134,7 +134,7 @@ public class NavigationRuleTestSuite_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig("");
+      String facesConfig = Utilities.getFacesConfig("");
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       NavigationRuleTestSuite testSuite = new NavigationRuleTestSuite("NavigationRuleTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

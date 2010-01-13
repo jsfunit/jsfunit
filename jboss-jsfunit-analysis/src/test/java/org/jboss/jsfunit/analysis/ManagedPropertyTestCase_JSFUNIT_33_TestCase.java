@@ -16,22 +16,22 @@ public class ManagedPropertyTestCase_JSFUNIT_33_TestCase extends TestCase
 {
    public void testExistingProperty()
    {
-      String property = TestUtils.getManagedProperty("existing", "value");
+      String property = Utilities.getManagedProperty("existing", "value");
       Node managedPropertyNode = createManagedPropertyNode(property, "existing");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "existing",
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "existing",
             managedPropertyNode);
       testCase.testPropertyAccessors();
    }
 
    public void testExistingBooleanProperty()
    {
-      String property = TestUtils.getManagedProperty("existingBoolean", "value");
+      String property = Utilities.getManagedProperty("existingBoolean", "value");
       Node managedPropertyNode = createManagedPropertyNode(property, "existingBoolean");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(),
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(),
             "existingBoolean", managedPropertyNode);
       testCase.testPropertyAccessors();
    }
@@ -39,11 +39,11 @@ public class ManagedPropertyTestCase_JSFUNIT_33_TestCase extends TestCase
    public void testMissingProperty()
    {
 
-      String property = TestUtils.getManagedProperty("notThere", "value");
+      String property = Utilities.getManagedProperty("notThere", "value");
       Node managedPropertyNode = createManagedPropertyNode(property, "notThere");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "notThere",
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "notThere",
             managedPropertyNode);
       try
       {
@@ -62,11 +62,11 @@ public class ManagedPropertyTestCase_JSFUNIT_33_TestCase extends TestCase
    public void testMissingPropertySetter()
    {
 
-      String property = TestUtils.getManagedProperty("noSetter", "value");
+      String property = Utilities.getManagedProperty("noSetter", "value");
       Node managedPropertyNode = createManagedPropertyNode(property, "noSetter");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noSetter",
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noSetter",
             managedPropertyNode);
       try
       {
@@ -85,11 +85,11 @@ public class ManagedPropertyTestCase_JSFUNIT_33_TestCase extends TestCase
    public void testMissingPropertyGetter()
    {
 
-      String property = TestUtils.getManagedProperty("noGetter", "value");
+      String property = Utilities.getManagedProperty("noGetter", "value");
       Node managedPropertyNode = createManagedPropertyNode(property, "noGetter");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noGetter",
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noGetter",
             managedPropertyNode);
       try
       {
@@ -107,8 +107,8 @@ public class ManagedPropertyTestCase_JSFUNIT_33_TestCase extends TestCase
 
    private Node createManagedPropertyNode(String property, String propertyName)
    {
-      String managedBean = TestUtils.getManagedBean("bean", ManagedBean.class, "none", property);
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      return TestUtils.createManagedPropertyNode(facesConfig, propertyName);
+      String managedBean = Utilities.getManagedBean("bean", ManagedBean.class, "none", property);
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      return Utilities.createManagedPropertyNode(facesConfig, propertyName);
    }
 }

@@ -47,16 +47,16 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
             + "  <map-entry>" + "       <key>duplicate</key>" + "       <value>3</value>" + "  </map-entry>"
             + "  <map-entry>" + "   <key>duplicate2</key>" + "   <value>4</value>" + "  </map-entry>"
             + " </map-entries>" + "</managed-property>";
-      String managedBean = TestUtils.getManagedBean("bean", ManagedBeanWithMap.class, "none", managedProperty);
-      String managedProperty2 = TestUtils.getManagedProperty("existing", "value");
-      String managedBean2 = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty2);
-      String facesConfig = TestUtils.getFacesConfig(managedBean + managedBean2);
-      Node managedPropertyNode = TestUtils.createManagedPropertyNode(facesConfig, "existingMap");
+      String managedBean = Utilities.getManagedBean("bean", ManagedBeanWithMap.class, "none", managedProperty);
+      String managedProperty2 = Utilities.getManagedProperty("existing", "value");
+      String managedBean2 = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty2);
+      String facesConfig = Utilities.getFacesConfig(managedBean + managedBean2);
+      Node managedPropertyNode = Utilities.createManagedPropertyNode(facesConfig, "existingMap");
       try
       {
          ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
                "ManagedPropertyTestCase_testTestMapDuplicateKeys",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(),
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(),
                "existingMap", managedPropertyNode);
          testCase.runTest();
       }
@@ -68,7 +68,7 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
       {
          ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
                "ManagedPropertyTestCase_testTestMapDuplicateKeys",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", ManagedBean.class.getName(), "existing",
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", ManagedBean.class.getName(), "existing",
                managedPropertyNode);
          testCase.runTest();
       }
@@ -87,11 +87,11 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
             + "  <map-entry>" + "       <key>duplicate</key>" + "       <value>3</value>" + "  </map-entry>"
             + "  <map-entry>" + "   <key>duplicate2</key>" + "   <value>4</value>" + "  </map-entry>"
             + " </map-entries>" + "</managed-property>";
-      String managedBean = TestUtils.getManagedBean("bean", ManagedBeanWithMap.class, "none", property);
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedPropertyNode = TestUtils.createManagedPropertyNode(facesConfig, "map");
+      String managedBean = Utilities.getManagedBean("bean", ManagedBeanWithMap.class, "none", property);
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedPropertyNode = Utilities.createManagedPropertyNode(facesConfig, "map");
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
-            "ManagedPropertyTestCase_testTestMapDuplicateKeys", (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0],
+            "ManagedPropertyTestCase_testTestMapDuplicateKeys", (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0],
             "bean", ManagedBean.class.getName(), "map", managedPropertyNode);
       try
       {
@@ -108,15 +108,15 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
     */
    public void testHappyPathPropertyAccessor()
    {
-      String managedProperty = TestUtils.getManagedProperty("existing", "value");
-      String manageBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
+      String managedProperty = Utilities.getManagedProperty("existing", "value");
+      String manageBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
 
-      Node managedPropertyNode = TestUtils.createManagedPropertyNode(facesConfig, "existing");
+      Node managedPropertyNode = Utilities.createManagedPropertyNode(facesConfig, "existing");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
             "ManagedPropertyTestCase_testHappyPathPropertyAccessor",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", ManagedBean.class.getName(), "existing",
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", ManagedBean.class.getName(), "existing",
             managedPropertyNode);
       testCase.testPropertyAccessors();
    }
@@ -126,20 +126,20 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
     */
    public void testTestPropertyAccessors()
    {
-      String managedProperty1 = TestUtils.getManagedProperty("notFound", "value");
-      String managedProperty2 = TestUtils.getManagedProperty("noSetter", "value");
-      String managedProperty3 = TestUtils.getManagedProperty("noGetter", "value");
-      String manageBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty1
+      String managedProperty1 = Utilities.getManagedProperty("notFound", "value");
+      String managedProperty2 = Utilities.getManagedProperty("noSetter", "value");
+      String managedProperty3 = Utilities.getManagedProperty("noGetter", "value");
+      String manageBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty1
             + managedProperty2 + managedProperty3);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedPropertyNode1 = TestUtils.createManagedPropertyNode(facesConfig, "notFound");
-      Node managedPropertyNode2 = TestUtils.createManagedPropertyNode(facesConfig, "noSetter");
-      Node managedPropertyNode3 = TestUtils.createManagedPropertyNode(facesConfig, "noGetter");
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedPropertyNode1 = Utilities.createManagedPropertyNode(facesConfig, "notFound");
+      Node managedPropertyNode2 = Utilities.createManagedPropertyNode(facesConfig, "noSetter");
+      Node managedPropertyNode3 = Utilities.createManagedPropertyNode(facesConfig, "noGetter");
       try
       {
          ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
                "ManagedPropertyTestCase_testTestMapDuplicateKeys",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "notFound",
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "notFound",
                managedPropertyNode1);
          testCase.testPropertyAccessors();
          fail("should have failed");
@@ -154,7 +154,7 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
       {
          ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
                "ManagedPropertyTestCase_testTestMapDuplicateKeys",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noSetter",
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noSetter",
                managedPropertyNode2);
          testCase.testPropertyAccessors();
          fail("should have failed");
@@ -169,7 +169,7 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
       {
          ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
                "ManagedPropertyTestCase_testTestMapDuplicateKeys",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noGetter",
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", ManagedBean.class.getName(), "noGetter",
                managedPropertyNode3);
          testCase.testPropertyAccessors();
          fail("should have failed");
@@ -191,11 +191,11 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
             + "  <map-entry>" + "       <key>duplicate</key>" + "       <value>3</value>" + "  </map-entry>"
             + "  <map-entry>" + "   <key>duplicate</key>" + "   <value>4</value>" + "  </map-entry>"
             + " </map-entries>" + "</managed-property>";
-      String managedBean = TestUtils.getManagedBean("bean", ManagedBeanWithMap.class, "none", property);
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedPropertyNode = TestUtils.createManagedPropertyNode(facesConfig, "map");
+      String managedBean = Utilities.getManagedBean("bean", ManagedBeanWithMap.class, "none", property);
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedPropertyNode = Utilities.createManagedPropertyNode(facesConfig, "map");
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase(
-            "ManagedPropertyTestCase_testTestMapDuplicateKeys", (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0],
+            "ManagedPropertyTestCase_testTestMapDuplicateKeys", (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0],
             "bean", ManagedBean.class.getName(), "map", managedPropertyNode);
       try
       {
@@ -209,15 +209,15 @@ public class ManagedPropertyTestCase_TestCase extends TestCase
       }
    }
    /*
-         String managedProperty = TestUtils.getManagedProperty("setter", "value");
-         String manageBean = TestUtils.getManagedBean("bad", ManagedBeanOneProperty.class, "none", managedProperty
+         String managedProperty = Utilities.getManagedProperty("setter", "value");
+         String manageBean = Utilities.getManagedBean("bad", ManagedBeanOneProperty.class, "none", managedProperty
                + managedProperty);
-         String facesConfig = TestUtils.getFacesConfig(manageBean);
+         String facesConfig = Utilities.getFacesConfig(manageBean);
 
-         Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "bad");
+         Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "bad");
 
          ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_32_TestCase",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
 
     */
 }

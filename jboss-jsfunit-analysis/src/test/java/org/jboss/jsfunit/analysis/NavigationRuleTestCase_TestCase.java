@@ -35,7 +35,7 @@ import org.w3c.dom.Node;
  */
 public class NavigationRuleTestCase_TestCase extends TestCase
 {
-   private static final String CONFIG_FILE_PATH = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+   private static final String CONFIG_FILE_PATH = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
 
    private static final String CORRECT = "<navigation-rule>"
          + "<description>Test Navigation Rule</description><display-name>MyNavigationRule</display-name>"
@@ -43,8 +43,8 @@ public class NavigationRuleTestCase_TestCase extends TestCase
 
    public void testHappyPaths()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestCase testCase = new NavigationRuleTestCase("NavigationRuleTestCase_TestCase", CONFIG_FILE_PATH,
             navigationRuleNode);
       testCase.runTest();
@@ -56,8 +56,8 @@ public class NavigationRuleTestCase_TestCase extends TestCase
             + "<description>Test Navigation Rule</description><display-name>MyNavigationRule</display-name>"
             + "<from-view-id>/pages/myFromView1.jsp</from-view-id>"
             + "<from-view-id>/pages/myFromView2.jsp</from-view-id>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseDuplicateFromViewId);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseDuplicateFromViewId);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestCase testCase = new NavigationRuleTestCase("NavigationRuleTestCase_TestCase", CONFIG_FILE_PATH,
             navigationRuleNode);
       try
@@ -75,8 +75,8 @@ public class NavigationRuleTestCase_TestCase extends TestCase
       String badCaseEmptyFromViewId = "<navigation-rule>"
             + "<description>Test Navigation Rule</description><display-name>MyNavigationCase</display-name>"
             + "<from-view-id> </from-view-id>" + "</navigation-rule>";
-      String facesConfig = TestUtils.getFacesConfig(badCaseEmptyFromViewId);
-      Node navigationRuleNode = TestUtils.extractFirstNavigationRuleNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(badCaseEmptyFromViewId);
+      Node navigationRuleNode = Utilities.extractFirstNavigationRuleNode(facesConfig);
       NavigationRuleTestCase testCase = new NavigationRuleTestCase("NavigationRuleTestCase_TestCase", CONFIG_FILE_PATH,
             navigationRuleNode);
       try

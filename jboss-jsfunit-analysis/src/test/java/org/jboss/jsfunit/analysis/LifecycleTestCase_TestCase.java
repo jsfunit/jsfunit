@@ -48,9 +48,9 @@ public class LifecycleTestCase_TestCase extends TestCase
     */
    public void testHappyPaths()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
-      Node lifecycleNode = TestUtils.extractFirstLifecycleNode(facesConfig);
-      LifecycleTestCase testcase = new LifecycleTestCase("testHappyPaths", (String) TestUtils.STUBBED_RESOURCEPATH
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
+      Node lifecycleNode = Utilities.extractFirstLifecycleNode(facesConfig);
+      LifecycleTestCase testcase = new LifecycleTestCase("testHappyPaths", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], lifecycleNode);
       testcase.runTest();
    }
@@ -60,9 +60,9 @@ public class LifecycleTestCase_TestCase extends TestCase
     */
    public void testTestNullPhaseListener()
    {
-      String facesConfig = TestUtils.getFacesConfig(NULL_PHASELISTENER);
-      Node lifecycleNode = TestUtils.extractFirstLifecycleNode(facesConfig);
-      LifecycleTestCase testcase = new LifecycleTestCase("testHappyPaths", (String) TestUtils.STUBBED_RESOURCEPATH
+      String facesConfig = Utilities.getFacesConfig(NULL_PHASELISTENER);
+      Node lifecycleNode = Utilities.extractFirstLifecycleNode(facesConfig);
+      LifecycleTestCase testcase = new LifecycleTestCase("testHappyPaths", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], lifecycleNode);
       try
       {
@@ -79,9 +79,9 @@ public class LifecycleTestCase_TestCase extends TestCase
     */
    public void testTestEmptyPhaseListener()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY_PHASELISTENER);
-      Node lifecycleNode = TestUtils.extractFirstLifecycleNode(facesConfig);
-      LifecycleTestCase testcase = new LifecycleTestCase("testHappyPaths", (String) TestUtils.STUBBED_RESOURCEPATH
+      String facesConfig = Utilities.getFacesConfig(EMPTY_PHASELISTENER);
+      Node lifecycleNode = Utilities.extractFirstLifecycleNode(facesConfig);
+      LifecycleTestCase testcase = new LifecycleTestCase("testHappyPaths", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], lifecycleNode);
       try
       {

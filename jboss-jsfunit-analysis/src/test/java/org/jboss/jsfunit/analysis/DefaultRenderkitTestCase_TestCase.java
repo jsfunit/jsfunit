@@ -45,7 +45,7 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
 
    private static List<String> DUMMY_PATHS = new ArrayList<String>();
    {
-      DUMMY_PATHS.add((String) (TestUtils.STUBBED_RESOURCEPATH.toArray()[0]));
+      DUMMY_PATHS.add((String) (Utilities.STUBBED_RESOURCEPATH.toArray()[0]));
    }
 
    /**
@@ -53,7 +53,7 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
     */
    public void testHappyPaths()
    {
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(DEFAULT_RENDERKIT_CORRECT));
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(DEFAULT_RENDERKIT_CORRECT));
       DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("testHappyPaths", DUMMY_PATHS);
       testCase.setStreamProvider(streamProvider);
       testCase.runTest();
@@ -64,7 +64,7 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
     */
    public void testTestClassLoadable()
    {
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(DEFAULT_RENDERKIT_CORRECT));
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(DEFAULT_RENDERKIT_CORRECT));
       DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("testNotFound", DUMMY_PATHS);
       testCase.setStreamProvider(streamProvider);
       try
@@ -89,7 +89,7 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig("");
+      String facesConfig = Utilities.getFacesConfig("");
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("DefaultRenderkitTestCase_TestCase", DUMMY_PATHS);
       testCase.setStreamProvider(streamProvider);
@@ -103,7 +103,7 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
     */
    public void testMalFormed()
    {
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig("<"));
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig("<"));
       DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("ConfigFileTestSuite_TestCase", DUMMY_PATHS);
       testCase.setStreamProvider(streamProvider);
       try

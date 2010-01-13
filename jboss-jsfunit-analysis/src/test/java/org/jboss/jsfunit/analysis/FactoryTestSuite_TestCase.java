@@ -95,8 +95,8 @@ public class FactoryTestSuite_TestCase extends TestCase
     */
    public void testEmptyFacesConfiguration()
    {
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(""));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(""));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -111,8 +111,8 @@ public class FactoryTestSuite_TestCase extends TestCase
    public void testEmptyFactory()
    {
       String configFile = "<factory></factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -127,8 +127,8 @@ public class FactoryTestSuite_TestCase extends TestCase
    public void testEmptyApplicationFactory()
    {
       String configFile = "<factory>" + "<application-factory></application-factory>" + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -143,8 +143,8 @@ public class FactoryTestSuite_TestCase extends TestCase
    public void testEmptyFacesContextFactory()
    {
       String configFile = "<factory>" + "<faces-context-factory></faces-context-factory>" + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -159,8 +159,8 @@ public class FactoryTestSuite_TestCase extends TestCase
    public void testEmptyLifecycleFactory()
    {
       String configFile = "<factory>" + "<lifecycle-factory></lifecycle-factory>" + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -175,8 +175,8 @@ public class FactoryTestSuite_TestCase extends TestCase
    public void testEmptyRenderKitFactory()
    {
       String configFile = "<factory>" + "<render-kit-factory></render-kit-factory>" + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -194,8 +194,8 @@ public class FactoryTestSuite_TestCase extends TestCase
             + "<application-factory>org.jboss.jsfunit.analysis.modell.TestApplicationFactory</application-factory>"
             + "<application-factory>org.jboss.jsfunit.analysis.modell.TestApplicationFactory</application-factory>"
             + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -219,8 +219,8 @@ public class FactoryTestSuite_TestCase extends TestCase
             + "<faces-context-factory>org.jboss.jsfunit.analysis.modell.TestFacesContextFactory</faces-context-factory>"
             + "<faces-context-factory>org.jboss.jsfunit.analysis.modell.TestFacesContextFactory</faces-context-factory>"
             + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -244,8 +244,8 @@ public class FactoryTestSuite_TestCase extends TestCase
             + "<lifecycle-factory>org.jboss.jsfunit.analysis.modell.TestLifecycleFactory</lifecycle-factory>"
             + "<lifecycle-factory>org.jboss.jsfunit.analysis.modell.TestLifecycleFactory</lifecycle-factory>"
             + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -269,8 +269,8 @@ public class FactoryTestSuite_TestCase extends TestCase
             + "<render-kit-factory>org.jboss.jsfunit.analysis.modell.TestRenderKitFactory</render-kit-factory>"
             + "<render-kit-factory>org.jboss.jsfunit.analysis.modell.TestRenderKitFactory</render-kit-factory>"
             + "</factory>";
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(configFile));
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(configFile));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -290,10 +290,10 @@ public class FactoryTestSuite_TestCase extends TestCase
     */
    public void testMalFormed()
    {
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig("<"));
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig("<"));
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       Test test = testSuite.getSuite(configFilePath, null, configFiles);
@@ -302,11 +302,11 @@ public class FactoryTestSuite_TestCase extends TestCase
 
    public void testHappyPaths()
    {
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(manageBean + CORRECT);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(manageBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
@@ -319,12 +319,12 @@ public class FactoryTestSuite_TestCase extends TestCase
 
    public void testCanHandleMoreThanOneConfigFile()
    {
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
       configFiles.add("stubbed resource path");
       configFiles.add("second stubbed resource path");
-      String managedBean = TestUtils.getManagedBean("good1", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(managedBean + CORRECT);
+      String managedBean = Utilities.getManagedBean("good1", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(managedBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
@@ -345,7 +345,7 @@ public class FactoryTestSuite_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       FactoryTestSuite testSuite = new FactoryTestSuite("FactoryTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

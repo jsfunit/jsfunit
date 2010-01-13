@@ -40,15 +40,15 @@ public class ManagedBeanTestCase_JSFUNIT_32_TestCase extends TestCase
    public void testDuplicateProperty()
    {
 
-      String managedProperty = TestUtils.getManagedProperty("setter", "value");
-      String manageBean = TestUtils.getManagedBean("bad", ManagedBeanOneProperty.class, "none", managedProperty
+      String managedProperty = Utilities.getManagedProperty("setter", "value");
+      String manageBean = Utilities.getManagedBean("bad", ManagedBeanOneProperty.class, "none", managedProperty
             + managedProperty);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
 
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "bad");
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "bad");
 
       ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_32_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testCase.testDuplicateProperties();
@@ -64,16 +64,16 @@ public class ManagedBeanTestCase_JSFUNIT_32_TestCase extends TestCase
    public void testDuplicatePropertyNoBeanName()
    {
 
-      String managedProperty = TestUtils.getManagedProperty("setter", "value");
+      String managedProperty = Utilities.getManagedProperty("setter", "value");
       String manageBean = "<managed-bean>" + "<managed-bean-class>" + ManagedBeanOneProperty.class.getName()
             + "</managed-bean-class>" + "<managed-bean-scope>none</managed-bean-scope>" + managedProperty
             + "</managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
 
-      Node managedBeanNode = TestUtils.extractFirstManagedBeanNode(facesConfig);
+      Node managedBeanNode = Utilities.extractFirstManagedBeanNode(facesConfig);
 
       ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_32_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testCase.testDuplicateProperties();
@@ -92,12 +92,12 @@ public class ManagedBeanTestCase_JSFUNIT_32_TestCase extends TestCase
       String manageBean = "<managed-bean>" + "<managed-bean-name>bad</managed-bean-name>" + "<managed-bean-class>"
             + ManagedBeanOneProperty.class.getName() + "</managed-bean-class>"
             + "<managed-bean-scope>none</managed-bean-scope>" + managedProperty + "</managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
 
-      Node managedBeanNode = TestUtils.extractFirstManagedBeanNode(facesConfig);
+      Node managedBeanNode = Utilities.extractFirstManagedBeanNode(facesConfig);
 
       ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_32_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testCase.testDuplicateProperties();
@@ -112,16 +112,16 @@ public class ManagedBeanTestCase_JSFUNIT_32_TestCase extends TestCase
    public void testHappyPaths()
    {
 
-      String managedProperty = TestUtils.getManagedProperty("setter", "value");
-      String managedProperty2 = TestUtils.getManagedProperty("setter2", "value");
-      String manageBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty
+      String managedProperty = Utilities.getManagedProperty("setter", "value");
+      String managedProperty2 = Utilities.getManagedProperty("setter2", "value");
+      String manageBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty
             + managedProperty2);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
 
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "good");
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "good");
 
       ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_32_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testCase.testDuplicateProperties();

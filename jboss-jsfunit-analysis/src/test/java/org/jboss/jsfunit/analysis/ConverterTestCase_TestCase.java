@@ -42,10 +42,10 @@ public class ConverterTestCase_TestCase extends TestCase
    public void testHappyPaths()
    {
       String converter = "<converter><converter-class>org.jboss.jsfunit.analysis.model.TestConverter</converter-class></converter>";
-      String facesConfig = TestUtils.getFacesConfig(converter);
-      Node converterNode = TestUtils.extractFirstConverterNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(converter);
+      Node converterNode = Utilities.extractFirstConverterNode(facesConfig);
       ConverterTestCase testcase = new ConverterTestCase("testHappyPaths", converterNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       testcase.runTest();
    }
 
@@ -55,10 +55,10 @@ public class ConverterTestCase_TestCase extends TestCase
    public void testTestClassLoadable()
    {
       String converter = "<converter><converter-class>com.nonexist.Foo</converter-class></converter>";
-      String facesConfig = TestUtils.getFacesConfig(converter);
-      Node converterNode = TestUtils.extractFirstConverterNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(converter);
+      Node converterNode = Utilities.extractFirstConverterNode(facesConfig);
       ConverterTestCase testcase = new ConverterTestCase("testTestClassLoadable", converterNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("com.nonexist.Foo");
@@ -77,10 +77,10 @@ public class ConverterTestCase_TestCase extends TestCase
    public void testTestInterface()
    {
       String converter = "<converter><converter-class>org.jboss.jsfunit.analysis.model.Pojo</converter-class></converter>";
-      String facesConfig = TestUtils.getFacesConfig(converter);
-      Node converterNode = TestUtils.extractFirstConverterNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(converter);
+      Node converterNode = Utilities.extractFirstConverterNode(facesConfig);
       ConverterTestCase testcase = new ConverterTestCase("testTestInterface", converterNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("org.jboss.jsfunit.analysis.model.Pojo");

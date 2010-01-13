@@ -37,13 +37,13 @@ import org.w3c.dom.NodeList;
  * @author Dennis Byrne
  */
 
-public class TestUtils {
+public class Utilities {
 
 	public static final Set<String> STUBBED_RESOURCEPATH = new HashSet<String>() {{
 		add("stubbed resource path");
 	}};
 	
-	private TestUtils() {}
+	private Utilities() {}
 	
 	public static final String getFacesConfig(String body) {
 		
@@ -81,7 +81,7 @@ public class TestUtils {
    public static Node createManagedPropertyNode(String facesConfig, String propertyName)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -110,7 +110,7 @@ public class TestUtils {
    public static Node createManagedBeanNode(String facesConfig, String managedBeanName)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -140,7 +140,7 @@ public class TestUtils {
    public static Node extractFirstLifecycleNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -164,7 +164,7 @@ public class TestUtils {
    public static Node extractFirstManagedBeanNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -190,7 +190,7 @@ public class TestUtils {
    public static Node extractFirstRenderKitNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -214,7 +214,7 @@ public class TestUtils {
    public static Node extractFirstNavigationRuleNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -238,7 +238,7 @@ public class TestUtils {
    public static Node extractFirstNavigationCaseNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -262,7 +262,7 @@ public class TestUtils {
    public static Node extractFirstRendererNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -286,7 +286,7 @@ public class TestUtils {
    public static Node extractFirstConverterNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -310,7 +310,7 @@ public class TestUtils {
    public static Node extractFirstValidatorNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;
@@ -334,7 +334,7 @@ public class TestUtils {
    public static Node extractFirstComponentNode(String facesConfig)
    {
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
-      String configFilePath = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFilePath = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       String xml = ParserUtils.getXml(configFilePath, streamProvider);
       DocumentBuilder builder = ParserUtils.getDocumentBuilder();
       Document document = null;

@@ -46,8 +46,8 @@ public class ViewConfigReconcilerTest extends TestCase {
 	
 	protected void setUp() throws Exception {
 		
-		String manageBean = TestUtils.getManagedBean("bean", ManagedBean.class, "none");
-		String facesConfig = TestUtils.getFacesConfig(manageBean);
+		String manageBean = Utilities.getManagedBean("bean", ManagedBean.class, "none");
+		String facesConfig = Utilities.getFacesConfig(manageBean);
 		final Document facesConfigDocument = ParserUtils.getDocument(facesConfig);
 		configByPath = new HashMap<String, Document>(){{
 			put("path2config", facesConfigDocument);

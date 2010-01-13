@@ -38,33 +38,33 @@ public class ManagedBeanTestSuite_TestCase extends TestCase
 {
    public void testHappyPathWithProperty()
    {
-      String managedProperty = TestUtils.getManagedProperty("existing", "value");
-      String manageBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "good");
+      String managedProperty = Utilities.getManagedProperty("existing", "value");
+      String manageBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "good");
       ManagedBeanTestSuite testSuite = new ManagedBeanTestSuite("ManagedBeanTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
       assertEquals(2, test.countTestCases());
    }
 
    public void testHappyPathWithoutProperty()
    {
-      String manageBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", "");
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "good");
+      String manageBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", "");
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "good");
       ManagedBeanTestSuite testSuite = new ManagedBeanTestSuite("ManagedBeanTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
       assertEquals(1, test.countTestCases());
    }
 
    public void testHappyPathWithoutPropertyName()
    {
-      String managedProperty = TestUtils.getManagedProperty(" ", "value");
-      String manageBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "good");
+      String managedProperty = Utilities.getManagedProperty(" ", "value");
+      String manageBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty);
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "good");
       ManagedBeanTestSuite testSuite = new ManagedBeanTestSuite("ManagedBeanTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
       assertEquals(1, test.countTestCases());
    }
 
@@ -79,7 +79,7 @@ public class ManagedBeanTestSuite_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig("");
+      String facesConfig = Utilities.getFacesConfig("");
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       ManagedBeanTestSuite testSuite = new ManagedBeanTestSuite("ManagedBeanTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

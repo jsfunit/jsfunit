@@ -47,26 +47,26 @@ public class RenderKitTestSuite_TestCase extends TestCase
 
    public void testHappyPath()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
       RenderKitTestSuite testSuite = new RenderKitTestSuite("RenderKitTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], renderKitNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], renderKitNode);
       assertEquals(4, test.countTestCases());
    }
 
    public void testHappyPathEmpty()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
       RenderKitTestSuite testSuite = new RenderKitTestSuite("RenderKitTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], renderKitNode);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], renderKitNode);
       assertEquals(1, test.countTestCases());
    }
 
    public void testHappyPathNullConfigFilePath()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
       RenderKitTestSuite testSuite = new RenderKitTestSuite("RenderKitTestSuite_TestCase");
       Test test = testSuite.getSuite(null, renderKitNode);
       assertEquals(1, test.countTestCases());
@@ -74,8 +74,8 @@ public class RenderKitTestSuite_TestCase extends TestCase
 
    public void testHappyPathEmptyConfigFilePath()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
       RenderKitTestSuite testSuite = new RenderKitTestSuite("RenderKitTestSuite_TestCase");
       Test test = testSuite.getSuite("", renderKitNode);
       assertEquals(1, test.countTestCases());
@@ -84,7 +84,7 @@ public class RenderKitTestSuite_TestCase extends TestCase
    public void testHappyPathNullRenderKitNode()
    {
       RenderKitTestSuite testSuite = new RenderKitTestSuite("RenderKitTestSuite_TestCase");
-      Test test = testSuite.getSuite((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], null);
+      Test test = testSuite.getSuite((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], null);
       assertEquals(1, test.countTestCases());
    }
 
@@ -99,7 +99,7 @@ public class RenderKitTestSuite_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       RenderKitTestSuite testSuite = new RenderKitTestSuite("RenderKitTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

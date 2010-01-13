@@ -44,25 +44,25 @@ public class ManagedBeanTestCase_TestCase extends TestCase
     */
    public void testHappyPaths()
    {
-      String managedProperty = TestUtils.getManagedProperty("setter", "value");
-      String managedProperty2 = TestUtils.getManagedProperty("setter2", "value");
-      String managedBean = TestUtils.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty
+      String managedProperty = Utilities.getManagedProperty("setter", "value");
+      String managedProperty2 = Utilities.getManagedProperty("setter2", "value");
+      String managedBean = Utilities.getManagedBean("good", ManagedBeanOneProperty.class, "none", managedProperty
             + managedProperty2);
-      String managedBean2 = TestUtils.getManagedBean("goodSession", ManagedBeanOnePropertySerializable.class,
+      String managedBean2 = Utilities.getManagedBean("goodSession", ManagedBeanOnePropertySerializable.class,
             "session", managedProperty + managedProperty2);
-      String managedBean3 = TestUtils.getManagedBean("goodNoProperties", ManagedBeanOneProperty.class, "request");
-      String facesConfig = TestUtils.getFacesConfig(managedBean + managedBean2 + managedBean3);
+      String managedBean3 = Utilities.getManagedBean("goodNoProperties", ManagedBeanOneProperty.class, "request");
+      String facesConfig = Utilities.getFacesConfig(managedBean + managedBean2 + managedBean3);
 
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "good");
-      Node managedBeanSessionNode = TestUtils.createManagedBeanNode(facesConfig, "goodSession");
-      Node managedBeanNoPropertiesNode = TestUtils.createManagedBeanNode(facesConfig, "goodNoProperties");
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "good");
+      Node managedBeanSessionNode = Utilities.createManagedBeanNode(facesConfig, "goodSession");
+      Node managedBeanNoPropertiesNode = Utilities.createManagedBeanNode(facesConfig, "goodNoProperties");
 
-      ManagedBeanTestCase testCase = new ManagedBeanTestCase("testHappyPaths", (String) TestUtils.STUBBED_RESOURCEPATH
+      ManagedBeanTestCase testCase = new ManagedBeanTestCase("testHappyPaths", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], "good", managedBeanNode);
       ManagedBeanTestCase testCaseSession = new ManagedBeanTestCase("testHappyPaths_session",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "goodSession", managedBeanSessionNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "goodSession", managedBeanSessionNode);
       ManagedBeanTestCase testCaseNoProperties = new ManagedBeanTestCase("testHappyPaths_noProperties",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "goodNoProperties", managedBeanNoPropertiesNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "goodNoProperties", managedBeanNoPropertiesNode);
       try
       {
          testCase.runTest();
@@ -82,10 +82,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
    {
       //      String manageBean = "<managed-bean><managed-bean-name>good</managed-bean-name><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class><managed-bean-scope>request</managed-bean-scope></managed-bean>";
       String managedBean = "<managed-bean><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class><managed-bean-scope>request</managed-bean-scope></managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.extractFirstManagedBeanNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.extractFirstManagedBeanNode(facesConfig);
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestNameAttribute",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
       try
       {
          testcase.testNameAttribute();
@@ -103,10 +103,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
    {
       //      String manageBean = "<managed-bean><managed-bean-name>good</managed-bean-name><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class><managed-bean-scope>request</managed-bean-scope></managed-bean>";
       String managedBean = "<managed-bean><managed-bean-name>bad</managed-bean-name><managed-bean-scope>request</managed-bean-scope></managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "bad");
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "bad");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestClassAttribute",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testcase.testClassAttribute();
@@ -124,10 +124,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
    {
       //      String manageBean = "<managed-bean><managed-bean-name>good</managed-bean-name><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class><managed-bean-scope>request</managed-bean-scope></managed-bean>";
       String managedBean = "<managed-bean><managed-bean-name>bad</managed-bean-name><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class></managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "bad");
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "bad");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestScopeAttribute",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testcase.testScopeAttribute();
@@ -144,10 +144,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
    public void testTestClassLoadable()
    {
       String managedBean = "<managed-bean><managed-bean-name>unloadable</managed-bean-name><managed-bean-class>does.not.exist.ImpossibleToLoad</managed-bean-class><managed-bean-scope>request</managed-bean-scope></managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "unloadable");
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "unloadable");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestClassLoadable",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "unloadable", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "unloadable", managedBeanNode);
       try
       {
          testcase.testClassLoadable();
@@ -165,10 +165,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
    public void testTestValidScope()
    {
       String managedBean = "<managed-bean><managed-bean-name>badScope</managed-bean-name><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class><managed-bean-scope>wrongScope</managed-bean-scope></managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "badScope");
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "badScope");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestValidScope",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "badScope", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "badScope", managedBeanNode);
       try
       {
          testcase.testValidScope();
@@ -186,10 +186,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
    public void testTestSerializableInterface()
    {
       String managedBean = "<managed-bean><managed-bean-name>bad</managed-bean-name><managed-bean-class>org.jboss.jsfunit.analysis.model.Pojo</managed-bean-class><managed-bean-scope>session</managed-bean-scope></managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "bad");
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "bad");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestSerializableInterface",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
       try
       {
          testcase.testNameAttribute();
@@ -205,13 +205,13 @@ public class ManagedBeanTestCase_TestCase extends TestCase
     */
    public void testTestDuplicateProperties()
    {
-      String duplicateProperty = TestUtils.getManagedProperty("duplicate", "value");
-      String manageBean = TestUtils.getManagedBean("duplicates", Pojo.class, "request", duplicateProperty
+      String duplicateProperty = Utilities.getManagedProperty("duplicate", "value");
+      String manageBean = Utilities.getManagedBean("duplicates", Pojo.class, "request", duplicateProperty
             + duplicateProperty);
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "duplicates");
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "duplicates");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestSerializableInterface",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
       try
       {
          testcase.testDuplicateProperties();
@@ -228,11 +228,11 @@ public class ManagedBeanTestCase_TestCase extends TestCase
     */
    public void testTestDuplicatePropertiesBeanNotFound()
    {
-      String manageBean = TestUtils.getManagedBean("duplicates", Pojo.class, "request");
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "duplicates");
+      String manageBean = Utilities.getManagedBean("duplicates", Pojo.class, "request");
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "duplicates");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestSerializableInterface",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "duplicate", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "duplicate", managedBeanNode);
       testcase.testDuplicateProperties();
    }
 
@@ -241,11 +241,11 @@ public class ManagedBeanTestCase_TestCase extends TestCase
     */
    public void testTestDuplicatePropertiesNoProperties()
    {
-      String manageBean = TestUtils.getManagedBean("duplicates", Pojo.class, "request");
-      String facesConfig = TestUtils.getFacesConfig(manageBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "duplicates");
+      String manageBean = Utilities.getManagedBean("duplicates", Pojo.class, "request");
+      String facesConfig = Utilities.getFacesConfig(manageBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "duplicates");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestSerializableInterface",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
       testcase.testDuplicateProperties();
    }
 
@@ -260,10 +260,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
             + "<managed-property><property-name>duplicate</property-name><value>value</value></managed-property>"
             + "<managed-property><property-name>duplicate</property-name><value>value</value></managed-property>"
             + "</managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.extractFirstManagedBeanNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.extractFirstManagedBeanNode(facesConfig);
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestSerializableInterface",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
       try
       {
          testcase.testDuplicateProperties();
@@ -286,10 +286,10 @@ public class ManagedBeanTestCase_TestCase extends TestCase
             + "<managed-property><value>value</value></managed-property>"
             + "<managed-property><property-name>duplicate</property-name><value>value</value></managed-property>"
             + "</managed-bean>";
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "duplicates");
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "duplicates");
       ManagedBeanTestCase testcase = new ManagedBeanTestCase("testTestSerializableInterface",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "duplicates", managedBeanNode);
       try
       {
          testcase.testDuplicateProperties();

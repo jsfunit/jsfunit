@@ -23,7 +23,7 @@ public class ManagedPropertyTestCase_JSFUNIT_34_TestCase extends TestCase
       Node managedPropertyNode = createManagedPropertyNode(property, "map");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", "bean", "map", managedPropertyNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", "bean", "map", managedPropertyNode);
       try
       {
          testCase.testMapDuplicateKeys();
@@ -46,7 +46,7 @@ public class ManagedPropertyTestCase_JSFUNIT_34_TestCase extends TestCase
       Node managedPropertyNode = createManagedPropertyNode(property, "map");
 
       ManagedPropertyTestCase testCase = new ManagedPropertyTestCase("ManagedPropertyTestCase_JSFUNIT_34_TestCase",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bean", "bean", "map", managedPropertyNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bean", "bean", "map", managedPropertyNode);
       try
       {
          testCase.testMapDuplicateKeys();
@@ -60,8 +60,8 @@ public class ManagedPropertyTestCase_JSFUNIT_34_TestCase extends TestCase
 
    private Node createManagedPropertyNode(String property, String propertyName)
    {
-      String managedBean = TestUtils.getManagedBean("bean", ManagedBeanWithMap.class, "none", property);
-      String facesConfig = TestUtils.getFacesConfig(managedBean);
-      return TestUtils.createManagedPropertyNode(facesConfig, propertyName);
+      String managedBean = Utilities.getManagedBean("bean", ManagedBeanWithMap.class, "none", property);
+      String facesConfig = Utilities.getFacesConfig(managedBean);
+      return Utilities.createManagedPropertyNode(facesConfig, propertyName);
    }
 }

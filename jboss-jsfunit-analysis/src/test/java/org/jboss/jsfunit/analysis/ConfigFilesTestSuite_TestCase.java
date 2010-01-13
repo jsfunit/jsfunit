@@ -113,8 +113,8 @@ public class ConfigFilesTestSuite_TestCase extends TestCase
    public void testEmptyFacesConfiguration()
    {
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(""));
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(""));
       ConfigFilesTestSuite testSuite = new ConfigFilesTestSuite("ConfigFilesTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       try
@@ -137,8 +137,8 @@ public class ConfigFilesTestSuite_TestCase extends TestCase
    public void testMalFormed()
    {
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig("<"));
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig("<"));
       ConfigFilesTestSuite testSuite = new ConfigFilesTestSuite("ConfigFilesTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       try
@@ -163,9 +163,9 @@ public class ConfigFilesTestSuite_TestCase extends TestCase
    public void testHappyPaths()
    {
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(manageBean + CORRECT);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(manageBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ConfigFilesTestSuite testSuite = new ConfigFilesTestSuite("ConfigFilesTestSuite_TestCase");
@@ -183,13 +183,13 @@ public class ConfigFilesTestSuite_TestCase extends TestCase
       {
          private InputStream stream;
 
-         String managedBean1 = TestUtils.getManagedBean("good1", Pojo.class, "none");
+         String managedBean1 = Utilities.getManagedBean("good1", Pojo.class, "none");
 
-         String managedBean2 = TestUtils.getManagedBean("good2", Pojo.class, "none");
+         String managedBean2 = Utilities.getManagedBean("good2", Pojo.class, "none");
 
-         String facesConfig1 = TestUtils.getFacesConfig(managedBean1 + CORRECT);
+         String facesConfig1 = Utilities.getFacesConfig(managedBean1 + CORRECT);
 
-         String facesConfig2 = TestUtils.getFacesConfig(managedBean2 + NON_EXISTING_ACTION_LISTENER);
+         String facesConfig2 = Utilities.getFacesConfig(managedBean2 + NON_EXISTING_ACTION_LISTENER);
 
          public InputStream getInputStream(String path)
          {

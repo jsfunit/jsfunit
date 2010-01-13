@@ -93,8 +93,8 @@ public class LifecycleTestSuite_TestCase extends TestCase
     */
    public void testEmptyFacesConfiguration()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(""));
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(""));
       LifecycleTestSuite testSuite = new LifecycleTestSuite("LifecycleTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -107,10 +107,10 @@ public class LifecycleTestSuite_TestCase extends TestCase
     */
    public void testMalFormed()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig("<"));
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig("<"));
       LifecycleTestSuite testSuite = new LifecycleTestSuite("LifecycleTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       Test test = testSuite.getSuite(configFile, null);
@@ -122,10 +122,10 @@ public class LifecycleTestSuite_TestCase extends TestCase
     */
    public void testEmptyLifecycleConfiguration()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       LifecycleTestSuite testSuite = new LifecycleTestSuite("LifecycleTestSuite_TestCase");
@@ -137,10 +137,10 @@ public class LifecycleTestSuite_TestCase extends TestCase
 
    public void testHappyPaths()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       LifecycleTestSuite testSuite = new LifecycleTestSuite("LifecycleTestSuite_TestCase");
@@ -161,7 +161,7 @@ public class LifecycleTestSuite_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       LifecycleTestSuite testSuite = new LifecycleTestSuite("LifecycleTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

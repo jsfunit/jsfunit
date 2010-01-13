@@ -47,10 +47,10 @@ public class ComponentTestCase_TestCase extends TestCase
     */
    public void testHappyPathEmpty()
    {
-      String facesConfig = TestUtils.getFacesConfig(EMPTY);
-      Node componentNode = TestUtils.extractFirstComponentNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(EMPTY);
+      Node componentNode = Utilities.extractFirstComponentNode(facesConfig);
       ComponentTestCase testcase = new ComponentTestCase("testHappyPathEmpty", componentNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.runTest();
@@ -66,10 +66,10 @@ public class ComponentTestCase_TestCase extends TestCase
     */
    public void testHappyPaths()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
-      Node componentNode = TestUtils.extractFirstComponentNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
+      Node componentNode = Utilities.extractFirstComponentNode(facesConfig);
       ComponentTestCase testcase = new ComponentTestCase("testHappyPaths", componentNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       testcase.runTest();
    }
 
@@ -82,10 +82,10 @@ public class ComponentTestCase_TestCase extends TestCase
             + "<description>Test Component</description><display-name>MyComponent</display-name>"
             + "<component-type>MyComponentType</component-type>"
             + "<component-class>com.nonexist.Foo</component-class>" + "</component>";
-      String facesConfig = TestUtils.getFacesConfig(inexistingComponentClass);
-      Node componentNode = TestUtils.extractFirstComponentNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(inexistingComponentClass);
+      Node componentNode = Utilities.extractFirstComponentNode(facesConfig);
       ComponentTestCase testcase = new ComponentTestCase("testTestClassLoadable", componentNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("com.nonexist.Foo");
@@ -103,10 +103,10 @@ public class ComponentTestCase_TestCase extends TestCase
     */
    public void testTestInterface()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
-      Node componentNode = TestUtils.extractFirstComponentNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
+      Node componentNode = Utilities.extractFirstComponentNode(facesConfig);
       ComponentTestCase testcase = new ComponentTestCase("testTestInterface", componentNode,
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
       try
       {
          testcase.setClassName("org.jboss.jsfunit.analysis.model.Pojo");

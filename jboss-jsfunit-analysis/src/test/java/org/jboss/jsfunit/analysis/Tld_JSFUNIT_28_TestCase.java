@@ -45,7 +45,7 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 		String tld = getTld(tag, "A good tag library.");
 		StreamProvider streamProvider = new StringStreamProvider(tld);
 		
-		new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
+		new AbstractTldTestCase(Utilities.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
 		
 	}
 	
@@ -57,7 +57,7 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 		
 		try {
 
-			new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
+			new AbstractTldTestCase(Utilities.STUBBED_RESOURCEPATH, streamProvider) {}.testInheritance();
 
 			throw new RuntimeException();
 			
@@ -85,7 +85,7 @@ public class Tld_JSFUNIT_28_TestCase extends TestCase {
 		String tld = getTld("", "An empty tag library.");
 		StreamProvider streamProvider = new StringStreamProvider(tld);
 		
-		AbstractTldTestCase test = new AbstractTldTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {};
+		AbstractTldTestCase test = new AbstractTldTestCase(Utilities.STUBBED_RESOURCEPATH, streamProvider) {};
 		test.testInheritance();
 		test.testTagAttributeTypes();
 		test.testUniqueTagAttributes();

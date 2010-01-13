@@ -42,13 +42,13 @@ public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
    }
 //	public void testDuplicateManagedBean() {
 //		
-//		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
-//		String facesConfig = TestUtils.getFacesConfig(manageBean + manageBean);
+//		String manageBean = Utilities.getManagedBean("mirror", Pojo.class, "none");
+//		String facesConfig = Utilities.getFacesConfig(manageBean + manageBean);
 //		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 //		
 //		try {
 //			
-//			new AbstractFacesConfigTestCase(TestUtils.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
+//			new AbstractFacesConfigTestCase(Utilities.STUBBED_RESOURCEPATH, streamProvider) {}.testManagedBeans();
 //			
 //			throw new RuntimeException("should have failed");
 //			
@@ -58,8 +58,8 @@ public class ManagedBeanScope_JSFUNIT_25_TestCase extends TestCase {
 //
 //	public void testDuplicateManagedBeansDifferentConfigSource() {
 //
-//		String manageBean = TestUtils.getManagedBean("mirror", Pojo.class, "none");
-//		String facesConfig = TestUtils.getFacesConfig(manageBean);
+//		String manageBean = Utilities.getManagedBean("mirror", Pojo.class, "none");
+//		String facesConfig = Utilities.getFacesConfig(manageBean);
 //		StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 //
 //		Set<String> facesConfigPaths = new HashSet<String>() {{

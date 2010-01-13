@@ -148,8 +148,8 @@ public class ConfigFileTestSuite_TestCase extends TestCase
     */
    public void testEmptyFacesConfiguration()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(""));
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(""));
       ConfigFileTestSuite testSuite = new ConfigFileTestSuite("ConfigFileTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       try
@@ -171,10 +171,10 @@ public class ConfigFileTestSuite_TestCase extends TestCase
     */
    public void testMalFormed()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig("<"));
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig("<"));
       ConfigFileTestSuite testSuite = new ConfigFileTestSuite("ConfigFileTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       try
@@ -198,10 +198,10 @@ public class ConfigFileTestSuite_TestCase extends TestCase
 
    public void testMinimalHappyPath()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String facesConfig = TestUtils.getFacesConfig(MINIMAL);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String facesConfig = Utilities.getFacesConfig(MINIMAL);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ConfigFileTestSuite testSuite = new ConfigFileTestSuite("ConfigFileTestSuite_TestCase");
@@ -212,11 +212,11 @@ public class ConfigFileTestSuite_TestCase extends TestCase
 
    public void testHappyPaths()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(manageBean + CORRECT);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(manageBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ConfigFileTestSuite testSuite = new ConfigFileTestSuite("ConfigFileTestSuite_TestCase");
@@ -227,12 +227,12 @@ public class ConfigFileTestSuite_TestCase extends TestCase
 
    public void testCanHandleMoreThanOneConfigFile()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
       configFiles.add("stubbed resource path");
       configFiles.add("second stubbed resource path");
-      String managedBean = TestUtils.getManagedBean("good1", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(managedBean + CORRECT);
+      String managedBean = Utilities.getManagedBean("good1", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(managedBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       ConfigFileTestSuite testSuite = new ConfigFileTestSuite("ConfigFileTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

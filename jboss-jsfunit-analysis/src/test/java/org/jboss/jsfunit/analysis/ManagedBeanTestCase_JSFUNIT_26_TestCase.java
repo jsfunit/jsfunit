@@ -55,11 +55,11 @@ public class ManagedBeanTestCase_JSFUNIT_26_TestCase extends TestCase
 
       for (String scope : scopes)
       {
-         String manageBean = TestUtils.getManagedBean("good", Pojo.class, scope);
-         String facesConfig = TestUtils.getFacesConfig(manageBean);
-         Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "good");
+         String manageBean = Utilities.getManagedBean("good", Pojo.class, scope);
+         String facesConfig = Utilities.getFacesConfig(manageBean);
+         Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "good");
          ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_26_TestCase",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "good", managedBeanNode);
          testCase.testValidScope();
       }
 
@@ -77,10 +77,10 @@ public class ManagedBeanTestCase_JSFUNIT_26_TestCase extends TestCase
       for (String scope : scopes)
       {
 
-         String facesConfig = TestUtils.getFacesConfig(TestUtils.getManagedBean("bad", Pojo.class, scope));
-         Node managedBeanNode = TestUtils.createManagedBeanNode(facesConfig, "bad");
+         String facesConfig = Utilities.getFacesConfig(Utilities.getManagedBean("bad", Pojo.class, scope));
+         Node managedBeanNode = Utilities.createManagedBeanNode(facesConfig, "bad");
          ManagedBeanTestCase testCase = new ManagedBeanTestCase("ManagedBeanTestCase_JSFUNIT_26_TestCase",
-               (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
+               (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], "bad", managedBeanNode);
 
          try
          {

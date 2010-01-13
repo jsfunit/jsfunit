@@ -102,8 +102,8 @@ public class ApplicationTestSuite_TestCase extends TestCase
     */
    public void testEmptyFacesConfiguration()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig(""));
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(""));
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
       setStreamProvider(streamProvider);
       testSuite.setStreamProvider(streamProvider);
@@ -116,10 +116,10 @@ public class ApplicationTestSuite_TestCase extends TestCase
     */
    public void testMalFormed()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      StreamProvider streamProvider = new StringStreamProvider(TestUtils.getFacesConfig("<"));
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig("<"));
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
       Test test = testSuite.getSuite(configFile, null, configFiles);
@@ -128,11 +128,11 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testHappyPaths()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
-      configFiles.add((String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0]);
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(manageBean + CORRECT);
+      configFiles.add((String) Utilities.STUBBED_RESOURCEPATH.toArray()[0]);
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(manageBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -145,9 +145,9 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testHappyPaths2()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(manageBean + CORRECT);
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(manageBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -159,9 +159,9 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testHappyPathsEmptyApplication()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(manageBean + "<application></application>");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(manageBean + "<application></application>");
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -173,13 +173,13 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testDuplicateActionListener()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>"
             + "<action-listener>org.jboss.jsfunit.analysis.modell.TestActionListener</action-listener>"
             + "<action-listener>org.jboss.jsfunit.analysis.modell.TestActionListener</action-listener>"
             + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -198,10 +198,10 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testEmptyActionListener()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>" + "<action-listener></action-listener>" + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -213,13 +213,13 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testDuplicateNavigationHandler()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>"
             + "<navigation-handler>org.jboss.jsfunit.analysis.modell.TestNavigationHandler</navigation-handler>"
             + "<navigation-handler>org.jboss.jsfunit.analysis.modell.TestNavigationHandler</navigation-handler>"
             + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -238,10 +238,10 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testEmptyNavigationHandler()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>" + "<navigation-handler></navigation-handler>" + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -253,12 +253,12 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testDuplicateStateManager()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>"
             + "<state-manager>org.jboss.jsfunit.analysis.modell.TestStateManager</state-manager>"
             + "<state-manager>org.jboss.jsfunit.analysis.modell.TestStateManager</state-manager>" + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -277,10 +277,10 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testEmptyStateManager()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>" + "<state-manager></state-manager>" + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -292,12 +292,12 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testDuplicateViewHandler()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>"
             + "<view-handler>org.jboss.jsfunit.analysis.modell.TestViewHandler</view-handler>"
             + "<view-handler>org.jboss.jsfunit.analysis.modell.TestViewHandler</view-handler>" + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -316,10 +316,10 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testEmptyViewHandler()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
-      String manageBean = TestUtils.getManagedBean("good", Pojo.class, "none");
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
+      String manageBean = Utilities.getManagedBean("good", Pojo.class, "none");
       String application = "<application>" + "<view-handler></view-handler>" + "</application>";
-      String facesConfig = TestUtils.getFacesConfig(manageBean + application);
+      String facesConfig = Utilities.getFacesConfig(manageBean + application);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
 
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
@@ -331,12 +331,12 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testCanHandleMoreThanOneConfigFile()
    {
-      String configFile = (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0];
+      String configFile = (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0];
       List<String> configFiles = new ArrayList<String>();
       configFiles.add("stubbed resource path");
       configFiles.add("second stubbed resource path");
-      String managedBean = TestUtils.getManagedBean("good1", Pojo.class, "none");
-      String facesConfig = TestUtils.getFacesConfig(managedBean + CORRECT);
+      String managedBean = Utilities.getManagedBean("good1", Pojo.class, "none");
+      String facesConfig = Utilities.getFacesConfig(managedBean + CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);
@@ -357,7 +357,7 @@ public class ApplicationTestSuite_TestCase extends TestCase
 
    public void testStreamProviderAccessors()
    {
-      String facesConfig = TestUtils.getFacesConfig(CORRECT);
+      String facesConfig = Utilities.getFacesConfig(CORRECT);
       StreamProvider streamProvider = new StringStreamProvider(facesConfig);
       ApplicationTestSuite testSuite = new ApplicationTestSuite("ApplicationTestSuite_TestCase");
       testSuite.setStreamProvider(streamProvider);

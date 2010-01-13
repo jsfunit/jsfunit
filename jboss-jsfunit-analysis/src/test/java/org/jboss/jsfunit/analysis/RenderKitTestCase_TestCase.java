@@ -42,9 +42,9 @@ public class RenderKitTestCase_TestCase extends TestCase
    public void testHappyPaths()
    {
       String renderKit = "<render-kit><render-kit-id>myRenderKit</render-kit-id><render-kit-class>org.jboss.jsfunit.analysis.model.TestRenderKit</render-kit-class></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderKit);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
-      RenderKitTestCase testcase = new RenderKitTestCase("testHappyPaths", (String) TestUtils.STUBBED_RESOURCEPATH
+      String facesConfig = Utilities.getFacesConfig(renderKit);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
+      RenderKitTestCase testcase = new RenderKitTestCase("testHappyPaths", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], renderKitNode);
       testcase.runTest();
    }
@@ -55,9 +55,9 @@ public class RenderKitTestCase_TestCase extends TestCase
    public void testHappyPaths2()
    {
       String renderKit = "<render-kit><render-kit-id>myRenderKit</render-kit-id></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderKit);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
-      RenderKitTestCase testcase = new RenderKitTestCase("testHappyPaths2", (String) TestUtils.STUBBED_RESOURCEPATH
+      String facesConfig = Utilities.getFacesConfig(renderKit);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
+      RenderKitTestCase testcase = new RenderKitTestCase("testHappyPaths2", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], renderKitNode);
       testcase.runTest();
    }
@@ -68,10 +68,10 @@ public class RenderKitTestCase_TestCase extends TestCase
    public void testTestClassLoadable()
    {
       String renderKit = "<render-kit><render-kit-id>myRenderKit</render-kit-id><render-kit-class>com.nonexist.Foo</render-kit-class></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderKit);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
+      String facesConfig = Utilities.getFacesConfig(renderKit);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
       RenderKitTestCase testcase = new RenderKitTestCase("testTestClassLoadable",
-            (String) TestUtils.STUBBED_RESOURCEPATH.toArray()[0], renderKitNode);
+            (String) Utilities.STUBBED_RESOURCEPATH.toArray()[0], renderKitNode);
       try
       {
          testcase.setClassName("com.nonexist.Foo");
@@ -90,9 +90,9 @@ public class RenderKitTestCase_TestCase extends TestCase
    public void testTestInterface()
    {
       String renderKit = "<render-kit><render-kit-id>myRenderKit</render-kit-id><render-kit-class>org.jboss.jsfunit.analysis.model.Pojo</render-kit-class></render-kit>";
-      String facesConfig = TestUtils.getFacesConfig(renderKit);
-      Node renderKitNode = TestUtils.extractFirstRenderKitNode(facesConfig);
-      RenderKitTestCase testcase = new RenderKitTestCase("testTestInterface", (String) TestUtils.STUBBED_RESOURCEPATH
+      String facesConfig = Utilities.getFacesConfig(renderKit);
+      Node renderKitNode = Utilities.extractFirstRenderKitNode(facesConfig);
+      RenderKitTestCase testcase = new RenderKitTestCase("testTestInterface", (String) Utilities.STUBBED_RESOURCEPATH
             .toArray()[0], renderKitNode);
       try
       {
