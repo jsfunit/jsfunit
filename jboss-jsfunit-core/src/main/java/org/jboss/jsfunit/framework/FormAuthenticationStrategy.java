@@ -23,7 +23,6 @@
 package org.jboss.jsfunit.framework;
 
 import com.gargoylesoftware.htmlunit.Page;
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -118,13 +117,7 @@ public class FormAuthenticationStrategy extends SimpleInitialRequestStrategy
    protected Page clickSubmitComponent(HtmlPage page) throws IOException
    {
       HtmlElement htmlElement = getElement(page, this.submitComponent);
-      if (!(htmlElement instanceof ClickableElement))
-      {
-         throw new IllegalStateException("Component with name=" + this.submitComponent + " is not a ClickableElement.");
-      }
-      
-      ClickableElement clickable = (ClickableElement)htmlElement;
-      return clickable.click();
+      return htmlElement.click();
    }
    
    /**

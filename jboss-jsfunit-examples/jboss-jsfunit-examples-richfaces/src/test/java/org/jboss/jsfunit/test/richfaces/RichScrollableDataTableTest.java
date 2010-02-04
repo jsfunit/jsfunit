@@ -21,7 +21,7 @@
  */
 package org.jboss.jsfunit.test.richfaces;
 
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import java.io.IOException;
 import java.util.List;
 import junit.framework.Test;
@@ -62,7 +62,7 @@ public class RichScrollableDataTableTest extends ServletTestCase
    
    public void testScrollableDataTable() throws IOException
    {
-      ClickableElement stock = (ClickableElement)client.getElement("carList:c_0_5");
+      HtmlElement stock = (HtmlElement)client.getElement("carList:c_0_5");
       stock.click();
       
       client.click("setSelection");

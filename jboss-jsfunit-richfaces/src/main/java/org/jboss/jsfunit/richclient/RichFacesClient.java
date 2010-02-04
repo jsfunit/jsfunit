@@ -115,7 +115,7 @@ public class RichFacesClient
       } else {
          // Check to see if buttons are visible
          HtmlDivision bar = (HtmlDivision)jsfClient.getElement(componentID+"bar");
-         String buttonStyle = bar.getStyleAttribute();
+         String buttonStyle = bar.getAttribute("style"); //bar.getStyleAttribute();
          // Type #1 - NO BUTTONS
          if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") ) 
          {
@@ -380,6 +380,8 @@ public class RichFacesClient
     *
     * @throws IOException
     * @throws ComponentIDNotFoundException if the component can not be found
+    *
+    * @since 1.2
     */
    public HtmlElement getTreeHandle(String treeID, String treeNodeID, String nodeText) throws IOException
    {
@@ -409,6 +411,8 @@ public class RichFacesClient
     *
     * @throws IOException
     * @throws ComponentIDNotFoundException if the component can not be found
+    *
+    * @since 1.2
     */
    public boolean isTreeHandleExpanded(String treeID, String treeNodeID, String nodeText) throws IOException
    {
@@ -443,18 +447,22 @@ public class RichFacesClient
     * node.
     *
     * @param treeID id of the rich:tree
-    * @param treeNodeID id of the rich:treeNode
+    * @param componentID id of the component inside the rich:treeNode that contains the text,
+    *                    or the id of the rich:treeNode itself if the node
+    *                    does not contain other JSF components
     * @param nodeText text of the node
     *
     * @return The HtmlElement used to toggle expanded/collapsed
     *
     * @throws IOException
     * @throws ComponentIDNotFoundException if the component can not be found
+    *
+    * @since 1.2
     */
-   public HtmlElement getTreeNodeByText(String treeID, String treeNodeID, String nodeText) throws IOException
+   public HtmlElement getTreeNodeByText(String treeID, String componentID, String nodeText) throws IOException
    {
        DomNode table = (DomNode)jsfClient.getElement(treeID);
-       String xpath = "//text()[. = '" + nodeText + "']/parent::*[contains(@id,'" + treeID + "')][contains(@id,'" + treeNodeID + "')]";
+       String xpath = "//text()[. = '" + nodeText + "']/parent::*[contains(@id,'" + treeID + "')][contains(@id,'" + componentID + "')]";
        return (HtmlElement)table.getFirstByXPath(xpath);
    }
 }

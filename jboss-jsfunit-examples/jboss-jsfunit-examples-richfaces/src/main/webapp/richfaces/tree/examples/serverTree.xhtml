@@ -9,17 +9,17 @@
     <h:form id="serverTreeForm">
         <rich:tree id="serverTree" switchType="server" style="width:300px" value="#{library.data}" var="item" nodeFace="#{item.type}">
             <rich:treeNode id="serverTreeArtistNode" type="artist" iconLeaf="/images/tree/singer.gif" icon="/images/tree/singer.gif">
-                <h:commandLink value="#{item.name}">
+                <h:commandLink id="artistLink" value="#{item.name}">
                     <f:param name="serverTreeNodeValue" value="#{item.name}"/>
                 </h:commandLink>
             </rich:treeNode>
             <rich:treeNode id="serverTreeAlbumNode" type="album" iconLeaf="/images/tree/disc.gif" icon="/images/tree/disc.gif">
-                <h:commandLink value="#{item.title}">
+                <h:commandLink id="albumLink" value="#{item.title}">
                     <f:param name="serverTreeNodeValue" value="#{item.title}"/>
                 </h:commandLink>
             </rich:treeNode>
             <rich:treeNode id="serverTreeSongNode" type="song" iconLeaf="/images/tree/song.gif" icon="/images/tree/song.gif">
-                <h:commandLink value="#{item.title}">
+                <h:commandLink id="songLink" value="#{item.title}">
                     <f:param name="serverTreeNodeValue" value="#{item.title}"/>
                 </h:commandLink>
             </rich:treeNode>

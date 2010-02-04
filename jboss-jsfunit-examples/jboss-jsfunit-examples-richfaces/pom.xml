@@ -263,7 +263,6 @@
         <configuration>
           <skip>true</skip>
           <excludes>
-            <exclude>**/RichTreeTest.java</exclude>
             <exclude>**/AjaxPollTest.java</exclude>
             <exclude>**/RichInplaceInputTest.java</exclude>
           </excludes>

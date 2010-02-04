@@ -112,7 +112,7 @@ public class RichInplaceInputTest extends ServletTestCase
       assertTrue("Control not expected type (HtmlTextInput): "+e.getClass(),e instanceof HtmlTextInput);
       HtmlTextInput nameInput = (HtmlTextInput)e;
       // Make sure input control is hidden
-      String hiddenStyle = nameInput.getStyleAttribute();
+      String hiddenStyle = nameInput.getAttribute("style");
       assertTrue("Input control not hidden as expected: ["+hiddenStyle+"]",
               hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
       
@@ -120,7 +120,7 @@ public class RichInplaceInputTest extends ServletTestCase
       span.click();
       
       // Make sure input control is now visible
-      String visibleStyle = nameInput.getStyleAttribute();
+      String visibleStyle = nameInput.getAttribute("style");
       assertFalse("Input control not visible as expected: ["+visibleStyle+"]",
               visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));
       
@@ -144,7 +144,7 @@ public class RichInplaceInputTest extends ServletTestCase
          assertNotNull("Control not found: "+controlId+"bar",e);
          assertTrue("Control not expected type (HtmlDivision): "+e.getClass(),e instanceof HtmlDivision);
          HtmlDivision buttons = (HtmlDivision)e;
-         String buttonStyle = buttons.getStyleAttribute();
+         String buttonStyle = buttons.getAttribute("style");
          // Type #1 - NO BUTTONS
          if( buttonStyle.contains("display:none") || buttonStyle.contains("display: none") )
          {
@@ -165,7 +165,7 @@ public class RichInplaceInputTest extends ServletTestCase
       }
       
       // Make sure name input is no longer visible
-      hiddenStyle = nameInput.getStyleAttribute();
+      hiddenStyle = nameInput.getAttribute("style");
       assertTrue("Input control not hidden as expected: ["+hiddenStyle+"]",
               hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
       String inputValue = nameInput.getValueAttribute();

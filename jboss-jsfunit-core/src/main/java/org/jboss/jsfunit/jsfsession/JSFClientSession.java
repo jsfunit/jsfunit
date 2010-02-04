@@ -26,7 +26,6 @@ import com.gargoylesoftware.htmlunit.JavaScriptPage;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
@@ -200,7 +199,7 @@ public class JSFClientSession
     * @throws ComponentIDNotFoundException if no client ID matches the suffix
     * @throws DuplicateClientIDException if more than one client ID matches the suffix
     * @throws ClassCastException if the current page is not an HtmlPage or the 
-    *                            specified component is not a ClickableElement.
+    *                            specified component is not an HtmlElement.
     * @throws IOException if clicking causes a failed request to the server.
     */
    public void click(String componentID) throws IOException
@@ -221,9 +220,9 @@ public class JSFClientSession
       
       if (element == null) throw new ComponentIDNotFoundException(componentID);
       
-      if (element instanceof ClickableElement)
+      if (element instanceof HtmlElement)
       {
-         ((ClickableElement)element).click();
+         ((HtmlElement)element).click();
          return;
       }
       

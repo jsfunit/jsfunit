@@ -89,7 +89,7 @@ public class RichTreeTest extends ServletTestCase
         handle.click();
         assertTrue(richClient.isTreeHandleExpanded(treeId, artistNode, "Baccara"));
 
-        HtmlElement element = richClient.getTreeNodeByText(treeId, albumNode, "Grand Collection");
+        HtmlElement element = richClient.getTreeNodeByText(treeId, "albumLink", "Grand Collection");
         element.click();
         assertEquals("Grand Collection", getRequestParam(nodeValueParamName));
 
@@ -98,7 +98,7 @@ public class RichTreeTest extends ServletTestCase
         assertTrue(richClient.isTreeHandleExpanded(treeId, albumNode, "Grand Collection"));
         assertFalse(richClient.isTreeHandleExpanded(treeId, albumNode, "The Road To Hell"));
 
-        element = richClient.getTreeNodeByText(treeId, songNode, "Borriquito");
+        element = richClient.getTreeNodeByText(treeId, "songLink", "Borriquito");
         element.click();
         assertEquals("Borriquito", getRequestParam(nodeValueParamName));
 
@@ -107,7 +107,7 @@ public class RichTreeTest extends ServletTestCase
         handle.click();
         assertFalse(richClient.isTreeHandleExpanded(treeId, albumNode, "Grand Collection"));
 
-        element = richClient.getTreeNodeByText(treeId, artistNode, "Chris Rea");
+        element = richClient.getTreeNodeByText(treeId, "artistLink", "Chris Rea");
         element.click();
         assertEquals("Chris Rea", getRequestParam(nodeValueParamName));
 
@@ -118,7 +118,7 @@ public class RichTreeTest extends ServletTestCase
         assertFalse(richClient.isTreeHandleExpanded(treeId, albumNode, "The Road To Hell"));
 
         // JSFUNIT-238 if you remove the following three lines then the next assert will fail
-        element = richClient.getTreeNodeByText(treeId, albumNode, "The Road To Hell");
+        element = richClient.getTreeNodeByText(treeId, "albumLink", "The Road To Hell");
         element.click();
         assertEquals("The Road To Hell", getRequestParam(nodeValueParamName));
 
@@ -129,7 +129,7 @@ public class RichTreeTest extends ServletTestCase
         assertTrue(richClient.isTreeHandleExpanded(treeId, albumNode, "The Road To Hell"));
         assertFalse(richClient.isTreeHandleExpanded(treeId, albumNode, "Grand Collection"));
 
-        element = richClient.getTreeNodeByText(treeId, songNode, "Texas");
+        element = richClient.getTreeNodeByText(treeId, "songLink", "Texas");
         element.click();
         assertEquals("Texas", getRequestParam(nodeValueParamName));
 

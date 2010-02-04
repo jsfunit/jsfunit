@@ -22,10 +22,9 @@
 
 package org.jboss.jsfunit.example.ajax4jsf;
 
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
-import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.component.html.HtmlDataTable;
 import junit.framework.Test;
@@ -79,7 +78,7 @@ public class A4JTest extends ServletTestCase
    private void clickOption(JSFClientSession client, String optionValue) throws IOException
    {
       HtmlPage page = (HtmlPage)client.getContentPage();
-      ClickableElement clickable = (ClickableElement)page.getByXPath("//option[@value='" + optionValue + "']").get(0);
+      HtmlElement clickable = (HtmlElement)page.getByXPath("//option[@value='" + optionValue + "']").get(0);
       clickable.click(); // click to select
       client.click("list"); // click list to fire event
    }

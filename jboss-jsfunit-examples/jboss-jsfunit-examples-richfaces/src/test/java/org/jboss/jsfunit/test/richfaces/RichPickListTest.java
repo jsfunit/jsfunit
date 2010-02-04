@@ -22,7 +22,6 @@
 package org.jboss.jsfunit.test.richfaces;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HTMLParserListener;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -67,15 +66,15 @@ public class RichPickListTest extends ServletTestCase
       for (Iterator i = form.getAllHtmlChildElements().iterator(); i.hasNext();)
       {
          Object element = i.next();
-         if (element instanceof ClickableElement)
+         if (element instanceof HtmlElement)
          {
             System.out.println("id=" + ((HtmlElement)element).getAttribute("id") + " | className=" + element.getClass().getName());
          }
       }
-      ClickableElement firstState = (ClickableElement)htmlPage.getElementById("form1:pickList:source::1");
+      HtmlElement firstState = (HtmlElement)htmlPage.getElementById("form1:pickList:source::1");
       firstState.dblClick();
       assertTrue(client.getPageAsText().contains("1 Options Choosen"));
-      ClickableElement copyAllButton = (ClickableElement)htmlPage.getElementById("form1:pickListcopyAlllink");
+      HtmlElement copyAllButton = (HtmlElement)htmlPage.getElementById("form1:pickListcopyAlllink");
       htmlPage.setFocusedElement(copyAllButton);
       copyAllButton.click();
       Integer items = (Integer)server.getManagedBeanValue("#{pickListBean.items}");

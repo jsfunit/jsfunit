@@ -23,7 +23,6 @@ package org.jboss.jsfunit.test.richfaces;
 
 import java.io.IOException;
 
-import javax.faces.component.UIComponent;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,12 +36,8 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.jsfunit.richclient.RichFacesClient;
 import org.richfaces.component.html.HtmlToolTip;
 import org.richfaces.demo.tooltip.ToolTipData;
-import org.w3c.dom.Element;
 
-import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlInlineFrame;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
@@ -103,7 +98,7 @@ public class RichTooltipTest extends ServletTestCase {
 		HtmlDivision parentSubDiv = (HtmlDivision)client.getElement(_DEFAULT_CLIENTSIDE_PANEL+"_body");
 		assertNotNull("Unable to find \"sample1_body\" control",parentSubDiv);
 		// 4) Make sure tooltip is currently hidden (style contains 'display: none')
-		String hiddenStyle = tooltip1.getStyleAttribute();
+		String hiddenStyle = tooltip1.getAttribute("style");
 		assertTrue("Tooltip not hidden as expected: ["+hiddenStyle+"]",
 				hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
 		// 5) Move mouse over div to make tooltip display
@@ -113,7 +108,7 @@ public class RichTooltipTest extends ServletTestCase {
 		parentSubDiv.mouseOver();
 
 		// 6) Make sure tooltip is currently visible (style does not contain 'display: none')
-		String visibleStyle = tooltip1.getStyleAttribute();
+		String visibleStyle = tooltip1.getAttribute("style");
 		assertFalse("Tooltip not visible as expected: ["+visibleStyle+"]",
 				visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));		
 	}
@@ -134,7 +129,7 @@ public class RichTooltipTest extends ServletTestCase {
 		HtmlDivision parentSubDiv = (HtmlDivision)client.getElement(_FOLLOWMOUSE_PANEL+"_body");
 		assertNotNull("Unable to find \"sample1_body\" control",parentSubDiv);
 		// 4) Make sure tooltip is currently hidden (style contains 'display: none')
-		String hiddenStyle = tooltip1.getStyleAttribute();
+		String hiddenStyle = tooltip1.getAttribute("style");
 		assertTrue("Tooltip not hidden as expected: ["+hiddenStyle+"]",
 				hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
 		// 5) Move mouse over div to make tooltip display
@@ -147,7 +142,7 @@ public class RichTooltipTest extends ServletTestCase {
 		Thread.sleep(1000);
 		
 		// 6) Make sure tooltip is currently visible (style does not contain 'display: none')
-		String visibleStyle = tooltip1.getStyleAttribute();
+		String visibleStyle = tooltip1.getAttribute("style");
 		assertFalse("Tooltip not visible as expected: ["+visibleStyle+"]",
 				visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));		
 	}
@@ -169,7 +164,7 @@ public class RichTooltipTest extends ServletTestCase {
 		HtmlDivision parentSubDiv = (HtmlDivision)client.getElement(_SERVERREDNER_PANEL+"_body");
 		assertNotNull("Unable to find \"sample1_body\" control",parentSubDiv);
 		// 4) Make sure tooltip is currently hidden (style contains 'display: none')
-		String hiddenStyle = tooltip1.getStyleAttribute();
+		String hiddenStyle = tooltip1.getAttribute("style");
 		assertTrue("Tooltip not hidden as expected: ["+hiddenStyle+"]",
 				hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
 		// 5) Lookup backing bean and current tooltip counter
@@ -186,7 +181,7 @@ public class RichTooltipTest extends ServletTestCase {
 		Thread.sleep(1000);
 
 		// 7) Make sure tooltip is currently visible (style does not contain 'display: none')
-		String visibleStyle = tooltip1.getStyleAttribute();
+		String visibleStyle = tooltip1.getAttribute("style");
 		assertFalse("Tooltip not visible as expected: ["+visibleStyle+"]",
 				visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));				
 		// 8) Our tooltip counter should have increased by 1
@@ -211,7 +206,7 @@ public class RichTooltipTest extends ServletTestCase {
 		HtmlDivision parentSubDiv = (HtmlDivision)client.getElement(_MOUSECLICK_PANEL+"_body");
 		assertNotNull("Unable to find \"sample1_body\" control",parentSubDiv);
 		// 4) Make sure tooltip is currently hidden (style contains 'display: none')
-		String hiddenStyle = tooltip1.getStyleAttribute();
+		String hiddenStyle = tooltip1.getAttribute("style");
 		assertTrue("Tooltip not hidden as expected: ["+hiddenStyle+"]",
 				hiddenStyle.contains("display:none") || hiddenStyle.contains("display: none"));
 		// 5) Lookup backing bean and current tooltip counter
@@ -229,7 +224,7 @@ public class RichTooltipTest extends ServletTestCase {
 		Thread.sleep(1000);
 
 		// 7) Make sure tooltip is currently visible (style does not contain 'display: none')
-		String visibleStyle = tooltip1.getStyleAttribute();
+		String visibleStyle = tooltip1.getAttribute("style");
 		assertFalse("Tooltip not visible as expected: ["+visibleStyle+"]",
 				visibleStyle.contains("display:none") || visibleStyle.contains("display: none"));				
 		// 8) Our tooltip counter should have increased by 1
