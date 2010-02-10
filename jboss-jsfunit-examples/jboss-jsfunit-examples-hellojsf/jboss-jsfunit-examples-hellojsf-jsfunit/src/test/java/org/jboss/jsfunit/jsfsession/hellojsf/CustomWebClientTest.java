@@ -91,7 +91,7 @@ public class CustomWebClientTest extends ServletTestCase
 
    public void testGetProxyHostAndPort()
    {
-      WebClientSpec wcSpec = new WebClientSpec("/index.faces", BrowserVersion.FIREFOX_2, "myhost", 333);
+      WebClientSpec wcSpec = new WebClientSpec("/index.faces", BrowserVersion.FIREFOX_3, "myhost", 333);
       assertEquals("myhost", wcSpec.getProxyHost());
       assertEquals(333, wcSpec.getProxyPort());
    }

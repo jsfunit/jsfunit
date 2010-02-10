@@ -92,7 +92,7 @@ public class HtmlUnitSnooper implements RequestListener
       System.out.println("Status code=" + webResponse.getStatusCode());
       System.out.println("Status message=" + webResponse.getStatusMessage());
       System.out.println("Content type=" + webResponse.getContentType());
-      System.out.println("Content char set=" + webResponse.getContentCharSet());
+      System.out.println("Content char set=" + webResponse.getContentCharset());
       System.out.println();
       System.out.println("Response Headers:");
       for (Iterator i = webResponse.getResponseHeaders().iterator(); i.hasNext();)
