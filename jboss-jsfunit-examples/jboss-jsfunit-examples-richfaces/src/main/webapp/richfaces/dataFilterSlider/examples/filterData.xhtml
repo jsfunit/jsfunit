@@ -1,99 +1,82 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich">
-			
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
 	<style>
-			.rich-table-firstrow  .rich-table-cell{
-			  border-top-width:0px;
-			}
-	</style>
+.rich-table-firstrow  .rich-table-cell {
+	border-top-width: 0px;
+}
+</style>
 
-	<a4j:form id="form1"
-		reRender="list-body" ajaxSubmit="true" ignoreDupResponses="true"
-		requestDelay="500">
+	<h:form id="form1">
+		<a4j:queue />
 
-		<a4j:region id="stat1">
+		<rich:dataFilterSlider for="carList"
+			forValRef="inventoryList.carInventory" filterBy="getMileage"
+			manualInput="true" onSlide="true" onChange="true" storeResults="true"
+			width="200px" startRange="10000" endRange="60000" increment="10000"
+			trailer="true" handleValue="60000" id="slider_1"/>
 
-			<a4j:outputPanel id="slider-body">
+		<rich:spacer height="15" />
 
-				<rich:dataFilterSlider sliderListener="#{dfsBean.doSlide}"
-					binding="#{inventoryList.dataFilterSlider}" for="carList"
-					forValRef="inventoryList.carInventory" filterBy="getMileage"
-					manualInput="true" onSlide="true" onChange="true"
-					storeResults="true" trackStyleClass="track" width="200px"
-					styleClass="slider-container" startRange="10000" endRange="60000"
-					increment="10000" rangeStyleClass="range" trailer="true"
-					trailerStyleClass="trailer" handleStyleClass="handle"
-					handleValue="1" id="slider_1"></rich:dataFilterSlider>
+		<rich:dataTable id="carIndex" rows="10"
+			rowKeyVar="rowKey"
+			value="#{inventoryList.carMakeIndex}" var="category"
+			styleClass="list-table1" columnClasses="column-index"
+			rowClasses="list-row3">
 
-			</a4j:outputPanel>
+			<rich:column>
+				<a4j:commandLink id="switchMake" actionListener="#{inventoryList.filterCarList}"
+					reRender="carList">
+					<h:outputText value="#{category}" />
+					<f:attribute name="filterRule" value="showTable" />
+					<f:param name="sliderId" value="slider"/>
+					<f:param name="rowKey" value="#{rowKey}"/>
+				</a4j:commandLink>
+			</rich:column>
 
-			<rich:spacer height="15" />
+		</rich:dataTable>
+		<rich:spacer height="15" />
 
-			<a4j:outputPanel id="list-body">
-				<h:dataTable id="carIndex" rows="10"
-					binding="#{inventoryList.carMakeIndexUIData}"
-					value="#{inventoryList.carMakeIndex}" var="category"
-					styleClass="list-table1" columnClasses="column-index"
-					rowClasses="list-row3">
-
+		<rich:dataTable width="300" id="carList" rows="10"
+			value="#{inventoryList.carInventory}" var="category">
+			<f:facet name="header">
+				<rich:columnGroup>
 					<h:column>
-						<a4j:commandLink id="switchMake" 
-                                                        actionListener="#{inventoryList.filterCarList}"
-							reRender="carList">
-							<h:outputText value="#{category}" />
-							<f:attribute name="filterRule" value="showTable" />
-
-						</a4j:commandLink>
-					</h:column>
-
-				</h:dataTable>
-				<rich:spacer height="15" />
-
-				<rich:dataTable width="300" id="carList" rows="10"
-					value="#{inventoryList.carInventory}" var="category">
-					<f:facet name="header">
-						<rich:columnGroup>
-							<h:column>
-								<h:outputText styleClass="headerText" value="Make" />
-							</h:column>
-							<h:column>
-								<h:outputText styleClass="headerText" value="Model" />
-							</h:column>
-							<h:column>
-								<h:outputText styleClass="headerText" value="Price" />
-							</h:column>
-							<h:column>
-								<h:outputText styleClass="headerText" value="Mileage" />
-							</h:column>
-						</rich:columnGroup>
-					</f:facet>
-
-					<h:column>
-						<h:outputText id="make" value="#{category.make}" />
+						<h:outputText styleClass="headerText" value="Make" />
 					</h:column>
 					<h:column>
-						<h:outputText id="model" value="#{category.model}" />
+						<h:outputText styleClass="headerText" value="Model" />
 					</h:column>
 					<h:column>
-						<h:outputText id="price" value="#{category.price}" />
+						<h:outputText styleClass="headerText" value="Price" />
 					</h:column>
 					<h:column>
-						<h:outputText id="mileage" value="#{category.mileage}" />
+						<h:outputText styleClass="headerText" value="Mileage" />
 					</h:column>
+				</rich:columnGroup>
+			</f:facet>
 
-				</rich:dataTable>
+			<h:column>
+				<h:outputText id="make" value="#{category.make}" />
+			</h:column>
+			<h:column>
+				<h:outputText id="model" value="#{category.model}" />
+			</h:column>
+			<h:column>
+				<h:outputText id="price" value="#{category.price}" />
+			</h:column>
+			<h:column>
+				<h:outputText id="mileage" value="#{category.mileage}" />
+			</h:column>
 
-			</a4j:outputPanel>
+		</rich:dataTable>
 
-			<rich:spacer height="15" />
+		<rich:spacer height="15" />
 
-
-		</a4j:region>
-
-	</a4j:form>
+	</h:form>
 
 </ui:composition>

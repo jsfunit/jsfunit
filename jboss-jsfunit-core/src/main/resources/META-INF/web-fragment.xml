@@ -1,0 +1,40 @@
+<web-fragment xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+    version="3.0">
+
+    <filter>
+      <filter-name>JSFUnitFilter</filter-name>
+      <filter-class>org.jboss.jsfunit.framework.JSFUnitFilter</filter-class>
+    </filter>
+ 
+    <filter-mapping>
+      <filter-name>JSFUnitFilter</filter-name>
+      <servlet-name>ServletTestRunner</servlet-name>
+    </filter-mapping>    
+    
+    <filter-mapping>
+      <filter-name>JSFUnitFilter</filter-name>
+      <servlet-name>ServletRedirector</servlet-name>
+    </filter-mapping>
+ 
+    <servlet>
+      <servlet-name>ServletRedirector</servlet-name>
+      <servlet-class>org.jboss.jsfunit.framework.JSFUnitServletRedirector</servlet-class>
+    </servlet>
+    
+    <servlet>
+       <servlet-name>ServletTestRunner</servlet-name>
+       <servlet-class>org.apache.cactus.server.runner.ServletTestRunner</servlet-class>
+    </servlet> 
+ 
+    <servlet-mapping>
+      <servlet-name>ServletRedirector</servlet-name>
+      <url-pattern>/ServletRedirector</url-pattern>
+    </servlet-mapping> 
+    
+    <servlet-mapping>
+       <servlet-name>ServletTestRunner</servlet-name>
+       <url-pattern>/ServletTestRunner</url-pattern>
+    </servlet-mapping> 
+</web-fragment>

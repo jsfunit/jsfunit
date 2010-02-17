@@ -193,11 +193,17 @@
         <artifactId>jsf-impl</artifactId>
         <version>2.0.1-FCS</version>
       </dependency>
-
+<!--
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <version>2.4</version>
+      </dependency>
+-->
+      <dependency>
+        <groupId>jboss.web</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>3.0.0-beta-2</version>
       </dependency>
 
       <dependency>
@@ -348,7 +354,7 @@
     <module>jboss-jsfunit-examples</module>
   <!--  <module>jboss-jsfunit-analysis</module> -->
     <module>jboss-jsfunit-microdeployer</module>
-    <module>jboss-jsfunit-spy</module>
+  <!--  <module>jboss-jsfunit-spy</module> -->
   </modules>
 
   <pluginRepositories>
@@ -370,7 +376,7 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
-          <showDeprecation>true</showDeprecation>
+          <!--<showDeprecation>true</showDeprecation>-->
         </configuration>
       </plugin>
       
@@ -384,7 +390,8 @@
   </build>
     
   <properties>
-    <richfaces-version>3.3.2.SR1</richfaces-version>
+     <richfaces-version>3.3.3.CR1</richfaces-version>
+    <!--<richfaces-version>3.3.2.SR1</richfaces-version>-->
     <!--<richfaces-version>3.3.2.GA</richfaces-version>-->
     <!-- <richfaces-version>3.3.0.GA</richfaces-version> -->
     <!-- <seam-version>2.1.1.GA</seam-version> -->

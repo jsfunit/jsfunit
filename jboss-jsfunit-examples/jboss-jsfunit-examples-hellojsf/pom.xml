@@ -15,15 +15,23 @@
   <modules>    
     <module>jboss-jsfunit-examples-hellojsf-webapp</module>
     <module>jboss-jsfunit-examples-hellojsf-jsfunit</module>
+    <module>jboss-jsfunit-examples-hellojsf-jee6</module>
     <module>jboss-jsfunit-examples-hellojsf-pathmapped</module>
     <module>jboss-jsfunit-examples-hellojsf-ant</module>
   </modules>
   
   <dependencies>
+    <!--
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <scope>provided</scope>
+    </dependency>
+-->
+    <dependency>
+       <groupId>jboss.web</groupId>
+       <artifactId>servlet-api</artifactId>
+       <scope>provided</scope>
     </dependency>
     <!--
     <dependency>

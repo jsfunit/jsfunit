@@ -81,12 +81,21 @@ public class SeamRequestListener implements RequestListener
    private void tearDownConversation()
    {
       if (!this.iRestoredTheConversation) return;
-      
-      HttpServletRequest request = httpServletRequest();
-      Manager.instance().endRequest( new ServletRequestSessionMap(request)  );
-      ServletLifecycle.endRequest(request);
-      
-      this.iRestoredTheConversation = false;
+
+      try
+      {
+        HttpServletRequest request = httpServletRequest();
+        Manager.instance().endRequest( new ServletRequestSessionMap(request)  );
+        ServletLifecycle.endRequest(request);
+      }
+      catch (IllegalArgumentException e)
+      {
+          // ignore
+      }
+      finally
+      {
+        this.iRestoredTheConversation = false;
+      }
    }
    
    private void demoteConversation()

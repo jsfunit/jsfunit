@@ -1,0 +1,69 @@
+h1,h2
+{
+font-family: arial, 'sans serif'; 
+}
+
+h3
+{
+  font-family: arial, 'sans serif'; 
+  color: black;
+  font-weight: bold;
+}
+
+p,table,li,address
+{
+font-family: arial, 'sans serif'; 
+margin-left: 15pt;
+}
+
+#infoheading
+{
+  font-family: arial, 'sans serif'; 
+  color: black;
+  font-weight: bold;
+  
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #FAEBD7;
+}
+
+p,li,th,td
+{
+font-size: 80%;
+}
+
+.integer
+{
+  text-align: center;
+}
+
+.noop {}
+
+th, tfoot, .highlight
+{
+  background-color:#FAEBD7;
+  font-weight: bold;
+}
+
+label 
+{
+  font-weight: bold;
+}
+
+label span
+{
+    
+  font-weight: normal;
+}
+
+body
+{
+background-color: #ffffff;
+}
+
+h1,h2,hr 
+{
+color:saddlebrown; 
+}

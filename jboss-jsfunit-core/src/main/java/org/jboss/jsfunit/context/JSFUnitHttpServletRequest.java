@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -35,12 +36,19 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  * This class takes the same approach as the JSFUnitExternalContext in that it
@@ -59,7 +67,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
 {
    private JSFUnitExternalContext extCtx;
    
-   private boolean isServlet14OrGreater = false;
+   private boolean isServlet24OrGreater = false;
    
    private String localName = "";
    private String localAddr = "";
@@ -88,8 +96,8 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    public JSFUnitHttpServletRequest(JSFUnitExternalContext extCtx, HttpServletRequest request)
    {
       this.extCtx = extCtx;
-      this.isServlet14OrGreater = isServlet14OrGreater();
-      cacheServlet14RequestValues(request);
+      this.isServlet24OrGreater = isServlet24OrGreater();
+      cacheServlet24RequestValues(request);
       this.queryString = request.getQueryString();
       this.protocol = request.getProtocol();
       this.pathTranslated = request.getPathTranslated();
@@ -111,15 +119,18 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       this.isSecure = request.isSecure();
    }
    
-   private boolean isServlet14OrGreater()
+   private boolean isServlet24OrGreater()
    {
       ServletContext servletContext = (ServletContext)this.extCtx.getContext();
-      return servletContext.getMinorVersion() > 3;
+      int major = servletContext.getMajorVersion();
+      int minor = servletContext.getMinorVersion();
+
+      return (major > 2) || ((major == 2) && (minor > 3));
    }
    
-   private void cacheServlet14RequestValues(HttpServletRequest request)
+   private void cacheServlet24RequestValues(HttpServletRequest request)
    {
-      if (!this.isServlet14OrGreater) return;
+      if (!this.isServlet24OrGreater) return;
       
       this.localName = request.getLocalName();
       this.localAddr = request.getLocalAddr();
@@ -472,7 +483,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public int getLocalPort()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
+      if (!isServlet24OrGreater) throw new UnsupportedOperationException();
       return this.localPort;
    }
    
@@ -484,7 +495,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public int getRemotePort()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
+      if (!isServlet24OrGreater) throw new UnsupportedOperationException();
       return this.remotePort;
    }
    
@@ -496,7 +507,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public String getLocalName()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException(); 
+      if (!isServlet24OrGreater) throw new UnsupportedOperationException();
       return this.localName;
    }
    
@@ -508,7 +519,104 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public String getLocalAddr()
    {
-      if (!isServlet14OrGreater) throw new UnsupportedOperationException();
+      if (!isServlet24OrGreater) throw new UnsupportedOperationException();
       return this.localAddr;
+   }
+
+   /**
+    * This method not supported yet.
+    *
+    * @throws UnsupportedOperationException
+    */
+   @Override
+   public Part getPart(String part)
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   /**
+    * This method not supported yet.
+    *
+    * @throws UnsupportedOperationException
+    */
+   @Override
+   public Collection<Part> getParts()
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   /**
+    * This method not supported.
+    *
+    * @throws UnsupportedOperationException
+    */
+   @Override
+   public void logout() throws ServletException
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   /**
+    * This method not supported.
+    *
+    * @throws UnsupportedOperationException
+    */
+   @Override
+   public void login(String username, String password) throws ServletException
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   /**
+    * This method not supported.
+    *
+    * @throws UnsupportedOperationException
+    */
+   @Override
+   public boolean authenticate(HttpServletResponse response) throws IOException, ServletException
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public DispatcherType getDispatcherType()
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public AsyncContext getAsyncContext()
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public boolean isAsyncStarted()
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public boolean isAsyncSupported()
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public AsyncContext startAsync()
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException
+   {
+       throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public ServletContext getServletContext()
+   {
+       throw new UnsupportedOperationException();
    }
 }

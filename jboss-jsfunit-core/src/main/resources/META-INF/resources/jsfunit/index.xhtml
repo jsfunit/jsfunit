@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="layout.xhtml">
+        <ui:define name="header">JSFUnit Test Launcher</ui:define>
+        <ui:define name="content">
+
+            <p>
+                <f:view>
+                    <h2>
+                        <h:outputLink value="../ServletTestRunner">
+                            <h:outputText value="Click here to run all tests"/>
+                            <f:param name="suite" value="org.jboss.jsfunit.init.AllJSFUnitTests"/>
+                            <f:param name="xsl" value="jsfunit/cactus-report.xsl"/>
+                        </h:outputLink>
+                    </h2>
+                    <hr/>
+                    <h2>Click below to run an individual test</h2>
+                    <h:dataTable value="#{JSFUnitTests.tests}"
+                                 var="test">
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="Test"/></f:facet>
+                            <h:outputLink value="../ServletTestRunner">
+                                <h:outputText value="#{test}"/>
+                                <f:param name="suite" value="#{test}"/>
+                                <f:param name="xsl" value="jsfunit/cactus-report.xsl"/>
+                            </h:outputLink>
+                        </h:column>
+                    </h:dataTable>
+
+                </f:view>
+            </p>
+        </ui:define>
+    </ui:composition>
+
+</html>
