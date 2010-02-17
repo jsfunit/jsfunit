@@ -76,13 +76,6 @@
     </dependency>
     
     <dependency>
-      <groupId>org.jboss.jsfspy</groupId>
-      <artifactId>jsfspy-core</artifactId>
-      <version>1.0.0.GA-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-    
-    <dependency>
       <groupId>com.sun.facelets</groupId>
       <artifactId>jsf-facelets</artifactId>
     </dependency>
@@ -182,8 +175,15 @@
       <scope>compile</scope>
     </dependency>
     
+    <!--
     <dependency>
-       <groupId>javax.servlet</groupId>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+-->
+    <dependency>
+       <groupId>jboss.web</groupId>
        <artifactId>servlet-api</artifactId>
        <scope>provided</scope>
     </dependency>
