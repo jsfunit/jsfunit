@@ -272,6 +272,7 @@
           <excludes>
             <exclude>**/AjaxPollTest.java</exclude>
             <exclude>**/RichInplaceInputTest.java</exclude>
+            <exclude>**/RichDataFilterSliderTest.java</exclude>
           </excludes>
         </configuration>
       </plugin>

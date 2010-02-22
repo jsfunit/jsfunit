@@ -12,48 +12,47 @@
 				overflow:auto;
 			}
 		</style>	
-		<h:form id="form1">
+		<h:form>
 			<rich:spacer height="30" />
 			<rich:scrollableDataTable rowKeyVar="rkv" frozenColCount="1" height="400px" 
 				width="700px" id="carList" rows="40" columnClasses="col"
 				value="#{dataTableScrollerBean.allCars}" var="category" sortMode="single"
-				binding="#{dataTableScrollerBean.table}"
 				sortOrder="#{dataTableScrollerBean.order}"
 				selection="#{dataTableScrollerBean.selection}">
 
 				<rich:column id="make">
-					<f:facet name="header"><h:outputText id="makeText" styleClass="headerText" value="Make" /></f:facet>
-					<h:outputText id="makeValue" value="#{category.make}" />
+					<f:facet name="header"><h:outputText styleClass="headerText" value="Make" /></f:facet>
+					<h:outputText value="#{category.make}" />
 				</rich:column>
 				<rich:column id="model">
-					<f:facet name="header"><h:outputText id="modelText" styleClass="headerText" value="Model" /></f:facet>
-					<h:outputText id="modelValue" value="#{category.model}" />
+					<f:facet name="header"><h:outputText styleClass="headerText" value="Model" /></f:facet>
+					<h:outputText value="#{category.model}" />
 				</rich:column>
 				<rich:column id="price">
-					<f:facet name="header"><h:outputText id="priceText" styleClass="headerText" value="Price" /></f:facet>
-					<h:outputText id="priceValue" value="#{category.price}" />
+					<f:facet name="header"><h:outputText styleClass="headerText" value="Price" /></f:facet>
+					<h:outputText value="#{category.price}" />
 				</rich:column>
 				<rich:column id="mileage">
-					<f:facet name="header"><h:outputText id="mileageText" styleClass="headerText" value="Mileage" /></f:facet>
-					<h:outputText id="mileageValue" value="#{category.mileage}" />
+					<f:facet name="header"><h:outputText styleClass="headerText" value="Mileage" /></f:facet>
+					<h:outputText value="#{category.mileage}" />
 				</rich:column>
 				<rich:column width="200px" id="vin">
-					<f:facet name="header"><h:outputText id="vinText" styleClass="headerText" value="VIN" /></f:facet>
-					<h:outputText id="vinValue" value="#{category.vin}" />
+					<f:facet name="header"><h:outputText styleClass="headerText" value="VIN" /></f:facet>
+					<h:outputText value="#{category.vin}" />
 				</rich:column>
 				<rich:column id="stock">
-					<f:facet name="header"><h:outputText id="stockText" styleClass="headerText" value="Stock" /></f:facet>
-					<h:outputText id="stockValue" value="#{category.stock}" />
+					<f:facet name="header"><h:outputText styleClass="headerText" value="Stock" /></f:facet>
+					<h:outputText value="#{category.stock}" />
 				</rich:column>
 			</rich:scrollableDataTable>
 			<rich:spacer height="20px"/>
-			<a4j:commandButton id="setSelection" value="Show Current Selection" reRender="table" 
+			<a4j:commandButton id="setSelection" value="Show Current Selection" reRender="table"
 				action="#{dataTableScrollerBean.takeSelection}" 
 				oncomplete="javascript:Richfaces.showModalPanel('panel');"/>
 		</h:form>
 		<rich:modalPanel id="panel" autosized="false" keepVisualState="false" width="315" height="230">
 				<f:facet name="header">
-					<h:outputText id="selectedRowsText" value="Selected Rows"/>
+					<h:outputText value="Selected Rows"/>
 				</f:facet>
 				<f:facet name="controls">
 					<span style="cursor:pointer" onclick="javascript:Richfaces.hideModalPanel('panel')">X</span>
@@ -61,24 +60,24 @@
 			<h:panelGroup layout="block" styleClass="scrolls">
 			<rich:dataTable value="#{dataTableScrollerBean.selectedCars}" var="sel" id="table">
 				<rich:column>
-					<f:facet name="header"><h:outputText id="makeText" value="Make" /></f:facet>
-					<h:outputText id="makeValue" value="#{sel.make}" />
+					<f:facet name="header"><h:outputText value="Make" /></f:facet>
+					<h:outputText value="#{sel.make}" />
 				</rich:column>
 				<rich:column id="model">
-					<f:facet name="header"><h:outputText id="modelText" value="Model" /></f:facet>
-					<h:outputText id="modelValue" value="#{sel.model}" />
+					<f:facet name="header"><h:outputText value="Model" /></f:facet>
+					<h:outputText value="#{sel.model}" />
 				</rich:column>
 				<rich:column id="price">
-					<f:facet name="header"><h:outputText id="priceText" value="Price" /></f:facet>
-					<h:outputText id="priceValue" value="#{sel.price}" />
+					<f:facet name="header"><h:outputText value="Price" /></f:facet>
+					<h:outputText value="#{sel.price}" />
 				</rich:column>
 				<rich:column id="mileage">
-					<f:facet name="header"><h:outputText id="mileageText" value="Mileage" /></f:facet>
-					<h:outputText id="mileageValue" value="#{sel.mileage}" />
+					<f:facet name="header"><h:outputText value="Mileage" /></f:facet>
+					<h:outputText value="#{sel.mileage}" />
 				</rich:column>
 				<rich:column id="stock">
-					<f:facet name="header"><h:outputText id="stockText" value="Stock" /></f:facet>
-					<h:outputText id="stockValue" value="#{sel.stock}" />
+					<f:facet name="header"><h:outputText value="Stock" /></f:facet>
+					<h:outputText value="#{sel.stock}" />
 				</rich:column>
 			</rich:dataTable>
 			</h:panelGroup>

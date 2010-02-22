@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2008, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2010, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -43,7 +43,7 @@ public class RichDataFilterSliderTest extends ServletTestCase
       JSFClientSession client = jsfSession.getJSFClientSession();
       RichFacesClient richClient = new RichFacesClient(client);
       
-      richClient.setDataFilterSlider("slider_1", "60000");  
+      richClient.setDataFilterSlider("slider", "50000");
 
       // The data table is built with random data, so there's nothing to 
       // reliably assert about it except the make of the car.
