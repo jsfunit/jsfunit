@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <parent>
-    <groupId>org.jboss.jsfunit</groupId>
-    <artifactId>jboss-jsfunit-examples-hellojsf</artifactId>
-    <version>1.2.0.GA-SNAPSHOT</version>
-  </parent>
+   <parent>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-examples-hellojsf</artifactId>
+      <version>1.2.0.GA-SNAPSHOT</version>
+   </parent>
 
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
-  <packaging>war</packaging>  
-  <name>HelloJSF Example Web App</name>    
-  
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>jboss-jsfunit-examples-hellojsf-webapp</artifactId>
+   <packaging>war</packaging>
+   <name>HelloJSF Example Web App</name>
+
+   <dependencies>
+      <dependency>
+         <groupId>org.jboss.jsfunit</groupId>
+         <artifactId>jboss-jsfunit-analysis</artifactId>
+         <version>${project.version}</version>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <testResources>
+         <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+         </testResource>
+      </testResources>
+   </build>
 </project>

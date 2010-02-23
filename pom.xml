@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jboss</groupId>
     <artifactId>jboss-parent</artifactId>
-    <version>4</version>
+    <version>5-beta-4</version>
   </parent> 
 
   <modelVersion>4.0.0</modelVersion>
@@ -117,6 +117,12 @@
         <groupId>org.jboss.jsfunit</groupId>
         <artifactId>jboss-jsfunit-core</artifactId>
         <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
       </dependency>
 
       <dependency>
@@ -352,9 +358,8 @@
     <module>jboss-jsfunit-richfaces</module>
     <module>jboss-jsfunit-ant</module>
     <module>jboss-jsfunit-examples</module>
-  <!--  <module>jboss-jsfunit-analysis</module> -->
+    <module>jboss-jsfunit-analysis</module>
     <module>jboss-jsfunit-microdeployer</module>
-  <!--  <module>jboss-jsfunit-spy</module> -->
   </modules>
 
   <pluginRepositories>
@@ -384,6 +389,12 @@
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
         <version>1.0.1-alpha-2</version>
+      </plugin>
+
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-resources-plugin</artifactId>
+         <version>2.4.1</version>
       </plugin>
       
     </plugins>

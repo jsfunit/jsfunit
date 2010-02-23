@@ -112,6 +112,7 @@ public class AbstractViewTestCase extends TestCase {
 		for(String path : allPaths) {
 			InputStream stream = null;
 			try {
+                            System.out.println("parsing " + path);
 				stream = streamProvider.getInputStream(path);
 				documentsByPath.put(path, builder.parse(stream));
 			} catch (Exception e) {

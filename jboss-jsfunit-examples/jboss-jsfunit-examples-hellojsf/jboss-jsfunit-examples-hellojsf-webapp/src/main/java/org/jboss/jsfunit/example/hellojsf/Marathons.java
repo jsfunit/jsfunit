@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.FacesContext;
@@ -32,7 +33,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stan Silvert
  */
-public class Marathons
+public class Marathons implements Serializable
 {
    
    private List marathonList = new ArrayList();
