@@ -14,7 +14,7 @@
 
   <profiles>
     
-    
+    <!--
     <profile>
        <id>jee6</id>
        <properties>
@@ -43,9 +43,6 @@
                       <value>http://localhost:8080/${artifactId}</value>
                     </property>
                   </systemProperties>
-                  <excludes>
-                     <exclude>**/PassServletRedirectParamsTest.java</exclude>
-                  </excludes>
                 </configuration>
               </execution>
             </executions>
@@ -58,9 +55,9 @@
               <wait>false</wait>  
               <container>
                 <systemProperties>
-                <!-- snoops request and response from client side
+                 snoops request and response from client side
                      result is in server.log 
-                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> -->
+                  <jsfunit.htmlunitsnooper>enabled</jsfunit.htmlunitsnooper> 
                 </systemProperties>
               </container>
               <configuration>            
@@ -92,7 +89,7 @@
 
         </plugins>
       </build>
-    </profile>
+    </profile> -->
   </profiles>
   
   <dependencies>
