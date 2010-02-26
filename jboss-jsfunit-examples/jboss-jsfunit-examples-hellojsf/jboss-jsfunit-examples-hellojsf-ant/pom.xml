@@ -128,7 +128,7 @@
                 <typedef resource="org/apache/maven/artifact/ant/antlib.xml" classpathref="maven-ant-tasks.classpath" />
                          
                 <dependencies filesetId="dependency.fileset" pathId="jsfunit.classpath">
-                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.5" />
+                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.7" />
                    <dependency groupId="cactus" artifactId="cactus" version="13-1.7.1" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-core" version="${project.version}" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-ant" version="${project.version}" />
