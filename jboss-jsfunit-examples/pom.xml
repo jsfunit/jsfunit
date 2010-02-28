@@ -142,7 +142,7 @@
             <configuration>
               <wait>false</wait>
               <container>
-                <containerId>jboss51x</containerId>
+                <containerId>jboss5x</containerId>
                 <timeout>240000</timeout>  <!-- 4 minutes -->
                 <home>${JBOSS_HOME}</home>
                 <log>${basedir}/target/jboss5.x/cargo.log</log>
