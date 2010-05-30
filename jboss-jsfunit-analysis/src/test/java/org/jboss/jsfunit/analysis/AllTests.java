@@ -43,6 +43,7 @@ public class AllTests
       TestSuite suite = new TestSuite("Test for org.jboss.jsfunit.analysis");
       suite.addTest(AllDevelopmentTests.suite());
       suite.addTest(AllIssueTests.suite());
+      suite.addTest(org.jboss.jsfunit.analysis.util.AllTests.suite());
       return suite;
    }
 }

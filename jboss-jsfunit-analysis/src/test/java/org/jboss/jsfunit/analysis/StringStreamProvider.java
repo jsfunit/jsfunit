@@ -31,7 +31,7 @@ import org.jboss.jsfunit.analysis.StreamProvider;
  * @author Dennis Byrne
  */
 
-class StringStreamProvider implements StreamProvider {
+public class StringStreamProvider implements StreamProvider {
 
 	private String xml;
 	

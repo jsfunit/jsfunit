@@ -28,6 +28,8 @@ import java.util.List;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
+import org.jboss.jsfunit.analysis.util.ConfigUtils;
+
 /**
  * A DefaultRenderkitTestCase_TestCase.
  * 
@@ -55,6 +57,17 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
    {
       StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(DEFAULT_RENDERKIT_CORRECT));
       DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("testHappyPaths", DUMMY_PATHS);
+      testCase.setStreamProvider(streamProvider);
+      testCase.runTest();
+   }
+
+   /**
+    * Test method for {@link org.jboss.jsfunit.analysis.DefaultRenderkitTestCase}.
+    */
+   public void testClassPathRenderKit()
+   {
+      StreamProvider streamProvider = new StringStreamProvider(Utilities.getFacesConfig(DEFAULT_RENDERKIT_CORRECT));
+      DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("myClassPathRenderKit", DUMMY_PATHS);
       testCase.setStreamProvider(streamProvider);
       testCase.runTest();
    }
@@ -95,7 +108,7 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
       testCase.setStreamProvider(streamProvider);
       StreamProvider streamProviderReturned = testCase.getStreamProvider();
       assertNotNull("TestCase does not returned passed StreamProvider", streamProviderReturned);
-      assertTrue("TestCase does not returned passed StreamProvider", (streamProvider == streamProviderReturned));
+      assertSame("TestCase does not returned passed StreamProvider", streamProvider, streamProviderReturned);
    }
 
    /**
@@ -123,5 +136,19 @@ public class DefaultRenderkitTestCase_TestCase extends TestCase
       {
          fail("should fail with Runtimeexception");
       }
+   }
+   
+   public void testConfigUtilsAccessors()
+   {
+      ConfigUtils configUtils = new ConfigUtils();
+      DefaultRenderkitTestCase testCase = new DefaultRenderkitTestCase("ConfigFileTestSuite_TestCase", DUMMY_PATHS);
+      testCase.setConfigUtils(configUtils);
+      assertSame(configUtils, testCase.getConfigUtils());
+      DefaultRenderkitTestCase testCase2 = new DefaultRenderkitTestCase("ConfigFileTestSuite_TestCase", DUMMY_PATHS, configUtils);
+      assertSame(configUtils, testCase2.getConfigUtils());
+      DefaultRenderkitTestCase testCase3 = new DefaultRenderkitTestCase("ConfigFileTestSuite_TestCase", DUMMY_PATHS);
+      assertNotSame(configUtils, testCase3.getConfigUtils());
+      testCase3.setConfigUtils(configUtils);
+      assertSame(configUtils, testCase3.getConfigUtils());
    }
 }
