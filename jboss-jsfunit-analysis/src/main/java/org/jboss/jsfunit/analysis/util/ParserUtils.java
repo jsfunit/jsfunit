@@ -49,17 +49,11 @@ import org.xml.sax.SAXException;
 public class ParserUtils {
 
 	private static XPathFactory xPathFactory = XPathFactory.newInstance();
-	private static DocumentBuilderFactory factory ;
-	
-	static {
-		
-		factory = DocumentBuilderFactory.newInstance();
-		factory.setIgnoringComments(true);
-		factory.setIgnoringElementContentWhitespace(true);
-		
-	}
 	
 	public static DocumentBuilder getDocumentBuilder() {
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setIgnoringComments(true);
+        factory.setIgnoringElementContentWhitespace(true);
 
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -81,6 +75,10 @@ public class ParserUtils {
 	
 	public static Document getDocument(String xml) throws SAXException, IOException {
 		DocumentBuilder documentBuilder = getDocumentBuilder();
+		if (xml == null) 
+		{
+		   throw(new IllegalArgumentException("input must not be null"));
+		}
 		return documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 	}
 	
@@ -112,4 +110,39 @@ public class ParserUtils {
 		
 		return count == 1 ? list.item(0).getTextContent() : null;
 	}
+
+	   /**
+	    * Setup the DOM parser for the file specified.
+	    * 
+	    * @param filePath the path to the file to be parsed
+	    * @param streamProvider the StreamProvider
+	    * @return a DOM Document
+	    */
+	   public static Document getDomDocument(String filePath, StreamProvider streamProvider)
+	   {
+	      String xml = ParserUtils.getXml(filePath, streamProvider);
+	      return ParserUtils.getDomDocument(new ByteArrayInputStream(xml.getBytes()), filePath);
+	   }
+
+	   /**
+	    * Setup the DOM parser for the file specified.
+	    * 
+	    * @param file the input stream to be parsed
+	    * @param filePath the path to the file to be parsed
+	    * @return a DOM Document
+	    */
+	   public static Document getDomDocument(InputStream file, String filePath)
+	   {
+	      DocumentBuilder builder = ParserUtils.getDocumentBuilder();
+	      Document document = null;
+	      try
+	      {
+	         document = builder.parse(file);
+	      }
+	      catch (Exception e)
+	      {
+	         throw new RuntimeException("Could not parse document '" + filePath + "'", e);
+	      }
+	      return document;
+	   }
 }

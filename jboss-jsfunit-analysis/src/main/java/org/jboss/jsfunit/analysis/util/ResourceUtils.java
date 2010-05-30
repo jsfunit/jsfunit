@@ -26,13 +26,50 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
+ * Collect methods that deal with resources.
+ * 
  * @author Dennis Byrne
  * @since 1.0
  */
 
 public class ResourceUtils{
+
+   /**
+    * Search resources within the classpath that match the given name, create input streams
+    * from the found resources and return them as a list.
+    * 
+    * @param relativeResourceName resource name relative to the root elements of the classpath 
+    *                 (usually the jar-files root element, or the folder specified in the classpath)
+    * @return a List<InputStream> of input streams matching the resource name
+    */
+   public static List<InputStream> getClassPathResourcesAsStreams(String relativeResourceName)
+   {
+      List<InputStream> result = new ArrayList<InputStream>();
+      try
+      {
+         Enumeration<URL> resourceUrls = Thread.currentThread().getContextClassLoader()
+                       .getResources(relativeResourceName);
+         while (resourceUrls.hasMoreElements())
+         {
+            result.add(((InputStream)(resourceUrls.nextElement().getContent())));
+         }
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      } 
+      catch (NullPointerException npe)
+      {
+         npe.printStackTrace();
+      }
+      return result;
+   }
 	
 	public String getAsString(InputStream stream, String resourceName) {
 		
@@ -45,13 +82,15 @@ public class ResourceUtils{
 			while ((temp = reader.readLine()) != null)
 				buffer.append(temp);
 			
-		} catch (IOException e) {
+		} catch (IOException e) 
+		{
 			throw new RuntimeException("Could not read file " + resourceName, e);
 		}
 		
 		try {
 			reader.close();
-		} catch (IOException e) {
+		} catch (IOException e) 
+		{
 			throw new RuntimeException("Could not close stream for " + resourceName);
 		}
 		
