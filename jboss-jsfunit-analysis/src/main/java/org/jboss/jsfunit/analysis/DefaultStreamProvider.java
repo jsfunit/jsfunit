@@ -32,7 +32,7 @@ import java.io.InputStream;
  * @since 1.0
  */
 
-class DefaultStreamProvider implements StreamProvider {
+public class DefaultStreamProvider implements StreamProvider {
 
 	public InputStream getInputStream(String resourceName) {
 
