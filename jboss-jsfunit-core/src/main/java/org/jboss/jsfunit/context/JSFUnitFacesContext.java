@@ -228,6 +228,9 @@ public class JSFUnitFacesContext extends FacesContext implements HttpSessionBind
       ExternalContext extCtx = delegate.getExternalContext();
       this.extContext = new JSFUnitExternalContext(extCtx);
       extCtx.getSessionMap().put(SESSION_KEY, this);
+
+      // Clean local Thread variable to prevent leak on the HTTP Threads.
+      setCurrentInstance(null);
    }
    
    //-------- JSF 2.0 -----------------------------------------
