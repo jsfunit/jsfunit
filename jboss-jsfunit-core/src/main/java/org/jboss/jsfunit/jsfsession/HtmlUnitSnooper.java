@@ -22,7 +22,7 @@
 
 package org.jboss.jsfunit.jsfsession;
 
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,16 +52,16 @@ public class HtmlUnitSnooper implements RequestListener
       return System.getProperty(SNOOP_PROPERTY) != null;
    }
 
-   public void beforeRequest(WebRequestSettings webRequestSettings) 
+   public void beforeRequest(WebRequest webRequest) 
    {
       System.out.println("-----------Snooping HtmlUnit Request---------------------------");
-      System.out.println("url=" + webRequestSettings.getUrl());
-      System.out.println("method=" + webRequestSettings.getHttpMethod());
-      System.out.println("encoding=" + webRequestSettings.getEncodingType());
+      System.out.println("url=" + webRequest.getUrl());
+      System.out.println("method=" + webRequest.getHttpMethod());
+      System.out.println("encoding=" + webRequest.getEncodingType());
 
       System.out.println();
       System.out.println("Additional Headers:");
-      Map<String, String> addlHeaders = webRequestSettings.getAdditionalHeaders();
+      Map<String, String> addlHeaders = webRequest.getAdditionalHeaders();
       for (Iterator<String> i = addlHeaders.keySet().iterator(); i.hasNext(); )
       {
          String name = i.next();
@@ -70,7 +70,7 @@ public class HtmlUnitSnooper implements RequestListener
       
       System.out.println();
       System.out.println("Request Params:");
-      for (Iterator i = webRequestSettings.getRequestParameters().iterator(); i.hasNext();)
+      for (Iterator i = webRequest.getRequestParameters().iterator(); i.hasNext();)
       {
          NameValuePair pair = (NameValuePair)i.next();
          System.out.println(pair.getName() + "=" + pair.getValue());

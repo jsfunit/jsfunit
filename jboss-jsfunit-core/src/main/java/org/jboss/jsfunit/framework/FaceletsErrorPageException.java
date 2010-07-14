@@ -52,10 +52,9 @@ public class FaceletsErrorPageException extends RuntimeException
     */
    public static boolean isFaceletsErrorPage(WebResponse response)
    {
-      byte[] responseBytes = response.getContentAsBytes();
-      if ((responseBytes == null) || (responseBytes.length == 0)) return false;
+      String responseBody = response.getContentAsString();
+      if (responseBody == null) return false;
       
-      String responseBody = new String(responseBytes);
       return response.getContentType().equals("text/html") &&
              responseBody.contains(TRACE_OFF) &&
              responseBody.contains(TRACE_ON) &&

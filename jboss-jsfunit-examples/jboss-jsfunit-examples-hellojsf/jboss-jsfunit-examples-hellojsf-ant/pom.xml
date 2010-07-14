@@ -124,11 +124,13 @@
                 <property name="src.war" location="${jsfunit.lib.dir}/jboss-jsfunit-examples-hellojsf-webapp-${project.version}.war" />
 
                 <path id="maven-ant-tasks.classpath" path="${ant.lib.dir}/maven-ant-tasks-2.0.7.jar" />
-                      
-                <typedef resource="org/apache/maven/artifact/ant/antlib.xml" classpathref="maven-ant-tasks.classpath" />
-                         
+
+                <!-- reverseLoader is a workaround for Maven 3 http://jira.codehaus.org/browse/MANTRUN-123 -->
+                <typedef resource="org/apache/maven/artifact/ant/antlib.xml" classpathref="maven-ant-tasks.classpath" reverseLoader="true"/>
+                
                 <dependencies filesetId="dependency.fileset" pathId="jsfunit.classpath">
-                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.7" />
+                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit" version="2.8-SNAPSHOT" />
+                   <dependency groupId="net.sourceforge.htmlunit" artifactId="htmlunit-core-js" version="2.8-SNAPSHOT" />
                    <dependency groupId="cactus" artifactId="cactus" version="13-1.7.1" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-core" version="${project.version}" />
                    <dependency groupId="org.jboss.jsfunit" artifactId="jboss-jsfunit-ant" version="${project.version}" />

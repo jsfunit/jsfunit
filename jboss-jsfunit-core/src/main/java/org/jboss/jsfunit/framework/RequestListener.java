@@ -22,7 +22,7 @@
 
 package org.jboss.jsfunit.framework;
 
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 
 /**
@@ -36,9 +36,9 @@ public interface RequestListener
    /**
     * This is called before HtmlUnit makes a request to the server.
     *
-    * @param webRequestSettings The settings for the request.
+    * @param webRequest The settings for the request.
     */
-   public void beforeRequest(WebRequestSettings webRequestSettings);
+   public void beforeRequest(WebRequest webRequest);
    
    /**
     * This is called after the request is over.  In the case that the request

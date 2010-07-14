@@ -510,12 +510,15 @@ public class JSFUnitWarTask extends Task
             log("Automatically adding JSFunit required jars to the new war", Project.MSG_INFO);
             // TODO: pick out actual classes used, these ones were picked at random from the jars
             String[][] classNames = new String[][] {
-              {"/org/jboss/jsfunit/context/NoNewEntryMap.class", "JSFUnit 1.1 or higher"},
-                 {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.7 or higher"},
+              {"/org/jboss/jsfunit/context/NoNewEntryMap.class", "JSFUnit 1.2 or higher"},
+                 {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.8 or higher"},
                     {"/org/apache/commons/codec/BinaryDecoder.class", "Commons Codec 1.4 or higher"},
-                    {"/net/sourceforge/htmlunit/corejs/javascript/ScriptableObject.class", "HTMLUnitJavascript 2.7 or higher"},
+                    {"/net/sourceforge/htmlunit/corejs/javascript/ScriptableObject.class", "HTMLUnitJavascript 2.8 or higher"},
                     {"/org/apache/commons/logging/Log.class", "Commons Logging 1.0.4 or higher"},
-                 {"/org/apache/commons/httpclient/auth/CredentialsProvider.class", "Commons HTTP Client 3.1 or higher"},
+                 {"/org/apache/http/client/CredentialsProvider.class", "Apache HTTP Client 4.0.1 or higher"},
+                 {"/org/apache/http/entity/mime/MIME.class", "Apache HTTP MIME 4.0.1 or higher"},
+                 {"/org/apache/james/mime4j/message/Body.class", "Apache James mime4j 0.6 or higher"},
+                 {"/org/apache/http/params/HttpParams.class", "Apache HTTP Core 4.0.1 or higher"},
                  {"/org/apache/commons/lang/ArrayUtils.class", "Commons Lang 2.4 or higher"},
                  {"/org/apache/commons/collections/ArrayStack.class", "Commons Collections 3.2.1 or higher"},
                  {"/org/apache/commons/io/FileUtils.class", "CommonsIO 1.4 or higher"},

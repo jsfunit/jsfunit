@@ -22,7 +22,7 @@
 
 package org.jboss.jsfunit.framework;
 
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 
 /**
@@ -42,7 +42,7 @@ public class FaceletsErrorPageDetector implements RequestListener
       }
    }
 
-   public void beforeRequest(WebRequestSettings webRequestSettings) {
+   public void beforeRequest(WebRequest webRequest) {
    }
 
     

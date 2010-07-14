@@ -22,7 +22,7 @@
 
 package org.jboss.jsfunit.seam;
 
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +50,7 @@ public class SeamRequestListener implements RequestListener
    private boolean iPromotedTheConversation = false;
    private boolean iRestoredTheConversation = false;
    
-   public void beforeRequest(WebRequestSettings webRequestSettings)
+   public void beforeRequest(WebRequest webRequest)
    {
       demoteConversation();
       tearDownConversation();

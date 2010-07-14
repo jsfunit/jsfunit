@@ -23,7 +23,7 @@
 package org.jboss.jsfunit.example.ajax4jsf;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import java.io.IOException;
 import junit.framework.Test;
@@ -113,6 +113,6 @@ public class FaceletsErrorPageTest extends ServletTestCase implements RequestLis
       this.latestResponse = webResponse;
    }
 
-   public void beforeRequest(WebRequestSettings webRequestSettings) {
+   public void beforeRequest(WebRequest webRequest) {
    }
 }

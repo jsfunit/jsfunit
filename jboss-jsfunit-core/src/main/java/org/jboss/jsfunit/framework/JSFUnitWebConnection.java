@@ -23,7 +23,7 @@
 package org.jboss.jsfunit.framework;
 
 import com.gargoylesoftware.htmlunit.WebConnection;
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,38 +58,39 @@ public class JSFUnitWebConnection implements WebConnection
    /**
     * Called by HtmlUnit whenever a request is made to the server.
     *
-    * @param webRequestSettings The WebRequestSettings
+    * @param webRequest The WebRequest
     *
     * @return The WebResponse
     *
     * @throws IOException
     */
-   public WebResponse getResponse(final WebRequestSettings webRequestSettings) throws IOException
+   @Override
+   public WebResponse getResponse(WebRequest webRequest) throws IOException
    {
-      notifyListenersBefore(webRequestSettings);
+      notifyListenersBefore(webRequest);
       WebResponse response = null;
-      
+
       try
       {
-         response = this.wrappedConnection.getResponse(webRequestSettings);
+         response = this.wrappedConnection.getResponse(webRequest);
       }
       catch (IOException ioe)
       {
          throw ioe;
       }
       finally
-      { 
+      {
          notifyListenersAfter(response);
       }
-      
+
       return response;
    }
    
-   private void notifyListenersBefore(WebRequestSettings webRequestSettings)
+   private void notifyListenersBefore(WebRequest webRequest)
    {
       for (Iterator<RequestListener> i = this.listeners.iterator(); i.hasNext();)
       {
-         i.next().beforeRequest(webRequestSettings);
+         i.next().beforeRequest(webRequest);
       }
    }
    
