@@ -260,7 +260,7 @@
               </includes>
             </resource>
           </webResources>
-          <dependentWarExcludes>WEB-INF/lib/nekohtml-0.9.5.jar,WEB-INF/lib/commons-collections-3.1.jar,WEB-INF/lib/commons-beanutils-1.7.0.jar</dependentWarExcludes>
+          <dependentWarExcludes>/WEB-INF/lib/jstl-1.0.jar,WEB-INF/lib/commons-collections-3.2.jar,WEB-INF/lib/nekohtml-1.9.6.jar,WEB-INF/lib/commons-collections-3.1.jar,WEB-INF/lib/commons-beanutils-1.7.0.jar</dependentWarExcludes>
         </configuration>
       </plugin>
       

@@ -510,7 +510,7 @@ public class JSFUnitWarTask extends Task
             log("Automatically adding JSFunit required jars to the new war", Project.MSG_INFO);
             // TODO: pick out actual classes used, these ones were picked at random from the jars
             String[][] classNames = new String[][] {
-              {"/org/jboss/jsfunit/context/NoNewEntryMap.class", "JSFUnit 1.2 or higher"},
+              {"/org/jboss/jsfunit/context/NoNewEntryMap.class", "JSFUnit 1.3 or higher"},
                  {"/com/gargoylesoftware/htmlunit/AjaxController.class", "HTMLUnit 2.8 or higher"},
                     {"/org/apache/commons/codec/BinaryDecoder.class", "Commons Codec 1.4 or higher"},
                     {"/net/sourceforge/htmlunit/corejs/javascript/ScriptableObject.class", "HTMLUnitJavascript 2.8 or higher"},

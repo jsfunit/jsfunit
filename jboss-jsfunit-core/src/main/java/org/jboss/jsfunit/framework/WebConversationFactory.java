@@ -128,12 +128,12 @@ public class WebConversationFactory
       wc.setAjaxController(new NicelyResynchronizingAjaxController());
       wc.setWebConnection(new JSFUnitWebConnection(wc.getWebConnection()));
       wcSpec.setWebClient(wc);
-      
+
       HttpSession session = getSessionFromThreadLocal();
       
       if (session == null)
       {
-         throw new IllegalStateException("Can not find HttpSession.  Perhaps JSFUnitFilter has not run?");
+         throw new IllegalStateException("Can not find HttpSession.  Make sure JSFUnitFilter has run and your test extends org.apache.cactus.ServletTestCase.");
       }
       
       clearSession(session);

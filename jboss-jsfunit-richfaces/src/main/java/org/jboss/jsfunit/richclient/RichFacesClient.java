@@ -29,6 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import java.io.IOException;
@@ -221,25 +222,25 @@ public class RichFacesClient
     * @throws DuplicateClientIDException if more than one client ID matches the 
     *                                    componentID suffix
     */
- /*  public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
+   public void dragAndDrop(String dragComponentID, String dropTargetComponentID)
          throws IOException
    {
       HtmlElement dragElement = (HtmlElement)jsfClient.getElement(dragComponentID);
-      //HtmlElement dragParent = (HtmlElement)dragElement.getParentNode();
-      
-      HtmlElement dropElement = (HtmlElement)jsfClient.getElement("form:phppanel_body");
-      
-      dragElement.mouseDown();
+      HtmlPage htmlPage = (HtmlPage)dragElement.mouseDown();
+
+      // move to some other element
+      HtmlElement bodyElement = htmlPage.getFirstByXPath("//body");
+      if (bodyElement == null)
+      {
+         throw new ComponentIDNotFoundException("Can't drag and drop on a page without a body.");
+      }
+      bodyElement.mouseMove();
+
+      HtmlElement dropElement = (HtmlElement)jsfClient.getElement(dropTargetComponentID);
+      dropElement.mouseOver();
       dropElement.mouseMove();
       dropElement.mouseUp();
-      String dragClientID = client.getClientIDs().findClientID(dragComponentID);
-      String dropClientID = client.getClientIDs().findClientID(dropTargetComponentID);
-      Map<String, String> params = new HashMap<String, String>(3);
-      params.put("dragSourceId", dragClientID);
-      params.put("dropTargetId", dropClientID);
-      params.put(dragClientID, dragClientID);
-      ajaxSubmit(dropClientID, params);
-   } */
+   } 
    
    /**
     * Click a tab on a TabPanel.  Note that this method is a no-op if the tab
