@@ -14,7 +14,6 @@
 
   <profiles>
     
-    <!--
     <profile>
        <id>jee6</id>
        <properties>
@@ -89,7 +88,7 @@
 
         </plugins>
       </build>
-    </profile> -->
+    </profile>
   </profiles>
   
   <dependencies>

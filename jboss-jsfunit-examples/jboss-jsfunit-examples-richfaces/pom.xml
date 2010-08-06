@@ -105,11 +105,11 @@
     </profile>   
     
     <profile>
-      <id>jee6</id>
+      <id>jboss6x</id>
       <dependencies>
          <dependency>
            <groupId>org.richfaces.samples</groupId>
-           <artifactId>richfaces-demo</artifactId>
+           <artifactId>richfaces-demo-jsf2</artifactId>
            <version>${richfaces-version}</version>
            <classifier>jee5</classifier>
            <type>war</type>

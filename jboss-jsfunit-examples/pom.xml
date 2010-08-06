@@ -154,6 +154,11 @@
                    </dependency>
                 </dependencies>
               </container>
+              <configuration>
+                <properties>
+                  <cargo.jvmargs>-XX:PermSize=512m -XX:MaxPermSize=1024 -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled</cargo.jvmargs>
+                </properties>
+              </configuration>
             </configuration>
           </plugin>
         </plugins>
@@ -201,6 +206,11 @@
                    </dependency>
                 </dependencies>
               </container>
+              <configuration>
+                <properties>
+                  <cargo.jvmargs>-XX:PermSize=512m -XX:MaxPermSize=1024 -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled</cargo.jvmargs>
+                </properties>
+              </configuration>
             </configuration>
           </plugin>
         </plugins>

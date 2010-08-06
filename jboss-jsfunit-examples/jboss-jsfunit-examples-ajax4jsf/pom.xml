@@ -13,6 +13,78 @@
   <name>Example tests for Ajax4JSF sample app</name>      
    
   <profiles>
+    
+    <!-- The jee6 profile is exactly the same as the test profile.  The Ajax4JSF tests are
+         the only test suite that runs the same on JBoss AS6 and other containers. -->
+    <profile>
+      <id>jee6</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+
+            <executions>
+              <execution>
+                <id>surefire-it</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <skip>false</skip>
+                  <systemProperties>
+                    <property>
+                      <name>cactus.contextURL</name>
+                      <value>http://localhost:8080/${artifactId}</value>
+                    </property>
+                  </systemProperties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <wait>false</wait>
+              <configuration>
+                <deployables>
+                  <deployable>
+                    <location>${project.build.directory}/${artifactId}.war</location>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+      <activation>
+        <property>
+           <name>jsfunit-test-profile</name>
+        </property>
+      </activation>
+    </profile>
+
     <profile>
       <id>test</id>        
       <build>
@@ -120,8 +192,49 @@
         </dependency>  
       </dependencies>
     </profile>
+
+    <profile>
+      <id>jboss4.2</id>
+       <build>
+         <plugins>
+           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+              <!-- AS 4.2 has a Mojarra 1.2 version with a bug that causes this test to fail -->
+              <excludes>
+                <exclude>**/NestedTableTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>  
+      </build>
+    </profile>
+
+    <profile>
+      <id>jboss5x</id>
+       <build>
+         <plugins>
+           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+              <!-- AS 5.0 has a Mojarra 1.2 version with a bug that causes this test to fail -->
+              <excludes>
+                <exclude>**/NestedTableTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>  
+      </build>
+    </profile>
+
+
   </profiles>
 
+  
   <dependencies>    
   
     <dependency>

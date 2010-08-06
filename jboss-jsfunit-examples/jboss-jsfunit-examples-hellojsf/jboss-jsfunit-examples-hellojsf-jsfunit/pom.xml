@@ -40,14 +40,6 @@
     </profile>
     
     <profile>
-       <id>jee6</id>
-       <properties>
-         <jsfMajorVersion>2</jsfMajorVersion>
-         <jsfMinorVersion>0</jsfMinorVersion>
-      </properties>
-    </profile>
-    
-    <profile>
        <id>jee5</id>
        <properties>
          <jsfMajorVersion>1</jsfMajorVersion>

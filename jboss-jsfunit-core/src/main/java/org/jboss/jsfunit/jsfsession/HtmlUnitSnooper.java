@@ -24,9 +24,9 @@ package org.jboss.jsfunit.jsfsession;
 
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.util.NameValuePair;
 import java.util.Iterator;
 import java.util.Map;
-import org.apache.commons.httpclient.NameValuePair;
 import org.jboss.jsfunit.framework.RequestListener;
 
 /**
