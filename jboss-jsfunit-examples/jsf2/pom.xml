@@ -3,7 +3,7 @@
    <parent>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jboss-jsfunit-examples</artifactId>
-      <version>1.3.0.Final-SNAPSHOT</version>
+      <version>1.3.0.Final</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
    <artifactId>jboss-jsfunit-examples-jsf2</artifactId>
