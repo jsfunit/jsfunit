@@ -90,13 +90,13 @@
    </profile>
   </profiles>
 
+ <!-- Note: When running 'mvn javadoc:aggreagate' I commented out the examples module -->
   <reporting>
     <plugins>      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <aggregate>true</aggregate>
+        <configuration>          
           <excludePackageNames>org.jboss.jsfunit.spy:org.jboss.jsfunit.analysis:org.jboss.jsfunit.analysis.util:org.jboss.jsfunit.icefacestest:org.jboss.jsfunit.example.*:demo:filters:org.jboss.jsfunit.jsfsession.hellojsf:org.jboss.jsfunit.seam.booking:org.jboss.jsfunit.seam.registration:org.jboss.jsfunit.test.*:org.richfaces.demo.*:org.jboss.seam.*:org.jboss.jsfunit.analysis.el</excludePackageNames>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
@@ -107,9 +107,21 @@
             <link>http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/api</link>
           </links>
         </configuration>
+        <reportSets>
+          <reportSet>
+            <id>aggregate</id>
+            <configuration>
+              <excludePackageNames>org.jboss.jsfunit.spy:org.jboss.jsfunit.analysis:org.jboss.jsfunit.analysis.util:org.jboss.jsfunit.icefacestest:org.jboss.jsfunit.example.*:demo:filters:org.jboss.jsfunit.jsfsession.hellojsf:org.jboss.jsfunit.seam.booking:org.jboss.jsfunit.seam.registration:org.jboss.jsfunit.test.*:org.richfaces.demo.*:org.jboss.seam.*:org.jboss.jsfunit.analysis.el</excludePackageNames>
+            </configuration>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
     </plugins>
   </reporting>
+
   
   <dependencyManagement>
     <dependencies>
