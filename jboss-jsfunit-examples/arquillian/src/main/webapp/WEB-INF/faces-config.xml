@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config>
+
+  <navigation-rule>
+    <from-view-id>/index.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>/finalgreeting.jsp</from-outcome>
+      <to-view-id>/finalgreeting.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/index.jsf.1.2.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>/finalgreeting.jsp</from-outcome>
+      <to-view-id>/finalgreeting.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/NestedNamingContainers.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>/finalgreeting.jsp</from-outcome>
+      <to-view-id>/finalgreeting.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+    <from-view-id>/finalgreeting.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>/index.jsp</from-outcome>
+      <to-view-id>/index.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <managed-bean>
+    <description>Use a swing JButton as a simple javabean</description>
+    <managed-bean-name>foo</managed-bean-name>
+    <managed-bean-class>javax.swing.JButton</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>Use another swing JButton as a simple javabean</description>
+    <managed-bean-name>foo2</managed-bean-name>
+    <managed-bean-class>javax.swing.JButton</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+       <property-name>text</property-name>
+       <value>Initial Value</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>Use third swing JButton as a simple javabean</description>
+    <managed-bean-name>foo3</managed-bean-name>
+    <managed-bean-class>javax.swing.JButton</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+       <property-name>text</property-name>
+       <value>Blue</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>Backing bean for checkbox</description>
+    <managed-bean-name>checkbox</managed-bean-name>
+    <managed-bean-class>org.jboss.jsfunit.example.hellojsf.CheckboxBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>Backing bean for marathons</description>
+    <managed-bean-name>marathons</managed-bean-name>
+    <managed-bean-class>org.jboss.jsfunit.example.hellojsf.Marathons</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <description>Backing bean for weekdays</description>
+    <managed-bean-name>weekdaylist</managed-bean-name>
+    <managed-bean-class>java.util.HashMap</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <map-entries>
+       <key-class>java.lang.String</key-class>
+       <map-entry>
+          <key>Monday</key>
+          <value>Monday</value>
+       </map-entry>
+       <map-entry>
+          <key>Tuesday</key>
+          <value>Tuesday</value>
+       </map-entry>
+       <map-entry>
+          <key>Wednesday</key>
+          <value>Wednesday</value>
+       </map-entry>
+       <map-entry>
+          <key>Thursday</key>
+          <value>Thursday</value>
+       </map-entry>
+       <map-entry>
+          <key>Friday</key>
+          <value>Friday</value>
+       </map-entry>
+    </map-entries>    
+  </managed-bean>
+
+</faces-config>
