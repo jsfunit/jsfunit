@@ -14,7 +14,8 @@
 
   <properties>
     <arquillian.version>1.0.0.Alpha4</arquillian.version>
-    <version.jboss_60>6.0.0.20100721-M4</version.jboss_60>
+    <!--<version.jboss_60>6.0.0.20100721-M4</version.jboss_60>-->
+    <version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>
   </properties>
 
   <dependencies>
@@ -167,39 +168,6 @@
       </build>
     </profile>
 
-
   </profiles>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <additionalClasspathElements>
-            <additionalClasspathElement>${JBOSS_HOME}/client/jbossws-native-client.jar</additionalClasspathElement>
-            <!--
-                            Because jbossweb.sar contains shared web.xml, which must be
-                            visible from same CL as TomcatDeployer.class.getClassLoader
-                        -->
-            <additionalClasspathElement>${JBOSS_HOME}/server/default/deploy/jbossweb.sar</additionalClasspathElement>
-          </additionalClasspathElements>
-
-          <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <trimStackTrace>false</trimStackTrace>
-          <printSummary>true</printSummary>
-          <forkMode>once</forkMode>
-
-          <!--
-                        MaxPermSize Required to bump the space for relective data like
-                        classes, methods, etc. EMB-41. Endorsed required for things like
-                        WS support (EMB-61)
-                    -->
-          <argLine>-Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -Djboss.home=${JBOSS_HOME} -Djboss.boot.server.log.dir=${JBOSS_HOME}</argLine>
-
-        </configuration>
-
-      </plugin>
-
-    </plugins>
-
-  </build>
+ 
 </project>
