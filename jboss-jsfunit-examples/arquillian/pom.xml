@@ -14,7 +14,7 @@
 
   <properties>
     <arquillian.version>1.0.0.Alpha4</arquillian.version>
-    <version.jboss_60>6.0.0.20100911-M5</version.jboss_60>
+    <version.jboss_60>6.0.0.20100721-M4</version.jboss_60>
   </properties>
 
   <dependencies>
@@ -22,7 +22,7 @@
       <groupId>javax.enterprise</groupId>
       <artifactId>cdi-api</artifactId>
       <version>1.0-SP1</version>
-    </dependency> 
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -43,12 +43,6 @@
       <artifactId>arquillian-framework-jsfunit</artifactId>
       <version>${arquillian.version}</version>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jboss.arquillian.container</groupId>
-      <artifactId>arquillian-jbossas-remote-6</artifactId>
-      <version>${arquillian.version}</version>
     </dependency>
 
     <dependency>
@@ -78,4 +72,134 @@
     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>jbossas-remote-6</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-jbossas-remote-6</artifactId>
+          <version>${arquillian.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>jbossas-managed-6</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-jbossas-managed-6</artifactId>
+          <version>${arquillian.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.jbossas</groupId>
+          <artifactId>jboss-server-manager</artifactId>
+          <version>1.0.3.GA</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>jbossas-embedded-6</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-jbossas-embedded-6</artifactId>
+          <version>${arquillian.version}</version>
+        </dependency>
+
+        <!-- Exclude Seam core.  See JBAS-8503 -->
+        <dependency>
+          <groupId>org.jboss.jbossas</groupId>
+          <artifactId>jboss-as-depchain</artifactId>
+          <version>${version.jboss_60}</version>
+          <type>pom</type>
+          <exclusions>
+            <exclusion>
+              <groupId>org.jboss.seam.integration</groupId>
+              <artifactId>jboss-seam-int-jbossas</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+
+      </dependencies>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.jboss.jbossas</groupId>
+            <artifactId>jboss-as-depchain</artifactId>
+            <version>${version.jboss_60}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${JBOSS_HOME}/client/jbossws-native-core.jar</additionalClasspathElement>
+                <!--
+                            Because jbossweb.sar contains shared web.xml, which must be
+                            visible from same CL as TomcatDeployer.class.getClassLoader
+                        -->
+                <additionalClasspathElement>${JBOSS_HOME}/server/default/deploy/jbossweb.sar</additionalClasspathElement>
+              </additionalClasspathElements>
+
+              <redirectTestOutputToFile>true</redirectTestOutputToFile>
+              <trimStackTrace>false</trimStackTrace>
+              <printSummary>true</printSummary>
+              <forkMode>once</forkMode>
+
+              <!--
+                        MaxPermSize Required to bump the space for relective data like
+                        classes, methods, etc. EMB-41. Endorsed required for things like
+                        WS support (EMB-61)
+                    -->
+              <argLine>-Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -Djboss.home=${JBOSS_HOME} -Djboss.boot.server.log.dir=${JBOSS_HOME}</argLine>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+
+  </profiles>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <additionalClasspathElements>
+            <additionalClasspathElement>${JBOSS_HOME}/client/jbossws-native-client.jar</additionalClasspathElement>
+            <!--
+                            Because jbossweb.sar contains shared web.xml, which must be
+                            visible from same CL as TomcatDeployer.class.getClassLoader
+                        -->
+            <additionalClasspathElement>${JBOSS_HOME}/server/default/deploy/jbossweb.sar</additionalClasspathElement>
+          </additionalClasspathElements>
+
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <trimStackTrace>false</trimStackTrace>
+          <printSummary>true</printSummary>
+          <forkMode>once</forkMode>
+
+          <!--
+                        MaxPermSize Required to bump the space for relective data like
+                        classes, methods, etc. EMB-41. Endorsed required for things like
+                        WS support (EMB-61)
+                    -->
+          <argLine>-Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -Djboss.home=${JBOSS_HOME} -Djboss.boot.server.log.dir=${JBOSS_HOME}</argLine>
+
+        </configuration>
+
+      </plugin>
+
+    </plugins>
+
+  </build>
 </project>
