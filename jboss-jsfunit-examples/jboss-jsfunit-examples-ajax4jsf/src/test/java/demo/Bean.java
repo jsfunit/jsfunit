@@ -18,6 +18,35 @@ public class Bean {
 	private static final int SIZE = 10; 
 	private int requestCounter;
 	private List<Integer> collection = null;
+
+        private String val1, val2;
+
+   public String getVal1()
+   {
+      System.out.println("Getting val 1");
+      return val1;
+   }
+
+   public void setVal1(String val1)
+   {
+      System.out.println("Setting val 1 to " + val1);
+      this.val1 = val1;
+   }
+
+   public String getVal2()
+   {
+      System.out.println("Getting val 2");
+      return val2;
+   }
+
+   public void setVal2(String val2)
+   {
+      System.out.println("Setting val 2 to " + val2);
+      this.val2 = val2;
+   }
+
+        
+
 	private void initCollection() {
 		collection = new ArrayList<Integer>();
 		for (int i=0; i<SIZE; i++){
