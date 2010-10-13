@@ -31,7 +31,7 @@ import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
- * Peform JSFUnit tests on three of the Ajax4jsf demo applications.
+ * Peform a simple test using the a4j:support tag.
  *
  * @author Stan Silvert
  */
