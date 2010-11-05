@@ -48,6 +48,12 @@
     -->
 
     <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
        <groupId>jboss.web</groupId>
        <artifactId>servlet-api</artifactId>
        <scope>provided</scope>
