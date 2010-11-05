@@ -31,7 +31,7 @@
    <h:form id="form1">    
       
       <h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/>
-      <h:outputText value="Hello #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/><br/>
+      <h:outputText value="#{mybean.hello} #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/><br/>
       
       <h:inputText value="#{foo.text}" id="input_foo_text">          
         <f:validateLength minimum="2"/>
