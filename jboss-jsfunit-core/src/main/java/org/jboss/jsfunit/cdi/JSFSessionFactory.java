@@ -31,6 +31,10 @@ import java.lang.reflect.Method;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.servlet.http.HttpSession;
+import org.jboss.jsfunit.framework.BasicAuthenticationStrategy;
+import org.jboss.jsfunit.framework.Environment;
+import org.jboss.jsfunit.framework.FormAuthenticationStrategy;
+import org.jboss.jsfunit.framework.InitialRequestStrategy;
 import org.jboss.jsfunit.framework.WebConversationFactory;
 import org.jboss.jsfunit.framework.WebClientSpec;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
@@ -94,7 +98,76 @@ public class JSFSessionFactory {
          port = proxyAnno.port();
       }
 
-      return new WebClientSpec(((InitialPage)initialPage).value(), browser.getVersion(), host, port);
+      WebClientSpec wcSpec = new WebClientSpec(((InitialPage)initialPage).value(), browser.getVersion(), host, port);
+
+      BasicAuthentication basicAuthAnno = (BasicAuthentication)getAnnotation(BasicAuthentication.class, injectionPoint, injectionType);
+      FormAuthentication formAuthAnno = (FormAuthentication)getAnnotation(FormAuthentication.class, injectionPoint, injectionType);
+      InitialRequest initReqAnno = (InitialRequest)getAnnotation(InitialRequest.class, injectionPoint, injectionType);
+      validateOneNonNullInitialRequest(injectionType, basicAuthAnno, formAuthAnno, initReqAnno);
+
+      if (basicAuthAnno != null)
+      {
+         String userName = basicAuthAnno.userName();
+         String password = basicAuthAnno.password();
+         wcSpec.setInitialRequestStrategy(new BasicAuthenticationStrategy(userName, password));
+      }
+
+      if (formAuthAnno != null)
+      {
+         String userName = formAuthAnno.userName();
+         String password = formAuthAnno.password();
+         String submitComponent = formAuthAnno.submitComponent();
+         String userNameComponent = formAuthAnno.userNameComponent();
+         String passwordComponent = formAuthAnno.passwordComponent();
+         wcSpec.setInitialRequestStrategy(new FormAuthenticationStrategy(userName, password, submitComponent, userNameComponent, passwordComponent));
+      }
+
+      if (initReqAnno != null)
+      {
+        Class clazz = initReqAnno.value();
+        InitialRequestStrategy initReq = (InitialRequestStrategy)Environment.newInstance(clazz);
+        wcSpec.setInitialRequestStrategy(initReq);
+      }
+
+      setCookies(wcSpec, injectionPoint, injectionType);
+
+      return wcSpec;
+   }
+
+   private void setCookies(WebClientSpec wcSpec,
+                           InjectionPoint injectionPoint,
+                           ElementType injectionType)
+   {
+      Cookies cookiesAnno = (Cookies)getAnnotation(Cookies.class, injectionPoint, injectionType);
+      if (cookiesAnno == null) return;
+
+      String[] names = cookiesAnno.names();
+      String[] values = cookiesAnno.values();
+      if (names.length != values.length) throw new IllegalArgumentException("'names' and 'values' must have same number of elements in @Cookies annotation.");
+
+      for (int i=0; i < names.length; i++)
+      {
+         wcSpec.addCookie(names[i], values[i]);
+      }
+   }
+
+   /**
+    * Make sure that only one of the InitialRequest annotations was used.
+    *
+    * @throws IllegalArgumentException if more than one is null.
+    */
+   private void validateOneNonNullInitialRequest(ElementType injectionType, Annotation... initRequests)
+   {
+      boolean found = false;
+      for (Annotation anno : initRequests)
+      {
+         if ((anno != null) && found) 
+         {
+            if (injectionType == ElementType.METHOD) throw new IllegalArgumentException("Only one of @BasicAuthentication, @FormAuthentication, or @InitialRequest is allowed per method.");
+            if (injectionType == ElementType.FIELD) throw new IllegalArgumentException("Only one of @BasicAuthentication, @FormAuthentication, or @InitialRequest is allowed at the class level.");
+         }
+         if (anno != null) found = true;
+      }
    }
 
    JSFSession createJSFSession(InjectionPoint injectionPoint, 

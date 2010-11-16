@@ -20,10 +20,10 @@
   </welcome-file-list>
 
   <security-constraint>
-     <display-name>Basic Authentication for the Admin</display-name>
+     <display-name>Form Authentication for the Admin</display-name>
      <web-resource-collection>
         <web-resource-name>Authenticated</web-resource-name>
-        <url-pattern>/secured-page.faces</url-pattern>
+        <url-pattern>/form-secured-page.faces</url-pattern>
      </web-resource-collection>
      <auth-constraint>
         <role-name>hellotestadmin</role-name>
@@ -31,8 +31,11 @@
    </security-constraint>
 
    <login-config>
-     <auth-method>BASIC</auth-method>
-     <realm-name>Authenticated</realm-name>
+     <auth-method>FORM</auth-method>
+     <form-login-config>
+       <form-login-page>/login.jsp</form-login-page>
+       <form-error-page>/error.jsp</form-error-page>
+     </form-login-config>
    </login-config>
    
    <security-role>

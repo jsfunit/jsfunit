@@ -26,10 +26,13 @@ import java.io.File;
 import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import junit.framework.Assert;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.jsfunit.cdi.Cookies;
 import org.jboss.jsfunit.cdi.InitialPage;
+import org.jboss.jsfunit.cdi.InitialRequest;
 import org.jboss.jsfunit.cdi.Browser;
 import org.jboss.jsfunit.cdi.BrowserVersion;
 import org.jboss.jsfunit.cdi.Proxy;
@@ -65,7 +68,11 @@ public class FacadeAPITest
             .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf"))
             .addPackage(Package.getPackage("org.jboss.jsfunit.cdi")) // not needed when Arquillian updated?
             .addResource(new File("src/main/webapp", "index.jsp"))
+            .addResource(new File("src/main/webapp", "secured-page.jsp"))
             .addWebResource(new File("src/main/webapp/WEB-INF/faces-config.xml"), "faces-config.xml")
+            .addWebResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"), "jboss-web.xml")
+            .addWebResource(new File("src/main/webapp/WEB-INF/classes/users.properties"), "classes/users.properties")
+            .addWebResource(new File("src/main/webapp/WEB-INF/classes/roles.properties"), "classes/roles.properties")
             .addWebResource(EmptyAsset.INSTANCE, "beans.xml")
             .addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
 
@@ -92,11 +99,24 @@ public class FacadeAPITest
     */
    @Test
    @InitialPage("/index.faces")
-   public void testGetCurrentViewId(JSFServerSession server) throws IOException
+   public void testGetCurrentViewId(JSFServerSession server)
    {
       // Test navigation to initial viewID
       Assert.assertEquals("/index.jsp", server.getCurrentViewID());
       Assert.assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
+   }
+
+   @Test
+   @InitialPage("/index.faces")
+   @InitialRequest(SetSocketTimeoutRequestStrategy.class)
+   public void testInitialRequestAnnotation(JSFSession jsfSession, JSFServerSession server)
+   {
+      // Test navigation to initial viewID
+      Assert.assertEquals("/index.jsp", server.getCurrentViewID());
+      Assert.assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
+
+      // timeout set to 10001 in SetSocketTimeoutRequestStrategy
+      Assert.assertEquals(10001, jsfSession.getWebClient().getTimeout());
    }
 
    @Test
@@ -111,6 +131,31 @@ public class FacadeAPITest
       // test CDI bean
       Assert.assertTrue(client.getPageAsText().contains("Hello Stan"));
       Assert.assertEquals("Hello", server.getManagedBeanValue("#{mybean.hello}"));
+   }
+
+   @Test
+   @InitialPage("/index.faces")
+   @Cookies(names = {"cookie1", "cookie2"},
+            values = {"value1", "value2"})
+   public void testCustomCookies(JSFClientSession client, JSFServerSession server) throws IOException
+   {
+      Assert.assertEquals("value1", getCookieValue(server, "cookie1"));
+      Assert.assertEquals("value2", getCookieValue(server, "cookie2"));
+
+      // verify that cookies survive for the whole session
+      client.click("submit_button");
+      Assert.assertEquals("value1", getCookieValue(server, "cookie1"));
+      Assert.assertEquals("value2", getCookieValue(server, "cookie2"));
+   }
+
+   private String getCookieValue(JSFServerSession server, String cookieName)
+   {
+      Object cookie = server.getFacesContext()
+                            .getExternalContext()
+                            .getRequestCookieMap()
+                            .get(cookieName);
+      if (cookie != null) return ((Cookie)cookie).getValue();
+      return null;
    }
 
 }

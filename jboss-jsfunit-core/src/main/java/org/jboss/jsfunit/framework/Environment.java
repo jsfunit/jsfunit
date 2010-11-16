@@ -145,5 +145,37 @@ public class Environment
          throw new IllegalStateException(e);
       }
    }
+
+   /**
+    * Create a new instance of a class using the no-arg constructor.
+    *
+    * @param className The fully qualified name of the class.
+    *
+    * @return The instance or <code>null</code> if not found.
+    *
+    * @throws IllegalArgumentException if the class could not be instantiated.
+    */
+   public static Object newInstance(String className)
+   {
+      Class clazz = loadClass(className);
+      if (clazz == null) return null;
+      return newInstance(clazz);
+   }
+
+   public static Object newInstance(Class clazz)
+   {
+      try
+      {
+         return clazz.newInstance();
+      }
+      catch (InstantiationException e)
+      {
+         throw new IllegalArgumentException(e);
+      }
+      catch (IllegalAccessException e)
+      {
+         throw new IllegalArgumentException(e);
+      }
+   }
    
 }
