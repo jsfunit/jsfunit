@@ -22,16 +22,19 @@
 
 package org.jboss.jsfunit.cdi;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
+ * Annotation for adding cookies to the browser session.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 @Target({METHOD, TYPE})
+@Documented
 @Retention(RUNTIME)
 public @interface Cookies {
    public String[] names();

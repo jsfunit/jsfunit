@@ -22,6 +22,7 @@
 
 package org.jboss.jsfunit.cdi;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
@@ -30,9 +31,10 @@ import static java.lang.annotation.ElementType.*;
 /**
  * Annotation for specifying the HtmlUnit browser emulation.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 @Target({METHOD, TYPE})
+@Documented
 @Retention(RUNTIME)
 public @interface InitialRequest {
    public Class value();

@@ -42,8 +42,13 @@ import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
+ * This class is called by CDI to create the JSFSession, JSFClientSession, and
+ * JSFServerSession.  JSFUnit annotations are used to describe how the JSFSession
+ * will be created.
  *
- * @author ssilvert
+ * It will store a copy of JSFSession in the HttpSession for the active test.
+ *
+ * @author Stan Silvert
  */
 public class JSFSessionFactory {
    public static final String JSFSESSION_FIELD_INJECTED = JSFSessionFactory.class.getName() + ".JSFSESSION_FIELD_INJECTED";
@@ -51,12 +56,7 @@ public class JSFSessionFactory {
 
    public JSFSessionFactory()
    {
-      System.out.println("****************");
-      System.out.println("Factory constructor called");
-      System.out.println("class=" + hashCode());
-      System.out.println("****************");
    }
-
 
    private Annotation getAnnotation(Class annoClass,
                                     InjectionPoint injectionPoint,
@@ -143,7 +143,7 @@ public class JSFSessionFactory {
 
       String[] names = cookiesAnno.names();
       String[] values = cookiesAnno.values();
-      if (names.length != values.length) throw new IllegalArgumentException("'names' and 'values' must have same number of elements in @Cookies annotation.");
+      if (names.length != values.length) throw new IllegalArgumentException("'names' and 'values' must have equal number of elements in @Cookies annotation.");
 
       for (int i=0; i < names.length; i++)
       {
@@ -185,49 +185,26 @@ public class JSFSessionFactory {
    @Produces
    JSFSession findJSFSession(InjectionPoint injectionPoint) throws IOException
    {
-      System.out.println("**************");
-      System.out.println("Called findJSFSession");
-      System.out.println("class=" + hashCode());
-      System.out.println("HttpSession=" + WebConversationFactory.getSessionFromThreadLocal());
-      System.out.println("Member = " + injectionPoint.getMember());
-
       ElementType injectionType = getElementType(injectionPoint);
       HttpSession httpSession = WebConversationFactory.getSessionFromThreadLocal();
       JSFSession jsfSession = null;
       if (injectionType == ElementType.FIELD) jsfSession = (JSFSession)httpSession.getAttribute(JSFSESSION_FIELD_INJECTED);
       if (injectionType == ElementType.METHOD) jsfSession = (JSFSession)httpSession.getAttribute(JSFSESSION_METHOD_INJECTED);
 
-      try {
-         if (jsfSession != null) return jsfSession;
-         jsfSession = createJSFSession(injectionPoint, injectionType, httpSession);
-         return jsfSession;
-      } finally {
-         System.out.println("returning JSFSession=" + jsfSession);
-         System.out.println("***************");
-      }
+      if (jsfSession != null) return jsfSession;
+      jsfSession = createJSFSession(injectionPoint, injectionType, httpSession);
+      return jsfSession;
    }
 
    @Produces
    JSFClientSession getJSFClientSession(InjectionPoint injectionPoint) throws IOException
    {
-      System.out.println("**************");
-      System.out.println("Called the producer for JSFClientSession");
-      System.out.println("class=" + hashCode());
-      System.out.println("HttpSession=" + WebConversationFactory.getSessionFromThreadLocal());
-      System.out.println("Member = " + injectionPoint.getMember());
-      System.out.println("***************");
       return findJSFSession(injectionPoint).getJSFClientSession();
    }
 
    @Produces
    JSFServerSession getJSFServerSession(InjectionPoint injectionPoint) throws IOException
    {
-      System.out.println("**************");
-      System.out.println("Called the producer for JSFServerSession");
-      System.out.println("class=" + hashCode());
-      System.out.println("HttpSession=" + WebConversationFactory.getSessionFromThreadLocal());
-      System.out.println("Member = " + injectionPoint.getMember());
-      System.out.println("***************");
       return findJSFSession(injectionPoint).getJSFServerSession();
    }
 

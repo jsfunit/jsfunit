@@ -27,7 +27,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 /**
  * An enum wrapper for HtmlUnit's BrowserVersion.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 public enum Browser {
 

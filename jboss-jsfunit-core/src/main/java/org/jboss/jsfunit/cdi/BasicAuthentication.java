@@ -22,16 +22,21 @@
 
 package org.jboss.jsfunit.cdi;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
+ * Annotation for Basic Authentication.  Use this if your initial page is
+ * guarded with Basic Authentication.
  *
- * @author ssilvert
+ * @author Stan Silvert
+ * @see org.jboss.jsfunit.framework.BasicAuthenticationStrategy
  */
 @Target({METHOD, TYPE})
+@Documented
 @Retention(RUNTIME)
 public @interface BasicAuthentication {
    public String userName();

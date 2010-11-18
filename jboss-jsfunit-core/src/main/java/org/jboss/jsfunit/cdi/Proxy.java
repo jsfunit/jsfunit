@@ -22,16 +22,19 @@
 
 package org.jboss.jsfunit.cdi;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
+ * Annotation to describe proxy settings for the inital request.
  *
- * @author ssilvert
+ * @author Stan Silvert
  */
 @Target({METHOD, TYPE})
+@Documented
 @Retention(RUNTIME)
 public @interface Proxy {
    public String host();

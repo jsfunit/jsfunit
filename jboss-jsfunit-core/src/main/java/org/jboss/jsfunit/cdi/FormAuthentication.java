@@ -22,16 +22,21 @@
 
 package org.jboss.jsfunit.cdi;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
+ * Annotation for Form Authentication.  Use this if your initial page is
+ * guarded with Form Authentication.
  *
- * @author ssilvert
+ * @author Stan Silvert
+ * @see org.jboss.jsfunit.framework.FormAuthenticationStrategy
  */
 @Target({METHOD, TYPE})
+@Documented
 @Retention(RUNTIME)
 public @interface FormAuthentication {
    public String userName();
