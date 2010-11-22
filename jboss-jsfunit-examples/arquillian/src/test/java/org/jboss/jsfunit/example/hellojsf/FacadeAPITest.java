@@ -22,11 +22,19 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
+import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectManyListbox;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 import junit.framework.Assert;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -36,6 +44,9 @@ import org.jboss.jsfunit.cdi.InitialRequest;
 import org.jboss.jsfunit.cdi.Browser;
 import org.jboss.jsfunit.cdi.BrowserVersion;
 import org.jboss.jsfunit.cdi.Proxy;
+import org.jboss.jsfunit.framework.Environment;
+import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
+import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
@@ -62,14 +73,27 @@ public class FacadeAPITest
 
    @Deployment
    public static WebArchive createDeployment() {
+      long timer = System.currentTimeMillis();
       WebArchive war =
          ShrinkWrap.create(WebArchive.class, "test.war")
             .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
             .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf"))
             .addPackage(Package.getPackage("org.jboss.jsfunit.cdi")) // not needed when Arquillian updated?
+            .addClasses(org.slf4j.impl.Log4jLoggerAdapter.class,
+                        org.slf4j.impl.Log4jLoggerFactory.class,
+                        org.slf4j.impl.Log4jMDCAdapter.class,
+                        org.slf4j.impl.StaticLoggerBinder.class,
+                        org.slf4j.impl.StaticMarkerBinder.class,
+                        org.slf4j.impl.StaticMDCBinder.class)
             .addResource(new File("src/main/webapp", "index.jsp"))
+            .addResource(new File("src/main/webapp", "finalgreeting.jsp"))
             .addResource(new File("src/main/webapp", "secured-page.jsp"))
+            .addResource(new File("src/main/webapp", "NestedNamingContainers.jsp"))
+            .addResource(new File("src/main/webapp", "indexWithExtraComponents.jsp"))
+            .addResource(new File("src/main/webapp", "marathons.jsp"))
+            .addResource(new File("src/main/webapp", "marathons_datatable.jsp"))
             .addWebResource(new File("src/main/webapp/WEB-INF/faces-config.xml"), "faces-config.xml")
+            .addWebResource(new File("src/main/webapp/WEB-INF/local-module-faces-config.xml"), "local-module-faces-config.xml")
             .addWebResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"), "jboss-web.xml")
             .addWebResource(new File("src/main/webapp/WEB-INF/classes/users.properties"), "classes/users.properties")
             .addWebResource(new File("src/main/webapp/WEB-INF/classes/roles.properties"), "classes/roles.properties")
@@ -79,7 +103,6 @@ public class FacadeAPITest
       // Uncomment to print the archive for debugging
       // war.as(ExplodedExporter.class).exportExploded(new File("exploded"));
       // System.out.println(war.toString(true));
-
       return war;
    }
 
@@ -158,4 +181,300 @@ public class FacadeAPITest
       return null;
    }
 
+   @Test
+   public void testSetCheckbox() throws IOException
+   {
+      client.setValue("input_foo_text", "Stan");
+      client.click("funcheck"); // uncheck it
+      client.click("submit_button");
+      Assert.assertFalse((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
+
+      client.click("funcheck"); // make it checked again
+      client.click("submit_button");
+      Assert.assertTrue((Boolean)server.getManagedBeanValue("#{checkbox.funCheck}"));
+   }
+
+   @Test
+   public void testClickCommandLink() throws IOException
+   {
+      client.setValue("input_foo_text", "Stan");
+      client.click("goodbye_button");
+      client.click("go_back_link");
+
+      // test that we are back on the first page
+      Assert.assertEquals("/index.jsp", server.getCurrentViewID());
+   }
+
+   @Test
+   public void testCommandLinkWithoutViewChange() throws IOException
+   {
+      client.setValue("input_foo_text", "Stan");
+      client.click("goodbye_button");
+      client.click("stay_here_link");
+
+      // test that we are still on the same page
+      Assert.assertEquals("/finalgreeting.jsp", server.getCurrentViewID());
+   }
+
+   @Test
+   public void testCommandLinkWithFParam() throws IOException
+   {
+      client.setValue("input_foo_text", "Stan");
+      client.click("goodbye_button");
+      client.click("stay_here_link");
+
+      // link includes <f:param id="name" name="name" value="#{foo.text}"/>
+      String name = (String)FacesContext.getCurrentInstance()
+                                        .getExternalContext()
+                                        .getRequestParameterMap()
+                                        .get("name");
+
+      Assert.assertEquals("Stan", name);
+   }
+
+   @Test
+   public void testCommandLinkWithParamFromLoopVariable() throws IOException
+   {
+      // test should not run for JSF 1.1 - it uses a loop variable from <c:forEach>
+      if ((Environment.getJSFMajorVersion() == 1) &&
+          (Environment.getJSFMinorVersion() < 2)) return;
+
+      JSFSession jsfSession = new JSFSession("/marathons.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+
+      client.click("marathonSelect");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
+
+      client.click("marathonSelectj_id_3");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: Flora London Marathon"));
+
+      client.click("marathonSelectj_id_5");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: Olympic Marathon"));
+   }
+
+   @Test
+   public void testCommandLinkWithParamFromDatatableVariable() throws IOException
+   {
+
+      JSFSession jsfSession = new JSFSession("/marathons_datatable.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+
+      client.click("0:marathonSelect");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
+
+      client.click("3:marathonSelect");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: Flora London Marathon"));
+
+      client.click("5:marathonSelect");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: Olympic Marathon"));
+   }
+
+   @Test
+   public void testInvalidateSession() throws IOException
+   {
+
+      JSFSession jsfSession = new JSFSession("/marathons_datatable.faces");
+      JSFClientSession client = jsfSession.getJSFClientSession();
+      JSFServerSession server = jsfSession.getJSFServerSession();
+
+      client.click("0:marathonSelect");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
+      Assert.assertEquals("BAA Boston Marathon", server.getManagedBeanValue("#{marathons.selectedMarathon}"));
+
+      client.click("invalidateSession");
+
+      client.click("0:marathonSelect");
+      Assert.assertTrue(client.getPageAsText().contains("Selected Marathon: BAA Boston Marathon"));
+      Assert.assertEquals("BAA Boston Marathon", server.getManagedBeanValue("#{marathons.selectedMarathon}"));
+   }
+
+   @Test
+   public void testServerSideComponentValue() throws IOException
+   {
+      testSetParamAndSubmit(); // put "Stan" into the input field
+
+      // test the greeting component
+      Assert.assertEquals("Hello Stan", server.getComponentValue("greeting"));
+   }
+
+   /**
+    * This demonstrates how to test managed beans.
+    */
+   @Test
+   public void testManagedBeanValue() throws IOException
+   {
+      testSetParamAndSubmit(); // put "Stan" into the input field
+
+      Assert.assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
+   }
+
+   @Test
+   public void testFacesMessages() throws IOException
+   {
+      client.setValue("input_foo_text", "A"); // input too short - validation error
+      client.click("submit_button");
+
+      // Test that I was returned to the initial view because of input error
+      Assert.assertEquals("/index.jsp", server.getCurrentViewID());
+
+      // Should be only one FacesMessge generated for the page.
+      Iterator<FacesMessage> allMessages = server.getFacesMessages();
+      allMessages.next();
+      Assert.assertFalse(allMessages.hasNext());
+
+      Iterator<FacesMessage> checkboxMessages = server.getFacesMessages("funcheck");
+      Assert.assertFalse(checkboxMessages.hasNext());
+
+      Iterator<FacesMessage> fooTextMessages = server.getFacesMessages("input_foo_text");
+      FacesMessage message = fooTextMessages.next();
+      Assert.assertTrue(message.getDetail().contains("input_foo_text"));
+   }
+
+   @Test
+   @InitialPage("/indexWithExtraComponents.faces")
+   public void testTextArea(JSFClientSession client, JSFServerSession server) throws IOException
+   {
+      client.setValue("input_foo_text", "Stan");
+      Assert.assertEquals("Initial Value", server.getManagedBeanValue("#{foo2.text}"));
+      client.setValue("MyTextArea", "New Value");
+      client.click("submit_button");
+      Assert.assertEquals("New Value", server.getManagedBeanValue("#{foo2.text}"));
+   }
+
+   @Test
+   @InitialPage("/indexWithExtraComponents.faces")
+   public void testSelectOneRadio(JSFClientSession client, JSFServerSession server) throws IOException
+   {
+      client.setValue("input_foo_text", "Stan");
+      Assert.assertEquals("Blue", server.getManagedBeanValue("#{foo3.text}"));
+      client.click("selectGreen");
+      client.click("submit_button");
+      Assert.assertEquals("Green", server.getManagedBeanValue("#{foo3.text}"));
+   }
+
+   @Test
+   @InitialPage("/indexWithExtraComponents.faces")
+   public void testSelectManyListbox(JSFClientSession client, JSFServerSession server) throws IOException
+   {
+      client.click("selectMonday");
+      client.click("selectWednesday");
+      client.click("selectFriday");
+      client.click("submit_button");
+
+      HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("Weekdays");
+      Object[] selectedValues = listBox.getSelectedValues();
+      Assert.assertEquals(3, selectedValues.length);
+      List listOfValues = Arrays.asList(selectedValues);
+      Assert.assertTrue(listOfValues.contains("Monday"));
+      Assert.assertFalse(listOfValues.contains("Tuesday"));
+      Assert.assertTrue(listOfValues.contains("Wednesday"));
+      Assert.assertFalse(listOfValues.contains("Thursday"));
+      Assert.assertTrue(listOfValues.contains("Friday"));
+   }
+
+   @Test
+   @InitialPage("/indexWithExtraComponents.faces")
+   public void testSelectManyListboxWithItemList(JSFClientSession client, JSFServerSession server) throws IOException
+   {
+      HtmlSelect select = (HtmlSelect)client.getElement("WeekdaysUsingItemList");
+      select.getOptionByValue("Monday").setSelected(true);
+      select.getOptionByValue("Tuesday").setSelected(false);
+      select.getOptionByValue("Wednesday").setSelected(true);
+      select.getOptionByValue("Thursday").setSelected(true);
+      select.getOptionByValue("Friday").setSelected(false);
+      client.click("submit_button");
+
+      HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("WeekdaysUsingItemList");
+      Object[] selectedValues = listBox.getSelectedValues();
+      Assert.assertEquals(3, selectedValues.length);
+      List listOfValues = Arrays.asList(selectedValues);
+      Assert.assertTrue(listOfValues.contains("Monday"));
+      Assert.assertFalse(listOfValues.contains("Tuesday"));
+      Assert.assertTrue(listOfValues.contains("Wednesday"));
+      Assert.assertTrue(listOfValues.contains("Thursday"));
+      Assert.assertFalse(listOfValues.contains("Friday"));
+   }
+
+   @Test
+   public void testNoCreationOfBeanDuringELExpressionReference() throws IOException
+   {
+      HttpSession session = (HttpSession)server.getFacesContext().getExternalContext().getSession(true);
+      Assert.assertNull(session.getAttribute("unreferencedsessionbean"));
+
+      MyBean bean = (MyBean)server.getManagedBeanValue("#{unreferencedsessionbean}");
+      Assert.assertNull(bean);  //<--------- JSFUNIT-164
+
+      bean = (MyBean)server.getManagedBeanValue("#{unreferencedrequestbean}");
+      Assert.assertNull(bean);  //<--------- JSFUNIT-164
+
+      bean = (MyBean)server.getManagedBeanValue("#{unreferencedapplicationbean}");
+      Assert.assertNull(bean);  //<--------- JSFUNIT-164
+   }
+
+   @Test
+   @InitialPage("/indexWithExtraComponents.faces")
+   public void testReferencedBeans(JSFServerSession server, JSFClientSession client) throws IOException
+   {
+      String html = client.getPageAsText();
+      Assert.assertTrue(html.contains("request bean scope string = request"));
+      Assert.assertTrue(html.contains("session bean scope string = session"));
+      Assert.assertTrue(html.contains("application bean scope string = application"));
+
+      HttpSession session = (HttpSession)server.getFacesContext().getExternalContext().getSession(true);
+      Assert.assertNotNull(session.getAttribute("referencedsessionbean"));
+
+      MyBean bean = (MyBean)server.getManagedBeanValue("#{referencedsessionbean}");
+      Assert.assertNotNull(bean);
+      Assert.assertEquals(1, bean.myValue);
+
+      bean = (MyBean)server.getManagedBeanValue("#{referencedrequestbean}");
+      Assert.assertNotNull(bean);
+      Assert.assertEquals(1, bean.myValue);
+
+      bean = (MyBean)server.getManagedBeanValue("#{referencedapplicationbean}");
+      Assert.assertNotNull(bean);
+      Assert.assertEquals(1, bean.myValue);
+   }
+
+   @Test
+   public void testClickThrowsComponentNotFound() throws IOException
+   {
+      try
+      {
+         client.click("thiselementisnotthere");
+         Assert.fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // OK
+      }
+   }
+
+   @Test
+   public void testSetValueThrowsComponentNotFound() throws IOException
+   {
+      try
+      {
+         client.setValue("thiselementisnotthere", "bogusvalue");
+         Assert.fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // OK
+      }
+   }
+
+   @Test
+   public void testTypeThrowsComponentNotFound() throws IOException
+   {
+      try
+      {
+         client.type("thiselementisnotthere", 'b');
+         Assert.fail("Expected ComponentIDNotFoundException");
+      }
+      catch (ComponentIDNotFoundException e)
+      {
+         // OK
+      }
+   }
 }
