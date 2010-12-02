@@ -7,7 +7,7 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>jboss-jsfunit-core</artifactId>
+  <artifactId>jsfunit-core</artifactId>
   <name>JSFUnit Core</name>
   <packaging>jar</packaging>      
 
@@ -108,13 +108,7 @@
        <artifactId>commons-io</artifactId>
        <scope>compile</scope>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>rhino</groupId>
-      <artifactId>js</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    -->
+
     <dependency>
        <groupId>net.sourceforge.cssparser</groupId>
        <artifactId>cssparser</artifactId>
@@ -133,30 +127,6 @@
        <scope>compile</scope>
     </dependency>
     <!--**************************************************-->
-    
-    <dependency>
-      <groupId>cactus</groupId>
-      <artifactId>cactus</artifactId>
-      <scope>compile</scope>
-      <exclusions>
-         <exclusion>
-            <artifactId>nekohtml</artifactId>
-            <groupId>nekohtml</groupId>
-         </exclusion>
-         <exclusion>
-            <artifactId>httpunit</artifactId>
-            <groupId>httpunit</groupId>
-         </exclusion>
-      </exclusions>
-    </dependency>
-
-<!--
-    <dependency>
-      <groupId>org.apache.cactus</groupId>
-      <artifactId>cactus.core.framework.uberjar.javaEE.13</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    -->
     
     <!-- JSF2 -->
     <dependency>

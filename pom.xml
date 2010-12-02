@@ -391,6 +391,7 @@
 
   <modules>
     <module>jboss-jsfunit-core</module>
+    <module>jboss-jsfunit-cactus</module>
     <module>jboss-jsfunit-richfaces</module>
     <module>jboss-jsfunit-ant</module>
     <module>jboss-jsfunit-examples</module>

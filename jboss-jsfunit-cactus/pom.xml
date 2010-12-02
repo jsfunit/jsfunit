@@ -7,7 +7,7 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>jboss-jsfunit-cactus</artifactId>
+  <artifactId>jsfunit-cactus</artifactId>
   <name>JSFUnit Cactus Integration</name>
   <packaging>jar</packaging>      
 
@@ -42,8 +42,9 @@
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
-      <artifactId>jboss-jsfunit-core</artifactId>
+      <artifactId>jsfunit-core</artifactId>
       <scope>compile</scope>
+      <version>${project.version}</version>
     </dependency>        
     
     <dependency>
@@ -60,6 +61,12 @@
             <groupId>httpunit</groupId>
          </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+       <groupId>jboss.web</groupId>
+       <artifactId>servlet-api</artifactId>
+       <scope>provided</scope>
     </dependency>
     
   </dependencies>

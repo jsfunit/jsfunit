@@ -87,7 +87,7 @@
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
-      <artifactId>jboss-jsfunit-core</artifactId>
+      <artifactId>jsfunit-cactus</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>

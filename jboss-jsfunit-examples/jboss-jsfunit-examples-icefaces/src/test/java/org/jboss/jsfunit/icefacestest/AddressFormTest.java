@@ -22,7 +22,7 @@
 
 package org.jboss.jsfunit.icefacestest;
 
-import com.gargoylesoftware.htmlunit.html.ClickableElement;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import junit.framework.Test;
@@ -60,7 +60,7 @@ public class AddressFormTest extends ServletTestCase
       assertNotNull(server.getFacesContext());
       
       HtmlPage page = (HtmlPage)client.getContentPage();
-      ClickableElement mrTitle = (ClickableElement)page.getFirstByXPath(".//option[@value='Mr.']");
+      HtmlElement mrTitle = (HtmlElement)page.getFirstByXPath(".//option[@value='Mr.']");
       mrTitle.click();
       
       client.setValue("zip", "42303");
