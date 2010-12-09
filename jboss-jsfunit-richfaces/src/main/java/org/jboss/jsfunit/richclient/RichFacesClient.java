@@ -22,7 +22,6 @@
 
 package org.jboss.jsfunit.richclient;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
@@ -466,4 +465,22 @@ public class RichFacesClient
        String xpath = "//text()[. = '" + nodeText + "']/parent::*[contains(@id,'" + treeID + "')][contains(@id,'" + componentID + "')]";
        return (HtmlElement)table.getFirstByXPath(xpath);
    }
+
+   /**
+    * Click an item on a panel bar.
+    *
+    * @param componentID The JSF component ID or a suffix of the client ID.
+    *
+    * @throws IOException
+    * @throws ComponentIDNotFoundException if the component can not be found
+    *
+    * @since 2.0
+    */
+   public void clickPanelBarItem(String componentID) throws IOException
+   {
+       HtmlPage page = (HtmlPage) jsfClient.getContentPage();
+       HtmlElement panelBarItem = (HtmlElement) page.getFirstByXPath("//*[@id=\"" + componentID + "\"]/div");
+       panelBarItem.click();
+    }
+
 }

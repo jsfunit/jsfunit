@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:panelBar height="400" width="500">
+		<rich:panelBarItem
+                        id="leverage"
+			label="Leverage the whole set of JSF benefits while working with AJAX">
+			Ajax4jsf is fully integrated into the JSF lifecycle. While other frameworks only 
+			give you access to the managed bean facility, Ajax4jsf advantages the action and value 
+			change listeners as well as invokes server-side validators and converters during the 
+			AJAX request-response cycle.
+		</rich:panelBarItem>
+		<rich:panelBarItem
+                        id="addajax"
+			label="Add AJAX capability to existing JSF applications">
+			The framework is implemented using a component library. The library set Ajax 
+			functionality into existing pages, so there is no need to write any JavaScript 
+			code or to replace existing components with new Ajax one. Ajax4jsf enables page-wide 
+			Ajax support instead of the traditional component-wide support and it gives the 
+			opportunity to define the event on the page. An event invokes an Ajax request and areas 
+			of the page which are synchronized with the JSF Component Tree after changing the data 
+			on the server by Ajax request in accordance with events fired on the client.
+		</rich:panelBarItem>
+		<rich:panelBarItem
+                        id="writeyourown"
+			label="Write your own custom rich components with built-in AJAX support">
+			Component Development Kit (CDK) is a design-time extension for Ajax4jsf. The CDK includes 
+			a code-generation facility and a templating facility using a JSP-like syntax. These 
+			capabilities help to avoid a routine process of a component creation. The component 
+			factory works like a well-oiled machine allowing the creation of first-class rich 
+			components with built-in Ajax functionality even more easily than the creation of 
+			simpler components by means of the traditional coding approach.
+		</rich:panelBarItem>
+		<rich:panelBarItem
+                        id="packageresources"
+			label="Package resources with the application's Java classes ">
+			In addition to its core, Ajax functionality of Ajax4jsf provides an advanced 
+			support for the different resources management: pictures, JavaScript code, and 
+			CSS stylesheets. The resource framework makes possible to pack easily these 
+			resources into Jar files along with the code of your custom components.
+		</rich:panelBarItem>
+		<rich:panelBarItem
+                        id="easilygenerate"
+                        label="Easily generate images on-the-fly">
+			Resource framework can generate images on-the-fly so that it becomes possible 
+			to create images using the familiar approach of the Java graphic2D library.
+		</rich:panelBarItem>
+		<rich:panelBarItem
+                        id="createmodern"
+			label="Create a modern rich user interface look-and-feel with skins-based technology">
+			Ajax4jsf provides a skinnability feature that allows easily define and manage 
+			different color schemes and other parameters of the UI with the help of named 
+			skin parameters. Hence it is possible to access the skin parameters from JSP 
+			code and the Java code (e.g. to adjust generated on-the-fly images based on 
+			the text parts of the UI). Note: skinnability is not an equivalent of traditional 
+			CSS, but a complement.
+		</rich:panelBarItem>
+		<rich:panelBarItem
+                        id="testcomponents"
+			label="Test the components, actions, listeners, and pages as you are creating them">
+			An automated testing facility is in our roadmap for the near future. This facility 
+			will generate test cases for your component as soon as you develop it. The testing 
+			framework will not just test the components, but also any other server-side or 
+			client-side functionality including JavaScript code. What is more, it will do all 
+			of this without deploying the test application into the Servlet container.
+		</rich:panelBarItem>
+	</rich:panelBar>
+
+</ui:composition>
