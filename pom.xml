@@ -336,16 +336,6 @@
   </dependencyManagement>
 
   <repositories>
-    <repository>
-      <id>jboss</id>
-      <name>JBoss Repository</name>
-      <layout>default</layout>
-      <url>http://repository.jboss.org/maven2/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    
     
     <repository>
       <id>maven2-repository.dev.java.net</id>
