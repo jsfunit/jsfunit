@@ -35,12 +35,30 @@
       <artifactId>jsfunit-core</artifactId>
       <scope>compile</scope>
       <version>${project.version}</version>
-    </dependency>        
+    </dependency>
+
+    <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
        <groupId>jboss.web</groupId>
        <artifactId>servlet-api</artifactId>
        <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.arquillian</groupId>
+      <artifactId>arquillian-spi</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     
   </dependencies>

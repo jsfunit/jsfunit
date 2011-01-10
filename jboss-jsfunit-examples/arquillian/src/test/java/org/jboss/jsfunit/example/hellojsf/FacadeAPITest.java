@@ -46,7 +46,6 @@ import org.jboss.jsfunit.cdi.BrowserVersion;
 import org.jboss.jsfunit.cdi.Proxy;
 import org.jboss.jsfunit.framework.Environment;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
-import org.jboss.jsfunit.jsfsession.DuplicateClientIDException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;

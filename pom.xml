@@ -4,7 +4,7 @@
     <groupId>org.jboss</groupId>
     <artifactId>jboss-parent</artifactId>
     <version>5</version>
-  </parent> 
+  </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.jsfunit</groupId>
@@ -37,7 +37,7 @@
       <organization>ThoughtWorks</organization>
       <organizationUrl>http://www.thoughtworks.com/</organizationUrl>
       <timezone>-6</timezone>
-    </developer>    
+    </developer>
     <developer>
       <name>Brian Gregory</name>
       <id>bgregory</id>
@@ -55,11 +55,11 @@
       <timezone>-8</timezone>
     </developer>
     <developer>
-    	<id>AJesse</id>
-    	<name>Alexander Jesse</name>
-    	<email>alejesse@gmail.com</email>
-    	<timezone>+1</timezone>
-    </developer>    
+      <id>AJesse</id>
+      <name>Alexander Jesse</name>
+      <email>alejesse@gmail.com</email>
+      <timezone>+1</timezone>
+    </developer>
   </developers>
 
   <scm>
@@ -81,22 +81,22 @@
                 <id>attach-javadocs</id>
                 <goals>
                   <goal>jar</goal>
-               </goals>
-             </execution>
-           </executions>
-         </plugin>
-       </plugins>
-     </build>
-   </profile>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
  <!-- Note: When running 'mvn javadoc:aggreagate' I commented out the examples module -->
   <reporting>
-    <plugins>      
+    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>          
+        <configuration>
           <excludePackageNames>org.jboss.jsfunit.spy:org.jboss.jsfunit.analysis:org.jboss.jsfunit.analysis.util:org.jboss.jsfunit.icefacestest:org.jboss.jsfunit.example.*:demo:filters:org.jboss.jsfunit.jsfsession.hellojsf:org.jboss.jsfunit.seam.booking:org.jboss.jsfunit.seam.registration:org.jboss.jsfunit.test.*:org.richfaces.demo.*:org.jboss.seam.*:org.jboss.jsfunit.analysis.el</excludePackageNames>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
@@ -267,9 +267,9 @@
       </dependency>
       
       <dependency>
-         <groupId>org.apache.cactus</groupId>
-         <artifactId>cactus.core.framework.uberjar.javaEE.13</artifactId>
-         <version>1.8.0</version>
+        <groupId>org.apache.cactus</groupId>
+        <artifactId>cactus.core.framework.uberjar.javaEE.13</artifactId>
+        <version>1.8.0</version>
       </dependency>
       
       <dependency>
@@ -277,7 +277,7 @@
         <artifactId>el-api</artifactId>
         <version>1.0</version>
         <scope>provided</scope>
-      </dependency> 
+      </dependency>
        
       <dependency>
         <groupId>org.ajax4jsf</groupId>
@@ -332,6 +332,18 @@
         <artifactId>jsf-impl</artifactId>
         <version>2.0.0-Beta2</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-spi</artifactId>
+        <version>1.0.0.Alpha4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.shrinkwrap</groupId>
+        <artifactId>shrinkwrap-api</artifactId>
+        <version>1.0.0-alpha-11</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -343,13 +355,15 @@
       <url>http://download.java.net/maven/2/</url>
       <layout>default</layout>
     </repository>
-    
+   
+   <!--
     <repository>
 	<id>java.net</id>
 	<name>java.net Maven 1 Repository</name>
 	<url>https://maven-repository.dev.java.net/nonav/repository</url>
 	<layout>legacy</layout>
     </repository>    
+    -->
     
     <repository>
       <snapshots>
@@ -366,18 +380,18 @@
     </repository>
      
      
-     <repository>
-       <snapshots>
-          <enabled>true</enabled>
-          <updatePolicy>always</updatePolicy>
-       </snapshots>
-       <id>htmlUnitSnapshots</id>
-       <name>HtmlUnit Snapshots</name>
-       <url>http://htmlunit.sourceforge.net/m2-repo-snapshots</url>
-       <layout>default</layout>
-     </repository>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <id>htmlUnitSnapshots</id>
+      <name>HtmlUnit Snapshots</name>
+      <url>http://htmlunit.sourceforge.net/m2-repo-snapshots</url>
+      <layout>default</layout>
+    </repository>
      
-   </repositories>
+  </repositories>
 
   <modules>
     <module>jboss-jsfunit-core</module>
@@ -391,13 +405,13 @@
   </modules>
 
   <pluginRepositories>
-     <pluginRepository>
-       <id>codehaus snapshot repository</id>
-       <url>http://snapshots.repository.codehaus.org/</url>
-       <releases>
-         <enabled>true</enabled>
-       </releases>
-     </pluginRepository>
+    <pluginRepository>
+      <id>codehaus snapshot repository</id>
+      <url>http://snapshots.repository.codehaus.org/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
   </pluginRepositories>
    
   <build>
@@ -420,16 +434,16 @@
       </plugin>
 
       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-resources-plugin</artifactId>
-         <version>2.4.1</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.4.1</version>
       </plugin>
       
     </plugins>
   </build>
     
   <properties>
-     <richfaces-version>3.3.3.Final</richfaces-version>    
+    <richfaces-version>3.3.3.Final</richfaces-version>
     <!-- <seam-version>2.1.1.GA</seam-version> -->
     <!--<seam-version>2.1.2.CR1</seam-version> -->
     <seam-version>2.1.2</seam-version>

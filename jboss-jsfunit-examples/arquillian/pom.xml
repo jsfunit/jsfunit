@@ -14,10 +14,10 @@
 
   <properties>
     <arquillian.version>1.0.0.Alpha4</arquillian.version>
-    <!--<version.jboss_60>6.0.0.20100721-M4</version.jboss_60>-->
 
     <!-- Using a SNAPSHOT here causes Maven to download stuff like crazy -->
-    <version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>
+    <!--<version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>-->
+    <version.jboss_60>6.0.0.Final</version.jboss_60>
   </properties>
 
   <dependencies>
@@ -40,14 +40,14 @@
       <version>${arquillian.version}</version>
       <scope>test</scope>
     </dependency>
-
+<!--
     <dependency>
       <groupId>org.jboss.arquillian.framework</groupId>
       <artifactId>arquillian-framework-jsfunit</artifactId>
       <version>${arquillian.version}</version>
       <scope>test</scope>
     </dependency>
-
+-->
     <dependency>
       <groupId>org.jboss.jbossas</groupId>
       <artifactId>jboss-as-client</artifactId>
@@ -70,8 +70,8 @@
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
-      <artifactId>jsfunit-core</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <artifactId>jsfunit-arquillian</artifactId>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
