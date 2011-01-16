@@ -19,8 +19,6 @@
  <!--   <module>jboss-jsfunit-examples-icefaces</module> -->
     <module>jboss-jsfunit-examples-seam</module>
   <!--  <module>jsf2</module> -->
-   <!-- <module>jsfunit-spy</module> -->
-  <!--  <module>arquillian</module> -->
   </modules>
     
   <profiles>
