@@ -42,7 +42,7 @@
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
-      <artifactId>jsfunit-core</artifactId>
+      <artifactId>jboss-jsfunit-core</artifactId>
       <scope>compile</scope>
       <version>${project.version}</version>
     </dependency>        
