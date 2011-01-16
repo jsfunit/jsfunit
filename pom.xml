@@ -126,6 +126,12 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>javax.enterprise</groupId>
+        <artifactId>cdi-api</artifactId>
+        <version>1.0-SP1</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.jboss.jsfunit</groupId>
         <artifactId>jboss-jsfunit-core</artifactId>
         <version>${project.version}</version>
@@ -136,13 +142,7 @@
         <artifactId>junit</artifactId>
         <version>3.8.1</version>
       </dependency>
-
-      <dependency>
-        <groupId>javax.enterprise</groupId>
-        <artifactId>cdi-api</artifactId>
-        <version>1.0-SP1</version>
-      </dependency>
-
+      
       <dependency>
         <groupId>net.sourceforge.htmlunit</groupId>
         <artifactId>htmlunit</artifactId>
@@ -399,6 +399,7 @@
     <module>jboss-jsfunit-arquillian</module>
     <module>jboss-jsfunit-richfaces</module>
     <module>jboss-jsfunit-ant</module>
+    <module>examples-arquillian</module>
     <module>jboss-jsfunit-examples</module>
     <module>jboss-jsfunit-analysis</module>
     <module>jboss-jsfunit-microdeployer</module>
