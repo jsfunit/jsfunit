@@ -32,8 +32,6 @@
       <scope>test</scope>
     </dependency>
 
-    
-
     <dependency>
       <groupId>javax.faces</groupId>
       <artifactId>jsf-api</artifactId>
@@ -67,16 +65,47 @@
     
   </dependencies>
 
-  <build>
-    <testResources>
-      <testResource>
-        <directory>src/test/resources</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>**/*.xml</include>
-          <include>**/*.properties</include>
-        </includes>
-      </testResource>
-    </testResources>
-  </build>
+  <profiles>
+    <profile>
+      <id>jbossas-embedded-6</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/FormAuthenticationTest.java</exclude>
+                <exclude>**/BasicAuthenticationTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>jetty-embedded</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <systemProperties>
+                <property>
+                  <name>jetty-embedded</name>
+                  <value>active</value>
+                </property>
+              </systemProperties>
+              <excludes>
+                <exclude>**/FormAuthenticationTest.java</exclude>
+                <exclude>**/BasicAuthenticationTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

@@ -48,9 +48,9 @@ public class FormAuthenticationTest
    public static WebArchive createDeployment() {
       WebArchive webArchive = FacadeAPITest.createDeployment();
       webArchive.setWebXML(new File("src/main/webapp/WEB-INF/formauth-web.xml"))
-                .addResource(new File("src/main/webapp", "form-secured-page.jsp"))
-                .addResource(new File("src/main/webapp", "login.jsp"))
-                .addResource(new File("src/main/webapp", "error.jsp"));
+                .addResource(new File("src/main/webapp", "form-secured-page.xhtml"))
+                .addResource(new File("src/main/webapp", "login.xhtml"))
+                .addResource(new File("src/main/webapp", "error.xhtml"));
       return webArchive;
    }
 
@@ -61,7 +61,7 @@ public class FormAuthenticationTest
                        submitComponent="login_button")
    public void testFormAuthStandard(JSFServerSession server, JSFClientSession client) throws IOException
    {
-      Assert.assertEquals("/form-secured-page.jsp", server.getCurrentViewID());
+      Assert.assertEquals("/form-secured-page.xhtml", server.getCurrentViewID());
       Assert.assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
    }
 
@@ -84,7 +84,7 @@ public class FormAuthenticationTest
                        passwordComponent="j_password")
    public void testFormAuthNonStandard(JSFServerSession server, JSFClientSession client) throws IOException
    {
-      Assert.assertEquals("/form-secured-page.jsp", server.getCurrentViewID());
+      Assert.assertEquals("/form-secured-page.xhtml", server.getCurrentViewID());
       Assert.assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
    }
 

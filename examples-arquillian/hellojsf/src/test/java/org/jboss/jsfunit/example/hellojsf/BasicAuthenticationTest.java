@@ -53,7 +53,7 @@ public class BasicAuthenticationTest
    @BasicAuthentication(userName="admin", password="password")
    public void testBasicAuth(JSFServerSession server, JSFClientSession client) throws IOException
    {
-      Assert.assertEquals("/secured-page.jsp", server.getCurrentViewID());
+      Assert.assertEquals("/secured-page.xhtml", server.getCurrentViewID());
       Assert.assertTrue(client.getPageAsText().contains("Welcome to the Basic Secured Application Page"));
    }
 

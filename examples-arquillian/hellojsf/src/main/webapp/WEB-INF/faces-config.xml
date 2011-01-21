@@ -1,41 +1,40 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
 
-<!DOCTYPE faces-config PUBLIC
-  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
-  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
 
-<faces-config>
-
   <navigation-rule>
-    <from-view-id>/index.jsp</from-view-id>
+    <from-view-id>/index.xhtml</from-view-id>
     <navigation-case>
-      <from-outcome>/finalgreeting.jsp</from-outcome>
-      <to-view-id>/finalgreeting.jsp</to-view-id>
+      <from-outcome>/finalgreeting.xhtml</from-outcome>
+      <to-view-id>/finalgreeting.xhtml</to-view-id>
     </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
-    <from-view-id>/index.jsf.1.2.jsp</from-view-id>
+    <from-view-id>/index.jsf.1.2.xhtml</from-view-id>
     <navigation-case>
-      <from-outcome>/finalgreeting.jsp</from-outcome>
-      <to-view-id>/finalgreeting.jsp</to-view-id>
+      <from-outcome>/finalgreeting.xhtml</from-outcome>
+      <to-view-id>/finalgreeting.xhtml</to-view-id>
     </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
-    <from-view-id>/NestedNamingContainers.jsp</from-view-id>
+    <from-view-id>/NestedNamingContainers.xhtml</from-view-id>
     <navigation-case>
-      <from-outcome>/finalgreeting.jsp</from-outcome>
-      <to-view-id>/finalgreeting.jsp</to-view-id>
+      <from-outcome>/finalgreeting.xhtml</from-outcome>
+      <to-view-id>/finalgreeting.xhtml</to-view-id>
     </navigation-case>
   </navigation-rule>
   
   <navigation-rule>
-    <from-view-id>/finalgreeting.jsp</from-view-id>
+    <from-view-id>/finalgreeting.xhtml</from-view-id>
     <navigation-case>
-      <from-outcome>/index.jsp</from-outcome>
-      <to-view-id>/index.jsp</to-view-id>
+      <from-outcome>/index.xhtml</from-outcome>
+      <to-view-id>/index.xhtml</to-view-id>
     </navigation-case>
   </navigation-rule>
 

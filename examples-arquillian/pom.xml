@@ -64,6 +64,37 @@
 
   <profiles>
     <profile>
+      <id>test</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>false</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>jboss6x</id>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+            <includes>
+              <include>**/*.xml</include>
+              <include>**/*.properties</include>
+            </includes>
+          </testResource>
+        </testResources>
+      </build>
+    </profile>
+
+    <profile>
       <id>jbossas-remote-6</id>
       <dependencies>
         <dependency>
@@ -160,9 +191,77 @@
             </configuration>
           </plugin>
         </plugins>
+        
+      </build>
+    </profile>
+
+    <profile>
+      <id>jetty-embedded</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-jetty-embedded-7</artifactId>
+          <version>1.0.0.Alpha4</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-webapp</artifactId>
+          <version>7.0.2.v20100331</version>
+          <scope>test</scope>
+        </dependency>
+      <!-- plus and naming requires for using JNDI -->
+        <dependency>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-plus</artifactId>
+          <version>7.0.2.v20100331</version>
+          <scope>test</scope>
+        </dependency>
+      <!-- Weld servlet, EL and JSP required for testing CDI injections -->
+        <dependency>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet</artifactId>
+          <version>1.0.1-Final</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.glassfish.web</groupId>
+          <artifactId>el-impl</artifactId>
+          <version>2.2</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>javax.servlet.jsp</groupId>
+          <artifactId>jsp-api</artifactId>
+          <version>2.2</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <excludes>
+              <exclude>**/*.xml</exclude>
+              <exclude>**/*.properties</exclude>
+            </excludes>
+          </testResource>
+        </testResources>
       </build>
     </profile>
 
   </profiles>
  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
