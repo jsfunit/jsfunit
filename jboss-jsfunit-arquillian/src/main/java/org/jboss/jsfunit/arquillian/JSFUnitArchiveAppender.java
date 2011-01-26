@@ -19,9 +19,7 @@ package org.jboss.jsfunit.arquillian;
 import java.net.URL;
 import org.jboss.arquillian.spi.AuxiliaryArchiveAppender;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 
@@ -39,6 +37,9 @@ public class JSFUnitArchiveAppender implements AuxiliaryArchiveAppender
     */
    public Archive<?> createAuxiliaryArchive()
    {
+      System.out.println("********************");
+      System.out.println("Running JSFUnitArchiveAppender");
+      System.out.println("********************");
       return ShrinkWrap.create(JavaArchive.class, "arquillian-jsfunit.jar")
                   .addClass(JSFUnitCleanupTestTreadFilter.class)
                   .addPackages(

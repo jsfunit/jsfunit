@@ -210,12 +210,19 @@
           <artifactId>jetty-plus</artifactId>
           <version>7.0.2.v20100331</version>
           <scope>test</scope>
-        </dependency>
+        </dependency> 
+ <!--       <dependency>
+
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-jndi</artifactId>
+          <version>7.0.2.v20100331</version>
+          <scope>test</scope>
+        </dependency> -->
       <!-- Weld servlet, EL and JSP required for testing CDI injections -->
         <dependency>
           <groupId>org.jboss.weld.servlet</groupId>
           <artifactId>weld-servlet</artifactId>
-          <version>1.0.1-Final</version>
+          <version>1.1.0.Final</version>
           <scope>test</scope>
         </dependency>
         <dependency>

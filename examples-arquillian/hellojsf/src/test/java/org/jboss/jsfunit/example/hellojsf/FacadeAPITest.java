@@ -102,6 +102,8 @@ public class FacadeAPITest
             .addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
 
       prepareForJetty(war);
+
+      System.out.println(war.toString(true));
       // Uncomment to print the archive for debugging
       //  war.as(ExplodedExporter.class).exportExploded(new File("exploded"));
       //  System.out.println(war.toString(true));
@@ -121,15 +123,16 @@ public class FacadeAPITest
       /* Never quite got this working.
        * See http://community.jboss.org/wiki/HowdoIaddJARfilestothetestarchive
        * for MavenArtifactResolver */
+       .addWebResource(new File("src/main/jetty/jetty-env.xml"), "jetty-env.xml")
        .addLibraries(MavenArtifactResolver.resolveQualifiedIds(
            "com.sun.faces:jsf-api:2.0.4-b03",
             "com.sun.faces:jsf-impl:2.0.4-b03",
-            "org.jboss.weld.servlet:weld-servlet:1.0.1-Final",
+            "org.jboss.weld.servlet:weld-servlet:1.1.0.Final",
             "org.glassfish.web:el-impl:2.2",
             "javax.annotation:jsr250-api:1.0",
-            "javax.servlet:jstl:1.2",
-            "org.eclipse.jetty:jetty-plus:7.0.2.v20100331",
-            "org.mortbay.jetty:jetty-naming:6.1.12"));
+            "javax.servlet:jstl:1.2")); //,
+           // "org.eclipse.jetty:jetty-plus:7.0.2.v20100331")); //,
+            //"org.eclipse.jetty:jetty-jndi:7.0.2.v20100331"));
    }
 
    @Test

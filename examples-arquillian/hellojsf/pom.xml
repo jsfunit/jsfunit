@@ -49,13 +49,13 @@
       <artifactId>jsfunit-arquillian</artifactId>
       <scope>test</scope>
     </dependency>
-
+<!--
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <scope>provided</scope>
     </dependency>
-
+-->
     <dependency>
       <groupId>org.jboss.jbossas</groupId>
       <artifactId>jboss-as-client</artifactId>
