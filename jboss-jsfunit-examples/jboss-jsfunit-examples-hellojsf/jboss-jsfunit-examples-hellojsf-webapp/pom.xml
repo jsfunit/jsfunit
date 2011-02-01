@@ -27,6 +27,23 @@
       </dependency>
    </dependencies>
 
+   <profiles>
+     <profile>
+       <id>jboss6x</id>       
+       <build>
+         <plugins>
+           <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-war-plugin</artifactId>
+             <configuration>
+               <webXml>${basedir}/src/main/webapp/WEB-INF/web-jbossas6.xml</webXml>              
+             </configuration>            
+           </plugin>          
+         </plugins>
+       </build>
+     </profile>
+   </profiles>
+
    <build>
       <testResources>
          <testResource>

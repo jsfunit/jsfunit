@@ -87,6 +87,14 @@
          <containerId>jboss5x</containerId>
       </properties>
     </profile>
+
+    <profile>
+       <id>jboss6x</id>
+       <properties>
+         <containerId>jboss6x</containerId>
+       </properties>       
+    </profile>
+
   </profiles>
   
   <dependencies>

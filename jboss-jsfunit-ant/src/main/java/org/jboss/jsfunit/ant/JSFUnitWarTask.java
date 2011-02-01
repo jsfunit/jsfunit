@@ -54,7 +54,7 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 public class JSFUnitWarTask extends Task
 {
 
-        private String containerId = "";
+      private String containerId = "";
 	private File srcfile;
 	private File destfile;
 	private List<JSFUnitFilter> jsfFilters = new ArrayList<JSFUnitFilter>();
@@ -79,6 +79,7 @@ public class JSFUnitWarTask extends Task
         public void setContainer(String containerId)
         {
            this.containerId = containerId;
+           if (containerId.equals("jboss6x")) this.containerId = "jboss5x";
         }
         
 	/**

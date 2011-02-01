@@ -12,7 +12,8 @@
   <packaging>war</packaging>
   <name>HelloJSF JSFUnit test with path-mapped FacesServlet</name>
 
-  <profiles>
+  <profiles>    
+
     <profile>
       <id>test</id>        
       <build>
@@ -81,6 +82,31 @@
         </property>
       </activation>
     </profile>
+
+    <!-- Must exclude old authentication tests in AS6 because it does not
+         ship MemoryRealm.  See arquillian tests for authentication tests
+         with AS6 -->
+    <profile>
+      <id>jboss6x</id>   
+      <build>        
+        <plugins>
+          <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>  
+              <webXml>${basedir}/src/main/webapp/WEB-INF/web-jbossas6.xml</webXml> 
+              <webResources>
+                <resource>
+                  <excludes>
+                    <exclude>**/context.xml</exclude>
+                  </excludes>
+                </resource>
+              </webResources>       
+            </configuration>
+          </plugin>          
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
   
   <dependencies>

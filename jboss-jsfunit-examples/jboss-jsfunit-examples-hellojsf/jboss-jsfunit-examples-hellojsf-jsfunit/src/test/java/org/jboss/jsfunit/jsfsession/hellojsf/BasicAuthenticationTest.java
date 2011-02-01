@@ -40,6 +40,8 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
  */
 public class BasicAuthenticationTest extends ServletTestCase
 {
+   private static boolean jboss6xprofile = (System.getProperty("jboss6xprofile") != null);
+
    /**
     * @return the suite of tests being tested
     */
@@ -50,6 +52,8 @@ public class BasicAuthenticationTest extends ServletTestCase
    
    public void testBasicAuth() throws IOException
    {
+      if (jboss6xprofile) return;
+
       WebClientSpec wcSpec = new WebClientSpec("/secured-page.faces");
       wcSpec.setInitialRequestStrategy(new BasicAuthenticationStrategy("admin", "password"));
       
@@ -62,6 +66,8 @@ public class BasicAuthenticationTest extends ServletTestCase
    
    public void testInvalidLogin() throws IOException
    {
+      if (jboss6xprofile) return;
+
       WebClientSpec wcSpec = new WebClientSpec("/secured-page.faces");
       wcSpec.getWebClient().setPrintContentOnFailingStatusCode(false);
       wcSpec.setInitialRequestStrategy(new BasicAuthenticationStrategy("invaliduser", "invalidpassword"));

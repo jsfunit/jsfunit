@@ -38,6 +38,31 @@
         </plugins>
       </build>
     </profile>
+
+    <!-- Must exclude old authentication tests in AS6 because it does not
+         ship MemoryRealm.  See arquillian tests for authentication tests
+         with AS6 -->
+    <profile>
+      <id>jboss6x</id>   
+      <build>        
+        <plugins>
+          <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>  
+              <webXml>${basedir}/src/main/webapp/WEB-INF/web-jbossas6.xml</webXml> 
+              <webResources>
+                <resource>
+                  <excludes>
+                    <exclude>**/context.xml</exclude>
+                  </excludes>
+                </resource>
+              </webResources>       
+            </configuration>
+          </plugin>          
+        </plugins>
+      </build>
+    </profile>
+
     
     <profile>
        <id>jee5</id>
@@ -46,6 +71,16 @@
          <jsfMinorVersion>2</jsfMinorVersion>
       </properties>
     </profile>
+
+  <!-- For JBoss AS6 we are using Mojarra 1.2 -->
+    <profile>
+       <id>jee6</id>
+       <properties>
+         <jsfMajorVersion>1</jsfMajorVersion>
+         <jsfMinorVersion>2</jsfMinorVersion>
+      </properties>
+    </profile>
+
     
     <profile>
        <id>mojarra1.2</id>
