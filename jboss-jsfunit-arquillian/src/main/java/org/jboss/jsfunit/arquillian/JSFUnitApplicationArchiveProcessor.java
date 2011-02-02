@@ -38,8 +38,6 @@ public class JSFUnitApplicationArchiveProcessor implements ApplicationArchivePro
 
    public void process(Archive<?> archive, TestClass tc)
    {
-      System.out.println("********************");
-      System.out.println("Running JSFUnitApplicationArchiveProcessor");
       WebArchive webArchive = (WebArchive)archive;
       webArchive.addPackage(Package.getPackage("org.jboss.jsfunit.cdi"));
    }

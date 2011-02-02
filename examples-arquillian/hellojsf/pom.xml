@@ -56,13 +56,6 @@
       <scope>provided</scope>
     </dependency>
 -->
-    <dependency>
-      <groupId>org.jboss.jbossas</groupId>
-      <artifactId>jboss-as-client</artifactId>
-      <type>pom</type>
-      <scope>test</scope>
-    </dependency>
-    
   </dependencies>
 
   <profiles>
@@ -76,7 +69,6 @@
             <configuration>
               <excludes>
                 <exclude>**/FormAuthenticationTest.java</exclude>
-                <exclude>**/BasicAuthenticationTest.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -100,7 +92,6 @@
               </systemProperties>
               <excludes>
                 <exclude>**/FormAuthenticationTest.java</exclude>
-                <exclude>**/BasicAuthenticationTest.java</exclude>
               </excludes>
             </configuration>
           </plugin>

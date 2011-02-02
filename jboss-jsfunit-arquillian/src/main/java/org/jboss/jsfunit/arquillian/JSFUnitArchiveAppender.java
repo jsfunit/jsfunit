@@ -37,9 +37,6 @@ public class JSFUnitArchiveAppender implements AuxiliaryArchiveAppender
     */
    public Archive<?> createAuxiliaryArchive()
    {
-      System.out.println("********************");
-      System.out.println("Running JSFUnitArchiveAppender");
-      System.out.println("********************");
       return ShrinkWrap.create(JavaArchive.class, "arquillian-jsfunit.jar")
                   .addClass(JSFUnitCleanupTestTreadFilter.class)
                   .addPackages(

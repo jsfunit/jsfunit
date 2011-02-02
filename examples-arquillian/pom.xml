@@ -97,6 +97,11 @@
           <version>${arquillian.version}</version>
           <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>org.jboss.jbossas</groupId>
+          <artifactId>jboss-as-client</artifactId>
+          <type>pom</type>
+        </dependency>
       </dependencies>
     </profile>
 
@@ -145,6 +150,7 @@
         </dependency>
 
       </dependencies>
+
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -181,7 +187,7 @@
                         classes, methods, etc. EMB-41. Endorsed required for things like
                         WS support (EMB-61) -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed
                     -->
-              <argLine>-Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -Djboss.home=${JBOSS_HOME} -Djboss.boot.server.log.dir=${JBOSS_HOME}/server/default/log</argLine>
+              <argLine>-Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -Djboss.home=${JBOSS_HOME} -Djboss.boot.server.log.dir=target/jboss6x</argLine>
             </configuration>
           </plugin>
         </plugins>
@@ -211,13 +217,7 @@
           <version>7.0.2.v20100331</version>
           <scope>test</scope>
         </dependency> 
- <!--       <dependency>
-
-          <groupId>org.eclipse.jetty</groupId>
-          <artifactId>jetty-jndi</artifactId>
-          <version>7.0.2.v20100331</version>
-          <scope>test</scope>
-        </dependency> -->
+ 
       <!-- Weld servlet, EL and JSP required for testing CDI injections -->
         <dependency>
           <groupId>org.jboss.weld.servlet</groupId>
@@ -242,11 +242,7 @@
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
-            <excludes>
-              <exclude>**/*.xml</exclude>
-              <exclude>**/*.properties</exclude>
-            </excludes>
+            <directory>src/test/resources-jetty</directory>
           </testResource>
         </testResources>
         <plugins>
