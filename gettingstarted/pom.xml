@@ -89,7 +89,7 @@
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jsfunit-arquillian</artifactId>
-      <version>${project.version}</version>
+      <version>${version.jsfunit}</version>
       <scope>test</scope>
     </dependency>
 
