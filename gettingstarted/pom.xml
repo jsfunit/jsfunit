@@ -26,10 +26,10 @@
       </snapshots>
     </repository>
     <repository>
-      <id>repository.jboss.org</id>
-      <url>http://repository.jboss.org/maven2</url>
-      <releases>
-      </releases>
+      <id>central</id>
+      <name>Maven Central</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/maven2</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
