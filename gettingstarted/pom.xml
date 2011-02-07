@@ -25,6 +25,15 @@
         <updatePolicy>never</updatePolicy>
       </snapshots>
     </repository>
+    <repository>
+      <id>repository.jboss.org</id>
+      <url>http://repository.jboss.org/maven2</url>
+      <releases>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
@@ -184,7 +193,7 @@
           <artifactId>jstl</artifactId>
           <version>1.2</version>
           <scope>test</scope>
-        </dependency> 
+        </dependency>
       </dependencies>
       
       <build>
