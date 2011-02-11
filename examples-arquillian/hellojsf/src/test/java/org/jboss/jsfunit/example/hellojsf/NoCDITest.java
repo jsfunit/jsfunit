@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2010, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2011, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -26,55 +26,39 @@ import java.io.IOException;
 import junit.framework.Assert;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.jsfunit.cdi.InitialPage;
-import org.jboss.jsfunit.cdi.BasicAuthentication;
-import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Version of the FacadeAPITest that uses Arquillian
+ * Test without using JSFUnit annotations.
+ *
+ * To recreate JSFUNIT-269, this test needs to be run alone with -Dtest=NoCDITest
  * 
  * @author Stan Silvert
  */
 @RunWith(Arquillian.class)
-public class BasicAuthenticationTest
+public class NoCDITest
 {
 
    @Deployment
    public static WebArchive createDeployment() {
+      // The following line will work around JSFUNIT-269
+      //Class clazz = org.jboss.jsfunit.cdi.InitialPage.class;
       return FacadeAPITest.createDeployment();
    }
 
    @Test
-   @InitialPage("/secured-page.faces")
-   @BasicAuthentication(userName="admin", password="password")
-   public void testBasicAuth(JSFServerSession server, JSFClientSession client) throws IOException
+   public void testGetCurrentViewId() throws IOException
    {
-      Assert.assertEquals("/secured-page.xhtml", server.getCurrentViewID());
-      Assert.assertTrue(client.getPageAsText().contains("Welcome to the Basic Secured Application Page"));
+      JSFSession jsfSession = new JSFSession("/index.faces");
+      JSFServerSession server = jsfSession.getJSFServerSession();
+
+      // Test navigation to initial viewID
+      Assert.assertEquals("/index.xhtml", server.getCurrentViewID());
+      Assert.assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
    }
-
-   /*@Test
-   @InitialPage("/secured-page.faces")
-   public void testInvalidLogin() throws IOException
-   {
-      WebClientSpec wcSpec = new WebClientSpec("/secured-page.faces");
-      wcSpec.getWebClient().setPrintContentOnFailingStatusCode(false);
-      wcSpec.setInitialRequestStrategy(new BasicAuthenticationStrategy("invaliduser", "invalidpassword"));
-
-      try
-      {
-         new JSFSession(wcSpec);
-         fail();
-      }
-      catch (FailingHttpStatusCodeException e)
-      {
-         // Should get 401 Unauthorized
-         Assert.assertEquals(401, e.getStatusCode());
-      }
-   } */
 
 }
