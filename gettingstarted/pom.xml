@@ -117,7 +117,7 @@
     <profile>
       <id>jbossas-remote-6</id>
       <dependencies>
-        <dependency>
+      <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-6</artifactId>
           <version>${version.arquillian}</version>
@@ -134,6 +134,28 @@
         <testResources>
           <testResource>
             <directory>src/test/resources-jbossremote</directory>
+          </testResource>
+        </testResources>
+      </build>  
+    </profile>
+
+    <profile>
+      <id>jbossas-remote-7</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss-as-arquillian-container-remote</artifactId>
+          <version>7.0.0.Alpha2-SNAPSHOT</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources-jbossremote</directory>
+            <excludes>
+              <exclude>jndi.properties</exclude>
+            </excludes>
           </testResource>
         </testResources>
       </build>
