@@ -35,13 +35,7 @@
       <artifactId>jboss-jsfunit-core</artifactId>
       <scope>provided</scope>
     </dependency>
-    
-    <dependency>
-      <groupId>org.ajax4jsf</groupId>
-      <artifactId>ajax4jsf</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    
+
     <dependency>
       <groupId>org.richfaces.framework</groupId>
       <artifactId>richfaces-impl</artifactId>

@@ -274,13 +274,13 @@
     
   </dependencies>
 
-  <!-- repo for el-ri -->
+  <!-- repo for el-ri 
   <repositories>
     <repository>
       <id>java.net</id>
       <url>http://download.java.net/maven/2</url>
     </repository>
-  </repositories>
+  </repositories> -->
 
   <build>
     <sourceDirectory>src/test/java</sourceDirectory>
