@@ -17,7 +17,8 @@
 package org.jboss.jsfunit.arquillian;
 
 import java.net.URL;
-import org.jboss.arquillian.spi.AuxiliaryArchiveAppender;
+
+import org.jboss.arquillian.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -55,16 +56,16 @@ public class JSFUnitArchiveAppender implements AuxiliaryArchiveAppender
                         org.w3c.css.sac.CSSException.class.getPackage(),
                         com.steadystate.css.dom.CSSOMObject.class.getPackage(),
                         org.cyberneko.html.HTMLComponent.class.getPackage())
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF2.properties")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF3.properties")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF3.6.properties")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE6.properties")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE7.properties")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE8.properties")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xml")
-                  .addResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xsd")
-                  .addManifestResource(jsfunitFacesConfigXml(), "faces-config.xml")
-                  .addManifestResource("arquillian/web-fragment.xml", "web-fragment.xml");
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF2.properties")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF3.properties")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF3.6.properties")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE6.properties")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE7.properties")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE8.properties")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xml")
+                  .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xsd")
+                  .addAsManifestResource(jsfunitFacesConfigXml(), "faces-config.xml")
+                  .addAsManifestResource("arquillian/web-fragment.xml", "web-fragment.xml");
    }
 
    private URL jsfunitFacesConfigXml()

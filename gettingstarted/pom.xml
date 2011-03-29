@@ -62,8 +62,8 @@
   </pluginRepositories>
 
   <properties>
-    <version.jsfunit>2.0.0.Beta1</version.jsfunit>
-    <version.arquillian>1.0.0.Alpha4</version.arquillian>
+    <version.jsfunit>2.0.0-SNAPSHOT</version.jsfunit>
+    <version.arquillian>1.0.0.Alpha5</version.arquillian>
     <version.jboss_60>6.0.0.Final</version.jboss_60>
   </properties>
 

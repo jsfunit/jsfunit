@@ -14,7 +14,7 @@
   <name>examples-arquillian</name>
 
   <properties>
-    <arquillian.version>1.0.0.Alpha4</arquillian.version>
+    <arquillian.version>1.0.0.Alpha5</arquillian.version>
 
     <!-- Using a SNAPSHOT here causes Maven to download stuff like crazy -->
     <!--<version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>-->

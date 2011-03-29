@@ -336,13 +336,13 @@
       <dependency>
         <groupId>org.jboss.arquillian</groupId>
         <artifactId>arquillian-spi</artifactId>
-        <version>1.0.0.Alpha4</version>
+        <version>1.0.0.Alpha5</version>
       </dependency>
 
       <dependency>
         <groupId>org.jboss.shrinkwrap</groupId>
         <artifactId>shrinkwrap-api</artifactId>
-        <version>1.0.0-alpha-11</version>
+        <version>1.0.0-alpha-12</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

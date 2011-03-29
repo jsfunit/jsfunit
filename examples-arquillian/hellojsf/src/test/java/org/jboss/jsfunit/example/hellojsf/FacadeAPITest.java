@@ -22,12 +22,12 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
-import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectManyListbox;
@@ -35,26 +35,30 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
+
 import junit.framework.Assert;
+
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.jsfunit.cdi.Browser;
+import org.jboss.jsfunit.cdi.BrowserVersion;
 import org.jboss.jsfunit.cdi.Cookies;
 import org.jboss.jsfunit.cdi.InitialPage;
 import org.jboss.jsfunit.cdi.InitialRequest;
-import org.jboss.jsfunit.cdi.Browser;
-import org.jboss.jsfunit.cdi.BrowserVersion;
 import org.jboss.jsfunit.cdi.Proxy;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
-import org.jboss.jsfunit.shrinkwrap.MavenArtifactResolver;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 
 /**
  * Version of the FacadeAPITest that uses Arquillian
@@ -84,24 +88,23 @@ public class FacadeAPITest
                         org.slf4j.impl.StaticMarkerBinder.class,
                         org.slf4j.impl.StaticMDCBinder.class)  */
 
-            .addResource(new File("src/main/webapp", "index.xhtml"))
-            .addResource(new File("src/main/webapp", "finalgreeting.xhtml"))
-            .addResource(new File("src/main/webapp", "secured-page.xhtml"))
-            .addResource(new File("src/main/webapp", "NestedNamingContainers.xhtml"))
-            .addResource(new File("src/main/webapp", "indexWithExtraComponents.xhtml"))
-            .addResource(new File("src/main/webapp", "marathons.xhtml"))
-            .addResource(new File("src/main/webapp", "marathons_datatable.xhtml"))
-            .addWebResource(new File("src/main/webapp/WEB-INF/faces-config.xml"), "faces-config.xml")
-            .addWebResource(new File("src/main/webapp/WEB-INF/local-module-faces-config.xml"), "local-module-faces-config.xml")
-            .addWebResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"), "jboss-web.xml")
-            .addWebResource(new File("src/main/webapp/WEB-INF/classes/users.properties"), "classes/users.properties")
-            .addWebResource(new File("src/main/webapp/WEB-INF/classes/roles.properties"), "classes/roles.properties")
-            .addWebResource(EmptyAsset.INSTANCE, "beans.xml")
-            .addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+            .addAsWebResource(new File("src/main/webapp", "index.xhtml"))
+            .addAsWebResource(new File("src/main/webapp", "finalgreeting.xhtml"))
+            .addAsWebResource(new File("src/main/webapp", "secured-page.xhtml"))
+            .addAsWebResource(new File("src/main/webapp", "NestedNamingContainers.xhtml"))
+            .addAsWebResource(new File("src/main/webapp", "indexWithExtraComponents.xhtml"))
+            .addAsWebResource(new File("src/main/webapp", "marathons.xhtml"))
+            .addAsWebResource(new File("src/main/webapp", "marathons_datatable.xhtml"))
+            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/faces-config.xml"), "faces-config.xml")
+            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/local-module-faces-config.xml"), "local-module-faces-config.xml")
+            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"), "jboss-web.xml")
+            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/classes/users.properties"), "classes/users.properties")
+            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/classes/roles.properties"), "classes/roles.properties")
+            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
       prepareForJetty(war);
 
-//      System.out.println(war.toString(true));
+      //System.out.println(war.toString(true));
 
       return war;
    }
@@ -111,13 +114,14 @@ public class FacadeAPITest
       if (!IS_JETTY) return;
       
       war.setWebXML(new File("src/main/jetty/web.xml"))
-         .addWebResource(new File("src/main/jetty/jetty-env.xml"), "jetty-env.xml")
-         .addLibraries(MavenArtifactResolver.resolveQualifiedIds(
-            "com.sun.faces:jsf-api:2.0.4-b03",
-            "com.sun.faces:jsf-impl:2.0.4-b03",                    
-            "org.glassfish.web:el-impl:2.2",
-            "javax.annotation:jsr250-api:1.0",
-            "javax.servlet:jstl:1.2")); 
+         .addAsWebInfResource(new File("src/main/jetty/jetty-env.xml"), "jetty-env.xml")
+         .addAsLibraries(
+               DependencyResolvers.use(MavenDependencyResolver.class).artifacts(
+                     "com.sun.faces:jsf-api:2.0.4-b03",
+                     "com.sun.faces:jsf-impl:2.0.4-b03",                    
+                     "org.glassfish.web:el-impl:2.2",
+                     "javax.annotation:jsr250-api:1.0",
+                     "javax.servlet:jstl:1.2").resolveAsFiles()); 
    }
 
    @Test

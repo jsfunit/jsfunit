@@ -48,9 +48,9 @@ public class FormAuthenticationTest
    public static WebArchive createDeployment() {
       WebArchive webArchive = FacadeAPITest.createDeployment();
       webArchive.setWebXML(new File("src/main/webapp/WEB-INF/formauth-web.xml"))
-                .addResource(new File("src/main/webapp", "form-secured-page.xhtml"))
-                .addResource(new File("src/main/webapp", "login.xhtml"))
-                .addResource(new File("src/main/webapp", "error.xhtml"));
+                .addAsWebResource(new File("src/main/webapp", "form-secured-page.xhtml"))
+                .addAsWebResource(new File("src/main/webapp", "login.xhtml"))
+                .addAsWebResource(new File("src/main/webapp", "error.xhtml"));
       return webArchive;
    }
 

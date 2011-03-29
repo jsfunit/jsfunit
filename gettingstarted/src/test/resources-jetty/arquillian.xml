@@ -1,11 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian-1.0.xsd">
 
-<arquillian xmlns="http://jboss.com/arquillian"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:jetty="urn:arq:org.jboss.arquillian.container.jetty.embedded_7">
+	<engine>
+		<property name="deploymentExportPath">target/</property>
+	</engine>
 
-  <engine>
-    <deploymentExportPath>target/</deploymentExportPath>
-  </engine>
-  
 </arquillian>

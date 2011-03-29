@@ -22,8 +22,8 @@
 
 package org.jboss.jsfunit.arquillian;
 
-import org.jboss.arquillian.spi.ApplicationArchiveProcessor;
 import org.jboss.arquillian.spi.TestClass;
+import org.jboss.arquillian.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
