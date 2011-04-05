@@ -40,12 +40,12 @@ import junit.framework.Assert;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.jsfunit.cdi.Browser;
-import org.jboss.jsfunit.cdi.BrowserVersion;
-import org.jboss.jsfunit.cdi.Cookies;
-import org.jboss.jsfunit.cdi.InitialPage;
-import org.jboss.jsfunit.cdi.InitialRequest;
-import org.jboss.jsfunit.cdi.Proxy;
+import org.jboss.jsfunit.api.Browser;
+import org.jboss.jsfunit.api.BrowserVersion;
+import org.jboss.jsfunit.api.Cookies;
+import org.jboss.jsfunit.api.InitialPage;
+import org.jboss.jsfunit.api.InitialRequest;
+import org.jboss.jsfunit.api.Proxy;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
@@ -78,15 +78,9 @@ public class FacadeAPITest
    @Deployment
    public static WebArchive createDeployment() {
       WebArchive war =
-         ShrinkWrap.create(WebArchive.class, "test.war")
+         ShrinkWrap.create(WebArchive.class)
             .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
             .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf"))
-   /*         .addClasses(org.slf4j.impl.Log4jLoggerAdapter.class,
-                        org.slf4j.impl.Log4jLoggerFactory.class,
-                        org.slf4j.impl.Log4jMDCAdapter.class,
-                        org.slf4j.impl.StaticLoggerBinder.class,
-                        org.slf4j.impl.StaticMarkerBinder.class,
-                        org.slf4j.impl.StaticMDCBinder.class)  */
 
             .addAsWebResource(new File("src/main/webapp", "index.xhtml"))
             .addAsWebResource(new File("src/main/webapp", "finalgreeting.xhtml"))
@@ -390,7 +384,7 @@ public class FacadeAPITest
       HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("Weekdays");
       Object[] selectedValues = listBox.getSelectedValues();
       Assert.assertEquals(3, selectedValues.length);
-      List listOfValues = Arrays.asList(selectedValues);
+      List<Object> listOfValues = Arrays.asList(selectedValues);
       Assert.assertTrue(listOfValues.contains("Monday"));
       Assert.assertFalse(listOfValues.contains("Tuesday"));
       Assert.assertTrue(listOfValues.contains("Wednesday"));
@@ -416,7 +410,7 @@ public class FacadeAPITest
       HtmlSelectManyListbox listBox = (HtmlSelectManyListbox)server.findComponent("WeekdaysUsingItemList");
       Object[] selectedValues = listBox.getSelectedValues();
       Assert.assertEquals(3, selectedValues.length);
-      List listOfValues = Arrays.asList(selectedValues);
+      List<Object> listOfValues = Arrays.asList(selectedValues);
       Assert.assertTrue(listOfValues.contains("Monday"));
       Assert.assertFalse(listOfValues.contains("Tuesday"));
       Assert.assertTrue(listOfValues.contains("Wednesday"));

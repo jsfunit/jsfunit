@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.cdi;
+package org.jboss.jsfunit.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -29,13 +29,20 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
- * Annotation for specifying the HtmlUnit browser emulation.
+ * Annotation specifies the first JSF page visited by the emulated browser.
+ * This annotation is required for injection of JSFSession, JSFClientSession,
+ * and JSFServerSession.
+ *
+ * Note that the initialPage param should be something that maps into the FacesServlet.
+ * In the case where the FacesServlet is extension mapped in web.xml, this param will be something
+ * like @InitialPage("/index.jsf") or @InitialPage("/index.faces").  If the FacesServlet is path-mapped then the
+ * initialPage param will be something like @Initialpage("/faces/index.jsp").
  *
  * @author Stan Silvert
  */
 @Target({METHOD, TYPE})
 @Documented
 @Retention(RUNTIME)
-public @interface InitialRequest {
-   public Class value();
+public @interface InitialPage {
+   public String value();
 }

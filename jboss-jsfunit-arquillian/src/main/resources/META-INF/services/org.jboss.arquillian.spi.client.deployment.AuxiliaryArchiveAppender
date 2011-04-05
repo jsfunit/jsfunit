@@ -1,1 +1,1 @@
-org.jboss.jsfunit.arquillian.JSFUnitArchiveAppender
+org.jboss.jsfunit.arquillian.client.JSFUnitArchiveAppender

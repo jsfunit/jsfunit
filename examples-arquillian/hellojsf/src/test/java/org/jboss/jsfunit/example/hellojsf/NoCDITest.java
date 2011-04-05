@@ -23,11 +23,13 @@
 package org.jboss.jsfunit.example.hellojsf;
 
 import java.io.IOException;
+
 import junit.framework.Assert;
+
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.jsfunit.api.InitialPage;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
-import org.jboss.jsfunit.jsfsession.JSFSession;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,17 +47,13 @@ public class NoCDITest
 
    @Deployment
    public static WebArchive createDeployment() {
-      // The following line will work around JSFUNIT-269
-      //Class clazz = org.jboss.jsfunit.cdi.InitialPage.class;
       return FacadeAPITest.createDeployment();
    }
 
    @Test
-   public void testGetCurrentViewId() throws IOException
+   @InitialPage("/index.faces")
+   public void testGetCurrentViewId(JSFServerSession server) throws IOException
    {
-      JSFSession jsfSession = new JSFSession("/index.faces");
-      JSFServerSession server = jsfSession.getJSFServerSession();
-
       // Test navigation to initial viewID
       Assert.assertEquals("/index.xhtml", server.getCurrentViewID());
       Assert.assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());

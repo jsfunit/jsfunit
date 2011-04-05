@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.cdi;
+package org.jboss.jsfunit.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

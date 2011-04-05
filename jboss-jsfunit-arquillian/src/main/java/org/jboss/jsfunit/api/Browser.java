@@ -20,23 +20,33 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.cdi;
+package org.jboss.jsfunit.api;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import java.lang.annotation.Target;
-import static java.lang.annotation.ElementType.*;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 /**
- * Annotation for adding cookies to the browser session.
+ * An enum wrapper for HtmlUnit's BrowserVersion.
  *
  * @author Stan Silvert
  */
-@Target({METHOD, TYPE})
-@Documented
-@Retention(RUNTIME)
-public @interface Cookies {
-   public String[] names();
-   public String[] values();
+public enum Browser {
+
+   DEFAULT(BrowserVersion.getDefault()),
+   FIREFOX_3(BrowserVersion.FIREFOX_3),
+   FIREFOX_3_6(BrowserVersion.FIREFOX_3_6),
+   INTERNET_EXPLORER_6(BrowserVersion.INTERNET_EXPLORER_6),
+   INTERNET_EXPLORER_7(BrowserVersion.INTERNET_EXPLORER_7),
+   INTERNET_EXPLORER_8(BrowserVersion.INTERNET_EXPLORER_8);
+
+   private BrowserVersion browserVersion;
+
+   private Browser(BrowserVersion browserVersion)
+   {
+      this.browserVersion = browserVersion;
+   }
+
+   public BrowserVersion getVersion()
+   {
+      return this.browserVersion;
+   }
 }

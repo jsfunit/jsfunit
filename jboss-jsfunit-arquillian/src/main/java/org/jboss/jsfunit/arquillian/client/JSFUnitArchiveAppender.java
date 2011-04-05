@@ -14,11 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.jsfunit.arquillian;
+package org.jboss.jsfunit.arquillian.client;
 
 import java.net.URL;
 
+import org.jboss.arquillian.spi.TestEnricher;
 import org.jboss.arquillian.spi.client.deployment.AuxiliaryArchiveAppender;
+import org.jboss.jsfunit.arquillian.container.JSFUnitCleanupTestTreadFilter;
+import org.jboss.jsfunit.arquillian.container.JSFUnitTestEnricher;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -46,12 +49,13 @@ public class JSFUnitArchiveAppender implements AuxiliaryArchiveAppender
                         org.jboss.jsfunit.framework.WebClientSpec.class.getPackage(),
                         org.jboss.jsfunit.context.JSFUnitFacesContext.class.getPackage(),
                         org.jboss.jsfunit.seam.SeamUtil.class.getPackage(),
+                        org.jboss.jsfunit.api.JSFUnitResource.class.getPackage(), // Arquillian JSFunit API
+                        org.jboss.jsfunit.arquillian.container.JSFUnitTestEnricher.class.getPackage(), // Support package for incontainer enrichment 
                         org.apache.http.HttpEntity.class.getPackage(), // HTTPClient
                         com.gargoylesoftware.htmlunit.BrowserVersion.class.getPackage(),
                         org.apache.commons.codec.Decoder.class.getPackage(),
                         org.apache.commons.io.IOUtils.class.getPackage(),
                         org.apache.commons.lang.StringUtils.class.getPackage(),
-                        
                         net.sourceforge.htmlunit.corejs.javascript.EvaluatorException.class.getPackage(),
                         org.w3c.css.sac.CSSException.class.getPackage(),
                         com.steadystate.css.dom.CSSOMObject.class.getPackage(),
@@ -65,7 +69,8 @@ public class JSFUnitArchiveAppender implements AuxiliaryArchiveAppender
                   .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xml")
                   .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xsd")
                   .addAsManifestResource(jsfunitFacesConfigXml(), "faces-config.xml")
-                  .addAsManifestResource("arquillian/web-fragment.xml", "web-fragment.xml");
+                  .addAsManifestResource("arquillian/web-fragment.xml", "web-fragment.xml")
+                  .addAsServiceProvider(TestEnricher.class, JSFUnitTestEnricher.class);
    }
 
    private URL jsfunitFacesConfigXml()

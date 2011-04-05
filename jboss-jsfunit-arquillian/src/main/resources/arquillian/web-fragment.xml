@@ -5,7 +5,7 @@
 
     <filter>
       <filter-name>JSFUnitCleanupTestTreadFilter</filter-name>
-      <filter-class>org.jboss.jsfunit.arquillian.JSFUnitCleanupTestTreadFilter</filter-class>
+      <filter-class>org.jboss.jsfunit.arquillian.container.JSFUnitCleanupTestTreadFilter</filter-class>
     </filter>
 
     <filter>

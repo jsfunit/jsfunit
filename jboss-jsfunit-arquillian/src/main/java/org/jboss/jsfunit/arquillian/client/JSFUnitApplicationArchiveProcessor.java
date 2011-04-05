@@ -20,11 +20,13 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.arquillian;
+package org.jboss.jsfunit.arquillian.client;
 
 import org.jboss.arquillian.spi.TestClass;
 import org.jboss.arquillian.spi.client.deployment.ApplicationArchiveProcessor;
+import org.jboss.jsfunit.cdi.JSFUnitCDIProducer;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
@@ -32,14 +34,24 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  * tests to use them.
  *
  * @author ssilvert
+ * @author <a href="mailto:aslak@conduct.no">Aslak Knutsen</a>
  */
+// TODO: this can be removed when ARQ-405 is fixed. We don't really need to support both CDI and Arq
 public class JSFUnitApplicationArchiveProcessor implements ApplicationArchiveProcessor
 {
-
+   /**
+    * If this is a CDI WebArchive, add the {@link JSFUnitCDIProducer} to the users deployment so it will be picked up by CDI 
+    */
    public void process(Archive<?> archive, TestClass tc)
    {
-      WebArchive webArchive = (WebArchive)archive;
-      webArchive.addPackage(org.jboss.jsfunit.cdi.InitialPage.class.getPackage());
+      if(WebArchive.class.isInstance(archive))
+      {
+         WebArchive webArchive = WebArchive.class.cast(archive);
+         if(webArchive.contains(ArchivePaths.create("WEB-INF/beans.xml")))
+         {
+            webArchive.addClass(JSFUnitCDIProducer.class);            
+         }
+      }
    }
 
 }

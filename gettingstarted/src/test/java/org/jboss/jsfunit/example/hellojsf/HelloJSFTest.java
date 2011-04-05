@@ -31,7 +31,7 @@ import junit.framework.Assert;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.jsfunit.cdi.InitialPage;
+import org.jboss.jsfunit.api.InitialPage;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.shrinkwrap.api.ShrinkWrap;

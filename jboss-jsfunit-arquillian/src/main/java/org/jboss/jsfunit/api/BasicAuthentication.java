@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.jsfunit.cdi;
+package org.jboss.jsfunit.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -29,19 +29,16 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
- * Annotation for Form Authentication.  Use this if your initial page is
- * guarded with Form Authentication.
+ * Annotation for Basic Authentication.  Use this if your initial page is
+ * guarded with Basic Authentication.
  *
  * @author Stan Silvert
- * @see org.jboss.jsfunit.framework.FormAuthenticationStrategy
+ * @see org.jboss.jsfunit.framework.BasicAuthenticationStrategy
  */
 @Target({METHOD, TYPE})
 @Documented
 @Retention(RUNTIME)
-public @interface FormAuthentication {
+public @interface BasicAuthentication {
    public String userName();
    public String password();
-   public String submitComponent();
-   public String userNameComponent() default "j_username";
-   public String passwordComponent() default "j_password";
 }
