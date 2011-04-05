@@ -291,23 +291,7 @@ public class WebClientSpec implements HttpSessionBindingListener
 	   // as per HtmlUnit issue:
 	   // https://sourceforge.net/tracker/?func=detail&atid=448266&aid=2014629&group_id=47038
 	   // -----------------------------------------------------------------------------------
-
-	   // first get the top windows and then close them to avoid ConcurrentModificationException
-	   final List<TopLevelWindow> topWindows = new ArrayList<TopLevelWindow>();
-	   for (final Iterator<WebWindow> iter=webClient.getWebWindows().iterator();iter.hasNext();)
-	   {
-		   final WebWindow window = iter.next();
-		   if (window instanceof TopLevelWindow)
-		   {
-			   topWindows.add((TopLevelWindow)window);
-		   }
-	   }
-	   for (final Iterator<TopLevelWindow> iter=topWindows.iterator(); iter.hasNext();)
-	   {
-		   final TopLevelWindow window = iter.next();
-		   window.close();
-	   }
-
+      webClient.closeAllWindows();
    }
 
    public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)
