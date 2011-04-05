@@ -45,7 +45,7 @@ public class BasicAuthenticationTest
 
    @Deployment
    public static WebArchive createDeployment() {
-      return FacadeAPITest.createDeployment();
+      return Deployments.createDeployment();
    }
 
    @Test

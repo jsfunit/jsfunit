@@ -52,6 +52,7 @@ public class JSFUnitArchiveAppender implements AuxiliaryArchiveAppender
                         org.jboss.jsfunit.api.JSFUnitResource.class.getPackage(), // Arquillian JSFunit API
                         org.jboss.jsfunit.arquillian.container.JSFUnitTestEnricher.class.getPackage(), // Support package for incontainer enrichment 
                         org.apache.http.HttpEntity.class.getPackage(), // HTTPClient
+                        org.apache.james.mime4j.MimeException.class.getPackage(), // Apache Mime4j, used by HTTP client
                         com.gargoylesoftware.htmlunit.BrowserVersion.class.getPackage(),
                         org.apache.commons.codec.Decoder.class.getPackage(),
                         org.apache.commons.io.IOUtils.class.getPackage(),

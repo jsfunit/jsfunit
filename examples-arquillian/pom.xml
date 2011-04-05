@@ -19,6 +19,7 @@
     <!-- Using a SNAPSHOT here causes Maven to download stuff like crazy -->
     <!--<version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>-->
     <version.jboss_60>6.0.0.Final</version.jboss_60>
+    <version.jboss_51>5.1.0.GA</version.jboss_51>
   </properties>
 
   <modules>
@@ -196,6 +197,40 @@
     </profile>
 
     <profile>
+      <id>jbossas-remote-5.1</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-jbossas-remote-5.1</artifactId>
+          <version>${arquillian.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.jbossas</groupId>
+          <artifactId>jboss-as-client</artifactId>
+          <version>${version.jboss_51}</version>          
+          <type>pom</type>
+        </dependency>
+      </dependencies>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+          </testResource>
+        </testResources>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>false</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
       <id>jetty-embedded</id>
       <dependencies>
         <dependency>
@@ -257,6 +292,51 @@
       </build>
     </profile>
 
+    <profile>
+      <id>tomcat-embedded</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-tomcat-embedded-6</artifactId>
+          <version>${arquillian.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>catalina</artifactId>
+          <version>6.0.29</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>coyote</artifactId>
+          <version>6.0.29</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>jasper</artifactId>
+          <version>6.0.29</version>
+          <scope>provided</scope>
+        </dependency>
+	  </dependencies>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources-tomcat</directory>
+          </testResource>
+        </testResources>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>false</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
  
   <build>

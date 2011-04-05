@@ -33,7 +33,7 @@ import static java.lang.annotation.ElementType.*;
  *
  * @author <a href="mailto:aslak@conduct.no">Aslak Knutsen</a>
  */
-@Target({PARAMETER, FIELD})
+@Target({FIELD})
 @Documented
 @Retention(RUNTIME)
 public @interface JSFUnitResource 

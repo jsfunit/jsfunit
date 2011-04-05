@@ -22,24 +22,19 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import junit.framework.Assert;
 
-import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jsfunit.api.Browser;
 import org.jboss.jsfunit.api.BrowserVersion;
 import org.jboss.jsfunit.api.Cookies;
@@ -50,13 +45,8 @@ import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.jsfunit.jsfsession.JSFSession;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.junit.Assume;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 
@@ -65,58 +55,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlSelect;
  * 
  * @author Stan Silvert
  */
-@RunWith(Arquillian.class)
 @InitialPage("/index.faces")
-public class FacadeAPITest
+public abstract class FacadeAPIBase
 {
-   // property surefire sys prop setting
-   public static final boolean IS_JETTY = (System.getProperty("jetty-embedded") != null);
-
-   private @Inject JSFClientSession client;
-   private @Inject JSFServerSession server;
-
-   @Deployment
-   public static WebArchive createDeployment() {
-      WebArchive war =
-         ShrinkWrap.create(WebArchive.class)
-            .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
-            .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf"))
-
-            .addAsWebResource(new File("src/main/webapp", "index.xhtml"))
-            .addAsWebResource(new File("src/main/webapp", "finalgreeting.xhtml"))
-            .addAsWebResource(new File("src/main/webapp", "secured-page.xhtml"))
-            .addAsWebResource(new File("src/main/webapp", "NestedNamingContainers.xhtml"))
-            .addAsWebResource(new File("src/main/webapp", "indexWithExtraComponents.xhtml"))
-            .addAsWebResource(new File("src/main/webapp", "marathons.xhtml"))
-            .addAsWebResource(new File("src/main/webapp", "marathons_datatable.xhtml"))
-            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/faces-config.xml"), "faces-config.xml")
-            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/local-module-faces-config.xml"), "local-module-faces-config.xml")
-            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"), "jboss-web.xml")
-            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/classes/users.properties"), "classes/users.properties")
-            .addAsWebInfResource(new File("src/main/webapp/WEB-INF/classes/roles.properties"), "classes/roles.properties")
-            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-
-      prepareForJetty(war);
-
-      //System.out.println(war.toString(true));
-
-      return war;
-   }
-
-   private static void prepareForJetty(WebArchive war)
-   {  
-      if (!IS_JETTY) return;
-      
-      war.setWebXML(new File("src/main/jetty/web.xml"))
-         .addAsWebInfResource(new File("src/main/jetty/jetty-env.xml"), "jetty-env.xml")
-         .addAsLibraries(
-               DependencyResolvers.use(MavenDependencyResolver.class).artifacts(
-                     "com.sun.faces:jsf-api:2.0.4-b03",
-                     "com.sun.faces:jsf-impl:2.0.4-b03",                    
-                     "org.glassfish.web:el-impl:2.2",
-                     "javax.annotation:jsr250-api:1.0",
-                     "javax.servlet:jstl:1.2").resolveAsFiles()); 
-   }
+   protected abstract JSFClientSession getInstanceClientSession();
+   protected abstract JSFServerSession getInstanceServerSession();
 
    @Test
    @InitialPage("/index.faces")
@@ -137,7 +80,7 @@ public class FacadeAPITest
    public void testGetCurrentViewId(JSFServerSession server) throws IOException
    {
       // Test navigation to initial viewID
-      Assert.assertEquals("/index.xhtml", server.getCurrentViewID());
+      assertViewId("/index", server.getCurrentViewID());
       Assert.assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
    }
 
@@ -147,25 +90,11 @@ public class FacadeAPITest
    public void testInitialRequestAnnotation(JSFSession jsfSession, JSFServerSession server)
    {
       // Test navigation to initial viewID
-      Assert.assertEquals("/index.xhtml", server.getCurrentViewID());
+      assertViewId("/index", server.getCurrentViewID());
       Assert.assertEquals(server.getCurrentViewID(), server.getFacesContext().getViewRoot().getViewId());
 
       // timeout set to 10001 in SetSocketTimeoutRequestStrategy
       Assert.assertEquals(10001, jsfSession.getWebClient().getTimeout());
-   }
-
-   @Test
-   public void testSetParamAndSubmit() throws IOException
-   {
-      client.setValue("input_foo_text", "Stan");
-      client.click("submit_button");
-
-      UIComponent greeting = server.findComponent("greeting");
-      Assert.assertTrue(greeting.isRendered());
-
-      // test CDI bean
-      Assert.assertTrue(client.getPageAsText().contains("Hello Stan"));
-      Assert.assertEquals("Hello", server.getManagedBeanValue("#{mybean.hello}"));
    }
 
    @Test
@@ -196,6 +125,9 @@ public class FacadeAPITest
    @Test
    public void testSetCheckbox() throws IOException
    {
+      JSFClientSession client = getInstanceClientSession();
+      JSFServerSession server = getInstanceServerSession();
+
       client.setValue("input_foo_text", "Stan");
       client.click("funcheck"); // uncheck it
       client.click("submit_button");
@@ -209,28 +141,42 @@ public class FacadeAPITest
    @Test
    public void testClickCommandLink() throws IOException
    {
+      Assume.assumeTrue(!Deployments.IS_JSF_1_2);
+      
+      JSFClientSession client = getInstanceClientSession();
+      JSFServerSession server = getInstanceServerSession();
+
       client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("go_back_link");
 
       // test that we are back on the first page
-      Assert.assertEquals("/index.xhtml", server.getCurrentViewID());
+      assertViewId("/index", server.getCurrentViewID());
    }
 
    @Test
    public void testCommandLinkWithoutViewChange() throws IOException
    {
+      Assume.assumeTrue(!Deployments.IS_JSF_1_2);
+      
+      JSFClientSession client = getInstanceClientSession();
+      JSFServerSession server = getInstanceServerSession();
+
       client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("stay_here_link");
 
       // test that we are still on the same page
-      Assert.assertEquals("/finalgreeting.xhtml", server.getCurrentViewID());
+      assertViewId("/finalgreeting", server.getCurrentViewID());
    }
 
    @Test
    public void testCommandLinkWithFParam() throws IOException
    {
+      Assume.assumeTrue(!Deployments.IS_JSF_1_2);
+      
+      JSFClientSession client = getInstanceClientSession();
+
       client.setValue("input_foo_text", "Stan");
       client.click("goodbye_button");
       client.click("stay_here_link");
@@ -270,7 +216,6 @@ public class FacadeAPITest
    @Test
    public void testCommandLinkWithParamFromDatatableVariable() throws IOException
    {
-
       JSFSession jsfSession = new JSFSession("/marathons_datatable.faces");
       JSFClientSession client = jsfSession.getJSFClientSession();
 
@@ -287,7 +232,6 @@ public class FacadeAPITest
    @Test
    public void testInvalidateSession() throws IOException
    {
-
       JSFSession jsfSession = new JSFSession("/marathons_datatable.faces");
       JSFClientSession client = jsfSession.getJSFClientSession();
       JSFServerSession server = jsfSession.getJSFServerSession();
@@ -304,33 +248,16 @@ public class FacadeAPITest
    }
 
    @Test
-   public void testServerSideComponentValue() throws IOException
-   {
-      testSetParamAndSubmit(); // put "Stan" into the input field
-
-      // test the greeting component
-      Assert.assertEquals("Hello Stan", server.getComponentValue("greeting"));
-   }
-
-   /**
-    * This demonstrates how to test managed beans.
-    */
-   @Test
-   public void testManagedBeanValue() throws IOException
-   {
-      testSetParamAndSubmit(); // put "Stan" into the input field
-
-      Assert.assertEquals("Stan", server.getManagedBeanValue("#{foo.text}"));
-   }
-
-   @Test
    public void testFacesMessages() throws IOException
    {
+      JSFClientSession client = getInstanceClientSession();
+      JSFServerSession server = getInstanceServerSession();
+
       client.setValue("input_foo_text", "A"); // input too short - validation error
       client.click("submit_button");
 
       // Test that I was returned to the initial view because of input error
-      Assert.assertEquals("/index.xhtml", server.getCurrentViewID());
+      assertViewId("/index", server.getCurrentViewID());
 
       // Should be only one FacesMessge generated for the page.
       Iterator<FacesMessage> allMessages = server.getFacesMessages();
@@ -372,7 +299,7 @@ public class FacadeAPITest
    public void testSelectManyListbox(JSFClientSession client, JSFServerSession server) throws IOException
    {
       // JSFUNIT-268
-      if (IS_JETTY) return;
+      Assume.assumeTrue( !(Deployments.IS_JETTY || Deployments.IS_TOMCAT) );
 
       client.click("selectMonday");
       client.click("selectWednesday");
@@ -397,7 +324,7 @@ public class FacadeAPITest
    public void testSelectManyListboxWithItemList(JSFClientSession client, JSFServerSession server) throws IOException
    {
       // JSFUNIT-268
-      if (IS_JETTY) return;
+      Assume.assumeTrue( !(Deployments.IS_JETTY || Deployments.IS_TOMCAT) );
       
       HtmlSelect select = (HtmlSelect)client.getElement("WeekdaysUsingItemList");
       select.getOptionByValue("Monday").setSelected(true);
@@ -421,6 +348,8 @@ public class FacadeAPITest
    @Test
    public void testNoCreationOfBeanDuringELExpressionReference() throws IOException
    {
+      JSFServerSession server = getInstanceServerSession();
+
       HttpSession session = (HttpSession)server.getFacesContext().getExternalContext().getSession(true);
       Assert.assertNull(session.getAttribute("unreferencedsessionbean"));
 
@@ -462,6 +391,8 @@ public class FacadeAPITest
    @Test
    public void testClickThrowsComponentNotFound() throws IOException
    {
+      JSFClientSession client = getInstanceClientSession();
+      
       try
       {
          client.click("thiselementisnotthere");
@@ -476,6 +407,8 @@ public class FacadeAPITest
    @Test
    public void testSetValueThrowsComponentNotFound() throws IOException
    {
+      JSFClientSession client = getInstanceClientSession();
+
       try
       {
          client.setValue("thiselementisnotthere", "bogusvalue");
@@ -490,6 +423,8 @@ public class FacadeAPITest
    @Test
    public void testTypeThrowsComponentNotFound() throws IOException
    {
+      JSFClientSession client = getInstanceClientSession();
+
       try
       {
          client.type("thiselementisnotthere", 'b');
@@ -498,6 +433,25 @@ public class FacadeAPITest
       catch (ComponentIDNotFoundException e)
       {
          // OK
+      }
+   }
+   
+   static void assertViewId(String expected, String actual)
+   {
+      Assert.assertNotNull(expected);
+      Assert.assertNotNull(actual, "ViewID is null");
+      
+      if(actual.endsWith(".xhtml"))
+      {
+         Assert.assertEquals(expected + ".xhtml", actual);
+      }
+      else if(actual.endsWith(".jsp"))
+      {
+         Assert.assertEquals(expected + ".jsp", actual);
+      }
+      else
+      {
+         Assert.fail("Unknown ViewID ending, " + actual);
       }
    }
 }

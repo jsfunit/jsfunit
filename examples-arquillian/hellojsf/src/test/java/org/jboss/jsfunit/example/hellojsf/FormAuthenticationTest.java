@@ -46,7 +46,7 @@ public class FormAuthenticationTest
 
    @Deployment
    public static WebArchive createDeployment() {
-      WebArchive webArchive = FacadeAPITest.createDeployment();
+      WebArchive webArchive = Deployments.createCDIDeployment();
       webArchive.setWebXML(new File("src/main/webapp/WEB-INF/formauth-web.xml"))
                 .addAsWebResource(new File("src/main/webapp", "form-secured-page.xhtml"))
                 .addAsWebResource(new File("src/main/webapp", "login.xhtml"))
