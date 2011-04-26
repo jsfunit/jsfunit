@@ -92,6 +92,11 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    private boolean isRequestedSessionIdFromURL;
    private boolean isRequestedSessionIdValid;
    private boolean isSecure;
+   private Locale locale;
+   private String authType;
+   private String characterEncoding;
+   private String contentType;
+   private String contextPath;
    
    public JSFUnitHttpServletRequest(JSFUnitExternalContext extCtx, HttpServletRequest request)
    {
@@ -117,6 +122,11 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
       this.isRequestedSessionIdFromURL = request.isRequestedSessionIdFromURL();
       this.isRequestedSessionIdValid = request.isRequestedSessionIdValid();
       this.isSecure = request.isSecure();
+      this.locale = request.getLocale();
+      this.authType = request.getAuthType();
+      this.characterEncoding = request.getCharacterEncoding();
+      this.contentType = request.getContentType();
+      this.contextPath = request.getContextPath();
    }
    
    private boolean isServlet24OrGreater()
@@ -200,7 +210,7 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public Locale getLocale()
    {
-      return this.extCtx.getRequestLocale();
+      return this.locale;
    }
 
    @Override
@@ -212,13 +222,13 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public String getAuthType()
    {
-      return this.extCtx.getAuthType();
+      return this.authType;
    }
 
    @Override
    public String getCharacterEncoding()
    {
-      return this.extCtx.getRequestCharacterEncoding();
+      return this.characterEncoding;
    }
 
    @Override
@@ -230,13 +240,13 @@ public class JSFUnitHttpServletRequest implements HttpServletRequest
    @Override
    public String getContentType()
    {
-      return this.extCtx.getRequestContentType();
+      return this.contentType;
    }
 
    @Override
    public String getContextPath()
    {
-      return this.extCtx.getRequestContextPath();
+      return this.contextPath;
    }
 
    @Override
