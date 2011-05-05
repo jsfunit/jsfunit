@@ -110,7 +110,7 @@
                   <systemProperties>
                     <property>
                       <name>cactus.contextURL</name>
-                      <value>http://localhost:8080/${artifactId}</value>
+                      <value>http://localhost:8080/${project.artifactId}</value>
                     </property>
                   </systemProperties>
                   <excludes>
@@ -136,7 +136,7 @@
               <configuration>            
                 <deployables>
                   <deployable>
-                    <location>${project.build.directory}/${artifactId}.war</location>
+                    <location>${project.build.directory}/${project.artifactId}.war</location>
                     <type>war</type>
                   </deployable>
                 </deployables>

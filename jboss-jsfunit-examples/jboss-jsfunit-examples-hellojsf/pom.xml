@@ -17,7 +17,11 @@
     <module>jboss-jsfunit-examples-hellojsf-jsfunit</module>
     <module>jboss-jsfunit-examples-hellojsf-jee6</module>
     <module>jboss-jsfunit-examples-hellojsf-pathmapped</module>
-    <module>jboss-jsfunit-examples-hellojsf-ant</module>
+    
+   <!-- Test removed because antrun plugin is incompatible with Maven 3 -->
+   <!-- See http://jira.codehaus.org/browse/MANTRUN-123                 -->
+   <!-- https://issues.jboss.org/browse/JSFUNIT-279                     -->
+   <!-- <module>jboss-jsfunit-examples-hellojsf-ant</module>            -->
   </modules>
   
   <dependencies>
