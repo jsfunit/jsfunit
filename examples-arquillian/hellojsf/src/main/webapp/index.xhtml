@@ -27,6 +27,8 @@ MA  02110-1301, USA.
       <h:outputText value="Enter your name:" rendered="#{empty foo.text}" id="prompt"/>
       <h:outputText value="#{mybean.hello} #{foo.text}" rendered="#{!empty foo.text}" id="greeting"/><br/>
       
+      <h:inputText value="dummyfield" id="dummy_input" />
+      
       <h:inputText value="#{foo.text}" id="input_foo_text">          
         <f:validateLength minimum="2"/>
       </h:inputText>
@@ -35,8 +37,8 @@ MA  02110-1301, USA.
       <h:outputText id="funchecktext" value="Uncheck this box just for fun  "/>
       <h:selectBooleanCheckbox id="funcheck" value="#{checkbox.funCheck}"/>
       <br/><br/>
-      <h:commandButton value="Submit" action="/index.jsp" id="submit_button"/>
-      <h:commandButton value="Goodbye" action="/finalgreeting.jsp" id="goodbye_button"/>
+      <h:commandButton value="Submit" id="submit_button"/>
+      <h:commandButton value="Goodbye" action="/finalgreeting.xhtml" id="goodbye_button"/>
 
    </h:form>
 </f:view>

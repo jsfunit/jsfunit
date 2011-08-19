@@ -38,6 +38,12 @@
       <artifactId>hibernate-validator</artifactId>
       <version>3.0.0.GA</version>
       <scope>provided</scope>
+      <exclusions>
+      	<exclusion>
+      		<groupId>javax.transaction</groupId>
+      		<artifactId>jta</artifactId>
+      	</exclusion>
+      </exclusions>
     </dependency>
       
     <dependency>

@@ -272,6 +272,11 @@
       <artifactId>jsf-facelets</artifactId>
     </dependency>
     
+    <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+	</dependency>
+    
   </dependencies>
 
   <!-- repo for el-ri 

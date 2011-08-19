@@ -10,6 +10,8 @@
 		<configuration>
 			<property name="bindHttpPort">8080</property>
 			<property name="unpackArchive">true</property>
+			<property name="user">tomcat</property>
+			<property name="pass">tomcat</property>
 		</configuration>
 	</container>
 </arquillian>

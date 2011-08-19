@@ -5,6 +5,7 @@
     <engine>
         <property name="deploymentExportPath">target/</property>
     </engine>
-    
 	
+	<defaultProtocol type="Servlet 3.0" />
+
 </arquillian>

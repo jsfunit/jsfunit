@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.jboss.arquillian.spi.TestEnricher;
+import org.jboss.arquillian.test.spi.TestEnricher;
 import org.jboss.jsfunit.api.JSFUnitResource;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
@@ -29,86 +29,66 @@ import org.jboss.jsfunit.jsfsession.JSFSession;
 
 /**
  * JSFUnitTestEnricher
- *
+ * 
+ * 
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
+ * @author <a href="http://community.jboss.org/people/spinner)">Jose Rodolfo freitas</a>
  * @version $Revision: $
  */
-public class JSFUnitTestEnricher implements TestEnricher
-{
-   //-------------------------------------------------------------------------------------||
-   // Contract - TestEnricher ------------------------------------------------------------||
-   //-------------------------------------------------------------------------------------||
+public class JSFUnitTestEnricher implements TestEnricher {
+    // -------------------------------------------------------------------------------------||
+    // Contract - TestEnricher ------------------------------------------------------------||
+    // -------------------------------------------------------------------------------------||
 
-   @Override
-   public void enrich(Object testCase)
-   {
-      List<Field> annotatedFields = SecurityActions.getFieldsWithAnnotation(testCase.getClass(), JSFUnitResource.class);
+    @Override
+    public void enrich(Object testCase) {
+        List<Field> annotatedFields = SecurityActions.getFieldsWithAnnotation(testCase.getClass(), JSFUnitResource.class);
 
-      try
-      {
-         for (Field field : annotatedFields)
-         {
-            Object value = null;
-            
-            if(field.getType() == JSFSession.class)
-            {
-               value = JSFUnitSessionFactory.findJSFSession(field);
-            }
-            else if(field.getType() == JSFClientSession.class)
-            {
-               value = JSFUnitSessionFactory.getJSFClientSession(field);
-            }
-            else if(field.getType() == JSFServerSession.class)
-            {
-               value = JSFUnitSessionFactory.getJSFServerSession(field);
-            }
-            
-            field.set(testCase, value);
-         }
-      }
-      catch (Exception e) 
-      {
-         throw new RuntimeException("Could not inject members", e);
-      }
-   }
+        try {
+            for (Field field : annotatedFields) {
+                Object value = null;
 
-   @Override
-   public Object[] resolve(Method method)
-   {
-      Object[] values = new Object[method.getParameterTypes().length];
+                if (field.getType() == JSFSession.class) {
+                    value = JSFUnitSessionFactory.findJSFSession(field);
+                } else if (field.getType() == JSFClientSession.class) {
+                    value = JSFUnitSessionFactory.getJSFClientSession(field);
+                } else if (field.getType() == JSFServerSession.class) {
+                    value = JSFUnitSessionFactory.getJSFServerSession(field);
+                }
 
-      try
-      {
-         Class<?>[] parameterTypes = method.getParameterTypes();
-         for(int i = 0; i < parameterTypes.length; i++)
-         {
-            if(values[i] != null)
-            {
-               continue; // someone else has set this value, possible the CDIEnricher
+                field.set(testCase, value);
             }
-            Class<?> parameterType = parameterTypes[i];
-            
-            Object value = null;
-            if(parameterType == JSFSession.class)
-            {
-               value = JSFUnitSessionFactory.findJSFSession(method);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not inject members", e);
+        }
+    }
+
+    @Override
+    public Object[] resolve(Method method) {
+        Object[] values = new Object[method.getParameterTypes().length];
+
+        try {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            for (int i = 0; i < parameterTypes.length; i++) {
+                if (values[i] != null) {
+                    continue; // someone else has set this value, possible the CDIEnricher
+                }
+                Class<?> parameterType = parameterTypes[i];
+
+                Object value = null;
+                if (parameterType == JSFSession.class) {
+                    value = JSFUnitSessionFactory.findJSFSession(method);
+                } else if (parameterType == JSFClientSession.class) {
+                    value = JSFUnitSessionFactory.getJSFClientSession(method);
+                } else if (parameterType == JSFServerSession.class) {
+                    value = JSFUnitSessionFactory.getJSFServerSession(method);
+                }
+                values[i] = value;
             }
-            else if(parameterType == JSFClientSession.class)
-            {
-               value = JSFUnitSessionFactory.getJSFClientSession(method);
-            }
-            else if(parameterType == JSFServerSession.class)
-            {
-               value = JSFUnitSessionFactory.getJSFServerSession(method);
-            }
-            values[i] = value;
-         }
-      }
-      catch (Exception e) 
-      {
-         throw new RuntimeException("Could not inject method parameters", e);
-      }
-      return values;
-   }
+        } catch (Exception e) {
+            throw new RuntimeException("Could not inject method parameters", e);
+        }
+        return values;
+    }
 
 }
