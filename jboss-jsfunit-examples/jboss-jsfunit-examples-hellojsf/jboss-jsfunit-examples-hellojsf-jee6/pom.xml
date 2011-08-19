@@ -99,6 +99,11 @@
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
@@ -107,7 +112,11 @@
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
-    
+	
+     <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+     </dependency>    
   </dependencies>      
 
   <build>

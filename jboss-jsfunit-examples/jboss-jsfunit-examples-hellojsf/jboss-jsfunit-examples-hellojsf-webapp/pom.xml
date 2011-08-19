@@ -25,6 +25,10 @@
          <artifactId>junit</artifactId>
          <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+       </dependency>
    </dependencies>
 
    <profiles>

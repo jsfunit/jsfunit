@@ -187,6 +187,11 @@
       <scope>runtime</scope>
     </dependency>
     
+     <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+     </dependency>
+    
   </dependencies>      
 
   <build>

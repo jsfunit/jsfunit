@@ -125,6 +125,11 @@
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
+    
+     <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+     </dependency>
   </dependencies>      
 
   <build>
@@ -139,7 +144,8 @@
           <dependentWarExcludes>WEB-INF/web.xml,index.*</dependentWarExcludes>   
           <webResources>
             <resource>
-              <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/hellojsf</directory>
+              <!-- <directory>${basedir}/src/test/java/org/jboss/jsfunit/example/hellojsf</directory>  -->
+              <directory>${basedir}/src/test/java/org/jboss/jsfunit/jsfsession/hellojsf</directory>
               <includes>
                 <include>**/*.java</include>
               </includes>
