@@ -67,7 +67,7 @@
     <developerConnection>scm:svn:https://svn.jboss.org/repos/jsfunit/trunk</developerConnection>
     <url>http://fisheye.jboss.org/browse/JSFUnit/</url>
   </scm>
-    
+ 
   <profiles>
     <profile>
       <id>release</id>
@@ -140,19 +140,19 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>3.8.1</version>
+        <version>${junit.vesion}</version>
       </dependency>
       
       <dependency>
         <groupId>net.sourceforge.htmlunit</groupId>
         <artifactId>htmlunit</artifactId>
-        <version>2.8</version>
+        <version>${htmlunit.version}</version>
       </dependency>
 
       <dependency>
         <groupId>net.sourceforge.htmlunit</groupId>
         <artifactId>htmlunit-core-js</artifactId>
-        <version>2.8</version>
+        <version>${htmlunit.version}</version>
       </dependency>
       
       <!-- needed by htmlunit                                -->
@@ -160,62 +160,63 @@
       <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>apache-mime4j</artifactId>
-        <version>0.6</version>
+        <version>${apache.mime4j.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
-        <version>4.0.1</version>
+        <version>${httpcomponents.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpmime</artifactId>
-        <version>4.0.1</version>
+        <version>${httpcomponents.version}</version>
       </dependency>
-      
+    
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>1.4</version>
+        <version>${commons.io.vesion}</version>
       </dependency>
       
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
-        <version>1.4</version>
+        <version>${commons.codec.version}</version>
       </dependency>
       
       <dependency>
         <groupId>rhino</groupId>
         <artifactId>js</artifactId>
-        <version>1.7R1</version>
+        <version>${rhino.version}</version>
       </dependency>
-      
+            
       <dependency>
         <groupId>net.sourceforge.cssparser</groupId>
         <artifactId>cssparser</artifactId>
-        <version>0.9.5</version>
+        <version>${cssparser.version}</version>
       </dependency>
       
       <dependency>
         <groupId>net.sourceforge.nekohtml</groupId>
         <artifactId>nekohtml</artifactId>
-        <version>1.9.14</version>
+        <version>${nekohtml.version}</version>
       </dependency>
       
       <dependency>
         <groupId>xalan</groupId>
         <artifactId>xalan</artifactId>
-        <version>2.7.1</version>
+        <version>${xalan.version}</version>
       </dependency>
       
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
-        <version>2.4</version>
+        <version>${commons.lang.version}</version>
       </dependency>
+      
 
       <!--**************************************************-->
     
@@ -334,17 +335,43 @@
         <version>2.0.4-b03</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-spi</artifactId>
-        <version>1.0.0.Alpha5</version>
-      </dependency>
-
+	   <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-container-spi</artifactId>
+            <version>${arquillian.core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-container-test-spi</artifactId>
+            <version>${arquillian.core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
       <dependency>
         <groupId>org.jboss.shrinkwrap</groupId>
         <artifactId>shrinkwrap-api</artifactId>
-        <version>1.0.0-alpha-12</version>
+        <version>${shrinkwrap.version}</version>
       </dependency>
+      
+      <dependency>
+		  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+		  <artifactId>shrinkwrap-descriptors-impl</artifactId>
+		  <version>${shrinkwrap.descriptors.version}</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+		  <artifactId>shrinkwrap-descriptors-api</artifactId>
+		  <version>${shrinkwrap.descriptors.version}</version>
+		</dependency>
+		
+		<dependency>
+	      <groupId>org.jboss.arquillian.protocol</groupId>
+	      <artifactId>arquillian-protocol-servlet</artifactId>
+	      <version>${arquillian.core.version}</version>
+	    </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -479,6 +506,20 @@
     <!-- <seam-version>2.1.1.GA</seam-version> -->
     <!--<seam-version>2.1.2.CR1</seam-version> -->
     <seam-version>2.1.2</seam-version>
+    <arquillian.core.version>1.0.0.Final-SNAPSHOT</arquillian.core.version>
+  	<shrinkwrap.version>1.0.0-beta-5</shrinkwrap.version>
+  	<junit.vesion>3.8.1</junit.vesion>
+	<htmlunit.version>2.8</htmlunit.version>
+	<apache.mime4j.version>0.6</apache.mime4j.version>
+	<httpcomponents.version>4.0.1</httpcomponents.version>
+	<commons.io.vesion>1.4</commons.io.vesion>
+	<commons.codec.version>1.4</commons.codec.version>
+	<rhino.version>1.7R1</rhino.version>
+	<cssparser.version>0.9.5</cssparser.version>
+	<nekohtml.version>1.9.14</nekohtml.version>
+	<xalan.version>2.7.1</xalan.version>
+	<commons.lang.version>2.4</commons.lang.version>
+	<shrinkwrap.descriptors.version>1.1.0-alpha-2</shrinkwrap.descriptors.version>
   </properties>
   
 </project>
