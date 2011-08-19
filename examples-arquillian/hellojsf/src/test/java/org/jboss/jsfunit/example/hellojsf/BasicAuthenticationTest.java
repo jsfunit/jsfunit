@@ -23,8 +23,10 @@
 package org.jboss.jsfunit.example.hellojsf;
 
 import java.io.IOException;
+
 import junit.framework.Assert;
-import org.jboss.arquillian.api.Deployment;
+
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jsfunit.api.BasicAuthentication;
 import org.jboss.jsfunit.api.InitialPage;
@@ -40,41 +42,36 @@ import org.junit.runner.RunWith;
  * @author Stan Silvert
  */
 @RunWith(Arquillian.class)
-public class BasicAuthenticationTest
-{
+public class BasicAuthenticationTest {
 
-   @Deployment
-   public static WebArchive createDeployment() {
-      return Deployments.createDeployment();
-   }
 
-   @Test
-   @InitialPage("/secured-page.faces")
-   @BasicAuthentication(userName="admin", password="password")
-   public void testBasicAuth(JSFServerSession server, JSFClientSession client) throws IOException
-   {
-      Assert.assertEquals("/secured-page.xhtml", server.getCurrentViewID());
-      Assert.assertTrue(client.getPageAsText().contains("Welcome to the Basic Secured Application Page"));
-   }
+    @Deployment
+    public static WebArchive createDeployment() {
+        return Deployments.createDeployment();
 
-   /*@Test
-   @InitialPage("/secured-page.faces")
-   public void testInvalidLogin() throws IOException
-   {
-      WebClientSpec wcSpec = new WebClientSpec("/secured-page.faces");
-      wcSpec.getWebClient().setPrintContentOnFailingStatusCode(false);
-      wcSpec.setInitialRequestStrategy(new BasicAuthenticationStrategy("invaliduser", "invalidpassword"));
+    }
 
-      try
-      {
-         new JSFSession(wcSpec);
-         fail();
-      }
-      catch (FailingHttpStatusCodeException e)
-      {
-         // Should get 401 Unauthorized
-         Assert.assertEquals(401, e.getStatusCode());
-      }
-   } */
+    @Test
+    @InitialPage("/secured-page.faces")
+    @BasicAuthentication(userName = "admin", password = "password")
+    public void testBasicAuth(JSFServerSession server, JSFClientSession client) throws IOException {
+        if (server.getCurrentViewID().endsWith("xhtml"))
+            Assert.assertEquals("/secured-page.xhtml", server.getCurrentViewID());
+        else
+            Assert.assertEquals("/secured-page.jsp", server.getCurrentViewID());
+        Assert.assertTrue(client.getPageAsText().contains("Welcome to the Basic Secured Application Page"));
+    }
+
+
+    /*
+     * @Test
+     * 
+     * @InitialPage("/secured-page.faces") public void testInvalidLogin() throws IOException { WebClientSpec wcSpec = new
+     * WebClientSpec("/secured-page.faces"); wcSpec.getWebClient().setPrintContentOnFailingStatusCode(false);
+     * wcSpec.setInitialRequestStrategy(new BasicAuthenticationStrategy("invaliduser", "invalidpassword"));
+     * 
+     * try { new JSFSession(wcSpec); fail(); } catch (FailingHttpStatusCodeException e) { // Should get 401 Unauthorized
+     * Assert.assertEquals(401, e.getStatusCode()); } }
+     */
 
 }

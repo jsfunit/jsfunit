@@ -22,24 +22,24 @@
 
 package org.jboss.jsfunit.example.hellojsf;
 
+import javax.inject.Named;
+
 /**
  * Simple backing bean for a checkbox.
- *
+ * 
  * @author Stan Silvert
  */
-public class CheckboxBean
-{
-   
-   private boolean funCheck = true;
-   
-   public boolean getFunCheck()
-   {
-      return this.funCheck;
-   }
-   
-   public void setFunCheck(boolean funCheck)
-   {
-      this.funCheck = funCheck;
-   }
-   
+@Named("checkbox")
+public class CheckboxBean {
+
+    private boolean funCheck = true;
+
+    public boolean getFunCheck() {
+        return this.funCheck;
+    }
+
+    public void setFunCheck(boolean funCheck) {
+        this.funCheck = funCheck;
+    }
+
 }

@@ -14,8 +14,12 @@
   <name>examples-arquillian</name>
 
   <properties>
-    <arquillian.version>1.0.0.Alpha5</arquillian.version>
-
+    <arquillian.core.version>1.0.0.Final-SNAPSHOT</arquillian.core.version>
+    <arquillian.jboss.version>1.0.0.CR1</arquillian.jboss.version>
+    <arquillian.tomcat.version>1.0.0.Final-SNAPSHOT</arquillian.tomcat.version>
+    <arquillian.jetty.version>1.0.0.CR1</arquillian.jetty.version>
+	<shrinkwrap.maven.version>1.1.0-alpha-1-SNAPSHOT</shrinkwrap.maven.version>
+	
     <!-- Using a SNAPSHOT here causes Maven to download stuff like crazy -->
     <!--<version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>-->
     <version.jboss_60>6.0.0.Final</version.jboss_60>
@@ -35,15 +39,15 @@
         <version>4.8.1</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-junit</artifactId>
-        <version>${arquillian.version}</version>
+     <dependency>
+	    <groupId>org.jboss.arquillian.junit</groupId>
+		<artifactId>arquillian-junit-container</artifactId>
+        <version>${arquillian.core.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.jboss.jbossas</groupId>
-        <artifactId>jboss-as-client</artifactId>
+        <artifactId>jboss-as-profileservice-client</artifactId>
         <version>${version.jboss_60}</version>
         <type>pom</type>
       </dependency>
@@ -53,14 +57,27 @@
         <artifactId>jsfunit-arquillian</artifactId>
         <version>${project.version}</version>
       </dependency>
-
+      
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <!--<version>1.6.1</version>-->
         <version>1.5.10</version>
       </dependency>
+      <dependency>
+   		<groupId>org.jboss.shrinkwrap.resolver</groupId>
+   		<artifactId>shrinkwrap-resolver-api-maven</artifactId>
+   		<version>${shrinkwrap.maven.version}</version>
+	</dependency>
+	<dependency>
+   		<groupId>org.jboss.shrinkwrap.resolver</groupId>
+   		<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+   		<version>${shrinkwrap.maven.version}</version>
+	</dependency>
+	
     </dependencies>
+    
+    
   </dependencyManagement>
 
   <profiles>
@@ -95,12 +112,12 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-6</artifactId>
-          <version>${arquillian.version}</version>
+          <version>${arquillian.jboss.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
-          <artifactId>jboss-as-client</artifactId>
+          <artifactId>jboss-as-profileservice-client</artifactId>
           <type>pom</type>
         </dependency>
       </dependencies>
@@ -112,7 +129,7 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-managed-6</artifactId>
-          <version>${arquillian.version}</version>
+          <version>${arquillian.jboss.version}</version>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
@@ -133,7 +150,7 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-embedded-6</artifactId>
-          <version>${arquillian.version}</version>
+          <version>${arquillian.jboss.version}</version>
         </dependency>
 
         <!-- Exclude Seam core.  See JBAS-8503 -->
@@ -202,7 +219,7 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-5.1</artifactId>
-          <version>${arquillian.version}</version>
+          <version>${arquillian.jboss.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -229,6 +246,40 @@
         </plugins>
       </build>
     </profile>
+    
+    <profile>
+      <id>glassfish-embedded-3.1</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+          <version>1.0.0.Final-SNAPSHOT</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.glassfish.extras</groupId>
+          <artifactId>glassfish-embedded-all</artifactId>
+          <version>3.1</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources-glassfish-embedded</directory>
+			</testResource>
+		</testResources>
+		<plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>false</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+	  </build>
+    </profile>
 
     <profile>
       <id>jetty-embedded</id>
@@ -236,7 +287,7 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jetty-embedded-7</artifactId>
-          <version>${arquillian.version}</version>
+          <version>${arquillian.jetty.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -293,7 +344,7 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-tomcat-embedded-6</artifactId>
-          <version>${arquillian.version}</version>
+          <version>${arquillian.tomcat.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -327,11 +378,69 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <skipTests>false</skipTests>
+              <excludes>
+                <exclude>**/FormAuthenticationTest.java</exclude>
+              </excludes>
             </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>
+    <profile>
+    	<build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources-tomcat</directory>
+          </testResource>
+        </testResources>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>false</skipTests>
+              <systemPropertyVariables>
+	            <tomcat>active</tomcat>
+	          </systemPropertyVariables>
+	          <argLine>-Dtomcat=active</argLine>
+              <excludes>
+                <exclude>**/FormAuthenticationTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+        </build>
+		<id>tomcat-remote</id>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-tomcat-remote-6</artifactId>
+				<version>1.0.0.CR1</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+		<repositories>
+		   <repository>
+		      <releases>
+		        <enabled>true</enabled>
+		        <updatePolicy>never</updatePolicy>
+		      </releases>
+		      <snapshots>
+		        <enabled>true</enabled>
+		        <updatePolicy>never</updatePolicy>
+		      </snapshots>
+		      <id>jboss-public-repository-group</id>
+		      <name>JBoss Public Repository Group</name>
+		      <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		    </repository>
+		    <repository>
+			  <id>maven2-repository.java.net</id>
+			  <name>Java.net Repository for Maven</name>
+			  <url>http://download.java.net/maven/2/</url>
+			  <layout>default</layout>
+			</repository>
+	</repositories>
+	</profile>
   </profiles>
  
   <build>

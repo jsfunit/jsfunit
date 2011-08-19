@@ -24,13 +24,16 @@ package org.jboss.jsfunit.example.hellojsf;
 
 import java.io.File;
 import java.io.IOException;
+
 import junit.framework.Assert;
-import org.jboss.arquillian.api.Deployment;
+
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jsfunit.api.FormAuthentication;
 import org.jboss.jsfunit.api.InitialPage;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
+import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,51 +44,40 @@ import org.junit.runner.RunWith;
  * @author Stan Silvert
  */
 @RunWith(Arquillian.class)
-public class FormAuthenticationTest
-{
+public class FormAuthenticationTest {
 
-   @Deployment
-   public static WebArchive createDeployment() {
-      WebArchive webArchive = Deployments.createCDIDeployment();
-      webArchive.setWebXML(new File("src/main/webapp/WEB-INF/formauth-web.xml"))
+    @Deployment
+    public static WebArchive createDeployment() {
+        WebArchive webArchive = Deployments.createDeployment();
+        webArchive.delete(ArchivePaths.create("WEB-INF/web.xml"));
+        webArchive.setWebXML(new File("src/main/webapp/WEB-INF/formauth-web.xml"))
                 .addAsWebResource(new File("src/main/webapp", "form-secured-page.xhtml"))
                 .addAsWebResource(new File("src/main/webapp", "login.xhtml"))
                 .addAsWebResource(new File("src/main/webapp", "error.xhtml"));
-      return webArchive;
-   }
+        return webArchive;
+    }
 
-   @Test
-   @InitialPage("/form-secured-page.faces")
-   @FormAuthentication(userName="admin",
-                       password="password",
-                       submitComponent="login_button")
-   public void testFormAuthStandard(JSFServerSession server, JSFClientSession client) throws IOException
-   {
-      Assert.assertEquals("/form-secured-page.xhtml", server.getCurrentViewID());
-      Assert.assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
-   }
+    @Test
+    @InitialPage("/form-secured-page.faces")
+    @FormAuthentication(userName = "admin", password = "password", submitComponent = "login_button")
+    public void testFormAuthStandard(JSFServerSession server, JSFClientSession client) throws IOException {
+        Assert.assertEquals("/form-secured-page.xhtml", server.getCurrentViewID());
+        Assert.assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
+    }
 
-   @Test
-   @InitialPage("/form-secured-page.faces")
-   @FormAuthentication(userName="invaliduser",
-                       password="invalidpassword",
-                       submitComponent="login_button")
-   public void testInvalidLogin(JSFServerSession server, JSFClientSession client) throws IOException
-   {
-      Assert.assertTrue(client.getPageAsText().contains("Error logging in"));
-   }
+    @Test
+    @InitialPage("/form-secured-page.faces")
+    @FormAuthentication(userName = "invaliduser", password = "invalidpassword", submitComponent = "login_button")
+    public void testInvalidLogin(JSFServerSession server, JSFClientSession client) throws IOException {
+        Assert.assertTrue(client.getPageAsText().contains("Error logging in"));
+    }
 
-   @Test
-   @InitialPage("/form-secured-page.faces")
-   @FormAuthentication(userName="admin",
-                       password="password",
-                       submitComponent="login_button",
-                       userNameComponent="j_username",
-                       passwordComponent="j_password")
-   public void testFormAuthNonStandard(JSFServerSession server, JSFClientSession client) throws IOException
-   {
-      Assert.assertEquals("/form-secured-page.xhtml", server.getCurrentViewID());
-      Assert.assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
-   }
+    @Test
+    @InitialPage("/form-secured-page.faces")
+    @FormAuthentication(userName = "admin", password = "password", submitComponent = "login_button", userNameComponent = "j_username", passwordComponent = "j_password")
+    public void testFormAuthNonStandard(JSFServerSession server, JSFClientSession client) throws IOException {
+        Assert.assertEquals("/form-secured-page.xhtml", server.getCurrentViewID());
+        Assert.assertTrue(client.getPageAsText().contains("Welcome to the Form Secured Application Page"));
+    }
 
 }

@@ -27,8 +27,20 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.arquillian</groupId>
-      <artifactId>arquillian-junit</artifactId>
+	  <groupId>org.jboss.arquillian.junit</groupId>
+	  <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.arquillian.protocol</groupId>
+      <artifactId>arquillian-protocol-servlet</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.arquillian.container</groupId>
+   	  <artifactId>arquillian-container-spi</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -44,11 +56,33 @@
       <scope>provided</scope>
     </dependency>
 
+	<dependency>
+      <groupId>org.jboss.jsfunit</groupId>
+      <artifactId>jboss-jsfunit-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+	
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jsfunit-arquillian</artifactId>
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+	  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+	  <artifactId>shrinkwrap-descriptors-impl</artifactId>
+	</dependency>
+	
+	<dependency>
+   		<groupId>org.jboss.shrinkwrap.resolver</groupId>
+   		<artifactId>shrinkwrap-resolver-api-maven</artifactId>
+	</dependency>
+	
+	<dependency>
+   		<groupId>org.jboss.shrinkwrap.resolver</groupId>
+   		<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+	</dependency>
+    
 <!--
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -57,8 +91,19 @@
     </dependency>
 -->
   </dependencies>
-
+   
   <profiles>
+	<profile>
+		<id>jbossas-remote-7</id>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-arquillian-container-remote</artifactId>
+				<version>7.1.0.Alpha1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	  </profile>
+    
     <profile>
       <id>jbossas-embedded-6</id>
       <build>
@@ -86,19 +131,32 @@
             <configuration>
               <systemProperties>
                 <property>
-                  <name>jbossas-remote-51-</name>
+                  <name>jbossas-remote-51</name>
                   <value>active</value>
                 </property>
               </systemProperties>
-              <includes>
-                <include>**/FasadeAPINonCDITest.java</include>
-              </includes>
             </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>
-
+	<profile>
+      <id>glassfish-embedded-3.1</id>
+      <build>
+		<plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/FormAuthenticationTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+	  </build>
+    </profile>
+	
     <profile>
       <id>jetty-embedded</id>
       <build>
@@ -112,7 +170,7 @@
                   <name>jetty-embedded</name>
                   <value>active</value>
                 </property>
-              </systemProperties>
+              </systemProperties> 
               <excludes>
                 <exclude>**/FormAuthenticationTest.java</exclude>
               </excludes>
@@ -130,9 +188,27 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+              <argLine>-Dtomcat=active</argLine>
+              <excludes>
+                <exclude>**/FormAuthenticationTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <id>tomcatx</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
               <systemProperties>
                 <property>
-                  <name>tomcat-embedded</name>
+                  <name>tomcat</name>
                   <value>active</value>
                 </property>
               </systemProperties>
@@ -144,5 +220,6 @@
         </plugins>
       </build>
     </profile>
+    
   </profiles>
 </project>

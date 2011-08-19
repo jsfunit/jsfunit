@@ -5,10 +5,20 @@
     <engine>
         <property name="deploymentExportPath">target/</property>
     </engine>
-        
-    <container qualifier="jetty" default="true">
-        <configuration>
-            <property name="bindHttpPort">8080</property>
-        </configuration>
-    </container>
+
+	
+	<container qualifier="tomcat" default="false">
+		<configuration>
+			<property name="bindHttpPort">8080</property>
+			<property name="unpackArchive">true</property>
+			<property name="user">tomcat</property>
+			<property name="pass">tomcat</property>
+		</configuration>
+	</container>
+	    
+	<container qualifier="glassfish" default="true">
+           <configuration>
+               <property name="sunResourcesXml">src/test/resources-glassfish-embedded/sun-resources.xml</property>
+           </configuration>
+       </container>
 </arquillian>
