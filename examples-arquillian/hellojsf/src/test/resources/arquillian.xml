@@ -5,7 +5,6 @@
     <engine>
         <property name="deploymentExportPath">target/</property>
     </engine>
-
 	
 	<container qualifier="tomcat" default="false">
 		<configuration>
@@ -16,7 +15,7 @@
 		</configuration>
 	</container>
 	    
-	<container qualifier="glassfish" default="true">
+	<container qualifier="glassfish" default="false">
            <configuration>
                <property name="sunResourcesXml">src/test/resources-glassfish-embedded/sun-resources.xml</property>
            </configuration>
