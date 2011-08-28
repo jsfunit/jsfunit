@@ -93,17 +93,6 @@
   </dependencies>
    
   <profiles>
-	<profile>
-		<id>jbossas-remote-7</id>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.as</groupId>
-				<artifactId>jboss-as-arquillian-container-remote</artifactId>
-				<version>7.1.0.Alpha1-SNAPSHOT</version>
-			</dependency>
-		</dependencies>
-	  </profile>
-    
     <profile>
       <id>jbossas-embedded-6</id>
       <build>

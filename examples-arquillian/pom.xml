@@ -14,16 +14,19 @@
   <name>examples-arquillian</name>
 
   <properties>
-    <arquillian.core.version>1.0.0.Final-SNAPSHOT</arquillian.core.version>
-    <arquillian.jboss.version>1.0.0.CR1</arquillian.jboss.version>
-    <arquillian.tomcat.version>1.0.0.Final-SNAPSHOT</arquillian.tomcat.version>
+    <arquillian.core.version>1.0.0.CR4</arquillian.core.version>
+    <arquillian.jboss.version>1.0.0.CR2</arquillian.jboss.version>
+    <arquillian.tomcat.version>1.0.0.CR1</arquillian.tomcat.version>
     <arquillian.jetty.version>1.0.0.CR1</arquillian.jetty.version>
-	<shrinkwrap.maven.version>1.1.0-alpha-1-SNAPSHOT</shrinkwrap.maven.version>
+    <arquillian.glassfish.version>1.0.0.CR1</arquillian.glassfish.version>
+    <glassfish.vesion>3.1</glassfish.vesion>
+	<shrinkwrap.maven.version>1.0.0-beta-5</shrinkwrap.maven.version>
 	
     <!-- Using a SNAPSHOT here causes Maven to download stuff like crazy -->
     <!--<version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60>-->
     <version.jboss_60>6.0.0.Final</version.jboss_60>
     <version.jboss_51>5.1.0.GA</version.jboss_51>
+    <version.jboss_701>7.0.1.Final</version.jboss_701>
   </properties>
 
   <modules>
@@ -105,7 +108,16 @@
         </plugins>
       </build>
     </profile>
-
+	<profile>
+		<id>jbossas-remote-7</id>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-arquillian-container-remote</artifactId>
+				<version>${version.jboss_701}</version>
+			</dependency>
+		</dependencies>
+	  </profile>
     <profile>
       <id>jbossas-remote-6</id>
       <dependencies>
@@ -253,13 +265,13 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-          <version>1.0.0.Final-SNAPSHOT</version>
+          <version>${arquillian.glassfish.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.glassfish.extras</groupId>
           <artifactId>glassfish-embedded-all</artifactId>
-          <version>3.1</version>
+          <version>${version.glassfih}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
