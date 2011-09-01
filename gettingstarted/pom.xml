@@ -6,7 +6,7 @@
 
   <groupId>org.jboss.jsfunit</groupId>
   <artifactId>gettingstarted</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0.Beta2-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Minimal example for the Getting Started Guide</name>
 
@@ -62,7 +62,7 @@
   </pluginRepositories>
 
   <properties>
-    <version.jsfunit>2.0.0-SNAPSHOT</version.jsfunit>
+    <version.jsfunit>2.0.0.Beta2-SNAPSHOT</version.jsfunit>
     <version.arquillian>1.0.0.Alpha5</version.arquillian>
     <version.jboss_60>6.0.0.Final</version.jboss_60>
   </properties>
