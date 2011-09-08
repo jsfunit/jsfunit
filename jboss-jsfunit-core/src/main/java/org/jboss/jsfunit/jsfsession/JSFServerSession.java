@@ -132,10 +132,11 @@ public class JSFServerSession implements RequestListener
    public Object getManagedBeanValue(String elExpression)
    {
       FacesContext facesContext = getFacesContext();
+      ExternalContext extContext = facesContext.getExternalContext();
       
       try
       {
-         setELRunning(true, facesContext.getExternalContext());
+         setELRunning(true, extContext);
          return facesContext.getApplication()
                             .createValueBinding(elExpression)
                             .getValue(facesContext);
@@ -157,7 +158,7 @@ public class JSFServerSession implements RequestListener
       }
       finally
       {
-         setELRunning(false, facesContext.getExternalContext());
+         setELRunning(false, extContext);
       }
    }
    
