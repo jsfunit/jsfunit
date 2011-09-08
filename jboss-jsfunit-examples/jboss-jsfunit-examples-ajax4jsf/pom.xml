@@ -231,6 +231,17 @@
       </build>
     </profile>
 
+    <profile>
+       <id>mojarra1.2</id>
+      <dependencies>
+         <dependency>
+           <groupId>javax.faces</groupId>
+           <artifactId>jsf-api</artifactId>
+           <scope>compile</scope>
+           <version>1.2_13</version>
+        </dependency>    
+      </dependencies>
+    </profile>
 
   </profiles>
 
