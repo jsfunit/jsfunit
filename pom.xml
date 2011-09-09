@@ -10,7 +10,7 @@
   <groupId>org.jboss.jsfunit</groupId>
   <artifactId>jboss-jsfunit</artifactId>
   <packaging>pom</packaging>
-  <version>2.0.0.Beta2</version>
+  <version>2.0.0.Beta3-SNAPSHOT</version>
   <description>JSFUnit is an integration test framework for JavaServer Faces.  JSFUnit tests run inside the container, which provides the developer full access to managed beans, the FacesContext, and the internal JSF component tree.  At the same time, you also have access to the HTML output of each client request.</description>
   <name>JSFUnit</name>
   <url>http://www.jsfunit.org</url>
