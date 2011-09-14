@@ -29,16 +29,13 @@ import javax.faces.component.UIComponent;
 
 import junit.framework.Assert;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jsfunit.api.InitialPage;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -60,28 +57,9 @@ public class HelloJSFTest
             .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
             .addPackage(Package.getPackage("org.jboss.jsfunit.example.hellojsf")) // my test package
             .addAsWebResource(new File("src/main/webapp", "index.xhtml"))
-            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
             .addAsWebInfResource(new File("src/main/webapp/WEB-INF/faces-config.xml"), "faces-config.xml");
-      
-      prepareForJetty(war);
-
 //      System.out.println(war.toString(true)); // for debugging
       return war;
-   }
-
-   private static void prepareForJetty(WebArchive war)
-   {  
-      if (!IS_JETTY) return;
-      
-      war.setWebXML(new File("src/main/jetty/web.xml")) // jetty web.xml needs extra declarations
-         .addAsWebInfResource(new File("src/main/jetty/jetty-env.xml"), "jetty-env.xml")
-         .addAsLibraries(
-               DependencyResolvers.use(MavenDependencyResolver.class).artifacts(
-                     "com.sun.faces:jsf-api:2.0.4-b03",
-                     "com.sun.faces:jsf-impl:2.0.4-b03",                    
-                     "org.glassfish.web:el-impl:2.2",
-                     "javax.annotation:jsr250-api:1.0",
-                     "javax.servlet:jstl:1.2").resolveAsFiles()); 
    }
 
    @Test
