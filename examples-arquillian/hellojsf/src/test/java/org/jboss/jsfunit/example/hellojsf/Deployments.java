@@ -10,7 +10,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -23,16 +23,13 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
-import org.jboss.shrinkwrap.descriptor.api.spec.servlet.web.AuthMethodType;
-import org.jboss.shrinkwrap.descriptor.api.spec.servlet.web.WebAppDescriptor;
-import org.jboss.shrinkwrap.descriptor.spi.Node;
-import org.jboss.shrinkwrap.descriptor.spi.NodeProvider;
+import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 /**
  * Deployments
- * 
+ *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
  * @version $Revision: $
  */
@@ -86,7 +83,7 @@ public class Deployments {
     private static void appendForEmbedded(WebArchive war) {
         if (IS_JETTY || IS_TOMCAT) {
             war.addAsLibraries(DependencyResolvers.use(MavenDependencyResolver.class)
-                    .loadDependenciesFromPom("src/test/resources-tomcat/pom.xml")
+                    .loadMetadataFromPom("src/test/resources-tomcat/pom.xml")
                     .artifacts("javax.annotation:jsr250-api:1.0", "javax.servlet:jstl:1.2").resolveAsFiles());
 
             // "com.sun.faces:jsf-api:2.0.4-b03", "com.sun.faces:jsf-impl:2.0.4-b03",
@@ -100,17 +97,15 @@ public class Deployments {
     public static WebAppDescriptor createCDIWebXML() {
         WebAppDescriptor desc = Descriptors.create(WebAppDescriptor.class);
 
-        if (IS_JETTY || IS_TOMCAT) {
-            if (IS_TOMCAT) // jetty is added by default. It finds weld-servlet on appCl and insists on loading it.
-            {
-                desc.listener("org.jboss.weld.environment.servlet.Listener");
-            }
-
-            Node rootNode = ((NodeProvider) desc).getRootNode();
-
-            rootNode.getOrCreate("/web-app/resource-env-ref").createChild("resource-env-ref-name").text("BeanManager")
-                    .getParent().createChild("resource-env-ref-type").text("javax.enterprise.inject.spi.BeanManager");
-        }
+        /*
+         * if (IS_JETTY || IS_TOMCAT) { if (IS_TOMCAT) // jetty is added by default. It finds weld-servlet on appCl and insists
+         * on loading it. { desc.createListener("org.jboss.weld.environment.servlet.Listener"); }
+         *
+         * // Node rootNode = ((Node) desc).getRootNode();
+         *
+         * // rootNode.getOrCreate("/web-app/resource-env-ref").createChild("resource-env-ref-name").text("BeanManager") //
+         * .getParent().createChild("resource-env-ref-type").text("javax.enterprise.inject.spi.BeanManager"); }
+         */
         appendBaseWebXML(desc);
         return desc;
     }
@@ -125,10 +120,26 @@ public class Deployments {
 
     private static void appendBaseWebXML(WebAppDescriptor desc) {
         desc.displayName("JSFUnit Arquillian TestCase")
-                .contextParam("javax.faces.CONFIG_FILES", "/WEB-INF/local-module-faces-config.xml").welcomeFile("index.html")
-                .servlet("javax.faces.webapp.FacesServlet", "*.faces").loadOnStartup(1);
+                .createContextParam()
+                    .paramName("javax.faces.CONFIG_FILES")
+                    .paramValue("/WEB-INF/local-module-faces-config.xml").up()
+                 .createWelcomeFileList()
+                    .welcomeFile("index.xhtml").up()
+                .createServlet()
+                    .servletClass("javax.faces.webapp.FacesServlet")
+                    .servletName("FacesServlet")
+                    .loadOnStartup(1).up()
+                .createServletMapping()
+                    .servletName("FacesServlet")
+                    .urlPattern("*.faces").up()
+                /*.createFilter().filterName("JSFUnitCleanupTestTreadFilter").filterClass("org.jboss.jsfunit.arquillian.container.JSFUnitCleanupTestTreadFilter").up()
+                .createFilter().filterName("JSFUnitFilter").filterClass("org.jboss.jsfunit.framework.JSFUnitFilter").up()
+                .createFilterMapping().filterName("JSFUnitCleanupTestTreadFilter").urlPattern("/*").up().createFilterMapping()
+                .filterName("JSFUnitFilter").urlPattern("/*").up()*/
+                    ;
 
-        if (!(IS_JETTY || IS_TOMCAT)) {
+
+        /*if (!(IS_JETTY || IS_TOMCAT)) {
             // SHRINKDESC-48 desc.securityConstraint("Basic Authentication for the Admin")
             desc.securityConstraint().webResourceCollection("Authenticated").urlPatterns("/secured-page.faces")
                     .authConstraint("hellotestadmin").loginConfig(AuthMethodType.BASIC, "Authenticated")
@@ -140,6 +151,6 @@ public class Deployments {
         }
         if (IS_TOMCAT || IS_JBOSS_51) {
             desc.version("2.5");
-        }
+        }*/
     }
 }

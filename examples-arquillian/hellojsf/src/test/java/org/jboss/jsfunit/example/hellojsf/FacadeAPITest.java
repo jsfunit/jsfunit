@@ -36,7 +36,9 @@ import javax.servlet.http.HttpSession;
 import junit.framework.Assert;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.spi.TestEnricher;
 import org.jboss.jsfunit.api.Browser;
 import org.jboss.jsfunit.api.BrowserVersion;
 import org.jboss.jsfunit.api.Cookies;
@@ -44,6 +46,9 @@ import org.jboss.jsfunit.api.InitialPage;
 import org.jboss.jsfunit.api.InitialRequest;
 import org.jboss.jsfunit.api.JSFUnitResource;
 import org.jboss.jsfunit.api.Proxy;
+import org.jboss.jsfunit.arquillian.container.JSFUnitCleanupTestTreadFilter;
+import org.jboss.jsfunit.arquillian.container.JSFUnitRemoteExtension;
+import org.jboss.jsfunit.arquillian.container.JSFUnitTestEnricher;
 import org.jboss.jsfunit.jsfsession.ComponentIDNotFoundException;
 import org.jboss.jsfunit.jsfsession.JSFClientSession;
 import org.jboss.jsfunit.jsfsession.JSFServerSession;
@@ -71,7 +76,72 @@ public class FacadeAPITest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        return Deployments.createDeployment();
+        WebArchive war = Deployments.createDeployment();
+        war.addClass(JSFUnitCleanupTestTreadFilter.class)
+                .addPackages(
+                        true,
+                        org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext.class.getPackage(),
+                        org.jboss.arquillian.protocol.servlet.Processor.class.getPackage(),
+                        org.jboss.jsfunit.jsfsession.JSFSession.class.getPackage(),
+                        org.jboss.jsfunit.framework.WebClientSpec.class.getPackage(),
+                        org.jboss.jsfunit.context.JSFUnitFacesContext.class.getPackage(),
+                        org.jboss.jsfunit.seam.SeamUtil.class.getPackage(),
+                        org.jboss.jsfunit.api.JSFUnitResource.class.getPackage(), // Arquillian JSFunit API
+                        org.jboss.jsfunit.arquillian.container.JSFUnitTestEnricher.class.getPackage(), // Support package for
+                                                                                                       // incontainer enrichment
+                        org.apache.http.HttpEntity.class.getPackage(), // HTTPClient
+                        org.apache.james.mime4j.MimeException.class.getPackage(), // Apache Mime4j, used by HTTP client
+                        com.gargoylesoftware.htmlunit.BrowserVersion.class.getPackage(),
+                        org.apache.commons.codec.Decoder.class.getPackage(), org.apache.commons.io.IOUtils.class.getPackage(),
+                        org.apache.commons.lang.StringUtils.class.getPackage(),
+                        net.sourceforge.htmlunit.corejs.javascript.EvaluatorException.class.getPackage(),
+                        org.w3c.css.sac.CSSException.class.getPackage(),
+                        com.steadystate.css.dom.CSSOMObject.class.getPackage(),
+                        com.steadystate.css.parser.CSSOMParser.class.getPackage(),
+                        com.steadystate.css.sac.TestCSSParseException.class.getPackage(),
+                        com.steadystate.css.userdata.UserDataConstants.class.getPackage(),
+
+                        org.apache.commons.logging.LogFactory.class.getPackage(),
+                        org.apache.xerces.xni.XNIException.class.getPackage(),
+                        org.apache.commons.collections.Transformer.class.getPackage(),
+                        org.apache.xerces.dom.AttrImpl.class.getPackage(), org.apache.xerces.impl.Constants.class.getPackage(),
+                        org.apache.xerces.jaxp.DocumentBuilderFactoryImpl.class.getPackage(),
+                        org.apache.xerces.parsers.AbstractDOMParser.class.getPackage(),
+                        org.apache.xerces.util.AttributesProxy.class.getPackage(),
+                        org.apache.xerces.xinclude.MultipleScopeNamespaceSupport.class.getPackage(),
+                        org.apache.xerces.xpointer.XPointerHandler.class.getPackage(),
+                        org.apache.xerces.xs.AttributePSVI.class.getPackage(),
+
+                        org.apache.xml.dtm.Axis.class.getPackage(), org.apache.xml.res.XMLErrorResources.class.getPackage(),
+                        org.apache.xml.utils.AttList.class.getPackage(), org.apache.xpath.XPath.class.getPackage(),
+                        org.apache.xalan.Version.class.getPackage(),
+
+                        org.cyberneko.html.HTMLComponent.class.getPackage(), org.cyberneko.html.HTMLEntities.class.getPackage())
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF2.properties")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF3.properties")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/FF3.6.properties")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE6.properties")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE7.properties")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/IE8.properties")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xml")
+                .addAsResource("com/gargoylesoftware/htmlunit/javascript/configuration/JavaScriptConfiguration.xsd")
+                .addAsResource("net/sourceforge/htmlunit/corejs/javascript/resources/Messages.properties")
+                .addAsResource("net/sourceforge/htmlunit/corejs/javascript/resources/Messages_fr.properties")
+                .addAsResource("org/cyberneko/html/res/HTMLlat1.properties")
+                .addAsResource("org/cyberneko/html/res/HTMLspecial.properties")
+                .addAsResource("org/cyberneko/html/res/HTMLsymbol.properties")
+                .addAsResource("org/cyberneko/html/res/XMLbuiltin.properties")
+                .addAsResource("com/steadystate/css/parser/SACParserMessages.properties")
+                .addAsResource("com/steadystate/css/parser/SACParserMessages_en.properties")
+                .addAsResource("com/steadystate/css/parser/SACParserMessages_de.properties")
+                /**
+                 * TODO use faces-config and web-fragment from jsfunit jar. for now it's not possible because shrinkwrap could
+                 * get a different META-INF/faces-config .addAsManifestResource(this.jsfunitFacesConfigXml(),
+                 * "faces-config.xml")
+                 */
+                .addAsServiceProvider(TestEnricher.class, JSFUnitTestEnricher.class)
+                .addAsServiceProvider(RemoteLoadableExtension.class, JSFUnitRemoteExtension.class);
+        return war;
     }
 
 

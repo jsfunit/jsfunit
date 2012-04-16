@@ -13,17 +13,16 @@
   <name>examples-arquillian</name>
 
   <properties>
-    <arquillian.core.version>1.0.0.CR4</arquillian.core.version>
+  	<arquillian.bom.version>1.0.0.Final</arquillian.bom.version>
     <arquillian.jboss.version>1.0.0.CR2</arquillian.jboss.version>
     <arquillian.tomcat.version>1.0.0.CR1</arquillian.tomcat.version>
     <arquillian.jetty.version>1.0.0.CR1</arquillian.jetty.version>
     <arquillian.glassfish.version>1.0.0.CR1</arquillian.glassfish.version>
     <glassfish.vesion>3.1</glassfish.vesion>
-	<shrinkwrap.maven.version>1.0.0-beta-5</shrinkwrap.maven.version>
-	
+
     <version.jboss_60>6.0.0.Final</version.jboss_60>
     <version.jboss_51>5.1.0.GA</version.jboss_51>
-    <version.jboss_701>7.0.1.Final</version.jboss_701>
+    <version.jboss_711>7.1.1.Final</version.jboss_711>
   </properties>
 
   <modules>
@@ -39,11 +38,13 @@
         <version>4.8.1</version>
       </dependency>
 
-     <dependency>
-	    <groupId>org.jboss.arquillian.junit</groupId>
-		<artifactId>arquillian-junit-container</artifactId>
-        <version>${arquillian.core.version}</version>
-      </dependency>
+      <dependency>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-bom</artifactId>
+			<version>${arquillian.bom.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
       <dependency>
         <groupId>org.jboss.jbossas</groupId>
@@ -51,33 +52,21 @@
         <version>${version.jboss_60}</version>
         <type>pom</type>
       </dependency>
-    
+
       <dependency>
         <groupId>org.jboss.jsfunit</groupId>
         <artifactId>jsfunit-arquillian</artifactId>
         <version>${project.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <!--<version>1.6.1</version>-->
         <version>1.5.10</version>
       </dependency>
-      <dependency>
-   		<groupId>org.jboss.shrinkwrap.resolver</groupId>
-   		<artifactId>shrinkwrap-resolver-api-maven</artifactId>
-   		<version>${shrinkwrap.maven.version}</version>
-	</dependency>
-	<dependency>
-   		<groupId>org.jboss.shrinkwrap.resolver</groupId>
-   		<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-   		<version>${shrinkwrap.maven.version}</version>
-	</dependency>
-	
+
     </dependencies>
-    
-    
   </dependencyManagement>
 
   <profiles>
@@ -132,7 +121,7 @@
 			<dependency>
 				<groupId>org.jboss.as</groupId>
 				<artifactId>jboss-as-arquillian-container-remote</artifactId>
-				<version>${version.jboss_701}</version>
+				<version>${version.jboss_711}</version>
 			</dependency>
 		</dependencies>
 	  </profile>
@@ -239,7 +228,7 @@
             </configuration>
           </plugin>
         </plugins>
-        
+
       </build>
     </profile>
 
@@ -255,7 +244,7 @@
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-as-client</artifactId>
-          <version>${version.jboss_51}</version>          
+          <version>${version.jboss_51}</version>
           <type>pom</type>
         </dependency>
       </dependencies>
@@ -276,7 +265,7 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
       <id>glassfish-embedded-3.1</id>
       <dependencies>
@@ -332,8 +321,8 @@
           <artifactId>jetty-plus</artifactId>
           <version>7.0.2.v20100331</version>
           <scope>test</scope>
-        </dependency> 
- 
+        </dependency>
+
       <!-- Weld servlet, EL and JSP required for testing CDI injections -->
         <dependency>
           <groupId>org.jboss.weld.servlet</groupId>
@@ -472,7 +461,7 @@
 	</repositories>
 	</profile>
   </profiles>
- 
+
   <build>
     <plugins>
       <plugin>

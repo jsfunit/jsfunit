@@ -9,10 +9,10 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jsfunit-arquillian</artifactId>
   <name>JSFUnit Arquillian Integration</name>
-  <packaging>jar</packaging>      
+  <packaging>jar</packaging>
 
   <reporting>
-    <plugins>      
+    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -27,8 +27,8 @@
       </plugin>
     </plugins>
   </reporting>
-  
-  <dependencies>     
+
+  <dependencies>
 
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
@@ -53,28 +53,34 @@
           <artifactId>arquillian-container-spi</artifactId>
           <scope>provided</scope>
       </dependency>
-      
+
       <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-container-test-spi</artifactId>
           <scope>provided</scope>
       </dependency>
-      
+
     <dependency>
       <groupId>org.jboss.shrinkwrap</groupId>
       <artifactId>shrinkwrap-api</artifactId>
     </dependency>
-    
+
     <dependency>
 	  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-	  <artifactId>shrinkwrap-descriptors-impl</artifactId>
+	  <artifactId>shrinkwrap-descriptors-api-javaee</artifactId>
 	</dependency>
-    
+
+
+    <dependency>
+	  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+	  <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
+	</dependency>
+
     <dependency>
       <groupId>org.jboss.arquillian.protocol</groupId>
       <artifactId>arquillian-protocol-servlet</artifactId>
     </dependency>
-    
+
   </dependencies>
 
 </project>
