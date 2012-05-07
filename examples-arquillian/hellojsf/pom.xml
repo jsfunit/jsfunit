@@ -1,4 +1,3 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <parent>
@@ -30,13 +29,13 @@
 	  <artifactId>arquillian-junit-container</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jboss.arquillian.protocol</groupId>
       <artifactId>arquillian-protocol-servlet</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jboss.arquillian.container</groupId>
    	  <artifactId>arquillian-container-spi</artifactId>
@@ -60,28 +59,28 @@
       <artifactId>jboss-jsfunit-core</artifactId>
       <scope>test</scope>
     </dependency>
-	
+
     <dependency>
       <groupId>org.jboss.jsfunit</groupId>
       <artifactId>jsfunit-arquillian</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
 	  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-	  <artifactId>shrinkwrap-descriptors-impl</artifactId>
+	  <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
 	</dependency>
-	
+
 	<dependency>
    		<groupId>org.jboss.shrinkwrap.resolver</groupId>
    		<artifactId>shrinkwrap-resolver-api-maven</artifactId>
 	</dependency>
-	
+
 	<dependency>
    		<groupId>org.jboss.shrinkwrap.resolver</groupId>
    		<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
 	</dependency>
-    
+
 <!--
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -90,7 +89,7 @@
     </dependency>
 -->
   </dependencies>
-   
+
   <profiles>
     <profile>
       <id>jbossas-embedded-6</id>
@@ -144,7 +143,7 @@
         </plugins>
 	  </build>
     </profile>
-	
+
     <profile>
       <id>jetty-embedded</id>
       <build>
@@ -158,7 +157,7 @@
                   <name>jetty-embedded</name>
                   <value>active</value>
                 </property>
-              </systemProperties> 
+              </systemProperties>
               <excludes>
                 <exclude>**/FormAuthenticationTest.java</exclude>
               </excludes>
@@ -185,7 +184,7 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
       <id>tomcatx</id>
       <build>
@@ -208,6 +207,6 @@
         </plugins>
       </build>
     </profile>
-    
+
   </profiles>
 </project>

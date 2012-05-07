@@ -14,7 +14,26 @@
   <description>JSFUnit is an integration test framework for JavaServer Faces.  JSFUnit tests run inside the container, which provides the developer full access to managed beans, the FacesContext, and the internal JSF component tree.  At the same time, you also have access to the HTML output of each client request.</description>
   <name>JSFUnit</name>
   <url>http://www.jsfunit.org</url>
-  
+
+  <properties>
+    <richfaces-version>3.3.3.Final</richfaces-version>
+    <!-- <seam-version>2.1.1.GA</seam-version> -->
+    <!--<seam-version>2.1.2.CR1</seam-version> -->
+    <seam-version>2.1.2</seam-version>
+    <arquillian.bom.version>1.0.0.Final</arquillian.bom.version>
+  	<junit.vesion>3.8.1</junit.vesion>
+	<htmlunit.version>2.8</htmlunit.version>
+	<apache.mime4j.version>0.6</apache.mime4j.version>
+	<httpcomponents.version>4.0.1</httpcomponents.version>
+	<commons.io.vesion>1.4</commons.io.vesion>
+	<commons.codec.version>1.4</commons.codec.version>
+	<rhino.version>1.7R1</rhino.version>
+	<cssparser.version>0.9.5</cssparser.version>
+	<nekohtml.version>1.9.14</nekohtml.version>
+	<xalan.version>2.7.1</xalan.version>
+	<commons.lang.version>2.4</commons.lang.version>
+  </properties>
+
   <inceptionYear>2007</inceptionYear>
   <developers>
     <developer>
@@ -28,6 +47,17 @@
         <role>Project Lead</role>
       </roles>
       <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <name>Jose Rodolfo Freitas</name>
+      <id>spinner</id>
+      <url>http://jsf.jboss.org</url>
+      <organization>independent</organization>
+      <organizationUrl>http://www.jboss.org</organizationUrl>
+      <roles>
+        <role>Community Lead</role>
+      </roles>
+      <timezone>-3</timezone>
     </developer>
     <developer>
       <name>Dennis Byrne</name>
@@ -67,7 +97,7 @@
     <developerConnection>scm:git:git@github.com:jsfunit/jsfunit.git</developerConnection>
     <url>https://github.com/jsfunit/jsfunit/</url>
   </scm>
- 
+
   <!-- Issues -->
   <issueManagement>
     <system>jira</system>
@@ -129,7 +159,7 @@
     </plugins>
   </reporting>
 
-  
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -149,7 +179,7 @@
         <artifactId>junit</artifactId>
         <version>${junit.vesion}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>net.sourceforge.htmlunit</groupId>
         <artifactId>htmlunit</artifactId>
@@ -161,7 +191,7 @@
         <artifactId>htmlunit-core-js</artifactId>
         <version>${htmlunit.version}</version>
       </dependency>
-      
+
       <!-- needed by htmlunit                                -->
       <!-- htmlunit's dependencies are not in any Maven repo -->
       <dependency>
@@ -181,64 +211,64 @@
         <artifactId>httpmime</artifactId>
         <version>${httpcomponents.version}</version>
       </dependency>
-    
+
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons.io.vesion}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>${commons.codec.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>rhino</groupId>
         <artifactId>js</artifactId>
         <version>${rhino.version}</version>
       </dependency>
-            
+
       <dependency>
         <groupId>net.sourceforge.cssparser</groupId>
         <artifactId>cssparser</artifactId>
         <version>${cssparser.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>net.sourceforge.nekohtml</groupId>
         <artifactId>nekohtml</artifactId>
         <version>${nekohtml.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>xalan</groupId>
         <artifactId>xalan</artifactId>
         <version>${xalan.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
         <version>${commons.lang.version}</version>
       </dependency>
-      
+
 
       <!--**************************************************-->
-    
+
       <dependency>
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
         <version>3.2.1</version>
       </dependency>
-      
+
       <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-api</artifactId>
         <version>2.0.1-FCS</version>
       </dependency>
-      
+
       <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>jsf-impl</artifactId>
@@ -268,26 +298,26 @@
         <artifactId>myfaces-api</artifactId>
         <version>1.1.6</version>
       </dependency>
-      
+
       <dependency>
         <groupId>cactus</groupId>
         <artifactId>cactus</artifactId>
         <version>13-1.7.1</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.cactus</groupId>
         <artifactId>cactus.core.framework.uberjar.javaEE.13</artifactId>
         <version>1.8.0</version>
       </dependency>
-      
+
       <dependency>
         <groupId>javax.el</groupId>
         <artifactId>el-api</artifactId>
         <version>1.0</version>
         <scope>provided</scope>
       </dependency>
-       
+
       <dependency>
         <groupId>org.ajax4jsf</groupId>
         <artifactId>ajax4jsf</artifactId>
@@ -305,80 +335,50 @@
         <artifactId>richfaces-ui</artifactId>
         <version>${richfaces-version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.jboss.seam</groupId>
         <artifactId>jboss-seam</artifactId>
         <version>${seam-version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.jboss.seam</groupId>
         <artifactId>jboss-seam-ui</artifactId>
         <version>${seam-version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.16</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.sun.facelets</groupId>
         <artifactId>jsf-facelets</artifactId>
         <version>1.1.15.B1</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.sun.faces</groupId>
         <artifactId>jsf-api</artifactId>
         <version>2.0.4-b03</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.sun.faces</groupId>
         <artifactId>jsf-impl</artifactId>
         <version>2.0.4-b03</version>
       </dependency>
 
-	   <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-container-spi</artifactId>
-            <version>${arquillian.core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-container-test-spi</artifactId>
-            <version>${arquillian.core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-      <dependency>
-        <groupId>org.jboss.shrinkwrap</groupId>
-        <artifactId>shrinkwrap-api</artifactId>
-        <version>${shrinkwrap.version}</version>
-      </dependency>
-      
-      <dependency>
-		  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-		  <artifactId>shrinkwrap-descriptors-impl</artifactId>
-		  <version>${shrinkwrap.descriptors.version}</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-		  <artifactId>shrinkwrap-descriptors-api</artifactId>
-		  <version>${shrinkwrap.descriptors.version}</version>
-		</dependency>
-		
-		<dependency>
-	      <groupId>org.jboss.arquillian.protocol</groupId>
-	      <artifactId>arquillian-protocol-servlet</artifactId>
-	      <version>${arquillian.core.version}</version>
-	    </dependency>
+	  <dependency>
+	  	<groupId>org.jboss.arquillian</groupId>
+		<artifactId>arquillian-bom</artifactId>
+	  	<version>${arquillian.bom.version}</version>
+	  	<type>pom</type>
+	  	<scope>import</scope>
+	</dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -397,7 +397,7 @@
         <updatePolicy>never</updatePolicy>
       </snapshots>
     </repository>
-    
+
     <!--
     <repository>
       <id>maven2-repository.dev.java.net</id>
@@ -412,9 +412,9 @@
 	<name>java.net Maven 1 Repository</name>
 	<url>https://maven-repository.dev.java.net/nonav/repository</url>
 	<layout>legacy</layout>
-    </repository>    
+    </repository>
     -->
-    
+
     <repository>
       <snapshots>
         <enabled>true</enabled>
@@ -428,7 +428,7 @@
       <url>http://build.canoo.com/NekoHTML/artifacts/m2-repo</url>
       <layout>default</layout>
     </repository>
-     
+
     <repository>
       <id>jboss-deprecated-repository</id>
       <name>JBoss Deprecated Maven Repository</name>
@@ -444,7 +444,7 @@
       </snapshots>
     </repository>
 
-     
+
     <repository>
       <snapshots>
         <enabled>true</enabled>
@@ -455,7 +455,7 @@
       <url>http://htmlunit.sourceforge.net/m2-repo-snapshots</url>
       <layout>default</layout>
     </repository>
-     
+
   </repositories>
 
   <modules>
@@ -479,7 +479,7 @@
       </releases>
     </pluginRepository>
   </pluginRepositories>
-   
+
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
@@ -492,7 +492,7 @@
           <!--<showDeprecation>true</showDeprecation>-->
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
@@ -506,7 +506,7 @@
       </plugin>
 
       <!-- Release -->
-      <plugin> 
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.2.1</version>
         <configuration>
@@ -516,29 +516,9 @@
           <preparationGoals>clean install</preparationGoals>
         </configuration>
       </plugin>
-      
+
     </plugins>
   </build>
-    
-  <properties>
-    <richfaces-version>3.3.3.Final</richfaces-version>
-    <!-- <seam-version>2.1.1.GA</seam-version> -->
-    <!--<seam-version>2.1.2.CR1</seam-version> -->
-    <seam-version>2.1.2</seam-version>
-    <arquillian.core.version>1.0.0.CR4</arquillian.core.version>
-  	<shrinkwrap.version>1.0.0-beta-5</shrinkwrap.version>
-  	<junit.vesion>3.8.1</junit.vesion>
-	<htmlunit.version>2.8</htmlunit.version>
-	<apache.mime4j.version>0.6</apache.mime4j.version>
-	<httpcomponents.version>4.0.1</httpcomponents.version>
-	<commons.io.vesion>1.4</commons.io.vesion>
-	<commons.codec.version>1.4</commons.codec.version>
-	<rhino.version>1.7R1</rhino.version>
-	<cssparser.version>0.9.5</cssparser.version>
-	<nekohtml.version>1.9.14</nekohtml.version>
-	<xalan.version>2.7.1</xalan.version>
-	<commons.lang.version>2.4</commons.lang.version>
-	<shrinkwrap.descriptors.version>1.1.0-alpha-2</shrinkwrap.descriptors.version>
-  </properties>
-  
+
+
 </project>
